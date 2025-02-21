@@ -1,0 +1,77 @@
+notulen
+
+600 rb untuk transaksi hingga 2028 5 tahun
+
+registrasi ulang online
+
+promo: standarisasi warung
+
+500 rb untuk pemilik warung pendaftaran, menggunakan halal standarisasi LPKNI, 
+
+atau ada standarisasi MUI (kita akan upgrade), inti: menerbitkan label halal
+
+
+
+data registrasi: 
+
+yang tercepat registrasi, kabupaten 
+personil 9 orang untuk tiap pendaftaran LPKNI,
+
+
+pengumuman di suara konsumen tiap data data pendaftaran jangka 5 tahun biaya 600 rb. pembayaran dapat berupa BANK, E wallet, dll yang akan disediakan dari account dari LPKNI
+
+apabila registrasi ulang terlambat, maka yang lebih dahulu registrasi itu yang dapat kuota.
+
+
+sertifikat halal, promo. 
+
+system biro standarisasi warung boleh digabung tiap divisi. 
+
+
+kode referral untuk tiap pengguna baru agar mendapatkan benefit, 
+
+
+biro yang digaji -> standarisasi warungg 
+
+
+
+
+
+system udah siap akan dibuatkan pengumuman untuk regitrasi ulang melalui system yg sedang di develop
+
+
+dapat memilih jabatan: kabupaten/kota, provinsi dan bisa disetujui oleh LPKNI PUSAT
+
+
+
+
+konsep: pembayaran tidak harus lunas, bisa melalui secara angsuran, Dan ID CARD itu berlaku hingga 30 Des 2028.
+
+menerapkan peraturan menetri perdagangan, agar segera pihak umkm menuruti UU berlaku, tujuan mengajak pelaku UMKM untuk meregistrasi pada system Aplikasi, 
+
+struktur organisasi: tambahan -> Dirjen permohonan penghapusan UTANG PIUTANG (PUSAT)
+
+
+LPKNI dan suara konsumen (focus), ada di berita contoh: semacam persiapan kongres nasional yang difokuskan kepada konsumen (dikelola oleh LPKNI). 
+PUSAT -> Verifikasi Data User Yang akan Mendaftar
+pendaftaran warung -> koordinat di MAP
+system:
+notifikasi, keanggotaan berlaku -> email
+
+email dari tim lpkni untuk memberi informasi e user yang daftar,
+
+portal pengaduan konsumen pihak pusat yang akan menghandle, dan dapat diberitakan di portal dan dapat diberitakan secara anonym.
+
+system pengaduan jika berada di daerah A, maka pengaduan akan di laporkan ke pusat, dan pusat akan melemparkan aduan ke daerah A. (system alur pengaduan berdasarkan pengaduan daerah) Tindakan ini dilakukan demi LPKNI tindak cepat
+
+
+
+berita nasional, dan daerah (provinsi) jika berita di jombang kategorikan ke jawatimur. 
+nomor anggota -> kita bisa menggunakan kode berdasarkan mendagri, (up to sistem kita saja) yang penting bisa membedakan nomor anggota. (unik
+admin -> CRUD anggota 
+panduan penggunaan (gambar) akan ada di sistem. 
+Main name portal; PORTAL LPKNI
+pemilik warung bisa memasangkan iklan di portal dan akan ada tarif. mendesain sertfikat SWI
+iuran rt rw akan membayar melalui system apps 
+lpkni web: pendaftaran swi, anggota lpkni
+syarat pendaftaran si pemilik warung, nama warung, lokasi warung, identitas, foto tampak depan, foto tampak belakang, foto makanan, Harga dll
