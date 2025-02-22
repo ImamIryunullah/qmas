@@ -77,7 +77,7 @@
 </template>
 
 <script>
-import ApiService from "@/service/api.js";
+import ApiService from "@/service/lpkni.js";
 
 export default {
     data() {

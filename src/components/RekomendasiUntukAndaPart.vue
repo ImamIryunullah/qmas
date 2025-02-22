@@ -88,7 +88,7 @@
 </template>
 
 <script>
-import api from '@/service/api';
+import api from '@/service/lpkni';
 
 export default {
     data() {

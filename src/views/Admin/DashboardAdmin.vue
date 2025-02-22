@@ -5,11 +5,15 @@
 
       <!-- Dashboard Header -->
       <div class="text-center mb-12">
-        <h1 class="text-4xl font-extrabold text-gray-800 mb-4">🚀 Admin Dashboard</h1>
-        <p class="text-lg sm:text-xl text-gray-500 max-w-lg mx-auto">
-          Overview of all LPKNI Data
+        <div class="flex justify-center items-center space-x-3">
+          <img src="@/assets/iconlpkni.png" alt="LPKNI Icon" class="mt-2 w-9 h-12" />
+          <h1 class="text-4xl font-extrabold text-gray-800">Admin Dashboard LPKNI</h1>
+        </div>
+        <p class="text-lg sm:text-xl text-gray-500 max-w-lg mx-auto mt-2">
+          Lembaga Perlindungan Konsumen Indonesia
         </p>
       </div>
+
 
       <!-- Dashboard Stats Cards -->
       <div class="grid grid-cols-1 sm:grid-cols-2 lg:grid-cols-3 xl:grid-cols-4 gap-6 gap-y-10">

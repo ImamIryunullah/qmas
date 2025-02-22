@@ -1,17 +1,17 @@
 <template>
-  <div class="pb-20 ">
+  <div class="pb-20">
     <NavbarLandingPage />
   </div>
 
-  <div v-if="isMounted" class=" flex justify-center w-full h-full bg-white pb-20 pt-20 ">
+  <div v-if="isMounted" class=" flex justify-center w-full h-full bg-red-50 pb-20 pt-20 ">
     <!-- <img src="@/assets/logoswi.png" alt="SWI Logo" class="w-24 h-auto mb-6" /> -->
     <div class="w-100 bg-white shadow-lg rounded-lg  flex flex-col lg:flex-row animate-fadeInUp">
       <!-- Left Section (Login Form) -->
       <div
         class="w-full lg:w-100 h-full flex flex-col justify-center items-center px-8 lg:px-20 bg-white border border-gray-300 rounded-lg shadow-lg py-8 ">
         <!-- <img src="@/assets/logoswi.png" alt="SWI Logo" class="w-24 h-auto mb-6" /> -->
-        <h2 class="text-3xl font-semibold text-red-600 mb-4">Login Sekarang!!</h2>
-        <p class="text-sm text-gray-500 mb-6">Silakan masukkan kredensial Anda</p>
+        <h2 class="text-3xl font-semibold text-red-600 mb-4">Selamat Datang Kembali</h2>
+        <p class="text-sm text-gray-500 mb-6">Login Sekarang untuk melanjutkan</p>
 
         <div class="w-full max-w-md space-y-4">
           <form @submit.prevent="login">
@@ -44,7 +44,7 @@
               {{ loading ? 'Loading...' : 'MASUK' }}
             </button>
             <div class="mt-2">
-              <router-link to="/lupapassword"
+              <router-link to="/auth/lupa-kata-sandi"
                 class="text-red-600 font-bold mb-3 block text-left underline hover:scale-105">Lupa
                 password?</router-link>
             </div>
@@ -58,18 +58,6 @@
         </div>
 
       </div>
-      <!-- Right Section (Image) -->
-      <!-- <div
-        class="w-full  max-h-full bg-red-600 flex flex-col justify-center items-center text-white p-8 shadow-lg rounded-lg ">
-        <div class="w-full max-w-[300px] h-[80%] relative">
-          <img src="@/assets/iconlpkni.png" alt="Illustration"
-            class="w-full h-full object-cover rounded-lg shadow-lg transform transition duration-500 ease-in-out  logo-animate" />
-        </div>
-        <span class="text-center text-lg font-light px-6 mt-2 italic opacity-90 logo-fade-in">
-          "Your premier digital library for borrowing and reading books"
-        </span>
-      </div> -->
-
     </div>
 
   </div>
@@ -98,10 +86,10 @@ export default {
   },
   computed: {
     isUserLoggedIn() {
-      return this.$store.state.userLoggedIn;
+      return this.$store.state.storeLpkni.UserLpkniIsLoggedIn;
     },
     userRole() {
-      return this.$store.state.userRole;
+      return this.$store.state.storeLpkni.userLpkniRole;
     }
   },
   mounted() {
@@ -110,7 +98,8 @@ export default {
   methods: {
     async login() {
       try {
-        await this.$store.dispatch("login", { email: this.email, password: this.password });
+        await this.$store.dispatch("loginLpkni", { email: this.email, password: this.password });
+        console.log(this.isUserLoggedIn)
         if (this.isUserLoggedIn) {
           this.$toast.success("Berhasil login", { position: "top-right", duration: 1000 });
           if (this.userRole === "admin") {

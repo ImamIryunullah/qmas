@@ -1,12 +1,11 @@
 <template>
     <header :class="{ 'hidden-navbar': !isNavbarVisible }"
-        class="bg-red-600 p-6 shadow-lg fixed top-0 left-0 right-0 z-50 font-bold">
+        class="bg-green-600 p-6 shadow-lg fixed top-0 left-0 right-0 z-50 font-bold">
 
         <div class="container mx-auto flex justify-between items-center">
             <!-- Logo -->
             <router-link to="/" class="text-white text-3xl font-bold flex items-center">
-                <img src="@/assets/iconlpkni.png" alt="LPKNI" class="w-15 h-12 mr-3 mt-2">
-                LPKNI
+                <img src="@/assets/swiputih.png" alt="LPKNI" class="w-15 h-12 mr-3 mt-2">
             </router-link>
 
             <!-- headerbar Links for desktop -->

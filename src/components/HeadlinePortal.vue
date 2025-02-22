@@ -44,7 +44,7 @@
 </template>
 
 <script>
-import api from "@/service/api";
+import api from "@/service/lpkni";
 import { Swiper, SwiperSlide } from "swiper/vue";
 import "swiper/css";
 import "swiper/css/pagination";

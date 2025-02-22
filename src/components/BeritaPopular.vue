@@ -9,7 +9,7 @@
             </div>
         </div>
         <div class="block md:flex justify-between pt-6 ">
-            <div v-for="(news, index ) in populer" :key="news.id">
+            <div v-for="(news, index) in populer" :key="news.id">
                 <button @click="goToDetail(news)">
                     <div class="max-w-[30rem] 2xl:max-w-[35rem]">
                         <div class="relative top-4 -left-2">
@@ -56,7 +56,7 @@
             </div>
         </div>
         <div class="pt-6">
-            <div v-for="(news, index ) in populer" :key="news.id">
+            <div v-for="(news, index) in populer" :key="news.id">
                 <button @click="goToDetail(news)">
                     <div class="max-w-[35rem]">
                         <div class="relative top-4 -left-2">
@@ -96,7 +96,7 @@
 
 <script>
 
-import api from '@/service/api';
+import api from '@/service/lpkni';
 export default {
     data() {
         return {

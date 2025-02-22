@@ -39,8 +39,8 @@ export default {
     NavbarAnggota,
   },
   computed: {
-    getUserStatus() {
-      return this.$store.state.user.data_anggota.status;
+    getUserLpkni() {
+      return this.$store.state.storeLpkni.userLpkni.data_anggota.id_data_anggota;
     },
   },
   mounted() {

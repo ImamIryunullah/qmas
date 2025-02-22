@@ -55,6 +55,9 @@ export default {
     return API.delete(`/berita/${id}`);
   },
   /*Jabatan*/
+  CreateJabatan(data) {
+    return API.post(`/jabatans`, data);
+  },
   GetallJabatan() {
     return API.get("/jabatans");
   },
@@ -63,6 +66,9 @@ export default {
   },
   GetJabatanByDaerahId(id) {
     return API.get(`/jabatan/daerah/${id}`);
+  },
+  GetJabatanByWilayahDaerahId(wilayah_id, daerah_id) {
+    return API.get(`/jabatan/wilayah/${wilayah_id}/daerah/${daerah_id}`);
   },
   GetJabatanByWilayahIdAdmin(id) {
     return API.get(`/jabatans/wilayah/${id}`);

@@ -1,46 +1,46 @@
 <template>
 
   <div class="pb-20 bg-white">
-    <NavbarLandingPage />
+    <NavbarSwiAuth />
   </div>
 
-  <div v-if="isMounted" class=" flex justify-center w-full h-full bg-white pb-20 pt-20 ">
+  <div v-if="isMounted" class=" flex justify-center w-full h-full bg-green-200 pb-20 pt-20 ">
     <!-- Left Section (Background) -->
     <!-- Right Section (Form) -->
     <div
       class="w-full lg:w-100 h-full flex flex-col justify-center items-center px-8 lg:px-20 bg-white border border-gray-300 rounded-lg shadow-lg  animate-fadeInUp">
 
       <div class="">
-        <h2 class="text-3xl font-semibold text-red-600 mb-5 mt-5">Buat Akun Baru</h2>
+        <h2 class="text-3xl font-bold text-green-800 mb-5 mt-5">Buat Akun Baru</h2>
       </div>
-      <p class="text-sm text-gray-500 mb-5">Bergabung Menjadi Anggota LPKNI Wilayah Dan Daerah</p>
+      <p class="text-sm text-gray-500 mb-5">Ayo Menjadi Bagian Dari Standarisasi Warung Indonesia</p>
 
       <form @submit.prevent="submitForm" class="w-full max-w-md space-y-5">
         <div class="flex flex-col space-y-2">
           <label for="nama_depan" class="text-sm text-gray-500 font-bold">Nama Depan</label>
           <input v-model="form.nama_depan" id="nama_depan" type="text" placeholder="Nama Depan"
-            class="p-3 border border-gray-300 rounded-lg focus:outline-none focus:ring-2 focus:ring-red-600 transition duration-200 ease-in-out transform hover:scale-105"
+            class="p-3 border border-gray-300 rounded-lg focus:outline-none focus:ring-2 focus:ring-green-600 transition duration-200 ease-in-out transform hover:scale-105"
             required />
         </div>
 
         <div class="flex flex-col space-y-2">
           <label for="nama_belakang" class="text-sm text-gray-500 font-bold">Nama Belakang</label>
           <input v-model="form.nama_belakang" id="nama_belakang" type="text" placeholder="Nama Belakang"
-            class="p-3 border border-gray-300 rounded-lg focus:outline-none focus:ring-2 focus:ring-red-600 transition duration-200 ease-in-out transform hover:scale-105"
+            class="p-3 border border-gray-300 rounded-lg focus:outline-none focus:ring-2 focus:ring-green-600 transition duration-200 ease-in-out transform hover:scale-105"
             required />
         </div>
 
         <div class="flex flex-col space-y-2">
           <label for="no_hp" class="text-sm text-gray-500 font-bold">No Hp</label>
           <input v-model="form.no_hp" id="no_hp" type="text" placeholder="No Hp"
-            class="p-3 border border-gray-300 rounded-lg focus:outline-none focus:ring-2 focus:ring-red-600 transition duration-200 ease-in-out transform hover:scale-105"
+            class="p-3 border border-gray-300 rounded-lg focus:outline-none focus:ring-2 focus:ring-green-600 transition duration-200 ease-in-out transform hover:scale-105"
             required />
         </div>
 
         <div class="flex flex-col space-y-2">
           <label for="email" class="text-sm text-gray-500 font-bold">Email</label>
           <input v-model="form.email" id="email" type="email" placeholder="Email"
-            class="p-3 border border-gray-300 rounded-lg focus:outline-none focus:ring-2 focus:ring-red-600 transition duration-200 ease-in-out transform hover:scale-105"
+            class="p-3 border border-gray-300 rounded-lg focus:outline-none focus:ring-2 focus:ring-green-600 transition duration-200 ease-in-out transform hover:scale-105"
             required />
         </div>
 
@@ -49,7 +49,7 @@
           <label for="password" class="text-sm text-gray-500 font-bold">Password</label>
           <input v-model="form.password" :type="passwordVisible ? 'text' : 'password'" id="password"
             placeholder="Password"
-            class="p-3 border border-gray-300 rounded-lg focus:outline-none focus:ring-2 focus:ring-red-600 transition duration-200 ease-in-out transform hover:scale-105"
+            class="p-3 border border-gray-300 rounded-lg focus:outline-none focus:ring-2 focus:ring-green-600 transition duration-200 ease-in-out transform hover:scale-105"
             required />
 
         </div>
@@ -65,15 +65,15 @@
           <label for="confirmpassword" class="text-sm text-gray-500 font-bold">Konfirmasi Password</label>
           <input v-model="form.confirmpassword" :type="passwordVisible ? 'text' : 'password'" id="confirmpassword"
             placeholder="Konfirmasi Password"
-            class="p-3 border border-gray-300 rounded-lg focus:outline-none focus:ring-2 focus:ring-red-600 transition duration-200 ease-in-out transform hover:scale-105"
+            class="p-3 border border-gray-300 rounded-lg focus:outline-none focus:ring-2 focus:ring-green-600 transition duration-200 ease-in-out transform hover:scale-105"
             required />
         </div>
 
 
         <!-- Submit Button -->
-        <button type="submit" class=" mt-6 w-full h-12 bg-red-600 text-white px-6 py-2 rounded-lg font-bold hover:bg-red-500 transition
+        <button type="submit" class=" mt-6 w-full h-12 bg-green-600 text-white px-6 py-2 rounded-lg font-bold hover:bg-green-800 transition
           duration-200 ease-in-out transform hover:scale-105">
-          Daftar
+          Daftar Akun
         </button>
       </form>
 
@@ -82,25 +82,26 @@
       <!-- Link to Sign In -->
       <p class="mt-4 text-sm text-gray-500 mb-5">
         Sudah Memiliki Akun?
-        <router-link to="/auth/login" class="text-red-600 font-semibold hover:underline ">Masuk Sekarang</router-link>
+        <router-link to="/auth/swi/login" class="text-green-600 font-semibold hover:underline ">Masuk
+          Sekarang</router-link>
       </p>
 
     </div>
 
   </div>
   <div class="w-full">
-    <FooterLandingPage />
+    <FooterSwiAuth />
   </div>
 </template>
 
 <script>
-import Api from "@/service/api.js";
-import NavbarLandingPage from "@/components/NavbarLandingPage.vue";
-import FooterLandingPage from "@/components/FooterLandingPage.vue";
+import Api from "@/service/swi";
+import NavbarSwiAuth from "@/components/NavbarSwi.vue";
+import FooterSwiAuth from "@/components/FooterSwiAuth.vue";
 export default {
   components: {
-    NavbarLandingPage,
-    FooterLandingPage
+    NavbarSwiAuth,
+    FooterSwiAuth
   },
   data() {
     return {
@@ -164,13 +165,11 @@ export default {
         email: this.form.email,
         username: this.generatedUsername, // Use generated username
         password: this.form.password,
-        role: "anggota",
       };
-      console.log(userData);
-      Api.CreateUser(userData)
+      Api.CreateUserSwi(userData)
         .then((res) => {
           alert(res.data.message);
-          this.$router.push("/auth/login");
+          this.$router.push("/auth/swi/login");
         })
         .catch((error) => {
           if (error.response) {

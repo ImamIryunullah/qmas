@@ -1,7 +1,9 @@
 <template>
-  <NavbarAnggota />
+
   <div class="bg-gray-100 min-h-screen flex justify-center items-center p-6 ml-12">
+
     <div class="w-full max-w-2xl bg-white p-8 rounded-lg shadow-xl">
+      <NavbarAnggota />
       <!-- Subscription Info Section -->
       <section
         class="text-center mb-8 rounded-lg py-12 bg-gradient-to-r from-red-700 to-red-500 shadow-xl flex flex-col justify-between h-full">
@@ -12,6 +14,10 @@
         <p class="text-3xl font-extrabold text-white my-4 sm:text-4xl">Rp 600.000,00</p>
         <!-- Additional Text: Contextual Explanation (Bottom) -->
         <p class="text-sm text-white sm:text-base mb-1">Segera lakukan pembayaran untuk melanjutkan proses pendaftaran.
+
+        </p>
+        <p class="text-sm text-white font-semibold sm:text-base mb-1"> ( Masa Berlaku 5 Tahun )
+
         </p>
       </section>
 
@@ -210,7 +216,7 @@
 
 <script>
 import NavbarAnggota from '@/components/NavbarAnggota.vue';
-import api from '@/service/api';
+import api from '@/service/lpkni';
 
 export default {
   components: {
@@ -240,12 +246,12 @@ export default {
     };
   },
   computed: {
-    getUser() {
-      return this.$store.state.user.data_anggota.id_data_anggota;
+    getUserLpkni() {
+      return this.$store.state.storeLpkni.userLpkni.data_anggota.id_data_anggota;
     },
   },
   mounted() {
-    if (this.getUser === 0) {
+    if (this.getUserLpkni === 0) {
       this.$router.push('/anggota/data-diri')
       return
     }

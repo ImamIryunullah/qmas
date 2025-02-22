@@ -110,11 +110,18 @@
                     </div>
 
                     <!-- Tindak Lanjut -->
-                    <div class="flex items-center space-x-4 mb-4">
-                        <input type="checkbox" id="publish" v-model="form.publish" class="mr-2" />
-                        <label for="publish" class="text-sm font-semibold text-red-700">Apakah Bisa Kami
-                            Publish?</label>
+                    <div class="flex flex-col space-y-1 mb-4">
+                        <div class="flex items-center space-x-2">
+                            <input type="checkbox" id="publish" v-model="form.publish" class="mr-2" />
+                            <label for="publish" class="text-sm font-semibold text-red-700">
+                                Apakah Bisa Kami Publish?
+                            </label>
+                        </div>
+                        <p class="text-xs text-gray-500 italic">
+                            Dengan mencentang ini, Anda mengizinkan informasi ini untuk dipublikasikan secara umum.
+                        </p>
                     </div>
+
 
                     <!-- Submit Button -->
                     <button type="submit"
@@ -132,7 +139,7 @@
 <script>
 import NavbarLandingPage from '@/components/NavbarLandingPage.vue';
 import FooterLandingPage from '@/components/FooterLandingPage.vue';
-import api from '@/service/api';
+import api from '@/service/lpkni';
 
 export default {
     components: {

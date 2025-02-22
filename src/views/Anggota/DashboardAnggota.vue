@@ -1,7 +1,9 @@
 <template>
-    <NavbarAnggota />
-    <div class="bg-gray-100 w-full h-full min-h-screen pl-28">
-        <div class="container mx-auto p-8">
+
+    <div class="bg-gray-100 w-screen h-full min-h-screen pl-16">
+        <NavbarAnggota />
+        <div class="container mx-auto pl-12 p-2">
+
             <!-- Dashboard Header -->
             <div class="text-center mb-12 py-6">
                 <!-- Heading with classic, clean font and prominent size -->
@@ -16,155 +18,171 @@
 
             <!-- Anggota Details -->
             <div class="bg-white p-6 rounded-lg shadow-md mb-8">
-
-                <h2
-                    class="text-2xl font-semibold text-gray-700 mb-6 flex items-center justify-start sm:justify-center md:justify-start">
-                    <!-- Font Awesome User Icon -->
+                <h2 class="text-2xl font-semibold text-gray-700 mb-6 flex items-center">
                     <i class="fas fa-user text-gray-600 mr-3"></i>
                     Informasi Anggota
                 </h2>
 
-                <div class="grid grid-cols-1 sm:grid-cols-2 lg:grid-cols-3 gap-8">
-                    <!-- Name and Job -->
-                    <div class="flex flex-col">
+                <!-- Grid Layout -->
+                <div class="grid grid-cols-1 sm:grid-cols-2 md:grid-cols-3 gap-6">
+                    <!-- Nama Lengkap -->
+                    <div>
                         <div class="font-medium text-gray-600">Nama Lengkap:</div>
-                        <div class="text-gray-800">{{ data_anggota.nama_lengkap }}</div>
+                        <div class="text-lg text-gray-800 font-semibold">{{ data_anggota.nama_lengkap }}</div>
                     </div>
-                    <div class="flex flex-col">
+
+                    <!-- Pekerjaan -->
+                    <div>
                         <div class="font-medium text-gray-600">Pekerjaan:</div>
-                        <div class="text-gray-800">{{ data_anggota.pekerjaan }}</div>
+                        <div class="text-lg text-gray-800">{{ data_anggota.pekerjaan }}</div>
                     </div>
 
-                    <!-- Birth Date and Place -->
-                    <div class="flex flex-col">
+                    <!-- Tanggal Lahir -->
+                    <div>
                         <div class="font-medium text-gray-600">Tanggal Lahir:</div>
-                        <div class="text-gray-800">{{ new Date(data_anggota.tanggalLahir).toLocaleDateString() }}</div>
-                    </div>
-                    <div class="flex flex-col">
-                        <div class="font-medium text-gray-600">Tempat Lahir:</div>
-                        <div class="text-gray-800">{{ data_anggota.tempatLahir }}</div>
+                        <div class="text-lg text-gray-800">{{ new Date(data_anggota.tanggalLahir).toLocaleDateString()
+                            }}</div>
                     </div>
 
-                    <!-- Address and Status -->
-                    <div class="flex flex-col">
+                    <!-- Tempat Lahir -->
+                    <div>
+                        <div class="font-medium text-gray-600">Tempat Lahir:</div>
+                        <div class="text-lg text-gray-800">{{ data_anggota.tempatLahir }}</div>
+                    </div>
+
+                    <!-- Alamat -->
+                    <div class="md:col-span-2">
                         <div class="font-medium text-gray-600">Alamat:</div>
-                        <div class="text-gray-800">{{ data_anggota.alamat }}</div>
+                        <div class="text-lg text-gray-800">{{ data_anggota.alamat }}</div>
                     </div>
-                    <div class="flex flex-col">
+
+                    <!-- Status Perkawinan -->
+                    <div>
                         <div class="font-medium text-gray-600">Status Perkawinan:</div>
-                        <div class="text-gray-800">{{ data_anggota.statusPerkawinan }}</div>
+                        <div class="text-lg text-gray-800">{{ data_anggota.statusPerkawinan }}</div>
                     </div>
-                    <div class="flex flex-col">
+
+                    <!-- Status -->
+                    <div>
                         <div class="font-medium text-gray-600">Status:</div>
-                        <div class="text-gray-800">{{ data_anggota.status }}</div>
+                        <div class="text-lg text-gray-800">{{ data_anggota.status }}</div>
                     </div>
                 </div>
             </div>
+
             <!-- Daerah and Wilayah -->
             <div class="bg-white p-6 rounded-lg shadow-md mb-8">
-                <h2
-                    class="text-2xl font-semibold text-gray-700 mb-6 flex items-center justify-start sm:justify-center md:justify-start">
-                    <!-- Font Awesome Location Icon -->
+                <h2 class="text-2xl font-semibold text-gray-700 mb-6 flex items-center">
                     <i class="fas fa-map-marker-alt text-gray-600 mr-3"></i>
                     Daerah dan Wilayah
                 </h2>
 
-
-                <div class="grid grid-cols-1 sm:grid-cols-2 lg:grid-cols-4 gap-8">
+                <!-- Grid Layout -->
+                <div class="grid grid-cols-1 sm:grid-cols-2 md:grid-cols-4 gap-6">
                     <!-- Nama Daerah -->
-                    <div class="flex flex-col items-start">
+                    <div>
                         <div class="text-sm font-medium text-gray-600">Nama Daerah:</div>
-                        <div class="text-lg text-gray-800">{{ data_anggota.daerah.nama_daerah === '' ? 'Anggota Wilayah'
-                            :
-                            data_anggota.daerah.nama_daerah }}
-                        </div>
+                        <div class="text-lg text-gray-800 font-semibold">{{ data_anggota.daerah.nama_daerah }}</div>
                     </div>
 
                     <!-- Kode Daerah -->
-                    <div class="flex flex-col items-start">
+                    <div>
                         <div class="text-sm font-medium text-gray-600">Kode Daerah:</div>
-                        <div class="text-lg text-gray-800">{{ data_anggota.daerah.nama_daerah === '' ? '-'
-                            :
-                            data_anggota.daerah.nama_daerah }}</div>
+                        <div class="text-lg text-gray-800 font-semibold">{{ data_anggota.daerah.kode_daerah }}</div>
                     </div>
 
                     <!-- Nama Wilayah -->
-                    <div class="flex flex-col items-start">
+                    <div>
                         <div class="text-sm font-medium text-gray-600">Nama Wilayah:</div>
-                        <div class="text-lg text-gray-800">{{ data_anggota.wilayah.nama_wilayah }}</div>
+                        <div class="text-lg text-gray-800 font-semibold">{{ data_anggota.wilayah.nama_wilayah }}</div>
                     </div>
 
                     <!-- Kode Wilayah -->
-                    <div class="flex flex-col items-start">
+                    <div>
                         <div class="text-sm font-medium text-gray-600">Kode Wilayah:</div>
-                        <div class="text-lg text-gray-800">{{ data_anggota.wilayah.kode_wilayah }}</div>
+                        <div class="text-lg text-gray-800 font-semibold">{{ data_anggota.wilayah.kode_wilayah }}</div>
                     </div>
                 </div>
             </div>
+
 
 
             <!-- Jabatan Struktural -->
             <div class="bg-white p-6 rounded-lg shadow-md mb-8">
-                <h2
-                    class="text-2xl font-semibold text-gray-700 mb-6 flex items-center justify-start sm:justify-center md:justify-start">
-                    <!-- Font Awesome Icon for Job/Position -->
+                <h2 class="text-2xl font-semibold text-gray-700 mb-6 flex items-center">
                     <i class="fas fa-user-tie text-gray-600 mr-3"></i>
                     Jabatan Struktural
                 </h2>
 
-                <div class="grid grid-cols-1 sm:grid-cols-2 lg:grid-cols-2 gap-8">
+                <!-- Grid Layout -->
+                <div class="grid grid-cols-1 sm:grid-cols-2 gap-6">
                     <!-- Nama Jabatan -->
-                    <div class="flex flex-col items-start">
-                        <div class="w-full font-medium text-gray-600">Nama Jabatan:</div>
-                        <div class="w-full text-gray-800">{{ data_anggota.jabatanStruktural.nama }}</div>
+                    <div>
+                        <div class="text-sm font-medium text-gray-600">Nama Jabatan:</div>
+                        <div class="text-lg text-gray-800 font-semibold">{{ data_anggota.jabatanStruktural.nama }}</div>
                     </div>
 
                     <!-- Maksimum Anggota -->
-                    <div class="flex flex-col items-start">
-                        <div class="w-full font-medium text-gray-600">Maksimum Anggota:</div>
-                        <div class="w-full text-gray-800">{{ data_anggota.jabatanStruktural.maksimumAnggota }}</div>
+                    <div>
+                        <div class="text-sm font-medium text-gray-600">Maksimum Anggota:</div>
+                        <div class="text-lg text-gray-800 font-semibold">{{
+                            data_anggota.jabatanStruktural.maksimumAnggota }}</div>
+                    </div>
+
+                    <!-- Tingkat Jabatan -->
+                    <div>
+                        <div class="text-sm font-medium text-gray-600">Tingkat:</div>
+                        <div class="text-lg text-gray-800 font-semibold">{{ data_anggota.jabatanStruktural.tingkat }}
+                        </div>
+                    </div>
+
+                    <!-- Jumlah Terisi -->
+                    <div>
+                        <div class="text-sm font-medium text-gray-600">Terisi:</div>
+                        <div class="text-lg text-gray-800 font-semibold">{{ data_anggota.jabatanStruktural.terisi }}
+                        </div>
                     </div>
                 </div>
             </div>
 
+
+            <!-- User Information -->
             <!-- User Information -->
             <div class="bg-white p-6 rounded-lg shadow-md mt-8">
-                <h2
-                    class="text-2xl font-semibold text-gray-700 mb-6 flex items-center justify-start sm:justify-center md:justify-start">
-                    <!-- Font Awesome Icon for User Data -->
+                <h2 class="text-2xl font-semibold text-gray-700 mb-6 flex items-center">
                     <i class="fas fa-user text-gray-600 mr-3"></i>
                     Data User
                 </h2>
 
-                <div class="grid grid-cols-1 sm:grid-cols-2 lg:grid-cols-3 gap-8">
+                <div class="grid grid-cols-1 sm:grid-cols-2 lg:grid-cols-3 gap-6">
                     <!-- Email -->
-                    <div class="flex flex-col items-start">
-                        <div class="w-full font-medium text-gray-600">Email:</div>
-                        <div class="w-full text-gray-800">{{ user.email }}</div>
+                    <div>
+                        <div class="text-sm font-medium text-gray-600">Email:</div>
+                        <div class="text-lg text-gray-800 font-semibold">{{ user.email }}</div>
                     </div>
 
                     <!-- Nomor HP -->
-                    <div class="flex flex-col items-start">
-                        <div class="w-full font-medium text-gray-600">Nomor HP:</div>
-                        <div class="w-full text-gray-800">{{ user.no_hp }}</div>
+                    <div>
+                        <div class="text-sm font-medium text-gray-600">Nomor HP:</div>
+                        <div class="text-lg text-gray-800 font-semibold">{{ user.no_hp }}</div>
                     </div>
 
                     <!-- Nama Depan -->
-                    <div class="flex flex-col items-start">
-                        <div class="w-full font-medium text-gray-600">Nama Depan:</div>
-                        <div class="w-full text-gray-800">{{ user.nama_depan }}</div>
+                    <div>
+                        <div class="text-sm font-medium text-gray-600">Nama Depan:</div>
+                        <div class="text-lg text-gray-800 font-semibold">{{ user.nama_depan }}</div>
                     </div>
 
                     <!-- Nama Belakang -->
-                    <div class="flex flex-col items-start">
-                        <div class="w-full font-medium text-gray-600">Nama Belakang:</div>
-                        <div class="w-full text-gray-800">{{ user.nama_belakang }}</div>
+                    <div>
+                        <div class="text-sm font-medium text-gray-600">Nama Belakang:</div>
+                        <div class="text-lg text-gray-800 font-semibold">{{ user.nama_belakang }}</div>
                     </div>
 
                     <!-- Role -->
-                    <div class="flex flex-col items-start">
-                        <div class="w-full font-medium text-gray-600">Role:</div>
-                        <div class="w-full text-gray-800">{{ user.role }}</div>
+                    <div>
+                        <div class="text-sm font-medium text-gray-600">Role:</div>
+                        <div class="text-lg text-gray-800 font-semibold">{{ user.role }}</div>
                     </div>
                 </div>
             </div>
@@ -202,44 +220,27 @@
                 </div>
             </div>
 
-            <!-- Transaction Information -->
+            <!-- Informasi Transaksi -->
             <div class="bg-white p-6 rounded-lg shadow-md mt-8">
-                <h2
-                    class="text-2xl font-semibold text-gray-700 mb-6 flex items-center justify-start sm:justify-center md:justify-start">
-                    <!-- Font Awesome Icon for Transaction -->
+                <h2 class="text-2xl font-semibold text-gray-700 mb-6 flex items-center">
                     <i class="fas fa-credit-card text-gray-600 mr-3"></i>
                     Informasi Transaksi
                 </h2>
 
-
-                <!-- Payment Method -->
-                <div class="grid grid-cols-1 sm:grid-cols-2 lg:grid-cols-4 gap-8">
-                    <!-- Payment Method -->
-                    <div class="flex flex-col items-start">
+                <!-- Grid Layout -->
+                <div class="grid grid-cols-1 sm:grid-cols-2 md:grid-cols-4 gap-6">
+                    <!-- Metode Pembayaran -->
+                    <div>
                         <div class="text-sm font-medium text-gray-600">Metode Pembayaran:</div>
                         <div class="text-lg text-gray-800 font-semibold">{{ transaksi.method }}</div>
                     </div>
 
-                    <!-- Payment Status -->
-                    <div class="flex flex-col items-start">
+                    <!-- Status Pembayaran -->
+                    <div>
                         <div class="text-sm font-medium text-gray-600">Status Pembayaran:</div>
-                        <div class="text-lg text-gray-800 font-semibold">{{ transaksi.status }}</div>
-                    </div>
-
-                    <!-- Payment Status -->
-                    <div class="flex flex-col items-start">
-                        <div class="text-sm font-medium text-gray-600">Status Pembayaran:</div>
-
-                        <!-- Conditional rendering based on payment status -->
                         <div class="flex items-center space-x-2">
-                            <!-- Checkmark Icon for 'Lunas' -->
                             <i v-if="transaksi.status === 'Lunas'" class="fas fa-check text-green-500"></i>
-
-                            <!-- Exclamation Icon for 'Belum Lunas' -->
-                            <i v-if="transaksi.status === 'Belum Lunas'"
-                                class="fas fa-exclamation-triangle text-yellow-500"></i>
-
-                            <!-- Payment status text -->
+                            <i v-else class="fas fa-exclamation-triangle text-yellow-500"></i>
                             <div class="text-lg font-semibold" :class="{
                                 'text-green-600': transaksi.status === 'Lunas',
                                 'text-yellow-600': transaksi.status === 'Belum Lunas'
@@ -249,9 +250,8 @@
                         </div>
                     </div>
 
-
-                    <!-- Payment Time -->
-                    <div class="flex flex-col items-start">
+                    <!-- Waktu Pembayaran -->
+                    <div>
                         <div class="text-sm font-medium text-gray-600">Waktu Pembayaran:</div>
                         <div class="text-lg text-gray-800 font-semibold">{{ transaksi.waktupembayaran }}</div>
                     </div>
@@ -268,7 +268,7 @@
 
 <script>
 import NavbarAnggota from '@/components/NavbarAnggota.vue';
-import api from '../../service/api';
+import api from '../../service/lpkni';
 import VueEasyLightbox from 'vue-easy-lightbox';
 export default {
     components: {
@@ -324,12 +324,12 @@ export default {
         };
     },
     computed: {
-        getUser() {
-            return this.$store.state.user.data_anggota.id_data_anggota;
+        getUserLpkni() {
+            return this.$store.state.storeLpkni.userLpkni.data_anggota.id_data_anggota;
         },
     },
     mounted() {
-        if (this.getUser === 0) {
+        if (this.getUserLpkni === 0) {
             this.$router.push('/anggota/data-diri')
             return
         }

@@ -1,12 +1,12 @@
 <template>
   <div>
     <NavbarAdmin />
-    <div class="bg-gray-100 w-full h-full min-h-screen pl-28 mx-auto p-8">
+    <div class="bg-gray-100 w-full h-full min-h-screen pl-28 mx-auto p-6">
       <!-- Dashboard Header -->
       <div class="flex flex-col md:flex-row md:justify-between md:items-center mb-6 gap-4">
         <h1 class="text-2xl md:text-3xl font-bold text-gray-800 text-center md:text-left">📋 DATA PENDAFTARAN ANGGOTA
         </h1>
-        <button
+        <button @click="exportToCSV"
           class="w-full md:w-auto flex items-center justify-center bg-green-500 text-white px-4 py-2 rounded-lg hover:bg-green-600 transition duration-300 shadow-md">
           <i class="fas fa-file-csv mr-2"></i> Export CSV
         </button>
@@ -38,7 +38,7 @@
         </div>
 
         <!-- Table -->
-        <table class="min-w-full table-auto border-collapse">
+        <table class="min-w-full h-full table-auto border-collapse">
           <thead class="bg-red-500 text-white">
             <tr>
               <th class="px-4 py-3 border text-left">No.</th>
@@ -53,6 +53,7 @@
               <th class="px-4 py-3 border text-left">Kota/Kab</th>
               <th class="px-4 py-3 border text-center">3x4 Foto</th>
               <th class="px-4 py-3 border text-center">KTP Foto</th>
+              <th class="px-4 py-3 border text-center">Status</th>
               <th class="px-4 py-3 border text-center">Actions</th>
             </tr>
           </thead>
@@ -82,7 +83,7 @@
                   class="w-12 h-12 object-cover rounded-md shadow-md mx-auto cursor-pointer"
                   @click="openImagePreview(anggota.imageUsers[0].imageUrl, 'KTP')" />
               </td>
-
+              <td class="px-4 py-3 border">{{ anggota.status }}</td>
               <!-- Kolom Aksi -->
               <td class="px-4 py-3 border text-center">
                 <button class="text-blue-500 hover:text-blue-700 font-semibold">Setujui</button> |
@@ -112,7 +113,7 @@
 
 <script>
 import NavbarAdmin from "@/components/NavbarAdmin.vue";
-import api from "@/service/api";
+import api from "@/service/lpkni";
 
 export default {
   components: {
@@ -145,6 +146,32 @@ export default {
     openImagePreview(imageUrl, title) {
       this.imagePreview = this.getFullPathImage(imageUrl);
       this.imageTitle = title;
+    },
+    exportToCSV() {
+      const headers = ["No", "Nama Lengkap", "NIK", "Tempat Lahir", "Pekerjaan", "Agama", "Provinsi", "Kota/Kabupaten", "3x4 Foto", "KTP Foto"];
+      const rows = this.listDataAnggota.map((anggota, index) => [
+        index + 1,
+        anggota.nama_lengkap,
+        anggota.nik,
+        anggota.tempatLahir,
+        anggota.tanggalLahir.split('T')[0],
+        anggota.pekerjaan,
+        anggota.agama,
+        anggota.wilayah.nama_wilayah,
+        anggota.daerah.nama_daerah,
+        anggota.imageUsers[0]?.imageUrl ? this.getFullPathImage(anggota.imageUsers[0].imageUrl) : "", // Foto 3x4
+        anggota.imageUsers[1]?.imageUrl ? this.getFullPathImage(anggota.imageUsers[1].imageUrl) : ""  // Foto KTP
+
+      ]);
+      const csvContent = [headers, ...rows].map(row => row.join(",")).join("\n");
+      const blob = new Blob([csvContent], { type: "text/csv" });
+
+      // Buat link untuk mendownload file
+      const link = document.createElement("a");
+      link.href = URL.createObjectURL(blob);
+      link.download = "data_daftarAnggota.csv";
+      link.click();
+
     }
   }
 };

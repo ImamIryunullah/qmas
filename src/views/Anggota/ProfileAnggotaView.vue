@@ -6,17 +6,20 @@
     <!-- Content Section -->
     <div class="flex flex-col items-center p-6 flex-grow mt-6 ml-20">
       <div class="bg-white w-full max-w-2xl border border-b-2 shadow-md p-8 rounded-lg animate-fadeInUp">
-        <h2 class="text-2xl font-semibold text-black text-center mb-6">
+        <h2
+          class="text-3xl sm:text-4xl font-semibold text-transparent bg-clip-text bg-gradient-to-r from-gray-800 to-gray-500 text-center mb-6 animate-fadeInUp">
           Profile
         </h2>
+
         <div class="space-y-6">
           <!-- Foto Profil -->
           <div class="flex justify-center">
-            <div class="relative w-40 h-40 mb-4">
+            <div class="relative w-40 h-40 sm:w-48 sm:h-48 mb-4">
               <img :src="getFullpathImage(dataUser.imageUsers[0].imageUrl)" alt="Profile Picture"
-                class="w-full h-full object-contain" />
+                class="w-full h-full object-cover rounded-full shadow-lg border-4 border-white ring-2 ring-gray-300 hover:scale-105 transition-transform duration-200" />
             </div>
           </div>
+
           <!-- Nama Lengkap -->
           <div>
             <p class="text-sm text-gray-600">Nama Lengkap:</p>
@@ -91,8 +94,12 @@
 
           <!-- Status -->
           <div>
-            <p class="text-sm text-gray-600">Status:</p>
-            <p class="text-lg font-semibold">{{ dataUser.status }}</p>
+            <p class="text-lg font-semibold">Status:</p>
+            <p class="text-lg font-semibold">
+              <span
+                :class="{ 'text-yellow-500 font-semibold': dataUser.status === 'PENDING', 'font-semibold text-green-500': dataUser.status === 'Dietujui' }">{{
+                  dataUser.status }}</span>
+            </p>
           </div>
         </div>
       </div>
@@ -104,7 +111,7 @@
 
 <script>
 import NavbarAnggota from "@/components/NavbarAnggota.vue";
-import api from "@/service/api";
+import api from "@/service/lpkni";
 
 export default {
   components: {
@@ -170,12 +177,12 @@ export default {
     };
   },
   computed: {
-    getUser() {
-      return this.$store.state.user.data_anggota.id_data_anggota;
+    getUserLpkni() {
+      return this.$store.state.storeLpkni.userLpkni.data_anggota.id_data_anggota;
     },
   },
   mounted() {
-    if (this.getUser === 0) {
+    if (this.getUserLpkni === 0) {
       this.$router.push('/anggota/data-diri')
       return
     }

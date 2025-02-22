@@ -98,7 +98,7 @@
 
 <script>
 import NavbarPusat from '@/components/NavbarPusat.vue';
-import ApiService from '@/service/api.js';
+import ApiService from '@/service/lpkni.js';
 
 
 export default {

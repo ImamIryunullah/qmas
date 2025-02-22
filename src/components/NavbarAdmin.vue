@@ -4,11 +4,16 @@
     :class="sidebarOpen ? 'w-64  px-4 py-6 flex flex-col' : 'w-16 min-h-screen flex flex-col items-center py-6'">
     <!-- Logo & Hamburger Menu -->
     <div class="flex justify-between items-center mb-6 px-2">
-      <span v-if="sidebarOpen" class="ml-3 text-gray-200 font-bold text-lg">ADMIN</span>
+      <div v-if="sidebarOpen" class="flex items-center space-x-3 ml-3">
+        <img src="@/assets/iconlpkni.png" alt="LPKNI Icon" class="w-6 h-8" />
+        <span class="text-gray-200 font-bold text-lg">HALO ADMIN</span>
+      </div>
+
       <button @click="toggleSidebar" class="p-2 focus:outline-none text-white">
         <i class="fas" :class="sidebarOpen ? 'fa-angle-left' : 'fa-bars'"></i>
       </button>
     </div>
+
 
     <!-- Navigasi Menu -->
     <nav class="flex flex-col flex-grow space-y-2">
@@ -21,11 +26,11 @@
     </nav>
 
     <!-- Profile & Logout -->
-    <div class="mt-auto pt-6 border-t border-gray-600">
-      <router-link to="/profile" class="flex items-center py-3 px-4 rounded-md hover:bg-gray-700">
+    <div class="mt-auto pt-6 border-t border-white">
+      <div class="flex items-center py-3 px-4 rounded-md hover:bg-gray-700">
         <i class="fas fa-user-circle text-white text-2xl"></i>
         <span v-if="sidebarOpen" class="ml-3 font-semibold">ADMIN</span>
-      </router-link>
+      </div>
 
 
       <!-- Display Current Date & Time -->
@@ -62,7 +67,7 @@ export default {
         { label: "Data Pembayaran", path: "/admin/data-pembayaran-anggota", icon: "fas fa-wallet" },
         { label: "Management Jabatan", path: "/admin/management-jabatan", icon: "fas fa-briefcase" },
         { label: "Data Pengaduan", path: "/admin/data-pengaduan", icon: "fas fa-exclamation-triangle" },
-        { label: "Portal Suara", path: "/admin/pengaduan-suara-konsumen", icon: "fas fa-newspaper" },
+        { label: "Manage Portal Suara", path: "/admin/pengaduan-suara-konsumen", icon: "fas fa-newspaper" },
       ]
     };
   },

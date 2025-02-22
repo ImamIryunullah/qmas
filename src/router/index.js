@@ -4,11 +4,12 @@ import store from "@/store/store";
 import SuaraKonsumenView from "@/views/SuaraKonsumen/SuaraKonsumenView.vue";
 import DetailSuaraKonsumenView from "@/views/SuaraKonsumen/DetailSuaraKonsumenView.vue";
 import KategoriView from "@/views/SuaraKonsumen/KategoriView.vue";
-/* Auth */
-import LoginView from "@/views/Auth/LoginView.vue";
-import SignUpView from "@/views/Auth/SignUpView.vue";
-/* Pusat */
-import VerifikasiAnggotaPusatView from "@/views/Pusat/VerifikasiAnggotaPusatView.vue";
+/* Auth LPKNI */
+import LoginView from "@/views/Auth-LPKNI/LoginView.vue";
+import SignUpView from "@/views/Auth-LPKNI/SignUpView.vue";
+import ForgotPasswordView from "@/views/Auth-LPKNI/ForgotPasswordView.vue";
+import KonfirmLupaPassword from "@/views/Auth-LPKNI/KonfirmLupaPassword.vue";
+
 /* LPNI */
 import Dashboard from "@/views/Lpkni/LandingPage.vue";
 /* Anggota */
@@ -26,8 +27,22 @@ import DataPembayaran from "@/views/Admin/DataPembayaran.vue";
 import DataPengaduanAdmin from "@/views/Admin/DataPengaduanAdmin.vue";
 import ManagementJabatan from "@/views/Admin/ManagementJabatan.vue";
 import KelolaPengaduanData from "@/views/Admin/KelolaPengaduanData.vue";
+/* Tanpa Role Suara Konsumen */
+import LoginSwiView from "@/views/Auth-Swi/LoginSwiView.vue";
+import SignUpSwiView from "@/views/Auth-Swi/SignUpSwiView.vue";
+import DataDiriKonsumen from "@/views/swi/DataDiriKonsumen.vue";
+import KelayakanWarung from "@/views/swi/KelayakanWarung.vue";
+import DashboardSwi from "@/views/swi/DashboardSwi.vue";
+import MaintenanceView from "@/views/swi/maintenanceView.vue";
+import PengaduanSwi from "@/views/swi/PengaduanSwi.vue";
+import CetakSertifikatSwi from "@/views/swi/CetakSertifikatSwi.vue";
 
 const routes = [
+  {
+    path: "/maintenance",
+    name: "Maintencance",
+    component: MaintenanceView,
+  },
   /* Tanpa Role Suara Konsumen */
   {
     path: "/suara-konsumen",
@@ -44,7 +59,7 @@ const routes = [
     name: "Kategori Suara Konsumen",
     component: KategoriView,
   },
-  /* Auth */
+  /* Auth LPKNI*/
   {
     path: "/auth/login",
     name: "Login",
@@ -57,12 +72,82 @@ const routes = [
     component: SignUpView,
     meta: { requiresAuth: false },
   },
-  /* Role Pusat */
   {
-    path: "/pusat/verifikasi-anggota",
-    name: "Register Pusat",
-    component: VerifikasiAnggotaPusatView,
-    meta: { requiresAuth: true, requiredRole: "pusat" },
+    path: "/auth/reset-password",
+    name: "Register Anggota",
+    component: ForgotPasswordView,
+    meta: { requiresAuth: false },
+  },
+  {
+    path: "/auth/lupa-kata-sandi",
+    name: "Lupa Kata Sandi",
+    component: KonfirmLupaPassword,
+    meta: { requiresAuth: false },
+  },
+
+  /*Auth SWI*/
+  {
+    path: "/auth/swi/login",
+    name: "Login Swi",
+    component: LoginSwiView,
+    meta: { requiresAuth: false },
+  },
+  {
+    path: "/auth/swi/register",
+    name: "Register SWI",
+    component: SignUpSwiView,
+    meta: { requiresAuth: false },
+  },
+  /* Role Swi */
+  {
+    path: "/swi/data-diri",
+    name: "Data Diri SWI",
+    component: DataDiriKonsumen,
+    meta: {
+      requiresAuth: true,
+      requiredRole: "swi",
+      title: "Data Diri SWI",
+    },
+  },
+  {
+    path: "/swi/kelayakan-warung",
+    name: "kelayakan warung",
+    component: KelayakanWarung,
+    meta: {
+      requiresAuth: true,
+      requiredRole: "swi",
+      title: "Kelayakan Warung",
+    },
+  },
+  {
+    path: "/swi/dashboard",
+    name: "Dashboard SWI",
+    component: DashboardSwi,
+    meta: {
+      requiresAuth: true,
+      requiredRole: "swi",
+      title: "Dashboard SWI",
+    },
+  },
+  {
+    path: "/swi/pengaduan",
+    name: "Pengaduan Swi",
+    component: PengaduanSwi,
+    meta: {
+      requiresAuth: true,
+      requiredRole: "swi",
+      title: "Dashboard SWI",
+    },
+  },
+  {
+    path: "/swi/cetak-sertifikat",
+    name: "Cetak Sertifikat Swi",
+    component: CetakSertifikatSwi,
+    meta: {
+      requiresAuth: true,
+      requiredRole: "swi",
+      title: "Dashboard SWI",
+    },
   },
   /* Role Anggota */
   {
@@ -206,11 +291,20 @@ const router = createRouter({
 });
 
 router.beforeEach(async (to, from, next) => {
-  await store.dispatch("updateStore");
-  const isAuthenticated = store.state.userLoggedIn;
-  const userRole = store.state.userRole;
-  // console.log(isAuthenticated);
-  // console.log(userRole);
+  var isAuthenticated = null;
+  var userRole = null;
+  if (to.meta.requiredRole === "swi") {
+    await store.dispatch("storeswi/updateStoreSwi");
+    isAuthenticated = store.state.storeswi.userLoggedInSwi;
+    userRole = store.state.storeswi.userRoleSwi;
+  } else {
+    await store.dispatch("updateStoreLpkni");
+    isAuthenticated = store.state.storeLpkni.UserLpkniIsLoggedIn;
+    userRole = store.state.storeLpkni.userLpkniRole;
+  }
+
+  console.log(isAuthenticated);
+  console.log(userRole);
   if (to.meta.requiresAuth && !isAuthenticated) {
     alert("Sesi Anda Habis!");
     next({ name: "Login" });
