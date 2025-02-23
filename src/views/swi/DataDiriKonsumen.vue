@@ -6,12 +6,13 @@
 
         <div class="w-full  max-w-screen-md bg-white p-10 rounded-lg shadow-2xl border border-gray-200">
             <div class="text-center mb-8">
-                <h2 class="text-3xl font-bold text-green-700">
-                    Lembaga Perlindungan Konsumen Indonesia
+                <h2 class="text-3xl font-bold text-green-700 underline">
+                    Standarisasi Warung Indonesia
                 </h2>
                 <p class="text-lg text-gray-600 mt-4 max-w-lg mx-auto leading-relaxed">
-                    <span class="block font-semibold text-gray-600 text-xl underline decoration-3 decoration-green-600">
-                        Lengkapi Data Diri Untuk Melanjutkan
+                    <span class="block font-sm text-black text-sm decoration-3 decoration-green-600">
+                        Isi data diri Anda untuk melengkapi proses pendaftaran dan menjadi bagian dari standarisasi
+                        Warung Indonesia.
                     </span>
                 </p>
             </div>
@@ -100,7 +101,7 @@
                         <select v-model="form.wilayahId" @change="GetDaerahByWilayahId(form.wilayahId)"
                             class="w-full p-3 border border-gray-300 rounded-lg focus:outline-none focus:ring-2 focus:ring-red-600 transition duration-200 ease-in-out mt-2"
                             required>
-                            <option :value="0" selected disabled>Pilih Wilayah</option>
+                            <option :value="0" selected disabled>Pilih Provinsi</option>
                             <option v-for="wilayah in wilayahList" :key="wilayah.id_wilayah"
                                 :value="wilayah.id_wilayah">
                                 {{ wilayah.kode_wilayah + " - " + wilayah.nama_wilayah }}
@@ -110,11 +111,11 @@
 
 
                     <div>
-                        <label class="text-sm text-gray-500 font-bold">Kota / Kabupaten</label>
+                        <label class="text-sm text-gray-500 font-bold">Kota-Kabupaten</label>
                         <select v-model="form.daerahId" :disabled="form.wilayahId === 0"
                             class="w-full p-3 border border-gray-300 rounded-lg focus:outline-none focus:ring-2 focus:ring-red-600 transition duration-200 ease-in-out mt-2"
                             required>
-                            <option :value="0" selected disabled>Pilih Daerah</option>
+                            <option :value="0" selected disabled>Pilih Kota-Kabupaten</option>
                             <option v-for="daerah in daerahList" :key="daerah.id_daerah" :value="daerah.id_daerah">
                                 {{ daerah.kode_daerah + " - " + daerah.nama_daerah }}
                             </option>
@@ -227,14 +228,14 @@ export default {
             ],
             imageUsers: [],
             imageUrl: [],
-            location: { latitude: null, longitude: null },
-            errorLocation: null,
             lightboxVisible: false,
             lightboxIndex: 0,
             isLoading: false,
             daerahList: [],
             wilayahList: [], // To store the list of provinces
-            dataLengkap: false
+            dataLengkap: false,
+            location: { latitude: null, longitude: null },
+            errorLocation: null,
         }
     },
     mounted() {
@@ -259,6 +260,23 @@ export default {
         },
         handleFileUpload(event, index) {
             const file = event.target.files[0];
+            if (!file) {
+                this.$toast.error('Tidak ada file yang dipilih!');
+                return;
+            }
+            // Validasi ukuran file
+            var sizeInMb = file.size / 1024;
+            var sizeLimit = 1024 * 5;
+            if (sizeInMb > sizeLimit) {
+                this.$toast.error('Ukuran Gambar Terlalu Besar! Maksimal 5MB.');
+                return;
+            }
+            // Validasi tipe file (hanya gambar)
+            const allowedTypes = ['image/jpeg', 'image/png', 'image/jpg'];
+            if (!allowedTypes.includes(file.type)) {
+                this.$toast.error('Format file tidak didukung! Harap unggah gambar dalam format JPG atau PNG.');
+                return;
+            }
             if (file) {
                 this.form.file[index] = file
                 this.form.folder[index] = this.imageInputs[index].folder

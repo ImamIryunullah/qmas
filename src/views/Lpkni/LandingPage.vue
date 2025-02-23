@@ -13,9 +13,17 @@
                     fungsinya adalah melindungi hak setiap warga negara baik perseorangan (konsumen) maupun badan yang
                     harus mendapatkan perlakuan yang layak selaku konsumen khususnya dan masyarakat sebagai warga negara
                     Indonesia pada umumnya.</p>
-                <a href="#about"
-                    class="bg-white text-red-600 px-6 py-2 rounded-lg font-semibold hover:bg-gray-100 transition duration-300">Selengkapnya
-                    ></a>
+                <div class="flex space-x-4">
+                    <a href="/auth/login"
+                        class="bg-white text-red-600 px-6 py-2 rounded-lg font-semibold hover:bg-gray-100 transition duration-300">
+                        Daftar LPKNI
+                    </a>
+                    <a href="/auth/swi/login"
+                        class="bg-white text-red-600 px-6 py-2 rounded-lg font-semibold hover:bg-gray-100 transition duration-300">
+                        Daftar Standarisasi Warung Indonesia
+                    </a>
+                </div>
+
             </div>
 
             <!-- Right Section (Image) -->
@@ -23,33 +31,91 @@
                 <img src="@/assets/animasi1.png" alt="LPKNI" class="rounded-lg w-full mx-auto responsive-image" />
             </div>
         </section>
-        <section id="about" class="py-10 px-6 bg-red-50 text-justify">
-            <h2 class="text-3xl font-semibold mb-4 text-gray-800" id="typing-title"></h2>
-            <!-- Apply typing effect here -->
+        <section id="about" class="py-16 px-6 bg-red-50 text-center">
+            <h2 class="text-4xl font-bold text-gray-800 mb-6">
+                Keuntungan Menjadi Bagian Dari Kami
+            </h2>
 
-            <p class="text-lg text-gray-600 max-w-3xl mx-auto mb-8 leading-relaxed" id="about-text">
-                Lembaga Pengaduan Konsumen Korban Perbankan, Finance, Koperasi, Pinjol dan Perusahaan atau Lembaga yang
-                curang, Jika anda sedang mengalami masalah hukum yang berkaitan dengan hal diatas silahkan anda
-                mengunjungi kantor LPKNI dan bertemu dengan
-                Bapak Nanang Nilson, atau bisa juga WhatsApp di nomor 0813-3301-5767. Setelah itu kami LPKNI akan
-                membantu memperjuangankan hak anda baik di pengadilan atau secara mediasi
-                Lembaga Perlindungan Konsumen Nasional Indonesia (LPKNI) Kota Malang siap menjalankan tugasnya setelah
-                dilantik dalam acara Pelantikan dan Penyerahan SK Jabatan yang berlangsung di Kantor LPKNI Ruko Pelita,
-                Jalan Puntodewo Kav. 2, Kota Malang, pada Minggu (31/03/2024).
-                Sebagai lembaga yang bertugas untuk melindungi hak-hak konsumen, LPKNI memastikan bahwa setiap warga
-                negara, baik individu maupun badan, mendapatkan perlakuan yang adil sebagai konsumen dan sebagai warga
-                negara Indonesia pada umumnya.
+            <p class="text-lg text-gray-600 max-w-3xl mx-auto leading-relaxed mb-6">
+                Bergabung dengan kami memberikan banyak manfaat, mulai dari jaminan kebersihan hingga promosi eksklusif
+                untuk warung Anda. Berikut adalah beberapa keuntungan utama:
             </p>
 
-            <div class="flex justify-center space-x-6 mt-8">
-                <button
-                    class="bg-red-600 text-white py-3 px-6 rounded-full shadow-lg hover:bg-red-700 transition-all transform hover:scale-105"
-                    id="more-info-btn">
-                    <i class="fas fa-info-circle mr-2"></i> Learn More
+            <!-- GRID UNTUK KEUNTUNGAN, PROSES, DAN MANFAAT -->
+            <div class="grid grid-cols-1 md:grid-cols-2 lg:grid-cols-3 gap-8 max-w-6xl mx-auto text-left">
+
+                <!-- KEUNTUNGAN PEMILIK WARUNG -->
+                <div class="bg-white p-6 rounded-lg shadow-lg">
+                    <h3 class="text-xl font-semibold text-red-600 mb-4">Keuntungan bagi Pemilik Warung</h3>
+                    <ul class="list-disc text-gray-600 pl-5 space-y-2">
+                        <li>Sertifikat Warung / Restoran setelah uji kelayakan LPKNI.</li>
+                        <li>Banner daftar menu dan harga dari pihak sponsor.</li>
+                        <li>Bill / Bon dengan logo sponsor untuk konsumen.</li>
+                        <li>Akses di Google Maps, foto warung terlihat di peta.</li>
+                        <li>Promosi di majalah suara konsumen & website SWI.</li>
+                    </ul>
+                </div>
+
+                <!-- PROSES STANDARISASI -->
+                <div class="bg-white p-6 rounded-lg shadow-lg">
+                    <h3 class="text-xl font-semibold text-red-600 mb-4">Proses Standarisasi Warung</h3>
+                    <ul class="list-none text-gray-600 pl-5 space-y-2">
+                        <li>✅ Pendaftaran Offline dan Online</li>
+                        <li>✅ Verifikasi Data dan Approved</li>
+                        <li>✅ Sosialisasi Penggunaan Bahan Makanan</li>
+                        <li>✅ Sertifikasi SWI</li>
+                        <li>✅ Pemeriksaan</li>
+                        <li>✅ Kesimpulan dan Penutup</li>
+                        <li>✅ Lampiran-Lampiran</li>
+                    </ul>
+                </div>
+
+                <!-- MANFAAT STANDARISASI -->
+                <div class="bg-white p-6 rounded-lg shadow-lg">
+                    <h3 class="text-xl font-semibold text-red-600 mb-4">Manfaat Standarisasi</h3>
+                    <ul class="list-disc text-gray-600 pl-5 space-y-2">
+                        <li><strong>Pengusaha Warung:</strong> Standar kebersihan dan manajemen harga transparan.</li>
+                        <li><strong>Konsumen:</strong> Jaminan makanan aman, transparansi harga.</li>
+                        <li><strong>Pemerintah:</strong> Peningkatan pendapatan pajak & kemudahan pengawasan.</li>
+                    </ul>
+                </div>
+            </div>
+
+            <!-- EFEK "BACA SELENGKAPNYA" UNTUK INFO TAMBAHAN -->
+            <transition name="fade">
+                <div v-if="expanded" class="max-w-6xl mx-auto mt-8 text-left">
+                    <div class="grid grid-cols-1 md:grid-cols-2 lg:grid-cols-3 gap-8">
+
+                        <div class="bg-gray-100 p-6 rounded-lg shadow-md">
+                            <h3 class="text-lg font-semibold text-gray-700">Keuntungan Tambahan</h3>
+                            <p class="text-gray-600 mt-2">Warung Anda akan mendapatkan eksposur lebih luas melalui
+                                berbagai platform digital.</p>
+                        </div>
+
+                        <div class="bg-gray-100 p-6 rounded-lg shadow-md">
+                            <h3 class="text-lg font-semibold text-gray-700">Keamanan & Higienis</h3>
+                            <p class="text-gray-600 mt-2">Proses sertifikasi memastikan makanan yang disajikan bersih
+                                dan aman.</p>
+                        </div>
+
+                        <div class="bg-gray-100 p-6 rounded-lg shadow-md">
+                            <h3 class="text-lg font-semibold text-gray-700">Bantuan Legal</h3>
+                            <p class="text-gray-600 mt-2">Pemilik warung yang mengalami kendala bisa mendapatkan bantuan
+                                hukum dari LPKNI.</p>
+                        </div>
+
+                    </div>
+                </div>
+            </transition>
+
+            <!-- TOMBOL "BACA SELENGKAPNYA" -->
+            <div class="flex justify-center mt-8">
+                <button @click="toggleExpand"
+                    class="bg-red-600 text-white py-3 px-6 rounded-full shadow-lg hover:bg-red-700 transition-all transform hover:scale-105">
+                    <i class="fas fa-info-circle mr-2"></i> {{ expanded ? "Tutup" : "Baca Selengkapnya" }}
                 </button>
             </div>
         </section>
-
         <!-- Track Record Section -->
         <section id="track-record" class="py-20 px-6 bg-white">
             <h2 class="text-3xl font-semibold text-center mb-10 text-red-700">Perjalanan LPKNI</h2>
@@ -117,6 +183,7 @@
                 <!-- Service Card 1 -->
                 <div
                     class="bg-white p-6 rounded-lg shadow-lg transform transition-all duration-300 hover:scale-105 hover:shadow-2xl animate__animated animate__fadeInUp">
+                    <i class="fas fa-shield-alt text-red-600 text-3xl mb-4"></i>
                     <h3 class="text-xl font-semibold mb-4">Perlindungan Konsumen</h3>
                     <p class="text-gray-600">
                         Kami melindungi hak konsumen dengan memastikan praktik bisnis yang adil dan memberikan dukungan
@@ -124,9 +191,10 @@
                     </p>
                 </div>
 
-                <!-- Service Card 2 -->
+                <!-- Service Card 2 - Bantuan Hukum -->
                 <div
                     class="bg-white p-6 rounded-lg shadow-lg transform transition-all duration-300 hover:scale-105 hover:shadow-2xl animate__animated animate__fadeInUp">
+                    <i class="fas fa-gavel text-red-600 text-3xl mb-4"></i>
                     <h3 class="text-xl font-semibold mb-4">Bantuan Hukum</h3>
                     <p class="text-gray-600">
                         Menawarkan nasihat hukum dan representasi bagi konsumen yang menghadapi masalah penipuan, iklan
@@ -134,13 +202,48 @@
                     </p>
                 </div>
 
-                <!-- Service Card 3 -->
+                <!-- Service Card 3 - Menyuarakan Suara Konsumen -->
                 <div
                     class="bg-white p-6 rounded-lg shadow-lg transform transition-all duration-300 hover:scale-105 hover:shadow-2xl animate__animated animate__fadeInUp">
+                    <i class="fas fa-bullhorn text-red-600 text-3xl mb-4"></i>
                     <h3 class="text-xl font-semibold mb-4">Menyuarakan Suara Konsumen</h3>
                     <p class="text-gray-600">
                         Kami menyediakan platform tempat konsumen dapat mengungkapkan kekhawatiran, berbagi pengalaman,
                         dan mencari solusi atas perlakuan tidak adil di pasar.
+                    </p>
+                </div>
+
+                <!-- Service Card 4 - Promosi Warung -->
+                <div
+                    class="bg-white p-6 rounded-lg shadow-lg transform transition-all duration-300 hover:scale-105 hover:shadow-2xl animate__animated animate__fadeInUp">
+                    <i class="fas fa-store text-red-600 text-3xl mb-4"></i>
+                    <h3 class="text-xl font-semibold mb-4">Promosi Warung</h3>
+                    <p class="text-gray-600">
+                        Standarisasi Warung Indonesia membantu pemilik warung mendapatkan promosi melalui Portal Suara
+                        Konsumen,
+                        dan website resmi untuk meningkatkan visibilitas usaha.
+                    </p>
+                </div>
+
+                <!-- Service Card 5 - Keamanan dan Higienis -->
+                <div
+                    class="bg-white p-6 rounded-lg shadow-lg transform transition-all duration-300 hover:scale-105 hover:shadow-2xl animate__animated animate__fadeInUp">
+                    <i class="fas fa-utensils text-red-600 text-3xl mb-4"></i>
+                    <h3 class="text-xl font-semibold mb-4">Keamanan dan Higienis</h3>
+                    <p class="text-gray-600">
+                        Setiap warung yang terstandarisasi harus memenuhi syarat kebersihan dan keamanan pangan,
+                        sehingga pelanggan merasa aman mengonsumsi makanan di tempat tersebut.
+                    </p>
+                </div>
+
+                <!-- Service Card 6 - Bantuan Legal untuk Pemilik Warung -->
+                <div
+                    class="bg-white p-6 rounded-lg shadow-lg transform transition-all duration-300 hover:scale-105 hover:shadow-2xl animate__animated animate__fadeInUp">
+                    <i class="fas fa-handshake text-red-600 text-3xl mb-4"></i>
+                    <h3 class="text-xl font-semibold mb-4">Bantuan Legal untuk Pemilik Warung</h3>
+                    <p class="text-gray-600">
+                        Jika pemilik warung mengalami kendala hukum atau perselisihan bisnis, LPKNI siap memberikan
+                        bimbingan dan bantuan hukum untuk melindungi kepentingan usaha mereka.
                     </p>
                 </div>
             </div>
@@ -156,14 +259,15 @@
                 <!-- Contact Buttons -->
                 <div class="flex flex-col sm:flex-row justify-center items-center gap-4 sm:gap-6">
                     <!-- Contact via Phone -->
-                    <a href="tel:+62341492174"
+                    <a href="https://wa.me/6281333015767" target="_blank"
                         class="bg-red-600 text-white px-10 py-4 rounded-lg font-semibold hover:bg-red-700 transition-transform duration-300 transform hover:scale-105 w-full sm:w-auto text-center">
-                        📞 Call Us: 0341 492174
+                        📞 Kontak Kami: 0813 3301 5767 & 0341 - 437354
                     </a>
+
                     <!-- Contact via Email -->
-                    <a href="mailto:lpkni.jt@gmail.com"
+                    <a href="mailto:pt.lpkni@gmail.com"
                         class="bg-red-600 text-white px-10 py-4 rounded-lg font-semibold hover:bg-red-700 transition-transform duration-300 transform hover:scale-105 w-full sm:w-auto text-center">
-                        📧 Email Us
+                        📧 Email Us: pt.lpkni@gmail.com
                     </a>
                 </div>
 
@@ -188,11 +292,7 @@
                 </div>
             </div>
         </section>
-        <div class="fixed bottom-4 right-4">
-            <button class="bg-blue-500 hover:bg-blue-600 text-white font-bold py-2 px-4 rounded-full shadow-lg">
-                Feedback
-            </button>
-        </div>
+
         <!-- Footer -->
         <FooterLandingPage />
 
@@ -226,6 +326,13 @@ export default {
     name: 'LandingPage',
     data() {
         return {
+
+            expanded: false,
+            shortText: `
+                Lembaga Pengaduan Konsumen Korban Perbankan, Finance, Koperasi, Pinjol dan Perusahaan atau Lembaga yang curang. Jika anda mengalami masalah hukum terkait, silakan mengunjungi kantor LPKNI dan bertemu dengan Bapak Nanang Nilson, atau bisa juga WhatsApp di nomor 0813-3301-5767.
+                <br><br>
+                Lembaga Perlindungan Konsumen Nasional Indonesia (LPKNI) Kota Malang siap menjalankan tugasnya setelah dilantik dalam acara Pelantikan dan Penyerahan SK Jabatan yang berlangsung di Kantor LPKNI Ruko Pelita, Jalan Puntodewo Kav. 2, Kota Malang.
+            `,
             filters: ["About", "Services", "Contact"]
         };
     },
@@ -244,6 +351,9 @@ export default {
             if (element) {
                 type(element, text, i); // Call the type function outside the mounted hook
             }
+        },
+        toggleExpand() {
+            this.expanded = !this.expanded;
         },
 
         // Method to add fade-in effect on scroll

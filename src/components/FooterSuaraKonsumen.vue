@@ -35,8 +35,8 @@
           <h3 class="font-semibold text-lg mb-4">Contact</h3>
           <p class="text-gray-300">LPKNI, Malang City, Indonesia</p>
           <p class="text-gray-300">Malang, di Jalan Raya Wapoga No.2 Perum Nguji Permai Il </p>
-          <p class="text-gray-300">Phone: 0341 492174</p>
-          <p class="text-gray-300">Email: contact@lpkni.or.id</p>
+          <p class="text-gray-300">Phone: 0813 3301 5767 & 0341 - 437354</p>
+          <p class="text-gray-300">Email: pt.lpkni@gmail.com</p>
         </div>
 
 

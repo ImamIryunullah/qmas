@@ -43,19 +43,18 @@
                         <li>
 
                             <router-link to="/auth/login"
-                                class="fas fa-user-alt block px-4 py-2 text-sm hover:bg-gray-200"> Daftar
+                                class="fas fa-user-alt block px-4 py-2 text-sm hover:bg-white"> Daftar
                                 Anggota LPKNI</router-link>
                         </li>
                         <li>
                             <router-link to="/auth/swi/login"
-                                class="fas fa-store block px-4 py-2 text-sm hover:bg-gray-200">
+                                class="fas fa-store block px-4 py-2 text-sm hover:bg-white">
                                 Daftar
                                 Standar Warung Indonesia</router-link>
                         </li>
                     </ul>
                 </li>
 
-                <!-- Suara Konsumen (Portal Berita) -->
                 <li>
                     <router-link to="/suara-konsumen"
                         class="text-white hover:text-gray-300 flex items-center space-x-2">
@@ -71,8 +70,6 @@
                         <span>Pengaduan</span>
                     </router-link>
                 </li>
-
-
             </ul>
 
             <!-- Mobile Hamburger Menu -->
@@ -84,54 +81,53 @@
         </div>
 
         <!-- Mobile Sidebar Menu -->
-        <div v-show="isMenuOpen" class="fixed inset-0 bg-gray-800 bg-opacity-75 z-50 md:hidden">
+        <div v-show="isMenuOpen" class="fixed inset-0 bg-red-300 bg-opacity-40 z-50 md:hidden">
             <div class="flex justify-end p-6">
-                <button @click="toggleMenu" class="text-white">
+                <button @click="toggleMenu" class="text-red-600">
                     <i class="fas fa-times text-2xl"></i>
                 </button>
             </div>
-            <ul class="flex flex-col items-center text-white space-y-6">
+            <ul class="flex flex-col items-center text-red-600 space-y-6">
                 <li>
-                    <a href="/#about" class="text-white hover:text-gray-300 flex items-center space-x-2">
+                    <a href="/#about" class="text-black hover:text-red-800 flex items-center space-x-2">
                         <i class="fas fa-info-circle"></i>
                         <span>About</span>
                     </a>
                 </li>
                 <li>
-                    <a href="/#services" class="text-white hover:text-gray-300 flex items-center space-x-2">
+                    <a href="/#services" class="text-black hover:text-red-800 flex items-center space-x-2">
                         <i class="fas fa-cogs"></i>
                         <span>Services</span>
                     </a>
                 </li>
                 <li>
-                    <a href="/#contact" class="text-white hover:text-gray-300 flex items-center space-x-2">
+                    <a href="/#contact" class="text-black hover:text-red-800 flex items-center space-x-2">
                         <i class="fas fa-phone-alt"></i>
                         <span>Contact</span>
                     </a>
                 </li>
                 <li class="relative group">
-                    <button class="text-white hover:text-gray-300 flex items-center space-x-2 delay-100">
+                    <button class="text-black hover:text-black flex items-center space-x-2 delay-100">
                         <i class="fas fa-clipboard-check"></i>
                         <span>Pendaftaran</span>
                         <i class="fas fa-chevron-down ml-1"></i>
                     </button>
                     <!-- Dropdown Menu -->
                     <ul
-                        class="absolute left-0 min-w-[150px]  bg-white text-black shadow-lg rounded-lg hidden group-hover:block z-10">
+                        class="absolute left-0 min-w-[150px]  bg-red-600 text-black shadow-lg rounded-lg hidden group-hover:block z-10">
                         <li>
                             <router-link to="/auth/register-anggota"
-                                class="block px-4 py-2 text-sm hover:bg-gray-200">Daftar
+                                class="block px-4 py-2 text-sm hover:bg-red-200">Daftar
                                 Anggota LPKNI</router-link>
                         </li>
                         <li>
-                            <router-link to="/auth/swi/login" class="block px-4 py-2 text-sm hover:bg-gray-200">Daftar
+                            <router-link to="/auth/swi/login" class="block px-4 py-2 text-sm hover:bg-red-200">Daftar
                                 Standar Warung Indonesia</router-link>
                         </li>
                     </ul>
                 </li>
                 <li>
-                    <router-link to="/suara-konsumen"
-                        class="text-white hover:text-gray-300 flex items-center space-x-2">
+                    <router-link to="/suara-konsumen" class="text-black hover:text-red-800 flex items-center space-x-2">
                         <i class="fas fa-newspaper"></i>
                         <span>Suara Konsumen</span>
                     </router-link>
@@ -139,7 +135,7 @@
 
                 <!-- Pengaduan (Direct ke Form Pengaduan) -->
                 <li>
-                    <router-link to="/pengaduan" class="text-white hover:text-gray-300 flex items-center space-x-2">
+                    <router-link to="/pengaduan" class="text-black hover:text-red-800 flex items-center space-x-2">
                         <i class="fas fa-exclamation-triangle"></i>
                         <span>Pengaduan</span>
                     </router-link>
@@ -150,6 +146,7 @@
 </template>
 
 <script>
+import swi from '@/service/swi';
 export default {
     data() {
         return {
@@ -166,7 +163,10 @@ export default {
             const currentScrollY = window.scrollY;
             this.isNavbarVisible = currentScrollY < this.lastScrollY || currentScrollY < 50; // Jika scroll ke atas atau posisi dekat atas
             this.lastScrollY = currentScrollY;
-        }
+        },
+        getfullPathImage(img) {
+            return swi.getfullpathImageSwi(img)
+        },
     },
     mounted() {
         window.addEventListener("scroll", this.handleScroll);

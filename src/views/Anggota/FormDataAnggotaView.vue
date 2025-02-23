@@ -7,7 +7,7 @@
         Data Diri
       </h2>
 
-      <form @submit.prevent="SubmitData">
+      <form @submit.prevent="dataLengkap ? UpdatData() : SubmitData()">
         <div class="grid grid-cols-1 sm:grid-cols-2 gap-6">
 
           <!-- Nama Lengkap -->
@@ -122,8 +122,10 @@
               class="w-full p-3 border border-gray-300 rounded-lg focus:outline-none focus:ring-2 focus:ring-red-600 transition duration-200 ease-in-out mt-2"
               required>
               <option disabled hidden :value="''">Pilih Tingkat</option>
-              <option value="Wilayah">Wilayah</option>
-              <option value="Daerah">Daerah</option>
+              <option value="Provinsi">Provinsi</option>
+              <option value="Kota/Kab">Kota/Kab</option>
+              <option value="Region 1">Region 1</option>
+              <option value="Region 2">Region 2</option>
             </select>
           </div>
           <!-- Jabatan -->
@@ -136,7 +138,7 @@
               <option v-for="jabatan in filterJabatanList" :key="jabatan.id" :value="jabatan.id">{{ jabatan.wilayah &&
                 !jabatan.daerah ?
                 jabatan.wilayah.kode_wilayah + " - " + jabatan.nama : jabatan.daerah.kode_daerah + " - " + jabatan.nama
-                }}
+              }}
               </option>
             </select>
           </div>
@@ -145,23 +147,25 @@
           <!-- File Uploads (e.g., KTP, SIUP, NPWP) -->
           <div v-for="(image, index) in imageInputs" :key="index">
             <label class="text-sm text-gray-500 font-bold">{{ image.keterangan }}</label>
-            <input :required="image.required" type="file" @change="handleFileUpload($event, index)"
+            <input :required="!UpdateGambar ? image.required : false" type="file"
+              @change="handleFileUpload($event, index)"
               class="w-full p-3 border border-gray-300 rounded-lg focus:outline-none focus:ring-2 focus:ring-green-600 transition duration-200 ease-in-out transform mt-2 hover:scale-105" />
             <img v-if="imageUsers[index]"
-              :src="dataLengkap ? getFullpathImage(imageUsers[index].imageUrl) : imageUsers[index]" alt="uploaded"
-              @click="openLightbox(index)" class="w-40 h-auto items-start object-contain rounded-lg shadow-md mt-4">
+              :src="dataLengkap && !UpdateGambar[index] ? getFullpathImage(imageUsers[index].imageUrl) : imageUsers[index]"
+              alt="uploaded" @click="openLightbox(index)"
+              class="w-40 h-auto items-start object-contain rounded-lg shadow-md mt-4">
           </div>
           <!-- Submit Button -->
 
         </div>
         <button type="submit"
           class="mt-6 w-full bg-red-600 text-white px-6 py-2 rounded-lg font-bold hover:bg-red-700 transition">
-          {{ !isLoading ? 'Submit Data' : 'Loading..' }}
+          {{ dataLengkap ? 'Update Data' : 'Submit Data' }}
         </button>
       </form>
     </div>
-    <vue-easy-lightbox :visible="lightboxVisible" :imgs="dataLengkap ? imageUrl : imageUsers" :index="lightboxIndex"
-      @hide="lightboxVisible = false" />
+    <vue-easy-lightbox :visible="lightboxVisible" :imgs="dataLengkap && !UpdateGambar ? imageUrl : imageUsers"
+      :index="lightboxIndex" @hide="lightboxVisible = false" />
   </div>
 
 </template>
@@ -169,6 +173,7 @@
 
 <script>
 import NavbarAnggota from '@/components/NavbarAnggota.vue';
+import lpkni from '@/service/lpkni.js';
 import ApiService from '@/service/lpkni.js';
 import VueEasyLightbox from 'vue-easy-lightbox';
 export default {
@@ -179,6 +184,7 @@ export default {
   data() {
     return {
       dataLengkap: false,
+      UpdateGambar: [],
       userData: {
         id_data_anggota: 0,
         userId: null,
@@ -217,7 +223,7 @@ export default {
       user: {},
       imageInputs: [
         { folder: 'foto-ktp', keterangan: "Foto KTP", required: true },
-        { folder: 'pas-foto', keterangan: "Foto 3x4", required: false },
+        { folder: 'pas-foto', keterangan: "Foto 3x4", required: true },
       ],
       imageUsers: [],
       imageUrl: [],
@@ -240,18 +246,38 @@ export default {
   },
   methods: {
     handleFileUpload(event, index) {
-      const file = event.target.files[0];
-      if (file) {
-        this.userData.file[index] = file
+      const files = event.target.files[0];
+      if (!files) {
+        this.$toast.error('Tidak ada file yang dipilih!');
+        return;
+      }
+      // Validasi ukuran file
+      var sizeInMb = files.size / 1024;
+      var sizeLimit = 1024 * 5;
+      if (sizeInMb > sizeLimit) {
+        this.$toast.error('Ukuran Gambar Terlalu Besar! Maksimal 5MB.');
+        return;
+      }
+      // Validasi tipe file (hanya gambar)
+      const allowedTypes = ['image/jpeg', 'image/png', 'image/jpg'];
+      if (!allowedTypes.includes(files.type)) {
+        this.$toast.error('Format file tidak didukung! Harap unggah gambar dalam format JPG atau PNG.');
+        return;
+      }
+      if (this.dataLengkap) {
+        this.UpdateGambar[index] = true
+      }
+      if (files) {
+        this.userData.file[index] = files
         this.userData.folder[index] = this.imageInputs[index].folder
-        this.imageUsers[index] = URL.createObjectURL(file);
+        this.imageUsers[index] = URL.createObjectURL(files);
       }
     },
     openLightbox(index) {
       if (this.dataLengkap)
-        this.imageUrl = this.imageUsers.map(image => this.getFullpathImage(image.imageUrl)); // Menyiapkan array URL gambar
+        this.imageUrl = this.imageUsers.map(image => this.getFullpathImage(image.imageUrl));
       this.lightboxIndex = index;
-      this.lightboxVisible = true; // Menampilkan lightbox
+      this.lightboxVisible = true;
     },
     getFullpathImage(img) {
       return ApiService.getfullpathImage(img)
@@ -286,12 +312,6 @@ export default {
           this.$toast.info('Lengkapi Data Diri!', { duration: 1000 })
         } else {
           this.dataLengkap = true;
-          if (!this.userData.status_pembayaran) {
-            this.$toast.info('Harap Melakukan Pembayaran!', { duration: 1000 })
-          }
-          this.userData.tanggalLahir = this.userData.tanggalLahir.split('T')[0]
-          this.$toast.info(`Status : ${this.userData.status}`, { duration: 1000 })
-          this.$toast.success('Data Diri Lengkap!', { duration: 1000 })
         }
         this.userData.userId = this.user.id_user;
         if (this.user.nama_belakang) { this.userData.nama_lengkap = `${this.user.nama_depan} ${this.user.nama_belakang}` }
@@ -299,11 +319,19 @@ export default {
         if (this.dataLengkap) {
           this.userData = response.data.data_anggota
           this.imageUsers = response.data.data_anggota.imageUsers
+          this.userData.tanggalLahir = this.userData.tanggalLahir.split('T')[0]
+          this.$toast.info(`Status : ${this.userData.status}`, { duration: 1000 })
+          this.$toast.success('Data Diri Lengkap!', { duration: 1000 })
+          if (this.userData.status !== "SUCCESS") {
+            this.$toast.info('Harap Melakukan Pembayaran!', { duration: 1000 })
+          }
           await this.GetDaerahByWilayahId(this.userData.wilayahId)
           await this.getJabatanBywilayahAndDaerah(this.userData.wilayahId, this.userData.daerahId)
           this.filterJabatanList = this.jabatanList
         }
         console.log(this.userData)
+        this.userData.file = []
+        this.userData.folder = []
       }).catch((error) => {
         console.log(error)
       })
@@ -350,13 +378,42 @@ export default {
         const response = await ApiService.CreateDataUserImage(forms);
         console.log(response)
         this.$toast.success('Berhasil Menambahkan Data!');
-        this.$router.push(this.$route.path);
+        setTimeout(() => {
+          window.location.reload();
+        }, 500);
       } catch (error) {
         this.$toast.error('Gagal Menambahkan Data!');
         this.isLoading = false;
       } finally {
         this.isLoading = false;
       }
+    },
+    async UpdatData() {
+      if (!confirm('Apakah Anda Yakin Ingin Perbarui Data?')) {
+        return
+      }
+      const forms = {
+        daerahId: this.userData.daerahId,
+        wilayahId: this.userData.wilayahId,
+        jabatanStrukturalId: this.userData.jabatanStrukturalId,
+        nama_lengkap: this.userData.nama_lengkap,
+        alamat: this.userData.alamat,
+        tanggalLahir: this.userData.tanggalLahir,
+        tempatLahir: this.userData.tempatLahir,
+        nik: this.userData.nik,
+        pekerjaan: this.userData.pekerjaan,
+        statusPerkawinan: this.userData.statusPerkawinan,
+        agama: this.userData.agama,
+        file: this.userData.file,
+        keterangan: this.userData.folder,
+      }
+      console.log(forms)
+      await lpkni.UpdateDataUserImage(forms).then(() => {
+        this.$toast.success('Update Data Berhasil!')
+        this.$router.push(this.$route.path);
+      }).catch(() => {
+        this.$toast.error('Update Data Gagal!')
+      })
     }
   }
 };

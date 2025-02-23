@@ -28,30 +28,36 @@
                     </div>
                 </div>
 
-
                 <div>
                     <h3 class="font-semibold text-lg mb-4">Contact</h3>
-                    <p class="text-gray-300">Standarisasi Warung Indonesia, Malang City, Indonesia</p>
+                    <p class="text-gray-300">LPKNI, Malang City, Indonesia</p>
                     <p class="text-gray-300">Malang, di Jalan Raya Wapoga No.2 Perum Nguji Permai Il </p>
-                    <p class="text-gray-300">Phone: 0341 492174</p>
-                    <p class="text-gray-300">Email: contact@lpkni.or.id</p>
+                    <p class="text-gray-300">Phone: 0813 3301 5767 & 0341 - 437354</p>
+                    <p class="text-gray-300">Email: pt.lpkni@gmail.com</p>
                 </div>
-
 
                 <div>
-                    <h3 class="font-semibold text-lg mb-4">SWI</h3>
-                    <p class="text-gray-300 mb-4">Ikut SWI Page Kami to stay updated on our initiatives and
-                        events.</p>
-                    <form action="#" method="post" class="flex flex-col">
-                        <input type="email" placeholder="Enter your email" class="p-2 mb-4 text-black rounded-lg" />
-                        <button type="submit"
-                            class="bg-white text-green-800 px-6 py-2 rounded-lg font-semibold hover:bg-green-100">Subscribe</button>
-                    </form>
+                    <h3 class="font-semibold text-lg mb-4">Jadilah Bagian dari Kami</h3>
+                    <p class="text-gray-300 mb-4">
+                        Bergabung dengan LPKNI dan dapatkan manfaat eksklusif dalam perlindungan dan standarisasi usaha
+                        Anda!
+                    </p>
+                    <div class="grid grid-cols-2 gap-2 text-center">
+                        <router-link to="/auth/login"
+                            class="bg-white text-green-600 px-6 py-2 rounded-lg font-semibold hover:bg-gray-100 transition">
+                            LPKNI
+                        </router-link>
+                        <router-link to="/auth/swi/login"
+                            class="bg-white text-green-600 px-6 py-2 rounded-lg font-semibold hover:bg-gray-100 transition">
+                            SWI
+                        </router-link>
+                    </div>
                 </div>
+
             </div>
 
 
-            <div class="text-sm text-gray-300">
+            <div class="text-sm text-gray-300 text-center">
                 <p>&copy; 2025 SWI. All Rights Reserved.</p>
             </div>
         </div>

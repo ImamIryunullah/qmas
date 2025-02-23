@@ -27,7 +27,7 @@
                             placeholder="Nama Jabatan" required />
                     </div>
                     <div>
-                        <label class="text-gray-700 font-medium">Wilayah :</label>
+                        <label class="text-gray-700 font-medium">Provinsi :</label>
                         <select v-model="jabatan.selectedWilayah" class="w-full p-2 border rounded-md"
                             @change="jabatan.selectedDaerah = 0" required>
                             <option :value="0" disabled>Semua Wilayah</option>
@@ -43,7 +43,7 @@
                             placeholder="Jumlah Personil" required />
                     </div>
                     <div>
-                        <label class="text-gray-700 font-medium">Daerah :</label>
+                        <label class="text-gray-700 font-medium">Kota/Kab :</label>
                         <select v-model="jabatan.selectedDaerah" class="w-full p-2 border rounded-md" required>
                             <option :value="0" disabled>Pilih Daerah</option>
                             <option v-for="daerah in jabatan.selectedWilayah.daerah" :key="daerah.id_daerah"
@@ -53,9 +53,14 @@
                         </select>
                     </div>
                     <div class="">
-                        <label class="block text-gray-600 font-medium mb-1">Tingkat{{ " Wilayah/Daerah" }}</label>
-                        <input type="text" v-model="tingkat" class="w-full p-2 border rounded-md" placeholder="Tingkat"
-                            required disabled />
+                        <label class="block text-gray-600 font-medium mb-1">Tingkat</label>
+                        <select v-model="jabatan.tingkat" class="w-full p-2 border rounded-md" name="" id="">
+                            <option value="" disabled>Pilih Tingkat</option>
+                            <option value="Wilayah">Provinsi</option>
+                            <option value="Daerah">Kota/Kab</option>
+                            <option value="Region 1">Region 1</option>
+                            <option value="Region 2">Region 2</option>
+                        </select>
                     </div>
                     <div class="flex items-end">
                         <button type="submit" class="bg-red-500 text-white px-6 py-2 rounded-lg hover:bg-gray-500">
@@ -103,7 +108,7 @@
                             <tr>
                                 <th class="px-4 py-2 text-left">No.</th>
                                 <th class="px-4 py-2 text-left">Nama Jabatan</th>
-                                <th class="px-4 py-2 text-left">Wilayah</th>
+                                <th class="px-4 py-2 text-left">Provinsi</th>
                                 <th class="px-4 py-2 text-left">Kode Wilayah</th>
                                 <th class="px-4 py-2 text-left">Kota / Kab</th>
                                 <th class="px-4 py-2 text-left">Kode Daerah</th>
@@ -244,18 +249,11 @@ export default {
             wilayahList: [],
             daerahList: [],
             isModalOpen: false,
-            isModalDeleteOpen: true,
+            isModalDeleteOpen: false,
             selectedJabatan: null,
         };
     },
     computed: {
-        tingkat() {
-            return this.jabatan.selectedWilayah !== 0
-                ? this.jabatan.selectedDaerah === 0
-                    ? "Wilayah"
-                    : "Daerah"
-                : "";
-        },
     },
     mounted() {
         // this.GetallJabatan();

@@ -14,7 +14,7 @@ export default {
   LogoutPostSwi() {
     return API.post("/auth/logout");
   },
-  /*User Anggota LPKNI*/
+  /*User SWI*/
   CreateUserSwi(data) {
     return API.post("/user", data);
   },
@@ -23,6 +23,16 @@ export default {
   },
   CreateDataUserImage(data) {
     return API.post("/data-swi", data, {
+      headers: { "Content-Type": "multipart/form-data" },
+    });
+  },
+  UpdateDataUserImage(data) {
+    return API.put("/data-anggota", data, {
+      headers: { "Content-Type": "multipart/form-data" },
+    });
+  },
+  CreatePembayaranSWI(data) {
+    return API.post("/transaksi-anggota", data, {
       headers: { "Content-Type": "multipart/form-data" },
     });
   },

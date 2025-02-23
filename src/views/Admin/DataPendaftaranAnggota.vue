@@ -41,7 +41,7 @@
         <table class="min-w-full h-full table-auto border-collapse">
           <thead class="bg-red-500 text-white">
             <tr>
-              <th class="px-4 py-3 border text-left">No.</th>
+              <th class="px-4 py-3 border text-left">Anggota ID</th>
               <th class="px-4 py-3 border text-left">Nama Lengkap</th>
               <th class="px-4 py-3 border text-left">Alamat Lengkap</th>
               <th class="px-4 py-3 border text-left">NIK</th>
@@ -51,8 +51,8 @@
               <th class="px-4 py-3 border text-left">Agama</th>
               <th class="px-4 py-3 border text-left">Provinsi</th>
               <th class="px-4 py-3 border text-left">Kota/Kab</th>
-              <th class="px-4 py-3 border text-center">3x4 Foto</th>
-              <th class="px-4 py-3 border text-center">KTP Foto</th>
+              <th class="px-4 py-3 border text-center">Foto KTP</th>
+              <th class="px-4 py-3 border text-center">Pas Foto</th>
               <th class="px-4 py-3 border text-center">Status</th>
               <th class="px-4 py-3 border text-center">Actions</th>
             </tr>
@@ -61,7 +61,7 @@
             <!-- Dynamic Data Rows -->
             <tr v-for="(anggota, index) in listDataAnggota" :key="index"
               class="text-gray-700 hover:bg-gray-100 transition" :class="{ 'bg-gray-50': index % 2 === 0 }">
-              <td class="px-4 py-3 border">{{ index + 1 }}</td>
+              <td class="px-4 py-3 border">{{ anggota.id_data_anggota }}</td>
               <td class="px-4 py-3 border">{{ anggota.nama_lengkap }}</td>
               <td class="px-4 py-3 border">{{ anggota.alamat }}</td>
               <td class="px-4 py-3 border">{{ anggota.nik }}</td>
@@ -72,59 +72,64 @@
               <td class="px-4 py-3 border">{{ anggota.wilayah.nama_wilayah }}</td>
               <td class="px-4 py-3 border">{{ anggota.daerah.nama_daerah }}</td>
               <td class="px-4 py-3 border text-center">
-                <img :src="getFullPathImage(anggota.imageUsers[0].imageUrl)" alt="Foto"
-                  class="w-12 h-12 object-cover rounded-md shadow-md mx-auto cursor-pointer"
-                  @click="openImagePreview(anggota.imageUsers[0].imageUrl, 'Foto')" />
+                <div v-if="anggota.imageUsers.length > 0">
+                  <img :src="getFullPathImage(anggota.imageUsers[0].imageUrl)" alt="Foto"
+                    class="w-12 h-12 object-cover rounded-md shadow-md mx-auto cursor-pointer"
+                    @click="openImagePreview(anggota.imageUsers[0].imageUrl, 'Foto')" />
+                </div>
+                <div v-else>
+                  <label for="">Gambar Tidak Tersedia</label>
+                </div>
               </td>
 
               <!-- Kolom KTP -->
               <td class="px-4 py-3 border text-center">
-                <img :src="getFullPathImage(anggota.imageUsers[0].imageUrl)" alt="KTP"
-                  class="w-12 h-12 object-cover rounded-md shadow-md mx-auto cursor-pointer"
-                  @click="openImagePreview(anggota.imageUsers[0].imageUrl, 'KTP')" />
+                <div v-if="anggota.imageUsers.length > 0">
+                  <img :src="getFullPathImage(anggota.imageUsers[1].imageUrl)" alt="KTP"
+                    class="w-12 h-12 object-cover rounded-md shadow-md mx-auto cursor-pointer"
+                    @click="openImagePreview(anggota.imageUsers[1].imageUrl, 'KTP')" />
+                </div>
+                <div v-else>
+                  <label for="">Gambar Tidak Tersedia</label>
+                </div>
+
               </td>
               <td class="px-4 py-3 border">{{ anggota.status }}</td>
               <!-- Kolom Aksi -->
               <td class="px-4 py-3 border text-center">
-                <button class="text-blue-500 hover:text-blue-700 font-semibold">Setujui</button> |
-                <button class="text-red-500 hover:text-red-700 font-semibold">Tolak</button>
+                <button @click="updateStatusAnggota(anggota.id_data_anggota, `SUCCESS`)"
+                  class="text-green-500 hover:text-green-700 font-semibold">Setujui</button> |
+                <button @click="updateStatusAnggota(anggota.id_data_anggota, `PENDING`)"
+                  class="text-yellow-500 hover:text-yellow-700 font-semibold">Pending</button> |
+                <button @click="updateStatusAnggota(anggota.id_data_anggota, `CANCEL`)"
+                  class="text-red-500 hover:text-red-700 font-semibold">Tolak</button>
               </td>
             </tr>
           </tbody>
         </table>
-        <transition name="fade">
-          <div v-if="imagePreview" class="fixed inset-0 bg-black bg-opacity-70 flex items-center justify-center z-50">
-            <div class="bg-white p-4 rounded-lg shadow-lg relative">
-              <h2 class="text-center font-semibold mb-2">{{ imageTitle }}</h2>
-              <img :src="imagePreview" class="max-w-full max-h-[80vh] rounded-lg" />
-
-              <!-- Tombol Tutup -->
-              <button @click="imagePreview = null"
-                class="absolute top-5 right-4 bg-gray-500 text-white px-3 py-2 rounded-lg hover:bg-red-600">
-                X
-              </button>
-            </div>
-          </div>
-        </transition>
       </div>
     </div>
+    <vue-easy-lightbox :visible="lightboxVisible" :imgs="imagePreview" :index="lightboxIndex"
+      @hide="lightboxVisible = false" />
   </div>
 </template>
 
 <script>
 import NavbarAdmin from "@/components/NavbarAdmin.vue";
 import api from "@/service/lpkni";
-
+import VueEasyLightbox from 'vue-easy-lightbox';
 export default {
   components: {
     NavbarAdmin,
+    VueEasyLightbox
   },
   data() {
     return {
       imageTitle: "",
       imagePreview: null,
-      listDataAnggota: [
-      ]
+      listDataAnggota: [],
+      lightboxIndex: 0,
+      lightboxVisible: false,
     };
   },
   mounted() {
@@ -139,6 +144,7 @@ export default {
         this.listDataAnggota = response.data
         console.log(this.listDataAnggota)
         this.$toast.success('Berhasil mengambil Data Anggota')
+        window.location.reload
       }).catch(() => {
         this.$toast.error('Gagal mengambil Data Anggota')
       })
@@ -146,6 +152,23 @@ export default {
     openImagePreview(imageUrl, title) {
       this.imagePreview = this.getFullPathImage(imageUrl);
       this.imageTitle = title;
+      this.lightboxVisible = true
+    },
+    async updateStatusAnggota(id, data) {
+      if (!confirm('Apakah Anda Yakin untuk mengupdate Status Anggota?')) {
+        return
+      }
+      const form = {
+        status: data
+      }
+      await api.UpdateStatusAnggota(id, form).then(() => {
+        this.$toast.success('Status Berhasil Di-Rubah!')
+        setTimeout(() => {
+          window.location.reload();
+        }, 500);
+      }).catch(() => {
+        this.$toast.error('Gagal Mengupdate Status Anggota');
+      })
     },
     exportToCSV() {
       const headers = ["No", "Nama Lengkap", "NIK", "Tempat Lahir", "Pekerjaan", "Agama", "Provinsi", "Kota/Kabupaten", "3x4 Foto", "KTP Foto"];

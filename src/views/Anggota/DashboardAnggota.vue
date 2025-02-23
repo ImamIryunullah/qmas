@@ -7,7 +7,7 @@
             <!-- Dashboard Header -->
             <div class="text-center mb-12 py-6">
                 <!-- Heading with classic, clean font and prominent size -->
-                <h1 class="text-3xl font-normal text-gray-800 mb-4">Dashboard Anggota</h1>
+                <h1 class="text-3xl font-normal text-gray-800 mb-4">Dashboard Anggota LPKNI</h1>
 
                 <!-- Description with a more subtle, classic font size and spacing -->
                 <p class="text-lg sm:text-xl text-gray-600 max-w-lg mx-auto">
@@ -41,7 +41,7 @@
                     <div>
                         <div class="font-medium text-gray-600">Tanggal Lahir:</div>
                         <div class="text-lg text-gray-800">{{ new Date(data_anggota.tanggalLahir).toLocaleDateString()
-                            }}</div>
+                        }}</div>
                     </div>
 
                     <!-- Tempat Lahir -->
@@ -200,22 +200,35 @@
                 <div class="grid grid-cols-1 sm:grid-cols-2 lg:grid-cols-3 gap-5">
                     <!-- First Image Block -->
                     <div class="flex flex-col items-center">
-                        <div class="w-50 h-32 overflow-hidden rounded-lg border-2 border-gray-300 mb-2">
+                        <div v-if="data_anggota.imageUsers.length > 0"
+                            class="w-50 h-32 overflow-hidden rounded-lg border-2 border-gray-300 mb-2">
                             <img :src="getFullpathImage(data_anggota.imageUsers[0].imageUrl)" alt="Foto 3x4"
                                 class="w-full h-full object-cover transition-transform duration-300 transform hover:scale-105"
                                 @click="openLightbox(0)" />
                         </div>
-                        <p class="text-sm text-gray-600 text-center">{{ data_anggota.imageUsers[0].keterangan }}</p>
+                        <div v-else>
+                            <label for="">Gambar Tidak Tersedia</label>
+                        </div>
+                        <div v-if="data_anggota.imageUsers.length > 0">
+                            <p class="text-sm text-gray-600 text-center">{{ data_anggota.imageUsers[0].keterangan }}</p>
+                        </div>
                     </div>
 
                     <!-- Second Image Block -->
                     <div class="flex flex-col items-center">
-                        <div class="w-50 h-32 overflow-hidden rounded-lg border-2 border-gray-300 mb-2">
+                        <div v-if="data_anggota.imageUsers.length > 0"
+                            class="w-50 h-32 overflow-hidden rounded-lg border-2 border-gray-300 mb-2">
                             <img :src="getFullpathImage(data_anggota.imageUsers[1].imageUrl)" alt="Foto KTP"
                                 class="w-full h-full object-cover transition-transform duration-300 transform hover:scale-105"
                                 @click="openLightbox(1)" />
                         </div>
-                        <p class="text-sm text-gray-600 text-center">{{ data_anggota.imageUsers[1].keterangan }}</p>
+                        <div v-else>
+                            <label for="">Gambar Tidak Tersedia</label>
+                        </div>
+                        <div v-if="data_anggota.imageUsers.length > 0">
+                            <p class="text-sm text-gray-600 text-center">{{ data_anggota.imageUsers[1].keterangan }}</p>
+                        </div>
+
                     </div>
                 </div>
             </div>

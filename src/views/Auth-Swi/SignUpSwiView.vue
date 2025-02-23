@@ -1,46 +1,60 @@
 <template>
+  <!-- Modal Awal -->
+  <div v-if="showModal"
+    class="fixed inset-0 flex items-center justify-center bg-black bg-opacity-50 z-50 animate__animated animate__fadeIn">
+    <div class="bg-white w-11/12 md:w-2/3 lg:w-1/2 p-8 rounded-lg shadow-lg text-center relative">
+      <h2 class="text-2xl font-bold text-green-700 mb-4">Selamat Datang di SWI</h2>
+      <p class="text-gray-600 text-lg leading-relaxed">
+        Standarisasi Warung Indonesia (SWI) adalah program yang membantu pemilik warung mendapatkan
+        sertifikasi warung Indonesia, standarisasi keamanan dan kebersihan, serta promosi usaha. Dengan bergabung di
+        SWI,
+        warung Anda akan mendapatkan kepercayaan lebih dari pelanggan dan keuntungan promosi dari kami.
+      </p>
+      <button @click="closeModal"
+        class="mt-6 px-6 py-3 bg-green-600 text-white font-semibold rounded-lg hover:bg-green-800 transition duration-300">
+        Selanjutnya
+      </button>
+    </div>
+  </div>
 
+  <!-- Form Pendaftaran -->
   <div class="pb-20 bg-white">
     <NavbarSwiAuth />
   </div>
 
-  <div v-if="isMounted" class=" flex justify-center w-full h-full bg-green-200 pb-20 pt-20 ">
-    <!-- Left Section (Background) -->
-    <!-- Right Section (Form) -->
+  <div v-if="isMounted && !showModal" class="flex justify-center w-full h-full bg-green-200 pb-20 pt-20">
     <div
-      class="w-full lg:w-100 h-full flex flex-col justify-center items-center px-8 lg:px-20 bg-white border border-gray-300 rounded-lg shadow-lg  animate-fadeInUp">
+      class="w-full lg:w-100 h-full flex flex-col justify-center items-center px-8 lg:px-20 bg-white border border-gray-300 rounded-lg shadow-lg animate-fadeInUp">
 
-      <div class="">
-        <h2 class="text-3xl font-bold text-green-800 mb-5 mt-5">Buat Akun Baru</h2>
-      </div>
+      <h2 class="text-3xl font-bold text-green-800 mb-5 mt-5">Buat Akun Baru</h2>
       <p class="text-sm text-gray-500 mb-5">Ayo Menjadi Bagian Dari Standarisasi Warung Indonesia</p>
 
       <form @submit.prevent="submitForm" class="w-full max-w-md space-y-5">
         <div class="flex flex-col space-y-2">
           <label for="nama_depan" class="text-sm text-gray-500 font-bold">Nama Depan</label>
           <input v-model="form.nama_depan" id="nama_depan" type="text" placeholder="Nama Depan"
-            class="p-3 border border-gray-300 rounded-lg focus:outline-none focus:ring-2 focus:ring-green-600 transition duration-200 ease-in-out transform hover:scale-105"
+            class="p-3 border border-gray-300 rounded-lg focus:outline-none focus:ring-2 focus:ring-green-600"
             required />
         </div>
 
         <div class="flex flex-col space-y-2">
           <label for="nama_belakang" class="text-sm text-gray-500 font-bold">Nama Belakang</label>
           <input v-model="form.nama_belakang" id="nama_belakang" type="text" placeholder="Nama Belakang"
-            class="p-3 border border-gray-300 rounded-lg focus:outline-none focus:ring-2 focus:ring-green-600 transition duration-200 ease-in-out transform hover:scale-105"
+            class="p-3 border border-gray-300 rounded-lg focus:outline-none focus:ring-2 focus:ring-green-600"
             required />
         </div>
 
         <div class="flex flex-col space-y-2">
           <label for="no_hp" class="text-sm text-gray-500 font-bold">No Hp</label>
           <input v-model="form.no_hp" id="no_hp" type="text" placeholder="No Hp"
-            class="p-3 border border-gray-300 rounded-lg focus:outline-none focus:ring-2 focus:ring-green-600 transition duration-200 ease-in-out transform hover:scale-105"
+            class="p-3 border border-gray-300 rounded-lg focus:outline-none focus:ring-2 focus:ring-green-600"
             required />
         </div>
 
         <div class="flex flex-col space-y-2">
           <label for="email" class="text-sm text-gray-500 font-bold">Email</label>
           <input v-model="form.email" id="email" type="email" placeholder="Email"
-            class="p-3 border border-gray-300 rounded-lg focus:outline-none focus:ring-2 focus:ring-green-600 transition duration-200 ease-in-out transform hover:scale-105"
+            class="p-3 border border-gray-300 rounded-lg focus:outline-none focus:ring-2 focus:ring-green-600"
             required />
         </div>
 
@@ -49,46 +63,40 @@
           <label for="password" class="text-sm text-gray-500 font-bold">Password</label>
           <input v-model="form.password" :type="passwordVisible ? 'text' : 'password'" id="password"
             placeholder="Password"
-            class="p-3 border border-gray-300 rounded-lg focus:outline-none focus:ring-2 focus:ring-green-600 transition duration-200 ease-in-out transform hover:scale-105"
+            class="p-3 border border-gray-300 rounded-lg focus:outline-none focus:ring-2 focus:ring-green-600"
             required />
-
         </div>
+
         <!-- Show Password Checkbox -->
         <div class="flex items-center">
-          <input type="checkbox" v-model="passwordVisible"
-            class="mr-2 transform transition duration-200 ease-in-out cursor-pointer " />
+          <input type="checkbox" v-model="passwordVisible" class="mr-2 cursor-pointer" />
           <label class="text-sm text-gray-500 font-bold">Tampilkan Password</label>
-
         </div>
 
         <div class="flex flex-col relative space-y-2">
           <label for="confirmpassword" class="text-sm text-gray-500 font-bold">Konfirmasi Password</label>
           <input v-model="form.confirmpassword" :type="passwordVisible ? 'text' : 'password'" id="confirmpassword"
             placeholder="Konfirmasi Password"
-            class="p-3 border border-gray-300 rounded-lg focus:outline-none focus:ring-2 focus:ring-green-600 transition duration-200 ease-in-out transform hover:scale-105"
+            class="p-3 border border-gray-300 rounded-lg focus:outline-none focus:ring-2 focus:ring-green-600"
             required />
         </div>
 
-
         <!-- Submit Button -->
-        <button type="submit" class=" mt-6 w-full h-12 bg-green-600 text-white px-6 py-2 rounded-lg font-bold hover:bg-green-800 transition
-          duration-200 ease-in-out transform hover:scale-105">
+        <button type="submit"
+          class="mt-6 w-full h-12 bg-green-600 text-white px-6 py-2 rounded-lg font-bold hover:bg-green-800 transition duration-200">
           Daftar Akun
         </button>
       </form>
 
-
-
       <!-- Link to Sign In -->
       <p class="mt-4 text-sm text-gray-500 mb-5">
         Sudah Memiliki Akun?
-        <router-link to="/auth/swi/login" class="text-green-600 font-semibold hover:underline ">Masuk
+        <router-link to="/auth/swi/login" class="text-green-600 font-semibold hover:underline">Masuk
           Sekarang</router-link>
       </p>
-
     </div>
-
   </div>
+
   <div class="w-full">
     <FooterSwiAuth />
   </div>
@@ -105,6 +113,7 @@ export default {
   },
   data() {
     return {
+      showModal: false,
       isMounted: false,
       passwordVisible: false, // Menyembunyikan atau menampilkan password
       form: {
@@ -120,6 +129,10 @@ export default {
   },
   mounted() {
     this.isMounted = true;
+
+    setTimeout(() => {
+      this.showModal = true;
+    }, 3000);
   },
   computed: {
     // Generate username based on first name, last name, and email
@@ -148,6 +161,9 @@ export default {
         !this.form.password ||
         !this.form.confirmpassword
       );
+    },
+    closeModal() {
+      this.showModal = false;
     },
     submitForm() {
       if (this.isFormInvalid()) {
@@ -200,5 +216,29 @@ export default {
     opacity: 1;
     transform: translateY(0);
   }
+}
+
+/* Modal Background */
+.fixed {
+  backdrop-filter: blur(5px);
+}
+
+/* Pastikan modal muncul di tengah layar */
+.fixed.inset-0 {
+  display: flex;
+  align-items: center;
+  justify-content: center;
+  height: 100vh;
+  /* Modal akan selalu berada di tengah */
+}
+
+/* Animasi Modal */
+.animate__fadeIn {
+  animation-duration: 0.5s;
+}
+
+/* Tombol hover */
+button:hover {
+  transition: 0.3s ease-in-out;
 }
 </style>

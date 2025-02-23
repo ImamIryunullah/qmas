@@ -10,15 +10,20 @@
       <div
         class="w-full lg:w-100 h-full flex flex-col justify-center items-center px-8 lg:px-20 bg-white border border-gray-300 rounded-lg shadow-lg py-8 ">
         <!-- <img src="@/assets/logoswi.png" alt="SWI Logo" class="w-24 h-auto mb-6" /> -->
-        <h2 class="text-3xl font-semibold text-red-600 mb-4">Selamat Datang Kembali</h2>
-        <p class="text-sm text-gray-500 mb-6">Login Sekarang untuk melanjutkan</p>
+        <h2 class="text-2xl md:text-3xl font-semibold text-red-600 mb-4 text-center md:text-left">
+          Selamat Datang Kembali
+        </h2>
+        <p class="text-xs md:text-sm text-gray-500 mb-6 text-center md:text-left">
+          Login Sekarang untuk melanjutkan
+        </p>
+
 
         <div class="w-full max-w-md space-y-4">
           <form @submit.prevent="login">
             <!-- Email -->
             <div>
               <label class="text-sm text-gray-500 font-bold">Email</label>
-              <input v-model="email" type="email" placeholder="Email"
+              <input v-model="email" type="email" placeholder="email@gmail.com"
                 class="w-full p-3 border border-gray-300 rounded-lg focus:outline-none focus:ring-2 focus:ring-red-600 transition duration-200 ease-in-out transform mt-2 hover:scale-105"
                 required />
             </div>
@@ -26,7 +31,7 @@
             <!-- Password -->
             <div class="mt-5 mb-5">
               <label class="text-sm text-gray-500 font-bold">Password</label>
-              <input v-model="password" :type="passwordVisible ? 'text' : 'password'" placeholder="Password"
+              <input v-model="password" :type="passwordVisible ? 'text' : 'password'" placeholder="password"
                 class="w-full p-3 border border-gray-300 rounded-lg focus:outline-none focus:ring-2 focus:ring-red-600 transition duration-200 ease-in-out mt-2 transform hover:scale-105"
                 required />
               <div class="flex items-center mt-3">

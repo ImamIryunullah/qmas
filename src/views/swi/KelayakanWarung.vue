@@ -9,21 +9,22 @@
                 class="w-full max-w-5xl bg-white p-6 md:p-8 rounded-lg border border-gray-200 flex flex-col md:flex-row items-center">
                 <!-- Gambar di Sisi Kiri -->
                 <div class="md:w-1/3 flex justify-center">
-                    <img src="@/assets/logoswi.png" alt="SWI Logo" class="w-20 md:w-36 lg:w-44 object-contain">
+                    <img :src="getfullPathImage('assets/logoswi.png')" alt="LPKNI"
+                        class="w-20 md:w-36 lg:w-44 object-contain">
                 </div>
 
                 <!-- Teks di Sisi Kanan -->
                 <div class="md:w-2/3 text-center md:text-left mt-4 md:mt-0">
-                    <h2 class="text-2xl md:text-3xl font-bold text-green-700 uppercase tracking-wide">
+                    <h2 class="text-2xl md:text-3xl font-bold text-black uppercase tracking-wide">
                         Form Audit Kelayakan Warung
                     </h2>
-                    <p class="text-gray-600 mt-2 md:mt-3 font-semibold text-base md:text-lg">
+                    <p class="text-black mt-2 md:mt-3 font-semibold text-base md:text-lg">
                         DASAR UU PERLINDUNGAN KONSUMEN
                     </p>
                     <p class="text-red-600 font-semibold text-base md:text-sm">
                         NO 8 TAHUN 1999 PASAL 4
                     </p>
-                    <p class="text-gray-600 font-medium text-sm md:text-base leading-relaxed mt-1 md:mt-2 italic">
+                    <p class="text-black font-medium text-sm md:text-base leading-relaxed mt-1 md:mt-2 italic">
                         "Hak atas Kenyamanan, Keamanan, Keselamatan dalam mengkonsumsi barang dan/atau jasa."
                     </p>
 
@@ -35,9 +36,11 @@
             <form @submit.prevent="SubmitData">
                 <!-- Informasi Warung -->
 
-                <h3 class="text-xl font-semibold text-gray-600 mt-6 mb-4 border-b-2 border-gray-300 pb-2">
-                    Informasi Warung
+                <h3
+                    class="text-2xl font-semibold text-gray-700 mt-8 mb-6 border-b-2 border-gray-400 pb-2 flex items-center gap-2">
+                    <i class="fas fa-store text-red-500"></i> Informasi Warung
                 </h3>
+
                 <div class="flex justify-end mt-4">
                     <button
                         class="flex items-center bg-red-600 text-white px-4 py-2 rounded-lg shadow-md hover:bg-red-700 transition">
@@ -88,7 +91,10 @@
                 </div>
 
                 <!-- Audit Kriteria -->
-                <h3 class="text-xl font-semibold text-gray-700 mt-6 mb-4">Audit Kriteria</h3>
+                <h3 class="text-xl font-semibold text-gray-700 mt-6 mb-4 flex items-center">
+                    <i class="fas fa-clipboard-check text-red-600 mr-2 "></i> Audit Kriteria
+                </h3>
+
                 <div v-for="(section, index) in auditSections" :key="index" class="mb-6">
                     <h4 class="text-lg font-semibold text-gray-800 mb-2">{{ section.title }}</h4>
                     <div class="bg-gray-100 p-4 rounded-lg">
@@ -155,6 +161,7 @@
 
 <script>
 import NavbarSwiLanding from '@/components/NavbarSwiLanding.vue';
+import swi from '@/service/swi';
 export default {
     components: {
         NavbarSwiLanding
@@ -244,8 +251,11 @@ export default {
         submitForm() {
             this.showModal = false;
             this.$toast.success("Berhasil Dikirim");
+        },
+        getfullPathImage(img) {
+            return swi.getfullpathImageSwi(img)
         }
-    },
+    }
 };
 </script>
 

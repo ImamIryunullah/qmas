@@ -2,9 +2,9 @@
     <div class="relative flex">
         <!-- Tombol Hamburger -->
         <button v-if="!sidebarOpen || isDesktop" @click="toggleSidebar" type="button"
-            class="fixed top-4 left-4 z-50 p-3 text-gray-800 rounded-lg sm:left-64 sm:hidden">
+            class="fixed top-4 left-4 z-50 p-4 text-gray-800 rounded-lg sm:left-64 sm:hidden">
             <span class="sr-only">Open sidebar</span>
-            <i class="fa fa-bars text-2xl"></i>
+            <i class="fa fa-bars fa-2x"></i>
         </button>
 
         <!-- Sidebar -->
@@ -12,12 +12,12 @@
             :class="{ 'translate-x-0': sidebarOpen, '-translate-x-full': !sidebarOpen, 'sm:w-64 sm:translate-x-0': sidebarOpen || isDesktop }"
             class="fixed top-0 left-0 z-40 w-64 h-screen bg-emerald-600 text-white shadow-lg transition-transform sm:translate-x-0 flex flex-col">
 
-            <div class="px-4 py-5 bg-green-450 flex items-center justify-between">
+            <div class="px-4 py-5 bg-emerald-600 flex items-center justify-between">
                 <div class="flex flex-col space-y-1 ml-2">
                     <div class="flex items-center space-x-3">
-                        <img src="@/assets/swiputih.png" alt="Logo SWI" class="w-8 h-8 rounded-full ml-20" />
+                        <img :src="getfullPathImage('assets/logoswi.png')" alt="Logo SWI" class="w-10 h-10 ml-20" />
                     </div>
-                    <p class="text-sm text-white">Standarisasi Warung Indonesia</p>
+                    <p class="text-extrabold text-black">Standarisasi Warung Indonesia</p>
                 </div>
                 <!-- Tombol close -->
                 <button @click="toggleSidebar" class="text-white text-2xl sm:hidden">
@@ -46,9 +46,9 @@
             <!-- Tombol Logout -->
             <div class="p-4 border-t border-green-600">
                 <button @click="logout"
-                    class="flex items-center py-3 px-4 w-full rounded-md bg-emerald-700 hover:bg-emerald-900 transition">
-                    <i class="fas fa-sign-out-alt w-6"></i>
-                    <span class="ml-3">Logout</span>
+                    class="flex items-center py-3 px-4 w-full rounded-md bg-white hover:bg-emerald-900 transition">
+                    <i class="fas fa-sign-out-alt w-6 text-emerald-700"></i>
+                    <span class="ml-3 text-emerald-700 text-extrabold">Logout</span>
                 </button>
             </div>
         </aside>
@@ -61,6 +61,7 @@
 </template>
 
 <script>
+import swi from '@/service/swi';
 export default {
     data() {
         return {
@@ -71,8 +72,9 @@ export default {
                 { label: "Dashboard", path: "/swi/dashboard", icon: "fas fa-home" },
                 { label: "Data Diri & Warung", path: "/swi/data-diri", icon: "fas fa-user-check" },
                 { label: "Kelayakan Warung", path: "/swi/kelayakan-warung", icon: "fas fa-store-alt" },
-                { label: "Cetak Sertifikat", path: "/swi/cetak-sertifikat", icon: "fas fa-id-card" },
+                { label: "Pembayaran", path: "/swi/pembayaran", icon: "fas fa-money" },
                 { label: "Pengaduan", path: "/swi/pengaduan", icon: "fas fa-exclamation-triangle" },
+                { label: "Cetak Sertifikat", path: "/swi/cetak-sertifikat", icon: "fas fa-id-card" },
             ],
         };
     },
@@ -89,6 +91,9 @@ export default {
                 console.log(e);
                 this.$toast.error("Couldn't log out.", { position: "top-right", duration: 1000 });
             }
+        },
+        getfullPathImage(img) {
+            return swi.getfullpathImageSwi(img)
         },
         updateTime() {
             const now = new Date();

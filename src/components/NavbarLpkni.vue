@@ -30,18 +30,6 @@
       <a href="/tentang-kami" class="text-white hover:text-[#028a66] transition">Tentang Kami</a>
     </nav>
 
-    <!-- Right Side: Date Display and Login Icon -->
-    <!-- <div class="flex items-center gap-10">
-      <div class="text-white hidden md:block font-medium ">
-        {{ currentDate }}
-      </div>
-      <div class="flex items-center gap-2">
-        <a href="/login" class="text-white font-Jet hover:text-[#028a66] transition">
-          <i class="fa fa-user-circle text-2xl"></i> Login
-        </a>
-      </div>
-    </div> -->
-
     <!-- Mobile Menu Links -->
     <div v-if="mobileMenuOpen" @click.self="toggleMobileMenu"
       class="md:hidden fixed inset-0 bg-black bg-opacity-50 z-40 flex justify-center items-start">

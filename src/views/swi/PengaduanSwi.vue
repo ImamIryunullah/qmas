@@ -6,13 +6,19 @@
 
             <div class="bg-white w-full rounded-lg shadow-md p-8">
                 <!-- Judul -->
-                <h2 class="text-3xl font-bold text-center text-gray-800 border-b-2 border-gray-300 pb-3">
-                    Form Pengaduan
-                </h2>
-                <p class="text-center text-gray-600 mt-2 text-sm md:text-base">
-                    Laporkan masalah atau keluhan Anda agar dapat segera ditindaklanjuti.
-                    Kami berkomitmen untuk menjaga kenyamanan, keamanan, dan keadilan bagi semua pihak.
-                </p>
+                <div class="max-w-2xl mx-auto px-4 md:px-6 lg:px-8">
+                    <h2
+                        class="text-2xl md:text-3xl font-bold text-center text-gray-800 border-b-2 border-gray-300 pb-3">
+                        <i class="fas fa-exclamation-circle text-yellow-500 mr-2"></i>
+                        Form Pengaduan
+                    </h2>
+                    <p class="text-center text-gray-600 mt-2 text-sm md:text-base leading-relaxed">
+                        <i class="fas fa-info-circle text-gray-500 mr-2"></i>
+                        Laporkan masalah atau keluhan Anda agar dapat segera ditindaklanjuti.
+                        Kami berkomitmen untuk menjaga kenyamanan, keamanan, dan keadilan bagi semua pihak.
+                    </p>
+                </div>
+
 
                 <form @submit.prevent="submitForm" class="space-y-6 mt-12">
                     <!-- Nama Pengadu -->
@@ -121,6 +127,19 @@
             </div>
         </div>
     </div>
+    <div v-if="showModal" class="fixed inset-0 flex items-center justify-center bg-gray-900 bg-opacity-50">
+        <div class="bg-white p-8 rounded-lg shadow-xl text-center max-w-md mx-auto">
+            <i class="fas fa-check-circle text-green-600 text-4xl mb-4"></i>
+            <h3 class="text-2xl font-semibold text-gray-800 mb-4">Terima Kasih!</h3>
+            <p class="text-lg text-gray-600 mb-4">
+                Terimakasih telah meluangkan waktu untuk mengirim keluh kesah. Pengaduan Anda telah berhasil dikirim.
+                Kami akan segera memprosesnya dan memberikan tindak lanjut.
+            </p>
+            <button @click="closeModal" class="bg-green-600 text-white p-3 rounded-lg hover:bg-green-700">
+                Tutup
+            </button>
+        </div>
+    </div>
 </template>
 
 
@@ -147,7 +166,8 @@ export default {
             wilayahList: [],
             daerahList: [],
             fileName: '',
-            file: null
+            file: null,
+            showModal: false
         }
     },
     methods: {
@@ -161,7 +181,11 @@ export default {
             formData.append('judul', this.form.judul);
             formData.append('deskripsi', this.form.deskripsi);
             formData.append('harapan', this.form.harapan);
-
+            this.showModal = true;
+        },
+        closeModal() {
+            // Close the modal when the user clicks "Tutup"
+            this.showModal = false;
         },
         handleFileUpload(event) {
             const file = event.target.files[0];

@@ -8,6 +8,17 @@ const API = axios.create({
 });
 
 export default {
+  /*Pengaduan*/
+  CreatePengaduanKonsumen(data) {
+    return API.post("/pengaduan/konsumen", data, {
+      headers: { "Content-Type": "multipart/form-data" },
+    });
+  },
+  CreatePengaduanAnggota(data) {
+    return API.post("/pengaduan/anggota", data, {
+      headers: { "Content-Type": "multipart/form-data" },
+    });
+  },
   /*Auth*/
   LoginPost(data) {
     return API.post("/auth/login", data);
@@ -24,9 +35,23 @@ export default {
       headers: { "Content-Type": "multipart/form-data" },
     });
   },
+  UpdateDataUserImage(data) {
+    return API.put("/data-anggota", data, {
+      headers: { "Content-Type": "multipart/form-data" },
+    });
+  },
+  CreatePembayaranAnggota(data) {
+    return API.post("/transaksi-anggota", data, {
+      headers: { "Content-Type": "multipart/form-data" },
+    });
+  },
+  UpdateStatusAnggota(id, data) {
+    return API.put(`/data-anggota/update-status/${id}`, data);
+  },
   getUserData() {
     return API.get("/data-anggota");
   },
+  /*Admin*/
   getAllUserData() {
     return API.get("/data-anggota/all");
   },

@@ -30,7 +30,7 @@
         </router-link>
         <div v-if="sidebarOpen" class="text-white-400 text-xs mt-4 ml-3 font-bold">
           <p>{{ currentDate.toLocaleString('id-ID', { weekday: 'long', year: 'numeric', month: 'long', day: 'numeric' })
-            }}</p>
+          }}</p>
           <p>{{ currentDate.toLocaleTimeString('id-ID') }} WIB</p>
         </div>
         <!-- Logout Button -->
@@ -59,7 +59,7 @@ export default {
         { label: "Dashboard", path: "/anggota/dashboard", icon: "fas fa-home" },
         { label: "Data Diri", path: "/anggota/data-diri", icon: "fas fa-user-check" },
         { label: "Pembayaran", path: "/anggota/pembayaran", icon: "fas fa-money" },
-        { label: "Cetak ID-CARD", path: "/anggota/id-card", icon: "fas fa-id-card" },
+        { label: "ID Card dan SK", path: "/anggota/id-card", icon: "fas fa-id-card" },
         { label: "Pengaduan Ke Pusat", path: "/anggota/pengaduan", icon: "fas fa-exclamation-triangle" },
       ]
     };

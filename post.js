@@ -3,7 +3,7 @@ const csv = require("csv-parser");
 const axios = require("axios");
 
 // URL API yang telah dibuat untuk menerima POST request
-const apiUrl = "http://localhost:3000/api/daerah"; // Ganti dengan URL API yang sesuai
+const apiUrl = "http://192.168.1.50:3000/api/daerah"; // Ganti dengan URL API yang sesuai
 
 // Fungsi untuk menambahkan delay (delay dalam milidetik)
 function delay(ms) {

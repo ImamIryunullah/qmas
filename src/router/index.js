@@ -36,6 +36,7 @@ import DashboardSwi from "@/views/swi/DashboardSwi.vue";
 import MaintenanceView from "@/views/swi/maintenanceView.vue";
 import PengaduanSwi from "@/views/swi/PengaduanSwi.vue";
 import CetakSertifikatSwi from "@/views/swi/CetakSertifikatSwi.vue";
+import PembayaranSwi from "@/views/swi/PembayaranSwi.vue";
 
 const routes = [
   {
@@ -74,7 +75,7 @@ const routes = [
   },
   {
     path: "/auth/reset-password",
-    name: "Register Anggota",
+    name: "Reset Password Anggota",
     component: ForgotPasswordView,
     meta: { requiresAuth: false },
   },
@@ -143,6 +144,16 @@ const routes = [
     path: "/swi/cetak-sertifikat",
     name: "Cetak Sertifikat Swi",
     component: CetakSertifikatSwi,
+    meta: {
+      requiresAuth: true,
+      requiredRole: "swi",
+      title: "Dashboard SWI",
+    },
+  },
+  {
+    path: "/swi/pembayaran",
+    name: "Pembayaran Swi",
+    component: PembayaranSwi,
     meta: {
       requiresAuth: true,
       requiredRole: "swi",
@@ -293,15 +304,16 @@ const router = createRouter({
 router.beforeEach(async (to, from, next) => {
   var isAuthenticated = null;
   var userRole = null;
-  if (to.meta.requiredRole === "swi") {
-    await store.dispatch("storeswi/updateStoreSwi");
-    isAuthenticated = store.state.storeswi.userLoggedInSwi;
-    userRole = store.state.storeswi.userRoleSwi;
-  } else {
-    await store.dispatch("updateStoreLpkni");
-    isAuthenticated = store.state.storeLpkni.UserLpkniIsLoggedIn;
-    userRole = store.state.storeLpkni.userLpkniRole;
-  }
+  if (to.meta.requiresAuth)
+    if (to.meta.requiredRole === "swi") {
+      await store.dispatch("storeswi/updateStoreSwi");
+      isAuthenticated = store.state.storeswi.userLoggedInSwi;
+      userRole = store.state.storeswi.userRoleSwi;
+    } else {
+      await store.dispatch("updateStoreLpkni");
+      isAuthenticated = store.state.storeLpkni.UserLpkniIsLoggedIn;
+      userRole = store.state.storeLpkni.userLpkniRole;
+    }
 
   console.log(isAuthenticated);
   console.log(userRole);

@@ -14,7 +14,7 @@
           <h2 class="text-2xl md:text-3xl font-bold text-green-600 mb-2 md:mb-4">
             Selamat Datang Kembali
           </h2>
-          <p class="text-xs md:text-sm text-gray-500 mb-4 md:mb-6">
+          <p class="text-xs md:text-sm text-gray-900 mb-4 md:mb-6 text-center">
             Login sekarang untuk melanjutkan
           </p>
         </div>
