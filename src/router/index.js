@@ -8,7 +8,7 @@ import KategoriView from "@/views/SuaraKonsumen/KategoriView.vue";
 import LoginView from "@/views/Auth-LPKNI/LoginView.vue";
 import SignUpView from "@/views/Auth-LPKNI/SignUpView.vue";
 import ForgotPasswordView from "@/views/Auth-LPKNI/ForgotPasswordView.vue";
-import KonfirmLupaPassword from "@/views/Auth-LPKNI/KonfirmLupaPassword.vue";
+import RequestResetPassword from "@/views/Auth-LPKNI/RequestResetPassword.vue";
 
 /* LPNI */
 import Dashboard from "@/views/Lpkni/LandingPage.vue";
@@ -30,10 +30,12 @@ import KelolaPengaduanData from "@/views/Admin/KelolaPengaduanData.vue";
 /* Tanpa Role Suara Konsumen */
 import LoginSwiView from "@/views/Auth-Swi/LoginSwiView.vue";
 import SignUpSwiView from "@/views/Auth-Swi/SignUpSwiView.vue";
+import RequestResetPasswordSwi from "@/views/Auth-Swi/RequestResetPasswordSwi.vue";
+import ForgotPasswordSwiView from "@/views/Auth-Swi/ForgotPasswordSwiView.vue";
 import DataDiriKonsumen from "@/views/swi/DataDiriKonsumen.vue";
 import KelayakanWarung from "@/views/swi/KelayakanWarung.vue";
 import DashboardSwi from "@/views/swi/DashboardSwi.vue";
-import MaintenanceView from "@/views/swi/maintenanceView.vue";
+import MaintenanceView from "@/views/maintenanceView.vue";
 import PengaduanSwi from "@/views/swi/PengaduanSwi.vue";
 import CetakSertifikatSwi from "@/views/swi/CetakSertifikatSwi.vue";
 import PembayaranSwi from "@/views/swi/PembayaranSwi.vue";
@@ -74,7 +76,7 @@ const routes = [
     meta: { requiresAuth: false },
   },
   {
-    path: "/auth/reset-password",
+    path: "/auth/reset-password/:token",
     name: "Reset Password Anggota",
     component: ForgotPasswordView,
     meta: { requiresAuth: false },
@@ -82,7 +84,7 @@ const routes = [
   {
     path: "/auth/lupa-kata-sandi",
     name: "Lupa Kata Sandi",
-    component: KonfirmLupaPassword,
+    component: RequestResetPassword,
     meta: { requiresAuth: false },
   },
 
@@ -97,6 +99,18 @@ const routes = [
     path: "/auth/swi/register",
     name: "Register SWI",
     component: SignUpSwiView,
+    meta: { requiresAuth: false },
+  },
+  {
+    path: "/auth/swi/get-reset-password",
+    name: "GetResetPassword",
+    component: RequestResetPasswordSwi,
+    meta: { requiresAuth: false },
+  },
+  {
+    path: "/auth/swi/reset-password",
+    name: "gantisandiswi",
+    component: ForgotPasswordSwiView,
     meta: { requiresAuth: false },
   },
   /* Role Swi */

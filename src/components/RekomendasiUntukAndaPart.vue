@@ -28,7 +28,7 @@
                     <button @click="goToDetail(news)">
                         <div>
                             <img class="w-full max-h-[15rem] rounded-xl object-cover"
-                                :src="`http://192.168.1.50:3000${news.media[0].filepath}`" alt="" />
+                                :src="`http://192.168.1.39:3000${news.media[0].filepath}`" alt="" />
                         </div>
                         <div class="pt-4">
                             <h1 class="font-semibold text-start">{{ news.judul }}</h1>

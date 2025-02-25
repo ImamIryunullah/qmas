@@ -28,12 +28,20 @@
   <header class="bg-red-600 shadow-md py-5 w-full">
     <div class="container mx-auto flex flex-wrap justify-between items-center px-4">
       <!-- Logo and Navigation -->
-      <div class="flex items-center space-x-4 w-full sm:w-auto">
-        <router-link to="/suara-konsumen" class="text-white text-xl font-bold flex items-center">
+      <div class="flex items-center w-full sm:w-auto sm:flex-row flex-col">
+        <router-link to="/" class="text-white text-xl font-bold flex items-center">
           <img src="@/assets/iconlpkni.png" alt="LPKNI" class="w-15 h-12 mr-3 mt-2">
-          Suara Konsumen
+          LPKNI
         </router-link>
+
+        <span class="text-white font-extrabold ml-2 sm:ml-4 hidden sm:inline-block"> | </span>
+        <div class="flex items-center w-full sm:w-auto sm:flex-row flex-col ml-2 sm:ml-4">
+          <router-link to="/suara-konsumen" class="text-white text-xl font-bold flex items-center">
+            Suara Konsumen
+          </router-link>
+        </div>
       </div>
+
 
       <!-- Date Section -->
       <div class="text-white w-full sm:w-auto mt-2 sm:mt-0">

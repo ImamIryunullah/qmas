@@ -35,7 +35,7 @@
                     </div>
                     <div>
                         <img class="w-full lg:w-[10rem] h-[10rem] rounded-2xl object-cover"
-                            :src="`http://192.168.1.50:3000${headline.media[0].filepath}`" alt="">
+                            :src="`http://192.168.1.39:3000${headline.media[0].filepath}`" alt="">
                     </div>
                 </div>
             </swiper-slide>

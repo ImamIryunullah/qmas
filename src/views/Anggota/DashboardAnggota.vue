@@ -1,189 +1,231 @@
 <template>
 
-    <div class="bg-gray-100 w-screen h-full min-h-screen pl-16">
-        <NavbarAnggota />
-        <div class="container mx-auto pl-12 p-2">
-
+    <NavbarAnggota />
+    <div class=" bg-gray-100 w-full min-h-screen h-full transition-all" :class="isSidebarOpen ? 'pl-36' : 'pl-16'">
+        <div class="container mx-auto p-2">
             <!-- Dashboard Header -->
             <div class="text-center mb-12 py-6">
                 <!-- Heading with classic, clean font and prominent size -->
                 <h1 class="text-3xl font-normal text-gray-800 mb-4">Dashboard Anggota LPKNI</h1>
 
                 <!-- Description with a more subtle, classic font size and spacing -->
-                <p class="text-lg sm:text-xl text-gray-600 max-w-lg mx-auto">
+                <p class="text-lg sm:text-xl text-gray-600 max-w-lg mx-auto justify">
                     Akses lengkap untuk melihat informasi terkait anggota dan pengguna. Temukan segala hal yang perlu
                     Anda ketahui tentang status dan data pengguna Anda.
                 </p>
             </div>
 
             <!-- Anggota Details -->
-            <div class="bg-white p-6 rounded-lg shadow-md mb-8">
+            <div class="bg-white p-6 sm:p-8 rounded-xl shadow-lg hover:shadow-xl transition-shadow mb-8">
                 <h2 class="text-2xl font-semibold text-gray-700 mb-6 flex items-center">
-                    <i class="fas fa-user text-gray-600 mr-3"></i>
-                    Informasi Anggota
+                    <i class="fas fa-user text-blue-500 mr-3"></i> Informasi Anggota
                 </h2>
 
                 <!-- Grid Layout -->
-                <div class="grid grid-cols-1 sm:grid-cols-2 md:grid-cols-3 gap-6">
+                <div class="grid grid-cols-1 sm:grid-cols-2 md:grid-cols-3 lg:grid-cols-3 gap-6">
                     <!-- Nama Lengkap -->
                     <div>
-                        <div class="font-medium text-gray-600">Nama Lengkap:</div>
-                        <div class="text-lg text-gray-800 font-semibold">{{ data_anggota.nama_lengkap }}</div>
+                        <div class="font-medium text-gray-600 border-l-4 border-blue-500 pl-4">Nama Lengkap:</div>
+                        <div class="text-lg text-gray-800 font-semibold mt-1">{{ data_anggota.nama_lengkap }}</div>
                     </div>
 
                     <!-- Pekerjaan -->
                     <div>
-                        <div class="font-medium text-gray-600">Pekerjaan:</div>
-                        <div class="text-lg text-gray-800">{{ data_anggota.pekerjaan }}</div>
+                        <div class="font-medium text-gray-600 border-l-4 border-blue-500 pl-4">Pekerjaan:</div>
+                        <div class="text-lg text-gray-800 mt-1">{{ data_anggota.pekerjaan }}</div>
                     </div>
 
                     <!-- Tanggal Lahir -->
                     <div>
-                        <div class="font-medium text-gray-600">Tanggal Lahir:</div>
-                        <div class="text-lg text-gray-800">{{ new Date(data_anggota.tanggalLahir).toLocaleDateString()
-                        }}</div>
+                        <div class="font-medium text-gray-600 border-l-4 border-blue-500 pl-4">Tanggal Lahir:</div>
+                        <div class="text-lg text-gray-800 mt-1">{{ new
+                            Date(data_anggota.tanggalLahir).toLocaleDateString('en-CA') }}</div>
                     </div>
 
                     <!-- Tempat Lahir -->
                     <div>
-                        <div class="font-medium text-gray-600">Tempat Lahir:</div>
-                        <div class="text-lg text-gray-800">{{ data_anggota.tempatLahir }}</div>
-                    </div>
-
-                    <!-- Alamat -->
-                    <div class="md:col-span-2">
-                        <div class="font-medium text-gray-600">Alamat:</div>
-                        <div class="text-lg text-gray-800">{{ data_anggota.alamat }}</div>
+                        <div class="font-medium text-gray-600 border-l-4 border-blue-500 pl-4">Tempat Lahir:</div>
+                        <div class="text-lg text-gray-800 mt-1">{{ data_anggota.tempatLahir }}</div>
                     </div>
 
                     <!-- Status Perkawinan -->
                     <div>
-                        <div class="font-medium text-gray-600">Status Perkawinan:</div>
-                        <div class="text-lg text-gray-800">{{ data_anggota.statusPerkawinan }}</div>
+                        <div class="font-medium text-gray-600 border-l-4 border-blue-500 pl-4">Status Perkawinan:</div>
+                        <div class="text-lg text-gray-800 mt-1">{{ data_anggota.statusPerkawinan }}</div>
                     </div>
 
                     <!-- Status -->
                     <div>
-                        <div class="font-medium text-gray-600">Status:</div>
-                        <div class="text-lg text-gray-800">{{ data_anggota.status }}</div>
+                        <div class="font-medium text-gray-600 border-l-4 pl-4" :class="{
+                            'border-gray-500': data_anggota.status === 'CANCEL',
+                            'border-yellow-500': data_anggota.status === 'PENDING',
+                            'border-green-500': data_anggota.status === 'SUCCESS'
+                        }">
+                            Status:
+                        </div>
+                        <div class="text-lg mt-1 flex items-center relative group">
+                            <!-- Conditional rendering for icon and status text color -->
+                            <span v-if="data_anggota.status === 'CANCEL'" class="text-gray-600 mr-2">
+                                <i class="fas fa-times-circle"></i> <!-- Icon for CANCEL -->
+                            </span>
+                            <span v-if="data_anggota.status === 'PENDING'" class="text-yellow-500 mr-2">
+                                <i class="fas fa-clock"></i> <!-- Icon for PENDING -->
+                            </span>
+                            <span v-if="data_anggota.status === 'SUCCESS'" class="text-green-500 mr-2">
+                                <i class="fas fa-check-circle"></i> <!-- Icon for SUCCESS -->
+                            </span>
+
+                            <!-- Status Text -->
+                            <span :class="{
+                                'text-gray-600': data_anggota.status === 'CANCEL',
+                                'text-yellow-500': data_anggota.status === 'PENDING',
+                                'text-green-500': data_anggota.status === 'SUCCESS'
+                            }" class="cursor-pointer" :title="statusTooltip">
+                                {{ data_anggota.status }}
+                            </span>
+
+                            <!-- Tooltip Text -->
+                            <div v-if="data_anggota.status === 'PENDING'"
+                                class="absolute left-1/2 transform -translate-x-1/2 bg-yellow-500 text-white text-xs rounded-md px-3 py-2 mt-1 opacity-0 group-hover:opacity-100 transition-opacity duration-300">
+                                Tunggu hingga tim kami memverifikasi data anda
+                            </div>
+                            <div v-if="data_anggota.status === 'SUCCESS'"
+                                class="absolute left-1/2 transform -translate-x-1/2 bg-green-500 text-white text-xs rounded-md px-2 py-1 mt-1 opacity-0 group-hover:opacity-100 transition-opacity duration-300">
+                                Anda sudah menjadi bagian dari tim LPKNI
+                            </div>
+                            <div v-if="data_anggota.status === 'CANCEL'"
+                                class="absolute left-1/2 transform -translate-x-1/2 bg-gray-500 text-white text-xs rounded-md px-2 py-1 mt-1 opacity-0 group-hover:opacity-100 transition-opacity duration-300">
+                                Pembatalan status. Hubungi kami untuk informasi lebih lanjut
+                            </div>
+                        </div>
+                    </div>
+
+
+                    <!-- Alamat (span 3 kolom untuk tampilan lebar) -->
+                    <div class="md:col-span-3">
+                        <div class="font-medium text-gray-600 border-l-4 border-blue-500 pl-4">Alamat:</div>
+                        <div class="text-lg text-gray-800 mt-1">{{ data_anggota.alamat }}</div>
                     </div>
                 </div>
             </div>
 
+
             <!-- Daerah and Wilayah -->
-            <div class="bg-white p-6 rounded-lg shadow-md mb-8">
+            <div class="bg-white p-6 sm:p-8 rounded-xl shadow-lg hover:shadow-xl transition-shadow mb-8">
                 <h2 class="text-2xl font-semibold text-gray-700 mb-6 flex items-center">
-                    <i class="fas fa-map-marker-alt text-gray-600 mr-3"></i>
-                    Daerah dan Wilayah
+                    <i class="fas fa-map-marker-alt text-blue-500 mr-3"></i> Daerah dan Wilayah
                 </h2>
 
                 <!-- Grid Layout -->
                 <div class="grid grid-cols-1 sm:grid-cols-2 md:grid-cols-4 gap-6">
                     <!-- Nama Daerah -->
                     <div>
-                        <div class="text-sm font-medium text-gray-600">Nama Daerah:</div>
-                        <div class="text-lg text-gray-800 font-semibold">{{ data_anggota.daerah.nama_daerah }}</div>
+                        <div class="text-sm font-medium text-gray-600 border-l-4 border-blue-500 pl-4">Nama Daerah:
+                        </div>
+                        <div class="text-lg text-gray-800 font-semibold mt-1">{{ data_anggota.daerah.nama_daerah }}
+                        </div>
                     </div>
 
                     <!-- Kode Daerah -->
                     <div>
-                        <div class="text-sm font-medium text-gray-600">Kode Daerah:</div>
-                        <div class="text-lg text-gray-800 font-semibold">{{ data_anggota.daerah.kode_daerah }}</div>
+                        <div class="text-sm font-medium text-gray-600 border-l-4 border-blue-500 pl-4">Kode Daerah:
+                        </div>
+                        <div class="text-lg text-gray-800 font-semibold mt-1">{{ data_anggota.daerah.kode_daerah }}
+                        </div>
                     </div>
 
                     <!-- Nama Wilayah -->
                     <div>
-                        <div class="text-sm font-medium text-gray-600">Nama Wilayah:</div>
-                        <div class="text-lg text-gray-800 font-semibold">{{ data_anggota.wilayah.nama_wilayah }}</div>
+                        <div class="text-sm font-medium text-gray-600 border-l-4 border-blue-500 pl-4">Nama Wilayah:
+                        </div>
+                        <div class="text-lg text-gray-800 font-semibold mt-1">{{ data_anggota.wilayah.nama_wilayah }}
+                        </div>
                     </div>
 
                     <!-- Kode Wilayah -->
                     <div>
-                        <div class="text-sm font-medium text-gray-600">Kode Wilayah:</div>
-                        <div class="text-lg text-gray-800 font-semibold">{{ data_anggota.wilayah.kode_wilayah }}</div>
+                        <div class="text-sm font-medium text-gray-600 border-l-4 border-blue-500 pl-4">Kode Wilayah:
+                        </div>
+                        <div class="text-lg text-gray-800 font-semibold mt-1">{{ data_anggota.wilayah.kode_wilayah }}
+                        </div>
                     </div>
                 </div>
             </div>
 
-
-
             <!-- Jabatan Struktural -->
-            <div class="bg-white p-6 rounded-lg shadow-md mb-8">
+            <div class="bg-white p-6 sm:p-8 rounded-lg shadow-md mb-8">
                 <h2 class="text-2xl font-semibold text-gray-700 mb-6 flex items-center">
-                    <i class="fas fa-user-tie text-gray-600 mr-3"></i>
-                    Jabatan Struktural
+                    <i class="fas fa-user-tie text-blue-500 mr-3"></i> Jabatan Struktural
                 </h2>
 
                 <!-- Grid Layout -->
-                <div class="grid grid-cols-1 sm:grid-cols-2 gap-6">
+                <div class="grid grid-cols-1 sm:grid-cols-2 md:grid-cols-4 gap-6">
                     <!-- Nama Jabatan -->
-                    <div>
-                        <div class="text-sm font-medium text-gray-600">Nama Jabatan:</div>
-                        <div class="text-lg text-gray-800 font-semibold">{{ data_anggota.jabatanStruktural.nama }}</div>
+                    <div class="border-l-4 border-blue-500 pl-4">
+                        <div class="text-sm font-medium text-gray-500">Nama Jabatan:</div>
+                        <div class="text-lg text-gray-900 font-semibold">{{ data_anggota.jabatanStruktural.nama }}</div>
                     </div>
 
                     <!-- Maksimum Anggota -->
-                    <div>
-                        <div class="text-sm font-medium text-gray-600">Maksimum Anggota:</div>
-                        <div class="text-lg text-gray-800 font-semibold">{{
+                    <div class="border-l-4 border-blue-500 pl-4">
+                        <div class="text-sm font-medium text-gray-500">Maksimum Anggota:</div>
+                        <div class="text-lg text-gray-900 font-semibold">{{
                             data_anggota.jabatanStruktural.maksimumAnggota }}</div>
                     </div>
 
                     <!-- Tingkat Jabatan -->
-                    <div>
-                        <div class="text-sm font-medium text-gray-600">Tingkat:</div>
-                        <div class="text-lg text-gray-800 font-semibold">{{ data_anggota.jabatanStruktural.tingkat }}
+                    <div class="border-l-4 border-blue-500 pl-4">
+                        <div class="text-sm font-medium text-gray-500">Tingkat:</div>
+                        <div class="text-lg text-gray-900 font-semibold">{{ data_anggota.jabatanStruktural.tingkat }}
                         </div>
                     </div>
 
                     <!-- Jumlah Terisi -->
-                    <div>
-                        <div class="text-sm font-medium text-gray-600">Terisi:</div>
-                        <div class="text-lg text-gray-800 font-semibold">{{ data_anggota.jabatanStruktural.terisi }}
+                    <div class="border-l-4 border-blue-500 pl-4">
+                        <div class="text-sm font-medium text-gray-500">Terisi:</div>
+                        <div class="text-lg text-gray-900 font-semibold">{{ data_anggota.jabatanStruktural.terisi }}
                         </div>
                     </div>
                 </div>
             </div>
 
-
             <!-- User Information -->
-            <!-- User Information -->
-            <div class="bg-white p-6 rounded-lg shadow-md mt-8">
+            <div class="bg-white p-6 rounded-2xl shadow-md mt-8">
                 <h2 class="text-2xl font-semibold text-gray-700 mb-6 flex items-center">
                     <i class="fas fa-user text-gray-600 mr-3"></i>
                     Data User
                 </h2>
 
-                <div class="grid grid-cols-1 sm:grid-cols-2 lg:grid-cols-3 gap-6">
+                <div class="grid grid-cols-1 sm:grid-cols-2 md:grid-cols-3 gap-x-8 gap-y-6">
                     <!-- Email -->
-                    <div>
-                        <div class="text-sm font-medium text-gray-600">Email:</div>
+                    <div class="bg-gray-50 p-4 rounded-lg shadow-sm hover:shadow-md transition">
+                        <div class="text-sm font-medium text-gray-500 border-b pb-2 mb-2">Email</div>
                         <div class="text-lg text-gray-800 font-semibold">{{ user.email }}</div>
                     </div>
 
                     <!-- Nomor HP -->
-                    <div>
-                        <div class="text-sm font-medium text-gray-600">Nomor HP:</div>
+                    <div class="bg-gray-50 p-4 rounded-lg shadow-sm hover:shadow-md transition">
+                        <div class="text-sm font-medium text-gray-500 border-b pb-2 mb-2">Nomor HP</div>
                         <div class="text-lg text-gray-800 font-semibold">{{ user.no_hp }}</div>
                     </div>
 
                     <!-- Nama Depan -->
-                    <div>
-                        <div class="text-sm font-medium text-gray-600">Nama Depan:</div>
+                    <div class="bg-gray-50 p-4 rounded-lg shadow-sm hover:shadow-md transition">
+                        <div class="text-sm font-medium text-gray-500 border-b pb-2 mb-2">Nama Depan</div>
                         <div class="text-lg text-gray-800 font-semibold">{{ user.nama_depan }}</div>
                     </div>
 
                     <!-- Nama Belakang -->
-                    <div>
-                        <div class="text-sm font-medium text-gray-600">Nama Belakang:</div>
+                    <div class="bg-gray-50 p-4 rounded-lg shadow-sm hover:shadow-md transition">
+                        <div class="text-sm font-medium text-gray-500 border-b pb-2 mb-2">Nama Belakang</div>
                         <div class="text-lg text-gray-800 font-semibold">{{ user.nama_belakang }}</div>
                     </div>
 
                     <!-- Role -->
-                    <div>
-                        <div class="text-sm font-medium text-gray-600">Role:</div>
+                    <!-- <div class="bg-gray-50 p-4 rounded-lg shadow-sm hover:shadow-md transition">
+                        <div class="text-sm font-medium text-gray-500 border-b pb-2 mb-2">Role</div>
                         <div class="text-lg text-gray-800 font-semibold">{{ user.role }}</div>
-                    </div>
+                    </div> -->
                 </div>
             </div>
 
@@ -197,7 +239,7 @@
                 </h2>
 
                 <!-- Grid Layout for Images -->
-                <div class="grid grid-cols-1 sm:grid-cols-2 lg:grid-cols-3 gap-5">
+                <div class="grid gap-2 grid-cols-1 sm:grid-cols-2 lg:grid-cols-3 ">
                     <!-- First Image Block -->
                     <div class="flex flex-col items-center">
                         <div v-if="data_anggota.imageUsers.length > 0"
@@ -213,7 +255,6 @@
                             <p class="text-sm text-gray-600 text-center">{{ data_anggota.imageUsers[0].keterangan }}</p>
                         </div>
                     </div>
-
                     <!-- Second Image Block -->
                     <div class="flex flex-col items-center">
                         <div v-if="data_anggota.imageUsers.length > 0"
@@ -228,7 +269,6 @@
                         <div v-if="data_anggota.imageUsers.length > 0">
                             <p class="text-sm text-gray-600 text-center">{{ data_anggota.imageUsers[1].keterangan }}</p>
                         </div>
-
                     </div>
                 </div>
             </div>
@@ -239,37 +279,76 @@
                     <i class="fas fa-credit-card text-gray-600 mr-3"></i>
                     Informasi Transaksi
                 </h2>
+                <div v-if="transaksiAnggota">
+                    <div v-for="(transaksi, index) in transaksiAnggota" :key="transaksi.id"
+                        class="grid grid-cols-1 gap-4 sm:grid-cols-2 md:grid-cols-3 lg:grid-cols-6">
 
-                <!-- Grid Layout -->
-                <div class="grid grid-cols-1 sm:grid-cols-2 md:grid-cols-4 gap-6">
-                    <!-- Metode Pembayaran -->
-                    <div>
-                        <div class="text-sm font-medium text-gray-600">Metode Pembayaran:</div>
-                        <div class="text-lg text-gray-800 font-semibold">{{ transaksi.method }}</div>
-                    </div>
+                        <!-- Metode Pembayaran -->
+                        <div class="">
+                            <div class="text-sm font-medium text-gray-600">Metode Pembayaran:</div>
+                            <div class="text-lg text-gray-800 font-semibold">{{ transaksi.metodePembayaran }}</div>
+                        </div>
 
-                    <!-- Status Pembayaran -->
-                    <div>
-                        <div class="text-sm font-medium text-gray-600">Status Pembayaran:</div>
-                        <div class="flex items-center space-x-2">
-                            <i v-if="transaksi.status === 'Lunas'" class="fas fa-check text-green-500"></i>
-                            <i v-else class="fas fa-exclamation-triangle text-yellow-500"></i>
-                            <div class="text-lg font-semibold" :class="{
-                                'text-green-600': transaksi.status === 'Lunas',
-                                'text-yellow-600': transaksi.status === 'Belum Lunas'
-                            }">
-                                {{ transaksi.status }}
+                        <!-- Vendor Pembayaran -->
+                        <div class="">
+                            <div class="text-sm font-medium text-gray-600">Vendor Pembayaran:</div>
+                            <div class="text-lg text-gray-800 font-semibold">{{ transaksi.vendorPembayaran }}</div>
+                        </div>
+
+                        <!-- Status Pembayaran -->
+                        <div class="">
+                            <div class="text-sm font-medium text-gray-600">Status Pembayaran:</div>
+                            <div class="flex items-center space-x-2">
+                                <i v-if="transaksi.statusPembayaran === 'SUCCESS'"
+                                    class="fas fa-check text-green-500"></i>
+                                <i v-else class="fas fa-exclamation-triangle text-yellow-500"></i>
+                                <div class="text-lg font-semibold" :class="{
+                                    'text-green-600': transaksi.statusPembayaran === 'SUCCESS',
+                                    'text-yellow-600': transaksi.statusPembayaran === 'PENDING'
+                                }">
+                                    {{ transaksi.statusPembayaran }}
+                                </div>
                             </div>
                         </div>
+                        <div class="">
+                            <div class="text-sm font-medium text-gray-600">Jumlah Pembayaran :</div>
+                            <div class="text-lg text-gray-800 font-semibold">{{ formatRupiah(transaksi.jumlahPembayaran)
+                                }}</div>
+                        </div>
+                        <!-- Bukti Pembayaran -->
+                        <div class="flex flex-col items-center ">
+                            <div class="text-sm font-medium text-gray-600">Bukti Pembayaran:</div>
+                            <div class="flex flex-col items-center">
+                                <div v-if="transaksi.imageUsers && transaksi.imageUsers.length > 0"
+                                    class="w-48 h-32 overflow-hidden rounded-lg border-2 border-gray-300 mb-2">
+                                    <img :src="getFullpathImage(transaksi.imageUsers[0].imageUrl)"
+                                        alt="Foto Bukti Pembayaran"
+                                        class="w-full h-full object-cover transition-transform duration-300 transform hover:scale-105"
+                                        @click="openLightbox(index + 2)" />
+                                </div>
+                                <div v-else>
+                                    <label class="text-gray-500">Gambar Tidak Tersedia</label>
+                                </div>
+                            </div>
+                        </div>
+
+                        <!-- Waktu Pembayaran -->
+                        <div class="">
+                            <div class="text-sm font-medium text-gray-600">Waktu Pembayaran:</div>
+                            <div class="text-lg text-gray-800 font-semibold">{{
+                                transaksi.tanggalPembayaran.split('T')[0] }}
+                            </div>
+                        </div>
+                        <!-- <div class="divide-x-8"></div> -->
                     </div>
 
-                    <!-- Waktu Pembayaran -->
-                    <div>
-                        <div class="text-sm font-medium text-gray-600">Waktu Pembayaran:</div>
-                        <div class="text-lg text-gray-800 font-semibold">{{ transaksi.waktupembayaran }}</div>
-                    </div>
                 </div>
+                <div v-else>
+                    <h1>Belum Ada Transaksi Yang Anda Lakukan!</h1>
+                </div>
+                <!-- Grid Layout -->
             </div>
+
 
 
         </div>
@@ -283,6 +362,7 @@
 import NavbarAnggota from '@/components/NavbarAnggota.vue';
 import api from '../../service/lpkni';
 import VueEasyLightbox from 'vue-easy-lightbox';
+import Swal from 'sweetalert2';
 export default {
     components: {
         NavbarAnggota,
@@ -290,6 +370,7 @@ export default {
     },
     data() {
         return {
+            showSuccessModal: false,
             data_anggota: {
                 id_data_anggota: 0,
                 nama_lengkap: "",
@@ -316,7 +397,7 @@ export default {
                 imageUsers: [
                     { imageUrl: "", keterangan: "" },
                     { imageUrl: "", keterangan: "" }
-                ]
+                ],
             },
             user: {
                 email: "",
@@ -325,30 +406,72 @@ export default {
                 nama_belakang: "",
                 role: ""
             },
-            transaksi: {
-                method: "Bank Transfer (Mandiri)",
-                status: "Belum Lunas",
-                jumlahpembayaran: "600.000",
-                waktupembayaran: "12 Jan 2024"
-            },
             imageUrls: [],
             lightboxVisible: false,
             lightboxIndex: 0,
+            transaksiAnggota: [{ tanggalPembayaran: ' ' }]
         };
     },
     computed: {
         getUserLpkni() {
             return this.$store.state.storeLpkni.userLpkni.data_anggota.id_data_anggota;
         },
+        getUserStatusLpkni() {
+            return this.$store.state.storeLpkni.userLpkni.data_anggota.status;// if GetgetUserStatusLpkni === SUCCESS
+        },
+        isSidebarOpen() {
+            return this.$store.state.storeSidebar.isSidebarOpen;
+        }
+
     },
+    watch: {
+        getUserStatusLpkni(newStatus) {
+            if (newStatus === "SUCCESS") {
+                this.showSuccessModal = true;
+            } else {
+                this.showSuccessModal = false;
+            }
+        },
+    },
+
     mounted() {
         if (this.getUserLpkni === 0) {
-            this.$router.push('/anggota/data-diri')
-            return
+            this.$router.push('/anggota/data-diri');
+            return;
         }
-        this.getGetUserData();
+        this.getGetUserData().then(() => {
+            if (this.getUserStatusLpkni === "SUCCESS") {
+                Swal.fire({
+                    icon: 'success',
+                    title: 'Selamat!',
+                    text: 'Anda Sekarang Menjadi Bagian Dari Anggota LPKNI!'
+                })
+                this.showSuccessModal = true;
+            } else {
+                Swal.fire({
+                    icon: "info",
+                    title: "Informasi!",
+                    text: "Data Belum Terverifikasi, Harap Menyelesaikan Pembayaran! Jika Sudah Melakukan Pembayaran, Abaikan Pesan ini",
+                    showConfirmButton: true,
+                })
+            }
+        });
     },
     methods: {
+        formatTanggal(tanggal) {
+            // Mengonversi tanggal yang diberikan menjadi objek Date
+            const [day, month, year] = tanggal.split('/');  // Memisahkan berdasarkan '/' (tanggal, bulan, tahun)
+            const formattedDate = new Date(year, month - 1, day); // Membuat objek Date
+
+            // Menggunakan toLocaleDateString untuk format YYYY-MM-DD
+            return formattedDate.toISOString().split('T')[0];  // Mengambil hanya bagian tanggal
+        },
+        formatRupiah(angka) {
+            if (typeof angka !== 'number' || isNaN(angka)) {
+                return 'nilai tidak valid';
+            }
+            return "Rp " + angka.toLocaleString('id-ID');
+        },
         openLightbox(index) {
             this.lightboxIndex = index;
             this.imageUrls = this.data_anggota.imageUsers.map(image => this.getFullpathImage(image.imageUrl)); // Menyiapkan array URL gambar
@@ -361,24 +484,34 @@ export default {
             try {
                 const res = await api.getUserData();
                 const userData = res.data;
-                console.log(userData);
+                // console.log(userData);
                 this.user = userData.user
                 this.data_anggota = userData.data_anggota
+                this.transaksiAnggota = userData.data_anggota.transaksiAnggota
+                console.log(this.transaksiAnggota)
             } catch (error) {
                 console.log(error)
             }
 
-        }
+        },
+        closeSuccessModal() {
+            this.showSuccessModal = false;
+        },
+
     }
 
 };
 </script>
 
 <style scoped>
+.transition-all {
+    transition: all 0.3s ease-in-out;
+}
+
 /* Add custom styles here for better mobile experience */
-@media (max-width: 640px) {
+@media (max-width: 100px) {
     .container {
-        padding-left: 0;
+        padding-left: 12;
         /* Remove padding on smaller screens */
     }
 
@@ -418,7 +551,7 @@ p {
 }
 
 /* Responsive adjustments for smaller screens */
-@media (max-width: 640px) {
+@media (max-width: 100px) {
     h1 {
         font-size: 2.5rem;
         /* Slightly smaller on mobile */

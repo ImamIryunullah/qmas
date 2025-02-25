@@ -3,19 +3,24 @@
     <NavbarLandingPage />
   </div>
 
-  <div v-if="isMounted" class=" flex justify-center w-full h-full bg-red-50 pb-20 pt-20 ">
-    <!-- <img src="@/assets/logoswi.png" alt="SWI Logo" class="w-24 h-auto mb-6" /> -->
-    <div class="w-100 bg-white shadow-lg rounded-lg  flex flex-col lg:flex-row animate-fadeInUp">
+  <div v-if="isMounted"
+    class=" flex justify-center w-full h-full bg-gradient-to-r from-red-400 to-red-600 pb-20 pt-20 ">
+    <div class="hidden lg:flex lg:w-1/2 rounded-l-lg overflow-hidden border-2 border-white object-cover">
+      <img src="@/assets/pasar.jpg" alt="Login Illustration" class="w-full h-full object-cover ">
+    </div>
+
+    <div class="w-100 bg-white rounded-lg  flex flex-col lg:flex-row animate-fadeInUp">
       <!-- Left Section (Login Form) -->
       <div
-        class="w-full lg:w-100 h-full flex flex-col justify-center items-center px-8 lg:px-20 bg-white border border-gray-300 rounded-lg shadow-lg py-8 ">
-        <!-- <img src="@/assets/logoswi.png" alt="SWI Logo" class="w-24 h-auto mb-6" /> -->
-        <h2 class="text-2xl md:text-3xl font-semibold text-red-600 mb-4 text-center md:text-left">
-          Selamat Datang Kembali
-        </h2>
-        <p class="text-xs md:text-sm text-gray-500 mb-6 text-center md:text-left">
-          Login Sekarang untuk melanjutkan
-        </p>
+        class="w-full lg:w-100 h-full flex flex-col justify-center items-center px-8 lg:px-20 bg-white border border-gray-300 rounded-r py-8 ">
+        <div class="text-center md:text-left">
+          <h2 class="text-xl md:text-2xl font-bold text-red-600 mb-4 flex items-center justify-center md:justify-start">
+            <i class="fas fa-sign-in-alt text-red-600 mr-2"></i> Selamat Datang Kembali
+          </h2>
+          <p class="text-sm md:text-base text-gray-700 mb-6 text-center md:text-left">
+            Login sekarang untuk melanjutkan
+          </p>
+        </div>
 
 
         <div class="w-full max-w-md space-y-4">
@@ -23,17 +28,23 @@
             <!-- Email -->
             <div>
               <label class="text-sm text-gray-500 font-bold">Email</label>
-              <input v-model="email" type="email" placeholder="email@gmail.com"
-                class="w-full p-3 border border-gray-300 rounded-lg focus:outline-none focus:ring-2 focus:ring-red-600 transition duration-200 ease-in-out transform mt-2 hover:scale-105"
-                required />
+              <div class="relative">
+                <input v-model="email" type="email" placeholder="Email"
+                  class="w-full p-3 pl-10 border border-gray-300 rounded-lg focus:outline-none focus:ring-2 focus:ring-red-600 transition duration-200 ease-in-out transform "
+                  required />
+                <i class="fas fa-envelope absolute left-3 top-4 text-gray-400"></i>
+              </div>
             </div>
 
             <!-- Password -->
             <div class="mt-5 mb-5">
               <label class="text-sm text-gray-500 font-bold">Password</label>
-              <input v-model="password" :type="passwordVisible ? 'text' : 'password'" placeholder="password"
-                class="w-full p-3 border border-gray-300 rounded-lg focus:outline-none focus:ring-2 focus:ring-red-600 transition duration-200 ease-in-out mt-2 transform hover:scale-105"
-                required />
+              <div class="relative w-full">
+                <input v-model="password" :type="passwordVisible ? 'text' : 'password'" placeholder="Password"
+                  class="w-full p-3 pl-10 border border-gray-300 rounded-lg focus:outline-none focus:ring-2 focus:ring-red-600 transition duration-200 ease-in-out mt-2 transform "
+                  required />
+                <i class="fas fa-lock absolute left-3 top-6 text-gray-400"></i>
+              </div>
               <div class="flex items-center mt-3">
                 <input type="checkbox" v-model="passwordVisible"
                   class="mr-2 transform transition duration-200 ease-in-out cursor-pointer " />
@@ -41,12 +52,9 @@
               </div>
             </div>
 
-
-
-            <button type="submit"
-              class="w-full h-12 bg-red-600 text-white font-bold rounded-lg hover:bg-red-500 transition hover:scale-105"
+            <button type="submit" class="w-full h-12 bg-red-600 text-white font-bold rounded-lg hover:bg-red-800"
               :disabled="loading">
-              {{ loading ? 'Loading...' : 'MASUK' }}
+              <i v-if="loading" class="fas fa-spinner fa-spin"></i> {{ loading ? 'Loading...' : 'MASUK' }}
             </button>
             <div class="mt-2">
               <router-link to="/auth/lupa-kata-sandi"
@@ -74,6 +82,9 @@
 <script>
 import NavbarLandingPage from "@/components/NavbarLandingPage.vue";
 import FooterLandingPage from "@/components/FooterLandingPage.vue";
+import lpkni from '@/service/lpkni';
+import Swal from 'sweetalert2';
+
 export default {
   components: {
     NavbarLandingPage,
@@ -99,14 +110,33 @@ export default {
   },
   mounted() {
     this.isMounted = true;
+    this.getHealth()
   },
   methods: {
+    async getHealth() {
+      await lpkni.getHealthlpkni().then(() => {
+
+      }).catch(() => {
+        this.$router.push('/maintenance');
+      })
+    },
     async login() {
       try {
+        // Dispatch login action to Vuex store
         await this.$store.dispatch("loginLpkni", { email: this.email, password: this.password });
         console.log(this.isUserLoggedIn)
+
+        // Check if the user is logged in
         if (this.isUserLoggedIn) {
-          this.$toast.success("Berhasil login", { position: "top-right", duration: 1000 });
+          Swal.fire({
+            icon: 'success',
+            title: 'Berhasil Login',
+            text: 'Selamat datang kembali!',
+            timer: 1500,
+            showConfirmButton: false,
+          });
+
+          // Redirect based on user role
           if (this.userRole === "admin") {
             await this.$router.push("/admin/dashboard");
           } else if (this.userRole === "anggota") {
@@ -116,9 +146,15 @@ export default {
           }
         }
       } catch (error) {
-        this.$toast.error(`${error}`, { position: "top-right", duration: 1000 });
+        Swal.fire({
+          icon: 'error',
+          title: 'Gagal Login',
+          text: `${error}`,
+          timer: 1500,
+          showConfirmButton: false,
+        });
       }
-    },
+    }
   }
 };
 </script>

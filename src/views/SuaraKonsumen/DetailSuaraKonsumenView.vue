@@ -10,7 +10,7 @@
           <article class="bg-gray-50 p-4 rounded-lg shadow-md">
             <figure class="relative">
               <img src="@/assets/bahlil.jpeg" alt="Latest Story" class="w-full h-full object-cover  mb-4" />
-              <figcaption class="text-center text-sm text-gray-700 mt-1">{{ article.captionUtama }}</figcaption>
+              <figcaption class="text-center text-sm text-gray-700 mt-1">{{ article.caption }}</figcaption>
               <!-- Underline below the caption -->
               <div class="w-full mx-auto mt-2 border-t-2 border-gray-300"></div>
             </figure>
@@ -71,11 +71,10 @@
           <div class="bg-gray-50 flex space-x-4 transition-all p-4 transform">
             <img src="@/assets/bannerberita.jpeg" alt="Article 1" class="w-1/3 h-20 object-cover rounded-lg" />
             <div class="w-2/3">
-              <h4 class="text-lg font-semibold text-gray-800">John Lewis, civil rights giant</h4>
+              <h4 class="text-lg font-semibold text-gray-800">{{ article.judul }}</h4>
               <p class="text-sm text-red-600">{{ article.waktu_publikasi }}</p>
-              <p class="text-sm text-gray-500">Lorem ipsum dolor sit amet consectetur adipisicing elit. Voluptatum
-                repellendus aperiam quasi!</p>
-              <router-link :to="'/news/1'">
+              <p class="text-sm text-gray-500">{{ article.deskripsi }}</p>
+              <router-link :to="'/detail/1'">
                 <button class="text-red-600 hover:text-red-800 font-semibold mt-4 transition-all hover:underline">Baca
                   Selengkapnya</button>
               </router-link>
@@ -86,11 +85,10 @@
           <div class="bg-gray-50 flex space-x-4 transition-all p-4 transform">
             <img src="@/assets/bannerberita.jpeg" alt="Article 2" class="w-1/3 h-20 object-cover rounded-lg" />
             <div class="w-2/3">
-              <h4 class="text-lg font-semibold text-gray-800">Beloved Arizona coach loses battle with coronavirus</h4>
+              <h4 class="text-lg font-semibold text-gray-800">{{ article.judul }}</h4>
               <p class="text-sm text-red-600">{{ article.waktu_publikasi }}</p>
-              <p class="text-sm text-gray-500">Lorem ipsum dolor sit amet consectetur adipisicing elit. Corporis
-                exercitationem architecto suscipit.</p>
-              <router-link :to="'/news/2'">
+              <p class="text-sm text-gray-500">{{ article.deskripsi }}</p>
+              <router-link :to="'/detail/1'">
                 <button class="text-red-600 hover:text-red-800 font-semibold mt-4 transition-all hover:underline">Baca
                   Selengkapnya</button>
               </router-link>
@@ -102,9 +100,8 @@
             <div class="w-2/3">
               <h4 class="text-lg font-semibold text-gray-800">Beloved Arizona coach loses battle with coronavirus</h4>
               <p class="text-sm text-red-600">{{ article.waktu_publikasi }}</p>
-              <p class="text-sm text-gray-500">Lorem ipsum dolor sit amet consectetur adipisicing elit. Corporis
-                exercitationem architecto suscipit.</p>
-              <router-link :to="'/news/2'">
+              <p class="text-sm text-gray-500">{{ article.deskripsi }}</p>
+              <router-link :to="'/detail/1'">
                 <button class="text-red-600 hover:text-red-800 font-semibold mt-4 transition-all hover:underline">Baca
                   Selengkapnya</button>
               </router-link>
@@ -114,11 +111,10 @@
           <div class="bg-gray-50 flex space-x-4 transition-all p-4 transform">
             <img src="@/assets/bannerberita.jpeg" alt="Article 2" class="w-1/3 h-20 object-cover rounded-lg" />
             <div class="w-2/3">
-              <h4 class="text-lg font-semibold text-gray-800">Beloved Arizona coach loses battle with coronavirus</h4>
+              <h4 class="text-lg font-semibold text-gray-800">{{ article.judul }}</h4>
               <p class="text-sm text-red-600">{{ article.waktu_publikasi }}</p>
-              <p class="text-sm text-gray-500">Lorem ipsum dolor sit amet consectetur adipisicing elit. Corporis
-                exercitationem architecto suscipit.</p>
-              <router-link :to="'/news/2'">
+              <p class="text-sm text-gray-500">{{ article.deskripsi }}</p>
+              <router-link :to="'/detail/1'">
                 <button class="text-red-600 hover:text-red-800 font-semibold mt-4 transition-all hover:underline">Baca
                   Selengkapnya</button>
               </router-link>
@@ -129,11 +125,11 @@
           <div class="bg-gray-50 flex space-x-4 transition-all p-4 transform">
             <img src="@/assets/bannerberita.jpeg" alt="Article 3" class="w-1/3 h-20 object-cover rounded-lg" />
             <div class="w-2/3">
-              <h4 class="text-lg font-semibold text-gray-800">Beloved Arizona coach loses battle with coronavirus</h4>
+              <h4 class="text-lg font-semibold text-gray-800">{{ article.judul }}</h4>
               <p class="text-sm text-red-600">{{ article.waktu_publikasi }}</p>
               <p class="text-sm text-gray-500">Lorem ipsum dolor sit amet consectetur, adipisicing elit. Eius esse
                 labore dignissimos.</p>
-              <router-link :to="'/news/3'">
+              <router-link :to="'/detail/1'">
                 <button class="text-red-600 hover:text-red-800 font-semibold mt-4 transition-all hover:underline">Baca
                   Selengkapnya</button>
               </router-link>
@@ -206,14 +202,14 @@ export default {
     return {
       article: {
         judul: 'John Lewis makes final journey across Edmund Pettus Bridge',
-        captionUtama: 'Pada hari Sabtu, 12 Februari 2045 Bahlil sedang memasaakk brodeeerr sistahhhhh',
+        caption: 'Pada hari Sabtu, 12 Februari 2045 Bahlil sedang memasaakk brodeeerr sistahhhhh',
         gambar: '',
         waktu_publikasi: '27 Agustus 2024',
         kategori: 'Berita Nasional',
-        caption: 'bahlil kntl pada hari senin selasa rabu kamis',
         paragraf1: 'Lorem ipsum dolor sit amet consectetur adipisicing elit. Fuga dolorum quae soluta non doloribus veniam quaerat quis nemo modi cum. Placeat expedita velit nisi dolores reiciendis, labore in quos inventore fugit, ut maxime maiores saepe neque voluptate magni nihil corporis! Alias adipisci maxime officia, eius sunt natus cupiditate at distinctio similique velit impedit quas animi voluptatum rerum facilis deleniti sit delectus cumque nobis? Deserunt, quas. Consectetur id pariatur, facere neque expedita ut blanditiis, consequatur dolorum rem amet quibusdam reprehenderit nobis ullam quam voluptatum. Esse sint nesciunt eveniet. Quisquam repudiandae culpa quae magni quod accusantium a eveniet, vero eos, atque libero.',
         paragraf2: 'Lorem ipsum dolor sit amet consectetur adipisicing elit. Fuga dolorum quae soluta non doloribus veniam quaerat quis nemo modi cum. Placeat expedita velit nisi dolores reiciendis, labore in quos inventore fugit, ut maxime maiores saepe neque voluptate magni nihil corporis! Alias adipisci maxime officia, eius sunt natus cupiditate at distinctio similique velit impedit quas animi voluptatum rerum facilis deleniti sit delectus cumque nobis? Deserunt, quas. Consectetur id pariatur, facere neque expedita ut blanditiis, consequatur dolorum rem amet quibusdam reprehenderit nobis ullam quam voluptatum. Esse sint nesciunt eveniet. Quisquam repudiandae culpa quae magni quod accusantium a eveniet, vero eos, atque libero.',
-        paragraf3: 'Lorem ipsum dolor sit amet consectetur adipisicing elit. Fuga dolorum quae soluta non doloribus veniam quaerat quis nemo modi cum. Placeat expedita velit nisi dolores reiciendis, labore in quos inventore fugit, ut maxime maiores saepe neque voluptate magni nihil corporis! Alias adipisci maxime officia, eius sunt natus cupiditate at distinctio similique velit impedit quas animi voluptatum rerum facilis deleniti sit delectus cumque nobis? Deserunt, quas. Consectetur id pariatur, facere neque expedita ut blanditiis, consequatur dolorum rem amet quibusdam reprehenderit nobis ullam quam voluptatum. Esse sint nesciunt eveniet. Quisquam repudiandae culpa quae magni quod accusantium a eveniet, vero eos, atque libero.'
+        paragraf3: 'Lorem ipsum dolor sit amet consectetur adipisicing elit. Fuga dolorum quae soluta non doloribus veniam quaerat quis nemo modi cum. Placeat expedita velit nisi dolores reiciendis, labore in quos inventore fugit, ut maxime maiores saepe neque voluptate magni nihil corporis! Alias adipisci maxime officia, eius sunt natus cupiditate at distinctio similique velit impedit quas animi voluptatum rerum facilis deleniti sit delectus cumque nobis? Deserunt, quas. Consectetur id pariatur, facere neque expedita ut blanditiis, consequatur dolorum rem amet quibusdam reprehenderit nobis ullam quam voluptatum. Esse sint nesciunt eveniet. Quisquam repudiandae culpa quae magni quod accusantium a eveniet, vero eos, atque libero.',
+        deskripsi: 'fewfgwefiwfggv'
       },
       username: '',
       commentText: '',

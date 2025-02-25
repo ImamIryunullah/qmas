@@ -1,24 +1,26 @@
 <template>
-  <div class="bg-gray-100 min-h-screen flex justify-center items-center p-6 ml-12">
-    <div class="w-full max-w-2xl bg-white p-8 rounded-lg shadow-xl">
-      <NavbarAnggota />
-      <h2
-        class="text-4xl font-extrabold text-center text-transparent bg-clip-text bg-gradient-to-r from-red-500 to-red-600 mb-8">
-        Data Diri
-      </h2>
+  <NavbarAnggota />
+  <div class="bg-gray-100 min-h-screen flex justify-center items-center pl-16">
+    <div class="w-full max-w-2xl bg-white p-8 rounded-lg shadow-xl animate-fadeInUp">
+      <div class="text-center mb-8">
+        <h2
+          class="text-4xl font-extrabold text-center text-transparent bg-clip-text bg-gradient-to-r from-black to-black mb-4 flex items-center justify-center space-x-2">
+          <i class="fas fa-user-circle text-3xl text-black mt-2"></i>
+          <span>Data Diri</span>
+        </h2>
 
+        <p class="text-lg text-gray-600 mb-6 max-w-2xl mx-auto justify">
+          Informasi ini diperlukan untuk melengkapi data Anda dan memastikan kelengkapan proses verifikasi.
+        </p>
+      </div>
       <form @submit.prevent="dataLengkap ? UpdatData() : SubmitData()">
         <div class="grid grid-cols-1 sm:grid-cols-2 gap-6">
-
-          <!-- Nama Lengkap -->
           <div>
             <label class="text-sm text-gray-500 font-bold">Nama Lengkap</label>
             <input v-model="userData.nama_lengkap" type="text" placeholder="Nama Lengkap"
               class="w-full p-3 border border-gray-300 rounded-lg focus:outline-none focus:ring-2 focus:ring-red-600 transition duration-200 ease-in-out mt-2"
               required />
           </div>
-
-          <!-- Alamat Lengkap -->
           <div>
             <label class="text-sm text-gray-500 font-bold">Alamat Lengkap</label>
             <input v-model="userData.alamat" type="text" placeholder="Alamat Lengkap"
@@ -26,7 +28,7 @@
               required />
           </div>
 
-          <!-- NIK -->
+
           <div>
             <label class="text-sm text-gray-500 font-bold">Nomor Induk Kependudukan</label>
             <input v-model="userData.nik" type="number" placeholder="NIK"
@@ -34,7 +36,7 @@
               required />
           </div>
 
-          <!-- Tempat Lahir -->
+
           <div>
             <label class="text-sm text-gray-500 font-bold">Tempat Lahir</label>
             <input v-model="userData.tempatLahir" type="text" placeholder="Tempat Lahir"
@@ -42,7 +44,7 @@
               required />
           </div>
 
-          <!-- Tanggal Lahir -->
+
           <div>
             <label class="text-sm text-gray-500 font-bold">Tanggal Lahir</label>
             <input v-model="userData.tanggalLahir" type="date" placeholder="Tanggal Lahir"
@@ -50,7 +52,7 @@
               required />
           </div>
 
-          <!-- Pekerjaan -->
+
           <div>
             <label class="text-sm text-gray-500 font-bold">Pekerjaan</label>
             <input v-model="userData.pekerjaan" type="text" placeholder="Pekerjaan"
@@ -58,10 +60,10 @@
               required />
           </div>
 
-          <!-- Status Kawin -->
+
           <div>
             <label class="text-sm text-gray-500 font-bold">Status Kawin</label>
-            <select v-model="userData.statusPerkawinan"
+            <select v-model="userData.statusPerkawinan" required
               class="w-full p-3 border border-gray-300 rounded-lg focus:outline-none focus:ring-2 focus:ring-red-600 transition duration-200 ease-in-out mt-2">
               <option value="" disabled>Pilih Status Kawin</option>
               <option value="Kawin">Kawin</option>
@@ -71,11 +73,12 @@
             </select>
           </div>
 
-          <!-- Agama -->
+
           <div>
             <label class="text-sm text-gray-500 font-bold">Agama</label>
             <select v-model="userData.agama"
-              class="w-full p-3 border border-gray-300 rounded-lg focus:outline-none focus:ring-2 focus:ring-red-600 transition duration-200 ease-in-out mt-2">
+              class="w-full p-3 border border-gray-300 rounded-lg focus:outline-none focus:ring-2 focus:ring-red-600 transition duration-200 ease-in-out mt-2"
+              required>
               <option value="" disabled>Pilih Agama</option>
               <option value="Islam">Islam</option>
               <option value="Kristen Protestan">Kristen Protestan</option>
@@ -86,7 +89,7 @@
             </select>
           </div>
 
-          <!-- Provinsi -->
+
           <div>
             <label class="text-sm text-gray-500 font-bold">Provinsi</label>
             <select v-model="userData.wilayahId" @change="GetDaerahByWilayahId(userData.wilayahId)"
@@ -99,7 +102,7 @@
             </select>
           </div>
 
-          <!-- Kota / Kabupaten -->
+
           <div>
             <label class="text-sm text-gray-500 font-bold">Kota / Kabupaten</label>
             <select v-model="userData.daerahId" :disabled="userData.wilayahId === 0"
@@ -114,7 +117,7 @@
           </div>
 
 
-          <!-- Tingkat -->
+
           <div>
             <label class="text-sm text-gray-500 font-bold">Tingkat</label>
             <select v-model="userData.jabatanStruktural.tingkat" :disabled="!userData.daerahId"
@@ -128,7 +131,7 @@
               <option value="Region 2">Region 2</option>
             </select>
           </div>
-          <!-- Jabatan -->
+
           <div>
             <label class="text-sm text-gray-500 font-bold">Jabatan</label>
             <select v-model="userData.jabatanStrukturalId" :disabled="!userData.daerahId"
@@ -138,13 +141,13 @@
               <option v-for="jabatan in filterJabatanList" :key="jabatan.id" :value="jabatan.id">{{ jabatan.wilayah &&
                 !jabatan.daerah ?
                 jabatan.wilayah.kode_wilayah + " - " + jabatan.nama : jabatan.daerah.kode_daerah + " - " + jabatan.nama
-              }}
+                }}
               </option>
             </select>
           </div>
 
-          <!-- Upload Foto KTP -->
-          <!-- File Uploads (e.g., KTP, SIUP, NPWP) -->
+
+
           <div v-for="(image, index) in imageInputs" :key="index">
             <label class="text-sm text-gray-500 font-bold">{{ image.keterangan }}</label>
             <input :required="!UpdateGambar ? image.required : false" type="file"
@@ -155,7 +158,7 @@
               alt="uploaded" @click="openLightbox(index)"
               class="w-40 h-auto items-start object-contain rounded-lg shadow-md mt-4">
           </div>
-          <!-- Submit Button -->
+
 
         </div>
         <button type="submit"
@@ -164,8 +167,15 @@
         </button>
       </form>
     </div>
-    <vue-easy-lightbox :visible="lightboxVisible" :imgs="dataLengkap && !UpdateGambar ? imageUrl : imageUsers"
-      :index="lightboxIndex" @hide="lightboxVisible = false" />
+
+    <div v-if="isLoading" class="fixed inset-0 flex items-center justify-center bg-black bg-opacity-50 z-50">
+      <div class="text-white text-lg">Sedang Memuat...</div>
+      <div class="spinner-border animate-spin border-4 border-t-4 border-white rounded-full w-16 h-16 ml-2"></div>
+    </div>
+
+    <vue-easy-lightbox :visible="lightboxVisible"
+      :imgs="dataLengkap && !UpdateGambar.length > 0 ? imageUrl : imageUsers" :index="lightboxIndex"
+      @hide="lightboxVisible = false" />
   </div>
 
 </template>
@@ -176,6 +186,7 @@ import NavbarAnggota from '@/components/NavbarAnggota.vue';
 import lpkni from '@/service/lpkni.js';
 import ApiService from '@/service/lpkni.js';
 import VueEasyLightbox from 'vue-easy-lightbox';
+import Swal from 'sweetalert2';
 export default {
   components: {
     NavbarAnggota,
@@ -183,6 +194,7 @@ export default {
   },
   data() {
     return {
+      showSuccessModal: false,
       dataLengkap: false,
       UpdateGambar: [],
       userData: {
@@ -305,11 +317,12 @@ export default {
       })
     },
     async GetUser() {
+      this.isLoading = true;
       await ApiService.getUserData().then(async (response) => {
         this.user = response.data.user
         if (response.data.data_anggota.userId === 0) {
           this.dataLengkap = false;
-          this.$toast.info('Lengkapi Data Diri!', { duration: 1000 })
+          this.showSuccessModal = true;
         } else {
           this.dataLengkap = true;
         }
@@ -320,10 +333,13 @@ export default {
           this.userData = response.data.data_anggota
           this.imageUsers = response.data.data_anggota.imageUsers
           this.userData.tanggalLahir = this.userData.tanggalLahir.split('T')[0]
-          this.$toast.info(`Status : ${this.userData.status}`, { duration: 1000 })
-          this.$toast.success('Data Diri Lengkap!', { duration: 1000 })
           if (this.userData.status !== "SUCCESS") {
-            this.$toast.info('Harap Melakukan Pembayaran!', { duration: 1000 })
+            Swal.fire({
+              icon: "info",
+              title: "Informasi!",
+              text: "Data Belum Terverifikasi, Harap Menyelesaikan Pembayaran.!",
+              showConfirmButton: true,
+            })
           }
           await this.GetDaerahByWilayahId(this.userData.wilayahId)
           await this.getJabatanBywilayahAndDaerah(this.userData.wilayahId, this.userData.daerahId)
@@ -332,8 +348,18 @@ export default {
         console.log(this.userData)
         this.userData.file = []
         this.userData.folder = []
+        if (this.showSuccessModal) {
+          Swal.fire({
+            icon: "warning",
+            title: "Informasi!",
+            text: "Harap Lengkapi Data Diri Anda!",
+            showConfirmButton: true,
+          })
+        }
       }).catch((error) => {
         console.log(error)
+      }).finally(() => {
+        this.isLoading = false;
       })
     },
     async GetJabatanByWilayahId(id) {
@@ -357,63 +383,104 @@ export default {
 
     },
     async SubmitData() {
-      this.isLoading = true;
-      const forms = {
-        daerahId: this.userData.daerahId,
-        wilayahId: this.userData.wilayahId,
-        jabatanStrukturalId: this.userData.jabatanStrukturalId,
-        nama_lengkap: this.userData.nama_lengkap,
-        alamat: this.userData.alamat,
-        tanggalLahir: this.userData.tanggalLahir,
-        tempatLahir: this.userData.tempatLahir,
-        nik: this.userData.nik,
-        pekerjaan: this.userData.pekerjaan,
-        statusPerkawinan: this.userData.statusPerkawinan,
-        agama: this.userData.agama,
-        file: this.userData.file,
-        keterangan: this.userData.folder,
-      }
-      try {
+      Swal.fire({
+        title: "Informasi",
+        text: 'Apakah Anda Yakin Data Sudah Benar?',
+        showDenyButton: true,
+        confirmButtonText: "Ya",
+        reverseButtons: true,
+        denyButtonText: `Tidak`,
+        icon: 'info',
+
+      }).then(async (result) => {
+        if (result.isDenied) {
+          return
+        }
+        const forms = {
+          daerahId: this.userData.daerahId,
+          wilayahId: this.userData.wilayahId,
+          jabatanStrukturalId: this.userData.jabatanStrukturalId,
+          nama_lengkap: this.userData.nama_lengkap,
+          alamat: this.userData.alamat,
+          tanggalLahir: this.userData.tanggalLahir,
+          tempatLahir: this.userData.tempatLahir,
+          nik: this.userData.nik,
+          pekerjaan: this.userData.pekerjaan,
+          statusPerkawinan: this.userData.statusPerkawinan,
+          agama: this.userData.agama,
+          file: this.userData.file,
+          keterangan: this.userData.folder,
+        }
         this.isLoading = true;
-        const response = await ApiService.CreateDataUserImage(forms);
-        console.log(response)
-        this.$toast.success('Berhasil Menambahkan Data!');
-        setTimeout(() => {
-          window.location.reload();
-        }, 500);
-      } catch (error) {
-        this.$toast.error('Gagal Menambahkan Data!');
-        this.isLoading = false;
-      } finally {
-        this.isLoading = false;
-      }
+        try {
+          const response = await ApiService.CreateDataUserImage(forms);
+          console.log(response)
+          Swal.fire({
+            icon: "success",
+            title: "Informasi!",
+            text: "Berhasil Menambahkan Data!",
+            showConfirmButton: true,
+          })
+        } catch (error) {
+          Swal.fire({
+            icon: "error",
+            title: "Informasi!",
+            text: "Gagal Menambahkan Data!",
+            showConfirmButton: true,
+          })
+          console.log(error)
+        } finally {
+          this.isLoading = false;
+        }
+      })
     },
     async UpdatData() {
-      if (!confirm('Apakah Anda Yakin Ingin Perbarui Data?')) {
-        return
-      }
-      const forms = {
-        daerahId: this.userData.daerahId,
-        wilayahId: this.userData.wilayahId,
-        jabatanStrukturalId: this.userData.jabatanStrukturalId,
-        nama_lengkap: this.userData.nama_lengkap,
-        alamat: this.userData.alamat,
-        tanggalLahir: this.userData.tanggalLahir,
-        tempatLahir: this.userData.tempatLahir,
-        nik: this.userData.nik,
-        pekerjaan: this.userData.pekerjaan,
-        statusPerkawinan: this.userData.statusPerkawinan,
-        agama: this.userData.agama,
-        file: this.userData.file,
-        keterangan: this.userData.folder,
-      }
-      console.log(forms)
-      await lpkni.UpdateDataUserImage(forms).then(() => {
-        this.$toast.success('Update Data Berhasil!')
-        this.$router.push(this.$route.path);
-      }).catch(() => {
-        this.$toast.error('Update Data Gagal!')
-      })
+      Swal.fire({
+        title: "Informasi",
+        text: 'Apakah Anda Yakin ingin Memperbarui Data?',
+        showDenyButton: true,
+        confirmButtonText: "Ya",
+        denyButtonText: `Tidak`,
+        icon: 'info'
+      }).then(async (result) => {
+        if (result.isDenied) {
+          return
+        }
+        this.isLoading = true;
+        const forms = {
+          daerahId: this.userData.daerahId,
+          wilayahId: this.userData.wilayahId,
+          jabatanStrukturalId: this.userData.jabatanStrukturalId,
+          nama_lengkap: this.userData.nama_lengkap,
+          alamat: this.userData.alamat,
+          tanggalLahir: this.userData.tanggalLahir,
+          tempatLahir: this.userData.tempatLahir,
+          nik: this.userData.nik,
+          pekerjaan: this.userData.pekerjaan,
+          statusPerkawinan: this.userData.statusPerkawinan,
+          agama: this.userData.agama,
+          file: this.userData.file,
+          keterangan: this.userData.folder,
+        }
+
+        await lpkni.UpdateDataUserImage(forms).then(() => {
+          Swal.fire({
+            icon: "success",
+            title: "Informasi!",
+            text: "Data Berhasil Di Perbarui!",
+            showConfirmButton: true,
+          })
+        }).catch(() => {
+          Swal.fire({
+            icon: "error",
+            title: "Informasi!",
+            text: "Gagal Memperbarui Data!",
+            showConfirmButton: true,
+          })
+        }).finally(() => {
+          this.isLoading = false;
+        })
+      });
     }
   }
 };
@@ -434,5 +501,23 @@ export default {
 
 .animate-fadeInUp {
   animation: fadeInUp 0.6s ease-out;
+}
+
+
+/* Tailwind CSS untuk spinner */
+.spinner-border {
+  border-color: transparent;
+  border-top-color: white;
+  animation: spin 1s linear infinite;
+}
+
+@keyframes spin {
+  0% {
+    transform: rotate(0deg);
+  }
+
+  100% {
+    transform: rotate(360deg);
+  }
 }
 </style>

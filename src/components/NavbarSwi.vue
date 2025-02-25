@@ -83,65 +83,75 @@
             </div>
         </div>
 
-        <!-- Mobile Sidebar Menu -->
-        <div v-show="isMenuOpen" class="fixed inset-0 bg-green-800 bg-opacity-50 z-50 md:hidden">
-            <div class="flex justify-end p-6">
-                <button @click="toggleMenu" class="text-green-600">
-                    <i class="fas fa-times text-2xl"></i>
+        <div class="fixed inset-y-0 right-0 w-64 bg-white text-black z-50 transform transition-transform duration-300"
+            :class="{ 'translate-x-full': !isMenuOpen, 'translate-x-0': isMenuOpen }">
+
+            <!-- Close Button -->
+            <div class="flex justify-end p-4">
+                <router-link to="/" class="text-black text-3xl font-bold flex items-center">
+                    <img :src="getfullPathImage('assets/logoswi.png')" alt="LPKNI" class="w-15 h-12 mr-12 mt-2">
+                </router-link>
+
+                <button @click="toggleMenu" class="text-black">
+                    <i class="fas fa-times w-6 h-6"></i>
                 </button>
+
             </div>
-            <ul class="flex flex-col items-center text-green-600 space-y-6">
+
+            <!-- Menu Items -->
+            <ul class="space-y-6 p-6">
                 <li>
-                    <a href="/#about" class="text-green-600 hover:text-green-800 flex items-center space-x-2">
-                        <i class="fas fa-info-circle"></i>
+                    <a href="/#about" class="flex items-center space-x-2 hover:text-gray-300">
+                        <i class="fas fa-info-circle w-5 h-5"></i>
                         <span>About</span>
                     </a>
                 </li>
                 <li>
-                    <a href="/#services" class="text-green-600 hover:text-green-800 flex items-center space-x-2">
-                        <i class="fas fa-cogs"></i>
+                    <a href="/#services" class="flex items-center space-x-2 hover:text-gray-300">
+                        <i class="fas fa-cogs w-5 h-5"></i>
                         <span>Services</span>
                     </a>
                 </li>
                 <li>
-                    <a href="/#contact" class="text-green-600 hover:text-green-800 flex items-center space-x-2">
-                        <i class="fas fa-phone-alt"></i>
+                    <a href="/#contact" class="flex items-center space-x-2 hover:text-gray-300">
+                        <i class="fas fa-phone-alt w-5 h-5"></i>
                         <span>Contact</span>
                     </a>
                 </li>
-                <li class="relative group">
-                    <button class="text-green-600 hover:text-green-800 flex items-center space-x-2 delay-100">
-                        <i class="fas fa-clipboard-check"></i>
-                        <span>Pendaftaran</span>
-                        <i class="fas fa-chevron-down ml-1"></i>
+
+                <!-- Dropdown Pendaftaran -->
+                <li class="relative">
+                    <button @click="toggleDropdown"
+                        class="flex items-center w-full justify-between hover:text-gray-300">
+                        <div class="flex items-center space-x-2">
+                            <i class="fas fa-clipboard-check w-5 h-5"></i>
+                            <span>Pendaftaran</span>
+                        </div>
+                        <i class="fas fa-chevron-down w-5 h-5 transition-transform"
+                            :class="{ 'rotate-180': isDropdownOpen }"></i>
                     </button>
-                    <!-- Dropdown Menu -->
-                    <ul
-                        class="absolute left-0 min-w-[150px]  bg-green-600 text-black shadow-lg rounded-lg hidden group-hover:block z-10">
+
+                    <ul v-show="isDropdownOpen" class="mt-2 bg-white text-black rounded shadow-lg overflow-hidden">
                         <li>
-                            <router-link to="/auth/register-anggota"
-                                class="block px-4 py-2 text-sm hover:bg-green-800">Daftar
+                            <router-link to="/auth/login" class="block px-4 py-2 text-sm hover:bg-gray-200">Daftar
                                 Anggota LPKNI</router-link>
                         </li>
                         <li>
-                            <router-link to="/auth/swi/login" class="block px-4 py-2 text-sm hover:bg-green-800">Daftar
+                            <router-link to="/auth/swi/login" class="block px-4 py-2 text-sm hover:bg-gray-200">Daftar
                                 Standar Warung Indonesia</router-link>
                         </li>
                     </ul>
                 </li>
+
                 <li>
-                    <router-link to="/suara-konsumen"
-                        class="text-green-600 hover:text-green-800 flex items-center space-x-2">
-                        <i class="fas fa-newspaper"></i>
+                    <router-link to="/suara-konsumen" class="flex items-center space-x-2 hover:text-gray-300">
+                        <i class="fas fa-newspaper w-5 h-5"></i>
                         <span>Suara Konsumen</span>
                     </router-link>
                 </li>
-
-                <!-- Pengaduan (Direct ke Form Pengaduan) -->
                 <li>
-                    <router-link to="/pengaduan"
-                        class="text-green-600 hover:text-green-800 flex items-center space-x-2">
-                        <i class="fas fa-exclamation-triangle"></i>
+                    <router-link to="/pengaduan" class="flex items-center space-x-2 hover:text-gray-300">
+                        <i class="fas fa-exclamation-triangle w-5 h-5"></i>
                         <span>Pengaduan</span>
                     </router-link>
                 </li>
@@ -157,7 +167,8 @@ export default {
         return {
             isMenuOpen: false,
             lastScrollY: 0,
-            isNavbarVisible: true
+            isNavbarVisible: true,
+            isDropdownOpen: false,
         };
     },
     methods: {
@@ -169,6 +180,11 @@ export default {
             this.isNavbarVisible = currentScrollY < this.lastScrollY || currentScrollY < 50; // Jika scroll ke atas atau posisi dekat atas
             this.lastScrollY = currentScrollY;
         },
+
+        toggleDropdown() {
+            this.isDropdownOpen = !this.isDropdownOpen;
+        },
+
         getfullPathImage(img) {
             return swi.getfullpathImageSwi(img)
         },

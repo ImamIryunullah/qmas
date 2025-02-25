@@ -24,7 +24,7 @@
                             <div class="flex space-x-6">
                                 <div class="">
                                     <img class="max-w-[10rem] 2xl:max-w-[15rem] max-h-[5rem] 2xl:max-h-[10rem] rounded-xl"
-                                        :src="`http://192.168.1.50:3000${news.media[0].filepath}`" alt="">
+                                        :src="`http://192.168.1.39:3000${news.media[0].filepath}`" alt="">
                                 </div>
                                 <div>
                                     <div>
@@ -70,7 +70,7 @@
                             <div class="flex space-x-6">
                                 <div class="">
                                     <img class="max-w-[10rem] max-h-[10rem] rounded-xl"
-                                        :src="`http://192.168.1.50:3000${news.media[0].filepath}`" alt="">
+                                        :src="`http://192.168.1.39:3000${news.media[0].filepath}`" alt="">
                                 </div>
                                 <div>
                                     <div>

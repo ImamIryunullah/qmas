@@ -46,7 +46,7 @@
             <!-- Tombol Logout -->
             <div class="p-4 border-t border-green-600">
                 <button @click="logout"
-                    class="flex items-center py-3 px-4 w-full rounded-md bg-white hover:bg-emerald-900 transition">
+                    class="flex items-center py-3 px-4 w-full rounded-md bg-white hover:bg-emerald-200 transition">
                     <i class="fas fa-sign-out-alt w-6 text-emerald-700"></i>
                     <span class="ml-3 text-emerald-700 text-extrabold">Logout</span>
                 </button>
@@ -62,6 +62,7 @@
 
 <script>
 import swi from '@/service/swi';
+import Swal from 'sweetalert2';
 export default {
     data() {
         return {
@@ -85,11 +86,18 @@ export default {
         async logout() {
             try {
                 await this.$store.dispatch("storeswi/logoutSwi");
-                this.$toast.success("Successfully logged out.", { position: "top-right", duration: 1000 });
+                Swal.fire({
+                    icon: 'success',
+                    title: 'Berhasil Logout',
+                });
                 await this.$router.push("/auth/swi/login");
             } catch (e) {
                 console.log(e);
-                this.$toast.error("Couldn't log out.", { position: "top-right", duration: 1000 });
+                Swal.fire({
+                    icon: 'error',
+                    title: 'Logout Gagal',
+                });
+                return;
             }
         },
         getfullPathImage(img) {

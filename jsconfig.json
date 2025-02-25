@@ -1,5 +1,8 @@
 {
   "compilerOptions": {
+    "types": [
+    "vue-sweetalert2"
+  ],
     "target": "es5",
     "module": "esnext",
     "baseUrl": "./",

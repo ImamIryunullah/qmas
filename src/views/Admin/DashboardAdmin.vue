@@ -1,8 +1,8 @@
 <template>
   <div>
     <NavbarAdmin />
-    <div class="bg-gray-100 w-full h-full min-h-screen pl-28 mx-auto p-8">
-
+    <div class="bg-gray-100 w-full h-full  min-h-screen pl-28 mx-auto p-8 transition-all"
+      :class="isSidebarOpen ? 'ml-40' : 'ml-0'">
       <!-- Dashboard Header -->
       <div class="text-center mb-12">
         <div class="flex justify-center items-center space-x-3">
@@ -13,7 +13,6 @@
           Lembaga Perlindungan Konsumen Indonesia
         </p>
       </div>
-
 
       <!-- Dashboard Stats Cards -->
       <div class="grid grid-cols-1 sm:grid-cols-2 lg:grid-cols-3 xl:grid-cols-4 gap-6 gap-y-10">
@@ -33,13 +32,13 @@
 
         </div>
       </div>
-
     </div>
   </div>
 </template>
 
 <script>
 import NavbarAdmin from '@/components/NavbarAdmin.vue';
+import lpkni from '@/service/lpkni'; // Importing the lpkni service
 
 export default {
   components: {
@@ -48,7 +47,7 @@ export default {
   data() {
     return {
       dashboardData: [
-        { title: "Data Pendaftaran Anggota", total: "35", icon: "fas fa-user-plus", bgColor: "bg-purple-500" },
+        { title: "Data Pendaftaran Anggota", total: "0", icon: "fas fa-user-plus", bgColor: "bg-purple-500" },
         { title: "Jabatan Tingkat Kota/Kabupaten", total: "11", icon: "fas fa-city", bgColor: "bg-yellow-500" },
         { title: "Jabatan Tingkat Provinsi", total: "11", icon: "fas fa-landmark", bgColor: "bg-green-500" },
         { title: "Total Jabatan Seluruh Indonesia", total: "6028", icon: "fas fa-globe", bgColor: "bg-red-500" },
@@ -56,12 +55,37 @@ export default {
         { title: "Total Pengaduan", total: "3", icon: "fas fa-exclamation-triangle", bgColor: "bg-purple-500" },
         { title: "Tim Pusat", total: "15", icon: "fas fa-users", bgColor: "bg-red-400" },
         { title: "Data Transaksi", total: "13", icon: "fas fa-wallet", bgColor: "bg-gray-900" }
-      ]
+      ],
+      listDataAnggota: [] // To store the list of members
+    }
+  },
+  mounted() {
+    this.getAllAnggota();
+  },
+  computed: {
+    isSidebarOpen() {
+      return this.$store.state.storeSidebar.isSidebarOpen;
+    }
+  },
+  methods: {
+    async getAllAnggota() {
+      try {
+        const response = await lpkni.getAllUserData();
+        this.listDataAnggota = response.data;
+        console.log(this.listDataAnggota);
+        this.$toast.success('Berhasil mengambil Data Anggota');
+        this.dashboardData[0].total = this.listDataAnggota.length;
+      } catch (error) {
+        this.$toast.error('Gagal mengambil Data Anggota');
+      }
     }
   }
 };
+
 </script>
 
-<style scoped>
-/* You can add additional custom styles here for layout and responsiveness */
+<style>
+.transition-all {
+  transition: all 0.3s ease-in-out;
+}
 </style>

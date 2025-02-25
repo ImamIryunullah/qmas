@@ -2,73 +2,79 @@
   <div class="pb-20 ">
     <NavbarSwiAuth />
   </div>
+  <div v-if="isMounted"
+    class="flex justify-center items-center w-full min-h-screen bg-gradient-to-r from-green-300 to-green-700 py-10">
 
-  <div v-if="isMounted" class=" flex justify-center w-full h-full bg-green-100 pb-20 pt-20 ">
-    <!-- <img src="@/assets/logoswi.png" alt="SWI Logo" class="w-24 h-auto mb-6" /> -->
-    <div class="w-100 bg-white shadow-lg rounded-lg  flex flex-col lg:flex-row animate-fadeInUp">
-      <!-- Left Section (Login Form) -->
-      <div
-        class="w-full lg:w-100 h-full flex flex-col justify-center items-center px-8 lg:px-20 bg-white border border-gray-300 rounded-lg shadow-lg py-8 ">
-        <!-- <img src="@/assets/logoswi.png" alt="SWI Logo" class="w-24 h-auto mb-6" /> -->
-        <div class="text-center md:text-left">
-          <h2 class="text-2xl md:text-3xl font-bold text-green-600 mb-2 md:mb-4">
-            Selamat Datang Kembali
-          </h2>
-          <p class="text-xs md:text-sm text-gray-900 mb-4 md:mb-6 text-center">
-            Login sekarang untuk melanjutkan
-          </p>
-        </div>
+    <div class="hidden lg:flex lg:w-1/2 h-[508px] rounded-l-lg overflow-hidden border-2 object-cover border-white">
+      <img src="@/assets/gaga.jpg" alt="Login Illustration" class="w-full h-full object-cover">
+    </div>
 
+    <!-- Kolom Form Login -->
+    <div class="w-full lg:w-100 flex flex-col justify-center items-center px-8 lg:px-20 py-9 bg-white rounded-r-lg">
 
-        <div class="w-full max-w-md space-y-4">
-          <form @submit.prevent="login">
-            <!-- Email -->
-            <div>
-              <label class="text-sm text-gray-500 font-bold">Email</label>
-              <input v-model="email" type="email" placeholder="Email"
-                class="w-full p-3 border border-gray-300 rounded-lg focus:outline-none focus:ring-2 focus:ring-green-600 transition duration-200 ease-in-out transform mt-2 hover:scale-105"
-                required />
-            </div>
-
-            <!-- Password -->
-            <div class="mt-5 mb-5">
-              <label class="text-sm text-gray-500 font-bold">Password</label>
-              <input v-model="password" :type="passwordVisible ? 'text' : 'password'" placeholder="Password"
-                class="w-full p-3 border border-gray-300 rounded-lg focus:outline-none focus:ring-2 focus:ring-green-600 transition duration-200 ease-in-out mt-2 transform hover:scale-105"
-                required />
-              <div class="flex items-center mt-3">
-                <input type="checkbox" v-model="passwordVisible"
-                  class="mr-2 transform transition duration-200 ease-in-out cursor-pointer " />
-                <label class="text-sm text-gray-500 font-bold">Tampilkan Password</label>
-              </div>
-            </div>
-
-
-
-            <button type="submit"
-              class="w-full h-12 bg-green-600 text-white font-bold rounded-lg hover:bg-green-800 transition hover:scale-105"
-              :disabled="loading">
-              {{ loading ? 'Loading...' : 'MASUK' }}
-            </button>
-            <div class="mt-2">
-              <router-link to="/lupapassword"
-                class="text-green-600 font-bold mb-3 block text-left underline hover:scale-105">Lupa
-                password?</router-link>
-            </div>
-
-          </form>
-          <p class="mt-2 text-sm text-gray-500 hover:scale-105">
-            Belum memiliki Akun SWI?
-            <router-link to="/auth/swi/register" class="text-green-600 font-semibold hover:underline ">Daftar
-              Sekarang</router-link>
-          </p>
-        </div>
-
+      <div class="text-center md:text-left">
+        <h2 class="text-xl md:text-2xl font-bold text-green-600 mb-4 flex items-center justify-center md:justify-start">
+          <i class="fas fa-sign-in-alt text-green-600 mr-2"></i> Selamat Datang Kembali
+        </h2>
+        <p class="text-sm md:text-base text-gray-700 mb-6 text-center md:text-left">
+          Login sekarang untuk melanjutkan
+        </p>
       </div>
 
+      <div class="w-full max-w-md">
+        <form @submit.prevent="login">
+          <!-- Email -->
+          <div>
+            <label class="text-sm text-gray-500 font-bold">Email</label>
+            <div class="relative">
+              <input v-model="email" type="email" placeholder="Email"
+                class="w-full p-3 pl-10 border border-gray-300 rounded-lg focus:ring-2 focus:ring-green-600" required />
+              <i class="fas fa-envelope absolute left-3 top-4 text-gray-400"></i>
+            </div>
+          </div>
+
+          <!-- Password -->
+          <div class="mt-5">
+            <label class="text-sm text-gray-500 font-bold">Password</label>
+            <div class="relative w-full">
+              <input v-model="password" :type="passwordVisible ? 'text' : 'password'" placeholder="Password"
+                class="w-full p-3 pl-10 border border-gray-300 rounded-lg focus:ring-2 focus:ring-green-600" required />
+              <i class="fas fa-lock absolute left-3 top-4 text-gray-400"></i>
+            </div>
+            <div class="flex items-center mt-3">
+              <input type="checkbox" v-model="passwordVisible" class="mr-2 cursor-pointer" />
+              <label class="text-sm text-gray-500 font-bold">Tampilkan Password</label>
+            </div>
+          </div>
+
+          <!-- Submit Button -->
+          <button type="submit"
+            class="w-full h-12 bg-green-600 text-white font-bold rounded-lg hover:bg-green-800 mt-5 transition-transform transform hover:scale-105"
+            :disabled="loading">
+            <i v-if="loading" class="fas fa-spinner fa-spin"></i> {{ loading ? 'Loading...' : 'MASUK' }}
+          </button>
+
+          <!-- Forgot Password -->
+          <div class="mt-3 text-center">
+            <router-link to="/auth/swi/get-reset-password"
+              class="text-green-600 font-bold underline hover:text-green-800">
+              Lupa password?
+            </router-link>
+          </div>
+
+          <!-- Register -->
+          <p class="mt-4 text-sm text-gray-500 text-center">
+            Belum memiliki akun SWI?
+            <router-link to="/auth/swi/register" class="text-green-600 font-semibold hover:underline">Daftar
+              Sekarang</router-link>
+          </p>
+
+        </form>
+      </div>
     </div>
 
   </div>
+
   <div class="w-full">
     <FooterSwiAuth />
   </div>
@@ -78,6 +84,7 @@
 import NavbarSwiAuth from "@/components/NavbarSwi.vue";
 import FooterSwiAuth from "@/components/FooterSwiAuth.vue";
 import swi from "@/service/swi";
+import Swal from 'sweetalert2';
 export default {
   components: {
     NavbarSwiAuth,
@@ -117,7 +124,10 @@ export default {
       try {
         await this.$store.dispatch("storeswi/loginSwi", { email: this.email, password: this.password });
         if (this.isUserLoggedIn) {
-          this.$toast.success("Berhasil login", { position: "top-right", duration: 1000 });
+          Swal.fire({
+            icon: 'success',
+            title: 'Berhasil Login',
+          });
           if (this.userRole === "swi") {
             await this.$router.push("/swi/dashboard");
           }

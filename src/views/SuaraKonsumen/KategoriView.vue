@@ -10,12 +10,11 @@
                         <img src="@/assets/bahlil.jpeg" alt="Main Story"
                             class="w-full h-full object-cover rounded-md mb-4" />
                         <h3 class="text-lg font-semibold text-gray-900 mb-2">
-                            Terhimpit kemiskinan dan kesepian, kisah lansia di Jepang memilih hidup di penjara
+                            {{ article.judul }}
                         </h3>
                         <p class="text-xs sm:text-sm text-red-700 mt-1">{{ article.waktu_publikasi }}</p>
                         <p class="text-sm text-gray-700 mb-4">
-                            Di Jepang, seorang lansia memilih hidup di penjara karena terhimpit kemiskinan dan kesepian.
-                            Ini menjadi fenomena menarik yang...
+                            {{ article.paragraf1 }}
                         </p>
                         <router-link :to="'/suara-konsumen/detail/1'">
                             <button class="text-red-600 hover:text-red-800 font-semibold mt-4 text-xs sm:text-sm">Baca
@@ -27,7 +26,7 @@
                 <div class="col-span-1">
                     <article class="p-4 ">
                         <h4 class="text-sm font-semibold text-gray-900">
-                            Doyan makan bakso dan seblak, ribuan remaja putri di Karawang derita anemia
+                            {{ article.judul }}
                         </h4>
                         <p class="text-xs sm:text-sm text-red-700 mt-1">{{ article.waktu_publikasi }}</p>
                         <router-link :to="'/suara-konsumen/detail/2'">
@@ -39,7 +38,7 @@
 
                     <article class=" p-4 ">
                         <h4 class="text-sm font-semibold text-gray-900">
-                            Pesona 5 artis Indonesia masuk dalam Daftar Perempuan Tercantik Dunia 2024 versi TC Candler
+                            {{ article.judul }}
                         </h4>
                         <p class="text-xs sm:text-sm text-red-700 mt-1">{{ article.waktu_publikasi }}</p>
                         <router-link :to="'/suara-konsumen/detail/3'">
@@ -51,7 +50,7 @@
 
                     <article class=" p-4 ">
                         <h4 class="text-sm font-semibold text-gray-900">
-                            'Geng anak baik': Tak Takut Kids Club jadi ruang aman anak-anak terlantar di Singapura
+                            {{ article.judul }}
                         </h4>
                         <p class="text-xs sm:text-sm text-red-700 mt-1">{{ article.waktu_publikasi }}</p>
                         <router-link :to="'/suara-konsumen/detail/4'">
@@ -63,7 +62,7 @@
 
                     <article class=" p-4 ">
                         <h4 class="text-sm font-semibold text-gray-900">
-                            'Geng anak baik': Tak Takut Kids Club jadi ruang aman anak-anak terlantar di Singapura
+                            {{ article.judul }}
                         </h4>
                         <p class="text-xs sm:text-sm text-red-700 mt-1">{{ article.waktu_publikasi }}</p>
                         <router-link :to="'/suara-konsumen/detail/4'">
@@ -75,7 +74,7 @@
 
                     <article class=" p-4 ">
                         <h4 class="text-sm font-semibold text-gray-900">
-                            'Geng anak baik': Tak Takut Kids Club jadi ruang aman anak-anak terlantar di Singapura
+                            {{ article.judul }}
                         </h4>
                         <p class="text-xs sm:text-sm text-red-700 mt-1">{{ article.waktu_publikasi }}</p>
                         <router-link :to="'/suara-konsumen/detail/4'">
@@ -87,7 +86,7 @@
 
                     <article class=" p-4 ">
                         <h4 class="text-sm font-semibold text-gray-900">
-                            'Geng anak baik': Tak Takut Kids Club jadi ruang aman anak-anak terlantar di Singapura
+                            {{ article.judul }}
                         </h4>
                         <p class="text-xs sm:text-sm text-red-700 mt-1">{{ article.waktu_publikasi }}</p>
                         <router-link :to="'/suara-konsumen/detail/4'">
@@ -113,11 +112,11 @@
                     <img src="@/assets/bahlil.jpeg" alt="Latest Story"
                         class="w-full h-56 object-cover rounded-lg mb-4" />
                     <h3 class="text-sm sm:text-base font-semibold text-gray-900 mb-2">
-                        Studi: Waspada, AI bisa melemahkan kemampuan manusia berpikir kritis
+                        {{ article.judul }}
                     </h3>
                     <p class="text-xs sm:text-sm text-red-700 mb-2">{{ article.waktu_publikasi }}</p>
                     <p class="text-xs sm:text-sm text-gray-700 mb-4">
-                        AI berpotensi merubah cara manusia berpikir, mengurangi kemampuan berpikir kritis dan logis.
+                        {{ article.deskripsi }}
                     </p>
                     <router-link :to="'/suara-konsumen/detail/1'">
                         <button class="text-red-600 hover:text-red-800 font-semibold text-xs sm:text-sm">Baca
@@ -130,11 +129,11 @@
                     <img src="@/assets/bahlil.jpeg" alt="Latest Story"
                         class="w-full h-56 object-cover rounded-lg mb-4" />
                     <h3 class="text-sm sm:text-base font-semibold text-gray-900 mb-2">
-                        Apa itu tren Youngtro? Ketika iPhone dan digicam lawas viral serta diburu Gen Z
+                        {{ article.judul }}
                     </h3>
                     <p class="text-xs sm:text-sm text-red-700 mb-2">{{ article.waktu_publikasi }}</p>
                     <p class="text-xs sm:text-sm text-gray-700 mb-4">
-                        Gen Z mulai mencintai kamera lawas dan iPhone sebagai tren baru dalam media sosial.
+                        {{ article.deskripsi }}
                     </p>
                     <router-link :to="'/suara-konsumen/detail/2'">
                         <button class="text-red-600 hover:text-red-800 font-semibold text-xs sm:text-sm">Baca
@@ -147,11 +146,11 @@
                     <img src="@/assets/bahlil.jpeg" alt="Latest Story"
                         class="w-full h-56 object-cover rounded-lg mb-4" />
                     <h3 class="text-sm sm:text-base font-semibold text-gray-900 mb-2">
-                        'Saya bukan dari keluarga kaya': Agnez Mo bahas kisruh royalti Rp1,5 M
+                        {{ article.judul }}
                     </h3>
                     <p class="text-xs sm:text-sm text-red-700 mb-2">{{ article.waktu_publikasi }}</p>
                     <p class="text-xs sm:text-sm text-gray-700 mb-4">
-                        Agnez Mo membahas masalah royalti yang melibatkan Rp1,5 M dengan Menteri Hukum.
+                        {{ article.deskripsi }}
                     </p>
                     <router-link :to="'/suara-konsumen/detail/3'">
                         <button class="text-red-600 hover:text-red-800 font-semibold text-xs sm:text-sm">Baca
@@ -164,12 +163,11 @@
                     <img src="@/assets/bahlil.jpeg" alt="Latest Story"
                         class="w-full h-56 object-cover rounded-lg mb-4" />
                     <h3 class="text-sm sm:text-base font-semibold text-gray-900 mb-2">
-                        Golongan darah B disebut lebih panjang umur dan awet muda, ini alasannya
+                        {{ article.judul }}
                     </h3>
                     <p class="text-xs sm:text-sm text-red-700 mb-2">{{ article.waktu_publikasi }}</p>
                     <p class="text-xs sm:text-sm text-gray-700 mb-4">
-                        Penelitian menunjukkan bahwa golongan darah B memiliki umur yang lebih panjang dan lebih awet
-                        muda.
+                        {{ article.deskripsi }}
                     </p>
                     <router-link :to="'/suara-konsumen/detail/4'">
                         <button class="text-red-600 hover:text-red-800 font-semibold text-xs sm:text-sm">Baca
@@ -196,11 +194,10 @@
                         <img src="@/assets/bahlil.jpeg" alt="Left Article"
                             class="w-full h-48 object-cover rounded-md mb-4" />
                         <h3 class="text-sm sm:text-base font-semibold text-gray-900 mb-2">
-                            Pope Francis is showing 'slight improvement' after pneumonia diagnosis
+                            {{ article.judul }}
                         </h3>
                         <p class="text-xs sm:text-sm text-red-700 mt-1">{{ article.waktu_publikasi }}</p>
-                        <p class="text-xs sm:text-sm text-gray-700 mb-4">Pope Francis has shown slight improvement after
-                            being diagnosed with pneumonia, says the Vatican.</p>
+                        <p class="text-xs sm:text-sm text-gray-700 mb-4">{{ article.deskripsi }}</p>
                         <router-link :to="'/suara-konsumen/detail/1'">
                             <button class="text-red-600 hover:text-red-800 font-semibold mt-4 text-xs sm:text-sm">Baca
                                 Selengkapnya</button>
@@ -213,11 +210,10 @@
                         <img src="@/assets/bahlil.jpeg" alt="Main Article"
                             class="w-full h-80 object-cover rounded-md mb-4" />
                         <h3 class="text-lg font-semibold text-gray-900 mb-2">
-                            Apple launches the iPhone 16e, a cheaper new version of iPhone 16
+                            {{ article.judul }}
                         </h3>
                         <p class="text-xs sm:text-sm text-red-700 mt-1">{{ article.waktu_publikasi }}</p>
-                        <p class="text-sm text-gray-700 mb-4">Apple announced the release of the iPhone 16e, a more
-                            affordable version of the iPhone 16 series. The new model features...</p>
+                        <p class="text-sm text-gray-700 mb-4">{{ article.deskripsi }}</p>
                         <router-link :to="'/suara-konsumen/detail/2'">
                             <button class="text-red-600 hover:text-red-800 font-semibold mt-4 text-xs sm:text-sm">Baca
                                 Selengkapnya</button>
@@ -230,11 +226,10 @@
                         <img src="@/assets/bahlil.jpeg" alt="Right Article"
                             class="w-full h-48 object-cover rounded-md mb-4" />
                         <h3 class="text-sm sm:text-base font-semibold text-gray-900 mb-2">
-                            US calls out ‘dangerous’ Chinese helicopter maneuvers
+                            {{ article.judul }}
                         </h3>
                         <p class="text-xs sm:text-sm text-red-700 mt-1">{{ article.waktu_publikasi }}</p>
-                        <p class="text-xs sm:text-sm text-gray-700 mb-4">The United States has called out China over
-                            "dangerous" helicopter maneuvers over the South China Sea, as tensions rise...</p>
+                        <p class="text-xs sm:text-sm text-gray-700 mb-4">{{ article.deskripsi }}</p>
                         <router-link :to="'/suara-konsumen/detail/3'">
                             <button class="text-red-600 hover:text-red-800 font-semibold mt-4 text-xs sm:text-sm">Baca
                                 Selengkapnya</button>
@@ -245,7 +240,6 @@
         </section>
     </div>
     <FooterNews />
-
 </template>
 
 <script>
@@ -260,7 +254,10 @@ export default {
     data() {
         return {
             article: {
+                judul: 'ofjijweggggggggggeeeeeeeeeeeeeeeefwfweffeff',
                 waktu_publikasi: '27 Agustus 2024',
+                paragraf1: 'Lorem ipsum dolor sit amet consectetur, adipisicing elit. Exercitationem minima doloribus recusandae enim nesciunt dolores reiciendis molestiae. Quae, molestias impedit, optio voluptas perferendis fugit blanditiis, id esse molestiae deserunt velit cumque. Praesentium illo provident harum facere perferendis eos reiciendis voluptate voluptatem ut? Quasi quisquam quo quibusdam cum temporibus quam numquam facere sequi aperiam delectus accusamus harum exercitationem, iste, dolorem vel error nesciunt rem deserunt! Soluta, quidem aperiam. Provident labore at sint omnis! Dolore ipsam ducimus molestias cupiditate, omnis illum, sapiente dolores perferendis esse tenetur dolorem vero voluptatum quibusdam, corrupti sint quidem dicta laborum ratione? Natus, odio quae? Placeat neque, qui deleniti tempore est praesentium esse quibusdam facilis similique quae perspiciatis nam veritatis sit ducimus molestias adipisci quam blanditiis voluptates aut beatae distinctio accusantium. Temporibus, hic impedit beatae aperiam perferendis similique nobis dolore illum repudiandae, ipsum ad eius explicabo, voluptatem voluptate exercitationem blanditiis id reiciendis? Voluptatibus officiis sed quaerat possimus. Dolores eveniet quaerat maiores sed natus! Itaque distinctio adipisci natus accusamus laboriosam dolore iure? Omnis iure saepe et eligendi. Aut eum rem quia explicabo minus expedita vel illum nobis fugit quod accusamus a itaque minima iste delectus, mollitia perspiciatis? Tenetur quisquam odio et natus omnis sequi quibusdam, maxime fugit quidem voluptates?',
+                deskripsi: 'Lorem ipsum dolor sit, amet consectetur adipisicing elit. Ducimus dolorum a quis doloribus harum fuga accusamus placeat, maiores dolor rerum unde necessitatibus voluptatem voluptas atque. Fugiat, culpa cumque. Harum, esse.',
             }
         };
     },

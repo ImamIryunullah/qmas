@@ -4,16 +4,14 @@
     <NavbarLandingPage />
   </div>
 
-  <div v-if="isMounted" class=" flex justify-center w-full h-full bg-red-50 pb-20 pt-20 ">
-    <!-- Left Section (Background) -->
-    <!-- Right Section (Form) -->
+  <div v-if="isMounted" class="flex justify-center w-full h-full bg-gradient-to-r from-red-300 to-red-600 pb-20 pt-20">
     <div
       class="w-full lg:w-100 h-full flex flex-col justify-center items-center px-8 lg:px-20 bg-white border border-gray-300 rounded-lg shadow-lg  animate-fadeInUp">
 
       <div class="">
-        <h2 class="text-3xl font-semibold text-red-600 mb-5 mt-5">Buat Akun Baru</h2>
+        <h2 class="text-3xl font-semibold text-red-600 mb-2 mt-5">Buat Akun Baru</h2>
       </div>
-      <p class="text-sm text-gray-500 mb-5">Bergabung Menjadi Anggota LPKNI Wilayah Dan Daerah</p>
+      <p class="text-sm text-gray-500 mb-5">Buat Akun Dan Bergabung Menjadi Anggota LPKNI</p>
 
       <form @submit.prevent="submitForm" class="w-full max-w-md space-y-5">
         <div class="flex flex-col space-y-2">
@@ -76,9 +74,6 @@
           Daftar
         </button>
       </form>
-
-
-
       <!-- Link to Sign In -->
       <p class="mt-4 text-sm text-gray-500 mb-5">
         Sudah Memiliki Akun?
@@ -97,6 +92,7 @@
 import Api from "@/service/lpkni.js";
 import NavbarLandingPage from "@/components/NavbarLandingPage.vue";
 import FooterLandingPage from "@/components/FooterLandingPage.vue";
+import Swal from 'sweetalert2';
 export default {
   components: {
     NavbarLandingPage,
@@ -150,11 +146,19 @@ export default {
     },
     submitForm() {
       if (this.isFormInvalid()) {
-        alert("Lengkapi Data Anda!");
+        Swal.fire({
+          icon: 'error',
+          title: 'Error',
+          text: 'Lengkapi Data Diri Anda',
+        });
         return;
       }
       if (this.form.password !== this.form.confirmpassword) {
-        alert("Password Anda Tidak Cocok");
+        Swal.fire({
+          icon: 'error',
+          title: 'Error',
+          text: 'Password Anda Tidak Cocok',
+        });
         return;
       }
       const userData = {
@@ -168,21 +172,47 @@ export default {
       console.log(userData);
       Api.CreateUser(userData)
         .then((res) => {
-          alert(res.data.message);
-          this.$router.push("/auth/login");
+          Swal.fire({
+            icon: 'success',
+            title: 'Success',
+            text: res.data.message,
+            timer: 1500,
+            showConfirmButton: false
+          }).then(() => {
+            this.$router.push("/auth/login");
+          });
         })
         .catch((error) => {
           if (error.response) {
-            alert(`${error.response.data.error}`);
+            Swal.fire({
+              icon: 'error',
+              title: 'Error',
+              text: `${error.response.data.error}`,
+              timer: 1500,
+              showConfirmButton: false
+            });
           } else if (error.request) {
-            alert("No response from server.");
+            Swal.fire({
+              icon: 'error',
+              title: 'No Response from Server',
+              text: "The server did not respond.",
+              timer: 1500,
+              showConfirmButton: false
+            });
           } else {
-            alert(`Error: ${error.message}`);
+            Swal.fire({
+              icon: 'error',
+              title: 'Error',
+              text: `Error: ${error.message}`,
+              timer: 1500,
+              showConfirmButton: false
+            });
           }
         });
-    },
-  },
-};
+
+    }
+  }
+}
 </script>
 
 <style scoped>

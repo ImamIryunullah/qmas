@@ -131,12 +131,35 @@ const storeswi = {
     },
   },
 };
-
+const storeSidebar = {
+  namespaced: true, // Menambahkan namespace
+  state: {
+    isSidebarOpen: window.innerWidth > 768,
+  },
+  mutations: {
+    toggleSidebar(state) {
+      state.isSidebarOpen = !state.isSidebarOpen;
+      console.log(state.isSidebarOpen);
+    },
+    setSidebarState(state, value) {
+      state.isSidebarOpen = value;
+    },
+  },
+  actions: {
+    toggleSidebar(context) {
+      context.commit("toggleSidebar");
+    },
+    setSidebarState(context, value) {
+      context.commit("setSidebarState", value);
+    },
+  },
+};
 // Membuat store utama dengan kedua modul
 const store = createStore({
   modules: {
     storeLpkni, // Menambahkan modul Lpkni
     storeswi, // Menambahkan modul Swi
+    storeSidebar,
   },
 });
 

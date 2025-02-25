@@ -8,19 +8,24 @@
             <!-- Left Section (Text Content) -->
             <div class="md:w-1/2 text-center md:text-left px-4 pt-5 sm:text-base">
                 <!-- Typing Effect for Heading -->
-                <h1 id="typing" class="text-4xl md:text-5xl font-bold mb-4"></h1>
-                <p class="mb-6 text-lg">LPKNI merupakan salah satu lembaga atau institusi yang mempunyai tugas pokok dan
+                <div class="flex items-center justify-center">
+                    <h1 id="typing" class="text-4xl md:text-5xl font-bold mb-4"></h1>
+                </div>
+
+                <p class="mb-6 text-lg text-justify">LPKNI merupakan salah satu lembaga atau institusi yang mempunyai
+                    tugas
+                    pokok dan
                     fungsinya adalah melindungi hak setiap warga negara baik perseorangan (konsumen) maupun badan yang
                     harus mendapatkan perlakuan yang layak selaku konsumen khususnya dan masyarakat sebagai warga negara
                     Indonesia pada umumnya.</p>
                 <div class="flex space-x-4">
                     <a href="/auth/login"
                         class="bg-white text-red-600 px-6 py-2 rounded-lg font-semibold hover:bg-gray-100 transition duration-300">
-                        Daftar LPKNI
+                        LPKNI
                     </a>
                     <a href="/auth/swi/login"
-                        class="bg-white text-red-600 px-6 py-2 rounded-lg font-semibold hover:bg-gray-100 transition duration-300">
-                        Daftar Standarisasi Warung Indonesia
+                        class="bg-white text-red-600 px-6 py-2 rounded-lg font-semibold hover:bg-gray-100 transition duration-300 ">
+                        Standarisasi Warung Indonesia
                     </a>
                 </div>
 
@@ -50,8 +55,6 @@
                     <ul class="list-disc text-gray-600 pl-5 space-y-2">
                         <li>Sertifikat Warung / Restoran setelah uji kelayakan LPKNI.</li>
                         <li>Banner daftar menu dan harga dari pihak sponsor.</li>
-                        <li>Bill / Bon dengan logo sponsor untuk konsumen.</li>
-                        <li>Akses di Google Maps, foto warung terlihat di peta.</li>
                         <li>Promosi di majalah suara konsumen & website SWI.</li>
                     </ul>
                 </div>
@@ -63,10 +66,8 @@
                         <li>✅ Pendaftaran Offline dan Online</li>
                         <li>✅ Verifikasi Data dan Approved</li>
                         <li>✅ Sosialisasi Penggunaan Bahan Makanan</li>
-                        <li>✅ Sertifikasi SWI</li>
                         <li>✅ Pemeriksaan</li>
-                        <li>✅ Kesimpulan dan Penutup</li>
-                        <li>✅ Lampiran-Lampiran</li>
+                        <li>✅ Sertifikasi SWI</li>
                     </ul>
                 </div>
 
@@ -118,8 +119,13 @@
         </section>
         <!-- Track Record Section -->
         <section id="track-record" class="py-20 px-6 bg-white">
-            <h2 class="text-3xl font-semibold text-center mb-10 text-red-700">Perjalanan LPKNI</h2>
-            <p class="text-lg text-gray-600 text-center max-w-3xl mx-auto mb-12">
+            <h2 class="text-3xl font-semibold text-center mb-2 text-red-700 flex items-center justify-center">
+                <!-- Icon before the title -->
+                <i class="fas fa-arrow-right text-red-700 mr-3"></i>
+                Perjalanan LPKNI
+            </h2>
+
+            <p class="text-lg text-gray-600 max-w-3xl mx-auto mb-12 text-justify">
                 Selama bertahun-tahun, LPKNI telah aktif bekerja untuk melindungi hak-hak konsumen, menyelesaikan
                 perselisihan,
                 dan meningkatkan kesadaran konsumen. Berikut ini adalah beberapa kegiatan dan pencapaian penting kami.
@@ -133,7 +139,7 @@
                         class="rounded-lg w-full object-cover transition duration-300 ease-in-out hover:opacity-80 max-h-80">
                     <h3 class="text-xl font-semibold mt-4 hover:text-red-600">Presentasi Standarisasi Warung Indonesia
                     </h3>
-                    <p class="text-gray-600 mt-2">
+                    <p class="text-gray-600 mt-2 text-justify">
                         Presentasi Standarisasi Warung Indonesia bersama Kementrian Pariwisata dan Ekonomi Kreatif di
                         Jakarta 12 September 2023 yang dilakukan oleh LPKNI merupakan bentuk Follow up atas hasil Rakor
                         I yang diadakan di Kab. Pasuruan Jawa Timur.
@@ -146,7 +152,7 @@
                         class="rounded-lg w-full object-cover transition duration-300 ease-in-out hover:opacity-80 max-h-80">
                     <h3 class="text-xl font-semibold mt-4 hover:text-red-600">Presentasi Standarisasi Warung Indonesia
                     </h3>
-                    <p class="text-gray-600 mt-2">
+                    <p class="text-gray-600 mt-2 text-justify">
                         Presentasi Standarisasi Warung Indonesia bersama Kementrian Pariwisata dan Ekonomi Kreatif di
                         Jakarta 12 September 2023 yang dilakukan oleh LPKNI merupakan bentuk Follow up atas hasil Rakor
                         I yang diadakan di Kab. Pasuruan Jawa Timur.
@@ -158,7 +164,7 @@
                     <img src="@/assets/kegiatan2.jpeg" alt="LPKNI Event 2"
                         class="rounded-lg w-full object-cover transition duration-300 ease-in-out hover:opacity-80 max-h-80">
                     <h3 class="text-xl font-semibold mt-4 hover:text-red-600">Pelaksanaan Operasi Pasar</h3>
-                    <p class="text-gray-600 mt-2">
+                    <p class="text-gray-600 mt-2 text-justify">
                         Pelaksanaan Operasi Pasar Minyak Goreng Murah bermerk Letizia Sabtu, 9 September 2023 di pasar
                         Bunulrejo Kota Malang berjalan dengan lancar dan antusias warga yang sangat luar biasa. Terima
                         kasih atas dukungan serta support rekan" LPKNI dan Dinas terkait.
@@ -170,7 +176,7 @@
                     <img src="@/assets/kegiatan3.png" alt="LPKNI Event 3"
                         class="rounded-lg w-full object-cover transition duration-300 ease-in-out hover:opacity-80 max-h-80">
                     <h3 class="text-xl font-semibold mt-4 hover:text-red-600">Operasi Pasar Minyak Goreng</h3>
-                    <p class="text-gray-600 mt-2">
+                    <p class="text-gray-600 mt-2 text-justify">
                         Presiden LPKNI Nanang Nilson, S.H.,M.H dalam waktu dekat akan menggalakkan operasi pasar Minyak
                         Goreng Murah merk Letizia harga Rp. 15.000/liter dimulai dari Pasar Bunul Pada tgl. 9 Sept 2023.
                     </p>
@@ -185,7 +191,7 @@
                     class="bg-white p-6 rounded-lg shadow-lg transform transition-all duration-300 hover:scale-105 hover:shadow-2xl animate__animated animate__fadeInUp">
                     <i class="fas fa-shield-alt text-red-600 text-3xl mb-4"></i>
                     <h3 class="text-xl font-semibold mb-4">Perlindungan Konsumen</h3>
-                    <p class="text-gray-600">
+                    <p class="text-gray-600 text-justify">
                         Kami melindungi hak konsumen dengan memastikan praktik bisnis yang adil dan memberikan dukungan
                         dalam menyelesaikan perselisihan secara efektif.
                     </p>
@@ -196,7 +202,7 @@
                     class="bg-white p-6 rounded-lg shadow-lg transform transition-all duration-300 hover:scale-105 hover:shadow-2xl animate__animated animate__fadeInUp">
                     <i class="fas fa-gavel text-red-600 text-3xl mb-4"></i>
                     <h3 class="text-xl font-semibold mb-4">Bantuan Hukum</h3>
-                    <p class="text-gray-600">
+                    <p class="text-gray-600 text-justify">
                         Menawarkan nasihat hukum dan representasi bagi konsumen yang menghadapi masalah penipuan, iklan
                         yang menyesatkan, dan transaksi yang tidak adil.
                     </p>
@@ -207,7 +213,7 @@
                     class="bg-white p-6 rounded-lg shadow-lg transform transition-all duration-300 hover:scale-105 hover:shadow-2xl animate__animated animate__fadeInUp">
                     <i class="fas fa-bullhorn text-red-600 text-3xl mb-4"></i>
                     <h3 class="text-xl font-semibold mb-4">Menyuarakan Suara Konsumen</h3>
-                    <p class="text-gray-600">
+                    <p class="text-gray-600 text-justify">
                         Kami menyediakan platform tempat konsumen dapat mengungkapkan kekhawatiran, berbagi pengalaman,
                         dan mencari solusi atas perlakuan tidak adil di pasar.
                     </p>
@@ -218,7 +224,7 @@
                     class="bg-white p-6 rounded-lg shadow-lg transform transition-all duration-300 hover:scale-105 hover:shadow-2xl animate__animated animate__fadeInUp">
                     <i class="fas fa-store text-red-600 text-3xl mb-4"></i>
                     <h3 class="text-xl font-semibold mb-4">Promosi Warung</h3>
-                    <p class="text-gray-600">
+                    <p class="text-gray-600 text-justify">
                         Standarisasi Warung Indonesia membantu pemilik warung mendapatkan promosi melalui Portal Suara
                         Konsumen,
                         dan website resmi untuk meningkatkan visibilitas usaha.
@@ -230,7 +236,7 @@
                     class="bg-white p-6 rounded-lg shadow-lg transform transition-all duration-300 hover:scale-105 hover:shadow-2xl animate__animated animate__fadeInUp">
                     <i class="fas fa-utensils text-red-600 text-3xl mb-4"></i>
                     <h3 class="text-xl font-semibold mb-4">Keamanan dan Higienis</h3>
-                    <p class="text-gray-600">
+                    <p class="text-gray-600 text-justify">
                         Setiap warung yang terstandarisasi harus memenuhi syarat kebersihan dan keamanan pangan,
                         sehingga pelanggan merasa aman mengonsumsi makanan di tempat tersebut.
                     </p>
@@ -252,7 +258,12 @@
         <section id="contact" class="py-20 px-4 md:px-8 bg-white">
             <div class="container mx-auto max-w-screen-md text-center">
                 <!-- Heading -->
-                <h2 class="text-3xl sm:text-4xl font-bold text-red-600 mb-4">Hubungi Kami</h2>
+                <h2 class="text-3xl sm:text-4xl font-bold text-red-600 mb-4 flex items-center justify-center">
+                    <!-- Icon before the title -->
+                    <i class="fas fa-phone-alt text-red-600 mr-3"></i>
+                    Hubungi Kami
+                </h2>
+
                 <p class="text-lg sm:text-xl text-gray-600 mb-8">Have questions or want to learn more? Contact us now!
                 </p>
 
@@ -261,13 +272,13 @@
                     <!-- Contact via Phone -->
                     <a href="https://wa.me/6281333015767" target="_blank"
                         class="bg-red-600 text-white px-10 py-4 rounded-lg font-semibold hover:bg-red-700 transition-transform duration-300 transform hover:scale-105 w-full sm:w-auto text-center">
-                        📞 Kontak Kami: 0813 3301 5767 & 0341 - 437354
+                        <i class="fa fa-phone text-black mr-2 text-2xl"> </i>0813 3301 5767 & 0341-437354
                     </a>
 
                     <!-- Contact via Email -->
                     <a href="mailto:pt.lpkni@gmail.com"
                         class="bg-red-600 text-white px-10 py-4 rounded-lg font-semibold hover:bg-red-700 transition-transform duration-300 transform hover:scale-105 w-full sm:w-auto text-center">
-                        📧 Email Us: pt.lpkni@gmail.com
+                        📧 pt.lpkni@gmail.com
                     </a>
                 </div>
 

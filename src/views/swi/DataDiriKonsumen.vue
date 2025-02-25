@@ -4,7 +4,7 @@
     </div>
     <div class="bg-green-100 w-full min-h-screen flex items-center justify-center p-6 mx-auto">
 
-        <div class="w-full  max-w-screen-md bg-white p-10 rounded-lg shadow-2xl border border-gray-200">
+        <div class="w-full  max-w-screen-md bg-white p-10 rounded-lg border border-gray-200">
             <div class="text-center mb-8">
                 <h2 class="text-3xl font-bold text-green-700 underline">
                     Standarisasi Warung Indonesia
@@ -173,12 +173,35 @@
                     </table>
                 </div>
                 <div class="flex justify-center mt-2">
-                    <button
+                    <button @click="openSuccessModal"
                         class="w-1/2 bg-green-600 text-white px-6 py-3 rounded-lg font-bold hover:bg-green-800 transition">
                         Kirim
                     </button>
                 </div>
             </form>
+        </div>
+        <div v-if="showSuccessModal" class="fixed inset-0 flex items-center justify-center bg-black bg-opacity-50 z-50">
+            <div class="bg-white p-6 rounded-lg shadow-lg w-96 text-center">
+                <h3 class="text-lg font-semibold text-gray-800">Terimakasih!</h3>
+                <p class="text-gray-600 mt-2">
+                    Terimakasih telah mengisi form ini. Data diri Anda dapat dilihat di halaman dashboard.
+                </p>
+                <p class="text-gray-600 mt-2">
+                    Lanjutkan proses untuk mendapatkan sertifikat warung.
+                </p>
+                <div class="mt-4 flex justify-center space-x-4">
+                    <!-- Tombol untuk lihat halaman dashboard -->
+                    <button @click="goToDashboard"
+                        class="px-4 py-2 bg-blue-500 text-white rounded-lg hover:bg-blue-600">
+                        Lihat Dashboard
+                    </button>
+                    <!-- Tombol untuk lanjutkan proses -->
+                    <button @click="goToKelajuanWarung"
+                        class="px-4 py-2 bg-green-600 text-white rounded-lg hover:bg-green-800">
+                        Lanjutkan Proses
+                    </button>
+                </div>
+            </div>
         </div>
         <vue-easy-lightbox :visible="lightboxVisible" :imgs="dataLengkap ? imageUrl : imageUsers" :index="lightboxIndex"
             @hide="lightboxVisible = false" />
@@ -188,6 +211,7 @@
 import NavbarSwiLanding from '@/components/NavbarSwiLanding.vue';
 import VueEasyLightbox from 'vue-easy-lightbox';
 import swi from '@/service/swi';
+import Swal from 'sweetalert2';
 export default {
     components: {
         NavbarSwiLanding,
@@ -195,6 +219,7 @@ export default {
     },
     data() {
         return {
+            showSuccessModal: false,
             form: {
                 daerahId: 0,
                 wilayahId: 0,
@@ -232,7 +257,7 @@ export default {
             lightboxIndex: 0,
             isLoading: false,
             daerahList: [],
-            wilayahList: [], // To store the list of provinces
+            wilayahList: [],
             dataLengkap: false,
             location: { latitude: null, longitude: null },
             errorLocation: null,
@@ -258,25 +283,59 @@ export default {
 
             })
         },
+        openSuccessModal() {
+            this.showSuccessModal = true;
+
+            setTimeout(() => {
+                this.showSuccessModal = false;
+            }, 5000);
+        },
+
+        goToDashboard() {
+            this.$router.push('/swi/dashboard');
+            this.showSuccessModal = false;
+        },
+
+
+        goToKelajuanWarung() {
+            this.$router.push('/swi/kelayakan-warung');
+            this.showSuccessModal = false;
+        },
         handleFileUpload(event, index) {
             const file = event.target.files[0];
             if (!file) {
-                this.$toast.error('Tidak ada file yang dipilih!');
+                Swal.fire({
+                    icon: 'error',
+                    title: 'Error!',
+                    text: 'Tidak Ada File Yang Dipilih',
+                    confirmButtonText: 'Ok'
+                });
                 return;
             }
-            // Validasi ukuran file
+
             var sizeInMb = file.size / 1024;
             var sizeLimit = 1024 * 5;
             if (sizeInMb > sizeLimit) {
-                this.$toast.error('Ukuran Gambar Terlalu Besar! Maksimal 5MB.');
+                Swal.fire({
+                    icon: 'error',
+                    title: 'Maximum Size, Maksimal Ukuran Gambar 5 MB',
+                    timer: 1500,
+                });
                 return;
             }
-            // Validasi tipe file (hanya gambar)
+
             const allowedTypes = ['image/jpeg', 'image/png', 'image/jpg'];
             if (!allowedTypes.includes(file.type)) {
-                this.$toast.error('Format file tidak didukung! Harap unggah gambar dalam format JPG atau PNG.');
+                Swal.fire({
+                    icon: 'error',
+                    title: 'Format file tidak didukung!',
+                    text: `Harap unggah gambar dalam format JPG atau PNG.`,
+                    timer: 1500,
+                    showConfirmButton: false,
+                });
                 return;
             }
+
             if (file) {
                 this.form.file[index] = file
                 this.form.folder[index] = this.imageInputs[index].folder
@@ -305,7 +364,11 @@ export default {
                 this.isLoading = true;
                 const response = await swi.CreateDataUserImage(this.form);
                 console.log(response)
-                this.$toast.success('Berhasil Menambahkan Data!');
+                Swal.fire({
+                    icon: 'success',
+                    title: 'Data Berhasil Ditambah',
+                    confirmButtonText: 'Ok'
+                });
                 this.$router.push(this.$route.path);
             } catch (error) {
                 console.log("Pendaftaran gagal:", error);
@@ -321,7 +384,7 @@ export default {
         },
         openLightbox(index) {
             if (this.dataLengkap)
-                this.imageUrl = this.imageUsers.map(image => this.getFullpathImage(image.imageUrl)); // Menyiapkan array URL gambar
+                this.imageUrl = this.imageUsers.map(image => this.getFullpathImage(image.imageUrl));
             this.lightboxVisible = true;
             this.lightboxIndex = index;
         },

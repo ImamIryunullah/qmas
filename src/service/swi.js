@@ -1,7 +1,7 @@
 import axios from "axios";
 
-const baseURL = "http://192.168.1.50:4000/api/swi";
-const IMG = "http://192.168.1.50:4000/swi/";
+const baseURL = "http://192.168.1.39:4000/api/swi";
+const IMG = "http://192.168.1.39:4000/swi/";
 const API = axios.create({
   baseURL: baseURL,
   withCredentials: true,

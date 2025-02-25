@@ -1,16 +1,16 @@
 <template>
   <!-- Sidebar -->
   <div class="bg-red-600 text-white fixed top-0 left-0 z-50 transition-all duration-300"
-    :class="sidebarOpen ? 'w-64  px-4 py-6 flex flex-col' : 'w-16 min-h-screen flex flex-col items-center py-6'">
+    :class="isSidebarOpen ? 'w-64 min-h-full px-4 py-6 flex flex-col' : 'w-16 min-h-full flex flex-col items-center py-6'">
     <!-- Logo & Hamburger Menu -->
     <div class="flex justify-between items-center mb-6 px-2">
-      <div v-if="sidebarOpen" class="flex items-center space-x-3 ml-3">
+      <div v-if="isSidebarOpen" class="flex items-center space-x-3 ml-3">
         <img src="@/assets/iconlpkni.png" alt="LPKNI Icon" class="w-6 h-8" />
         <span class="text-gray-200 font-bold text-lg">HALO ADMIN</span>
       </div>
 
       <button @click="toggleSidebar" class="p-2 focus:outline-none text-white">
-        <i class="fas" :class="sidebarOpen ? 'fa-angle-left' : 'fa-bars'"></i>
+        <i class="fas" :class="isSidebarOpen ? 'fa-angle-left' : 'fa-bars'"></i>
       </button>
     </div>
 
@@ -18,10 +18,10 @@
     <!-- Navigasi Menu -->
     <nav class="flex flex-col flex-grow space-y-2">
       <router-link v-for="(item, index) in menuItems" :key="index" :to="item.path"
-        class="flex items-center py-3 px-4 rounded-md transition-all duration-200 hover:bg-gray-700"
-        :class="{ 'bg-grey-200 text-black': $route.path === item.path }">
+        class="flex items-center py-3 px-4 rounded-md transition-all duration-200 hover:bg-red-700 font-semibold"
+        :class="{ 'bg-grey-200 text-black bg-red-700': $route.path === item.path }">
         <i :class="item.icon" class="w-6 text-lg"></i>
-        <span v-if="sidebarOpen" class="ml-3">{{ item.label }}</span>
+        <span v-if="isSidebarOpen" class="ml-3">{{ item.label }}</span>
       </router-link>
     </nav>
 
@@ -29,12 +29,12 @@
     <div class="mt-auto pt-6 border-t border-white">
       <div class="flex items-center py-3 px-4 rounded-md hover:bg-gray-700">
         <i class="fas fa-user-circle text-white text-2xl"></i>
-        <span v-if="sidebarOpen" class="ml-3 font-semibold">ADMIN</span>
+        <span v-if="isSidebarOpen" class="ml-3 font-semibold">ADMIN</span>
       </div>
 
 
       <!-- Display Current Date & Time -->
-      <div v-if="sidebarOpen" class="text-white text-xs mt-4 ml-3">
+      <div v-if="isSidebarOpen" class="text-white text-xs mt-4 ml-3">
         <p>{{ currentDate.toLocaleString('id-ID', { weekday: 'long', year: 'numeric', month: 'long', day: 'numeric' })
         }}</p>
         <p>{{ currentDate.toLocaleTimeString('id-ID') }} WIB</p>
@@ -43,15 +43,15 @@
       <!-- Logout Button -->
       <button @click="logout" class="flex items-center py-3 px-4 mt-4 rounded-md text-black hover:bg-gray-700 w-full">
         <i class="fas fa-sign-out-alt w-6"></i>
-        <span v-if="sidebarOpen">Logout</span>
+        <span v-if="isSidebarOpen">Logout</span>
       </button>
     </div>
   </div>
 
   <!-- Main Content -->
-  <!-- <div class="flex-1 transition-all duration-300" :class="sidebarOpen ? 'ml-64 p-6' : 'ml-16 p-6'">
-      <slot></slot>
-    </div> -->
+  <!-- <div class="flex-1 transition-all duration-300" :class="isSidebarOpen ? 'mr-64 ' : 'mr-16'">
+    <slot></slot>
+  </div> -->
 
 </template>
 
@@ -59,10 +59,9 @@
 export default {
   data() {
     return {
-      sidebarOpen: window.innerWidth > 768,
       currentDate: new Date(),
       menuItems: [
-        { label: "Dahshboard", path: "/admin/dashboard", icon: "fas fa-home" },
+        { label: "Dashboard", path: "/admin/dashboard", icon: "fas fa-home" },
         { label: "Data Pendaftaran", path: "/admin/data-pendaftaran-anggota", icon: "fas fa-user-check" },
         { label: "Data Pembayaran", path: "/admin/data-pembayaran-anggota", icon: "fas fa-wallet" },
         { label: "Management Jabatan", path: "/admin/management-jabatan", icon: "fas fa-briefcase" },
@@ -71,9 +70,14 @@ export default {
       ]
     };
   },
+  computed: {
+    isSidebarOpen() {
+      return this.$store.state.storeSidebar.isSidebarOpen;
+    },
+  },
   methods: {
     toggleSidebar() {
-      this.sidebarOpen = !this.sidebarOpen;
+      this.$store.dispatch('storeSidebar/toggleSidebar');
     },
     async logout() {
       try {
@@ -86,7 +90,7 @@ export default {
       }
     },
     handleResize() {
-      this.sidebarOpen = window.innerWidth > 768;
+      this.isSidebarOpen = window.innerWidth > 768;
     }
   },
   mounted() {

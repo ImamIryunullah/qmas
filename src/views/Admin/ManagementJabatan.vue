@@ -16,10 +16,9 @@
                     </div>
                 </div>
             </div>
-
             <!-- Form Section -->
             <div class="max-w-6xl mx-auto bg-white p-6 mt-6 rounded-lg shadow-md">
-                <h2 class="text-xl font-semibold text-gray-700 mb-4">Tambah Jabatan</h2>
+                <h2 class="text-xl font-semibold text-red-700 mb-4">Tambah Jabatan</h2>
                 <form @submit.prevent="submitForm" class="grid grid-cols-1 sm:grid-cols-2 gap-4">
                     <div>
                         <label class="block text-gray-600 font-medium mb-1">Nama Jabatan</label>
@@ -63,7 +62,7 @@
                         </select>
                     </div>
                     <div class="flex items-end">
-                        <button type="submit" class="bg-red-500 text-white px-6 py-2 rounded-lg hover:bg-gray-500">
+                        <button type="submit" class="bg-red-500 text-white px-6 py-2 rounded-lg hover:bg-red-700">
                             Tambah Jabatan
                         </button>
                     </div>
@@ -82,7 +81,7 @@
                     <label class="text-gray-700 font-medium">Daerah : </label>
                     <select v-model="selectedDaerah" class="p-2 border rounded-md"
                         @change="GetJabatanByDaerahId(selectedDaerah.id_daerah)">
-                        <option :value="0">Semua Daerah</option>
+                        <option disabled :value="0">Semua Daerah</option>
                         <option v-for="daerah in selectedWilayah.daerah" :key="daerah.id_daerah" :value="daerah">
                             {{ daerah.nama_daerah }}
                         </option>
@@ -302,6 +301,7 @@ export default {
             }
         },
         async GetJabatanByDaerahId(id) {
+
             await api
                 .GetJabatanByDaerahIdAdmin(id)
                 .then((res) => {

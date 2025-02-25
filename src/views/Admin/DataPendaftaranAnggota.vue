@@ -1,7 +1,8 @@
 <template>
   <div>
-    <NavbarAdmin />
-    <div class="bg-gray-100 w-full h-full min-h-screen pl-28 mx-auto p-6">
+    <NavbarAdmin /> <!-- Navbar yang bisa dibuka/tutup -->
+    <div class="bg-gray-100 w-full h-full min-h-screen p-6 transition-all duration-300"
+      :class="isSidebarOpen ? 'ml-60' : 'ml-12'">
       <!-- Dashboard Header -->
       <div class="flex flex-col md:flex-row md:justify-between md:items-center mb-6 gap-4">
         <h1 class="text-2xl md:text-3xl font-bold text-gray-800 text-center md:text-left">📋 DATA PENDAFTARAN ANGGOTA
@@ -34,47 +35,51 @@
               class="pl-10 pr-4 py-2 rounded-md border border-gray-300 focus:ring focus:ring-blue-200 w-64"
               placeholder="Cari Anggota" />
           </div>
-
         </div>
 
         <!-- Table -->
-        <table class="min-w-full h-full table-auto border-collapse">
+        <table class="w-full h-full table-auto border-red-950">
           <thead class="bg-red-500 text-white">
             <tr>
-              <th class="px-4 py-3 border text-left">Anggota ID</th>
-              <th class="px-4 py-3 border text-left">Nama Lengkap</th>
-              <th class="px-4 py-3 border text-left">Alamat Lengkap</th>
-              <th class="px-4 py-3 border text-left">NIK</th>
-              <th class="px-4 py-3 border text-left">Tempat Lahir</th>
-              <th class="px-4 py-3 border text-left">Tanggal Lahir</th>
-              <th class="px-4 py-3 border text-left">Pekerjaan</th>
-              <th class="px-4 py-3 border text-left">Agama</th>
-              <th class="px-4 py-3 border text-left">Provinsi</th>
-              <th class="px-4 py-3 border text-left">Kota/Kab</th>
+              <th class="px-4 py-3 border text-center">Anggota ID</th>
+              <th class="px-4 py-3 border text-center">Nama Lengkap</th>
+              <th class="px-4 py-3 border text-center">Alamat Lengkap</th>
+              <th class="px-4 py-3 border text-center">NIK</th>
+              <th class="px-4 py-3 border text-center">Tempat Lahir</th>
+              <th class="px-4 py-3 border text-center">Tanggal Lahir</th>
+              <th class="px-4 py-3 border text-center">Pekerjaan</th>
+              <th class="px-4 py-3 border text-center">Agama</th>
+              <th class="px-4 py-3 border text-center">Provinsi</th>
+              <th class="px-4 py-3 border text-center">Kota/Kab</th>
+              <th class="px-4 py-3 border text-center">Jabatan</th>
+              <th class="px-4 py-3 border text-center">Tingkat</th>
               <th class="px-4 py-3 border text-center">Foto KTP</th>
               <th class="px-4 py-3 border text-center">Pas Foto</th>
               <th class="px-4 py-3 border text-center">Status</th>
-              <th class="px-4 py-3 border text-center">Actions</th>
+              <th class="px-4 py-3 border text-center">Aksi</th>
             </tr>
           </thead>
           <tbody>
             <!-- Dynamic Data Rows -->
-            <tr v-for="(anggota, index) in listDataAnggota" :key="index"
-              class="text-gray-700 hover:bg-gray-100 transition" :class="{ 'bg-gray-50': index % 2 === 0 }">
-              <td class="px-4 py-3 border">{{ anggota.id_data_anggota }}</td>
-              <td class="px-4 py-3 border">{{ anggota.nama_lengkap }}</td>
-              <td class="px-4 py-3 border">{{ anggota.alamat }}</td>
-              <td class="px-4 py-3 border">{{ anggota.nik }}</td>
-              <td class="px-4 py-3 border">{{ anggota.tempatLahir }}</td>
-              <td class="px-4 py-3 border">{{ anggota.tanggalLahir.split('T')[0] }}</td>
-              <td class="px-4 py-3 border">{{ anggota.pekerjaan }}</td>
-              <td class="px-4 py-3 border">{{ anggota.agama }}</td>
-              <td class="px-4 py-3 border">{{ anggota.wilayah.nama_wilayah }}</td>
-              <td class="px-4 py-3 border">{{ anggota.daerah.nama_daerah }}</td>
+            <tr v-for="(anggota, index) in listDataAnggota" :key="index" class="text-black hover:bg-gray-100 transition"
+              :class="{ 'bg-gray-50': index % 2 === 0 }">
+              <td class="px-4 py-3 border text-center">{{ anggota.daerah.kode_daerah + "." + anggota.id_data_anggota }}
+              </td>
+              <td class="px-4 py-3 border text-center">{{ anggota.nama_lengkap }}</td>
+              <td class="px-4 py-3 border text-center">{{ anggota.alamat }}</td>
+              <td class="px-4 py-3 border text-center">{{ anggota.nik }}</td>
+              <td class="px-4 py-3 border text-center">{{ anggota.tempatLahir }}</td>
+              <td class="px-4 py-3 border text-center">{{ anggota.tanggalLahir.split('T')[0] }}</td>
+              <td class="px-4 py-3 border text-center">{{ anggota.pekerjaan }}</td>
+              <td class="px-4 py-3 border text-center">{{ anggota.agama }}</td>
+              <td class="px-4 py-3 border text-center">{{ anggota.wilayah.nama_wilayah }}</td>
+              <td class="px-4 py-3 border text-center">{{ anggota.daerah.nama_daerah }}</td>
+              <td class="px-4 py-3 border text-center">{{ anggota.jabatanStruktural.nama }}</td>
+              <td class="px-4 py-3 border text-center">{{ anggota.jabatanStruktural.tingkat }}</td>
               <td class="px-4 py-3 border text-center">
                 <div v-if="anggota.imageUsers.length > 0">
                   <img :src="getFullPathImage(anggota.imageUsers[0].imageUrl)" alt="Foto"
-                    class="w-12 h-12 object-cover rounded-md shadow-md mx-auto cursor-pointer"
+                    class="w-full h-full object-cover rounded-md shadow-md mx-auto cursor-pointer"
                     @click="openImagePreview(anggota.imageUsers[0].imageUrl, 'Foto')" />
                 </div>
                 <div v-else>
@@ -86,7 +91,7 @@
               <td class="px-4 py-3 border text-center">
                 <div v-if="anggota.imageUsers.length > 0">
                   <img :src="getFullPathImage(anggota.imageUsers[1].imageUrl)" alt="KTP"
-                    class="w-12 h-12 object-cover rounded-md shadow-md mx-auto cursor-pointer"
+                    class="w-full h-full object-cover rounded-md shadow-md mx-auto cursor-pointer"
                     @click="openImagePreview(anggota.imageUsers[1].imageUrl, 'KTP')" />
                 </div>
                 <div v-else>
@@ -97,13 +102,26 @@
               <td class="px-4 py-3 border">{{ anggota.status }}</td>
               <!-- Kolom Aksi -->
               <td class="px-4 py-3 border text-center">
-                <button @click="updateStatusAnggota(anggota.id_data_anggota, `SUCCESS`)"
-                  class="text-green-500 hover:text-green-700 font-semibold">Setujui</button> |
-                <button @click="updateStatusAnggota(anggota.id_data_anggota, `PENDING`)"
-                  class="text-yellow-500 hover:text-yellow-700 font-semibold">Pending</button> |
-                <button @click="updateStatusAnggota(anggota.id_data_anggota, `CANCEL`)"
-                  class="text-red-500 hover:text-red-700 font-semibold">Tolak</button>
+                <div class="justify-center space-y-2">
+                  <!-- Setujui Button -->
+                  <button @click="updateStatusAnggota(anggota.id_data_anggota, `SUCCESS`)"
+                    class="bg-green-500 text-white hover:bg-green-600 focus:ring-4 focus:ring-green-300 font-semibold rounded-lg py-2 px-4 flex items-center transition-all duration-300 ease-in-out transform hover:scale-105">
+                    <i class="fas fa-check mr-2"></i> Setujui
+                  </button>
+                  <!-- Pending Button -->
+                  <button @click="updateStatusAnggota(anggota.id_data_anggota, `PENDING`)"
+                    class="bg-yellow-500 text-white hover:bg-yellow-600 focus:ring-4 focus:ring-yellow-300 font-semibold rounded-lg py-2 px-4 flex items-center transition-all duration-300 ease-in-out transform hover:scale-105">
+                    <i class="fas fa-clock mr-2"></i> Pending
+                  </button>
+                  <!-- Tolak Button -->
+                  <button @click="updateStatusAnggota(anggota.id_data_anggota, `CANCEL`)"
+                    class="bg-red-500 text-white hover:bg-red-600 focus:ring-4 focus:ring-red-300 font-semibold rounded-lg py-2 px-4 flex items-center transition-all duration-300 ease-in-out transform hover:scale-105">
+                    <i class="fas fa-times mr-2"></i> Tolak
+                  </button>
+                </div>
               </td>
+
+
             </tr>
           </tbody>
         </table>
@@ -113,11 +131,12 @@
       @hide="lightboxVisible = false" />
   </div>
 </template>
-
 <script>
 import NavbarAdmin from "@/components/NavbarAdmin.vue";
 import api from "@/service/lpkni";
 import VueEasyLightbox from 'vue-easy-lightbox';
+import Swal from "sweetalert2";
+
 export default {
   components: {
     NavbarAdmin,
@@ -130,10 +149,16 @@ export default {
       listDataAnggota: [],
       lightboxIndex: 0,
       lightboxVisible: false,
+
     };
   },
   mounted() {
     this.GetAllAnggota()
+  },
+  computed: {
+    isSidebarOpen() {
+      return this.$store.state.storeSidebar.isSidebarOpen;
+    },
   },
   methods: {
     getFullPathImage(img) {
@@ -144,7 +169,6 @@ export default {
         this.listDataAnggota = response.data
         console.log(this.listDataAnggota)
         this.$toast.success('Berhasil mengambil Data Anggota')
-        window.location.reload
       }).catch(() => {
         this.$toast.error('Gagal mengambil Data Anggota')
       })
@@ -155,21 +179,35 @@ export default {
       this.lightboxVisible = true
     },
     async updateStatusAnggota(id, data) {
-      if (!confirm('Apakah Anda Yakin untuk mengupdate Status Anggota?')) {
-        return
-      }
-      const form = {
-        status: data
-      }
-      await api.UpdateStatusAnggota(id, form).then(() => {
-        this.$toast.success('Status Berhasil Di-Rubah!')
-        setTimeout(() => {
-          window.location.reload();
-        }, 500);
-      }).catch(() => {
-        this.$toast.error('Gagal Mengupdate Status Anggota');
-      })
+      Swal.fire({
+        title: "Info",
+        text: "Apakah Anda Yakin Ingin Merubah Status Anggota?",
+        icon: "warning",
+        showCancelButton: true,
+        confirmButtonColor: "#3085d6",
+        cancelButtonColor: "#d33",
+        confirmButtonText: "Ya",
+        cancelButtonText: 'Tidak',
+        reverseButtons: false
+      }).then(async (result) => {
+        if (!result.isConfirmed) {
+          return
+        }
+
+        const form = {
+          status: data
+        }
+        await api.UpdateStatusAnggota(id, form).then(() => {
+          this.$toast.success('Status Berhasil Di-Rubah!')
+          setTimeout(() => {
+            window.location.reload();
+          }, 500);
+        }).catch(() => {
+          this.$toast.error('Gagal Mengupdate Status Anggota');
+        })
+      });
     },
+
     exportToCSV() {
       const headers = ["No", "Nama Lengkap", "NIK", "Tempat Lahir", "Pekerjaan", "Agama", "Provinsi", "Kota/Kabupaten", "3x4 Foto", "KTP Foto"];
       const rows = this.listDataAnggota.map((anggota, index) => [
@@ -201,5 +239,8 @@ export default {
 </script>
 
 <style scoped>
-/* Add your custom styles if needed */
+/* Tailwind CSS untuk sidebar yang mengambang */
+.transition-all {
+  transition: all 0.3s ease-in-out;
+}
 </style>

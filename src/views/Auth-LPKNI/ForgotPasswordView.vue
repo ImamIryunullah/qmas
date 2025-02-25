@@ -8,19 +8,6 @@
       <p class="text-sm text-gray-600 text-center mb-6">Silakan masukkan password lama dan password baru.</p>
 
       <form @submit.prevent="changePassword">
-        <!-- Password Lama -->
-        <div class="mb-4">
-          <label class="block text-sm font-medium text-gray-700">Password Lama</label>
-          <div class="relative">
-            <input v-model="oldPassword" :type="showOldPassword ? 'text' : 'password'"
-              class="w-full p-3 border border-gray-300 rounded-lg focus:ring-2 focus:ring-blue-500"
-              placeholder="Masukkan password lama" required />
-            <button type="button" @click="toggleOldPassword" class="absolute right-3 top-3 text-gray-500">
-              <i :class="showOldPassword ? 'fas fa-eye-slash' : 'fas fa-eye'"></i>
-            </button>
-          </div>
-        </div>
-
         <!-- Password Baru -->
         <div class="mb-4">
           <label class="block text-sm font-medium text-gray-700">Password Baru</label>
@@ -60,6 +47,7 @@
 
       </form>
     </div>
+
   </div>
 
   <div class="w-full">
@@ -70,6 +58,8 @@
 <script>
 import NavbarLandingPage from '@/components/NavbarLandingPage.vue';
 import FooterLandingPage from '@/components/FooterLandingPage.vue';
+import lpkni from '@/service/lpkni';
+import Swal from 'sweetalert2';
 export default {
   components: {
     NavbarLandingPage,
@@ -83,31 +73,98 @@ export default {
       showOldPassword: false,
       showNewPassword: false,
       showConfirmPassword: false,
+      token: this.$route.query.token || this.$route.params.token, // Ambil token dari query atau path
     };
   },
   computed: {
     passwordMismatch() {
       return this.newPassword && this.confirmPassword && this.newPassword !== this.confirmPassword;
     },
+
   },
+  mounted() {
+    const token = this.$route.params.token;
+    this.token = this.$route.params.token;
+    console.log("Token from route: ", token);
+    this.CheckvalidToken(token)
+  },
+
+
   methods: {
+    async CheckvalidToken(token) {
+      await lpkni.CheckpasswordToken(token).then(() => {
+        Swal.fire({
+          icon: 'success',
+          title: 'Token Valid!',
+          text: 'Token yang Anda masukkan valid.',
+          timer: 1500,
+          showConfirmButton: false
+        });
+      }).catch(() => {
+        Swal.fire({
+          icon: 'error',
+          title: 'Token Tidak Valid!',
+          text: 'Token yang Anda masukkan tidak valid.',
+          timer: 1500,
+          showConfirmButton: false
+        });
+        setTimeout(() => {
+          this.$router.push('/auth/lupa-kata-sandi');
+        }, 1000);
+      });
+    },
+
     toggleOldPassword() {
       this.showOldPassword = !this.showOldPassword;
     },
+
     toggleNewPassword() {
       this.showNewPassword = !this.showNewPassword;
     },
+
     toggleConfirmPassword() {
       this.showConfirmPassword = !this.showConfirmPassword;
     },
+
     changePassword() {
       if (this.passwordMismatch) {
-        alert("Password baru tidak cocok!");
+        Swal.fire({
+          icon: 'error',
+          title: 'Password Tidak Sama!',
+          text: 'Harap coba lagi, password yang Anda masukkan tidak cocok.',
+          timer: 1500,
+          showConfirmButton: false
+        });
         return;
       }
-      // Lakukan logika untuk mengganti password (misalnya kirim ke API)
-      alert("Password berhasil diubah!");
-    },
-  },
+      this.token = this.$route.params.token;
+      const form = { new_password: this.newPassword };
+
+      lpkni.ChangePassword(this.token, form).then(() => {
+        Swal.fire({
+          icon: 'success',
+          title: 'Password Diubah!',
+          text: 'Password Anda berhasil diubah. Silahkan login.',
+          timer: 1500,
+          showConfirmButton: false
+        });
+        setTimeout(() => {
+          this.$router.push('/auth/login');
+        }, 1000);
+      }).catch(() => {
+        Swal.fire({
+          icon: 'error',
+          title: 'Password Gagal Diubah!',
+          text: 'Terjadi kesalahan saat mengubah password. Harap coba lagi.',
+          timer: 1500,
+          showConfirmButton: false
+        });
+        setTimeout(() => {
+          this.$router.push('/auth/lupa-kata-sandi');
+        }, 1000);
+      });
+    }
+  }
+
 };
 </script>

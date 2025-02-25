@@ -1,99 +1,110 @@
 <template>
     <div>
         <NavbarAdmin />
-        <div class="bg-gray-100 w-full h-full min-h-screen pl-28 mx-auto p-8">
-            <!-- Dashboard Header -->
-            <div class="flex flex-col md:flex-row md:justify-between md:items-center mb-6">
-                <h1 class="text-2xl md:text-3xl font-bold text-gray-800">📋 DATA PEMBAYARAN</h1>
-                <button @click="exportToCSV"
-                    class="flex items-center bg-green-500 text-white px-4 py-2 rounded-lg hover:bg-green-600 transition duration-300 shadow-md">
-                    <i class="fas fa-file-csv mr-2"></i> Export CSV
-                </button>
 
-            </div>
-
-            <!-- Table Section -->
-            <div class="overflow-x-auto bg-white rounded-lg shadow-md">
-                <!-- Filters -->
-                <div class="flex justify-between items-center p-4 border-b">
-                    <div class="flex space-x-4">
-                        <select class="px-4 py-2 rounded-md border border-gray-300">
-                            <option value="100">Show All</option>
-                            <option value="100">Show 100</option>
-                            <option value="50">Show 50</option>
-                            <option value="25">Show 25</option>
-                        </select>
-                        <select class="px-4 py-2 rounded-md border border-gray-300">
-                            <option value="all">Semua Data</option>
-                            <option value="department1">Lunas</option>
-                            <option value="department2">Belum Lunas</option>
-                        </select>
-                    </div>
-                    <div class="flex items-center space-x-4 relative">
-                        <i class="fas fa-search absolute left-6 top-1/2 transform -translate-y-1/2 text-gray-400"></i>
-                        <input type="text"
-                            class="pl-10 pr-4 py-2 rounded-md border border-gray-300 focus:ring focus:ring-blue-200 w-64"
-                            placeholder="Cari Anggota" />
+        <div class="bg-gray-100 min-h-screen p-6 transition-all" :class="isSidebarOpen ? 'pl-72' : 'pl-20'">
+            <!-- Page Header -->
+            <div class="max-w-8xl mx-auto bg-white p-6 md:p-8 rounded-xl shadow-lg">
+                <div class="flex flex-col md:flex-row md:items-center md:justify-between">
+                    <div>
+                        <h1 class="text-2xl md:text-3xl font-bold text-gray-800">
+                            📌 Management Pembayaran
+                        </h1>
+                        <p class="text-gray-600 mt-2">
+                            Kelola Pembayaran Untuk anggota tingkat Provinsi dan Kota/Kabupaten.
+                        </p>
                     </div>
                 </div>
+            </div>
 
-                <!-- Table -->
-                <table class="min-w-full table-auto">
-                    <thead class="bg-red-500 text-white">
-                        <tr>
-                            <th class="px-4 py-2 border">No.</th>
-                            <th class="px-4 py-2 border">Nama</th>
-                            <th class="px{{  }}y-2 border">Metode Pemabayaran</th>
-                            <th class="px-4 py-2 border">Jumlah Pembayaran</th>
-                            <th class="px-4 py-2 border">Status</th>
-                            <th class="px-4 py-2 border">Waktu Pembayaran</th>
-                            <th class="px-4 py-2 border">Bukti Pembayaran</th>
-                            <th class="px-4 py-2 border">Actions</th>
-                        </tr>
-                    </thead>
-                    <tbody>
-                        <!-- Dynamic Data Rows -->
-                        <tr v-for="(payment, index) in payments" :key="index" class="text-gray-600">
-                            <td class="px-4 py-2 border">{{ index + 1 }}</td>
-                            <td class="px-4 py-2 border">{{ payment.userName }}</td>
-                            <td class="px-4 py-2 border">{{ payment.paymentMethod }}</td>
-                            <td class="px-4 py-2 border">Rp{{ payment.amount }}</td>
-                            <td class="px-4 py-2 border">
-                                <span
-                                    :class="{ 'text-green-500': payment.status === 'Lunas', 'text-yellow-500': payment.status === 'Belum Lunas' }">
-                                    {{ payment.status }}
-                                </span>
-                            </td>
-                            <td class="px-4 py-2 border">{{ payment.paymentDate }}</td>
-                            <td class="px-4 py-2 border text-center">
-                                <img v-if="payment.buktiPembayaran" :src="payment.buktiPembayaran"
-                                    alt="Bukti Pembayaran"
-                                    class="w-16 h-16 object-cover rounded-lg cursor-pointer hover:opacity-75"
-                                    @click="showImage(payment.buktiPembayaran)" />
-                                <span v-else class="text-gray-500">Belum Ada</span>
-                            </td>
+            <div class="max-w-8xl mx-auto bg-white p-6 mt-6 rounded-lg shadow-md">
+                <h2 class="text-xl font-semibold text-gray-700 mb-4">
+                    Filter Anggota
+                </h2>
+                <div class="grid grid-cols-1 sm:grid-cols-2 lg:flex lg:items-center gap-4">
+                    <label class="text-gray-700 font-medium">Provinsi :</label>
+                    <select v-model="selectedWilayah" class="p-2 border rounded-md w-1/4">
+                        <option :value="''">Pilih Wilayah</option>
+                        <option v-for="wilayah in wilayahList" :key="wilayah.id_wilayah" :value="wilayah">
+                            {{ wilayah.nama_wilayah }}
+                        </option>
+                    </select>
+                    <label class="text-gray-700 font-medium">Kota/Kab : </label>
+                    <select v-model="selectedDaerah" class="p-2 border rounded-md w-1/4">
+                        <option disabled :value="''">Pilih Daerah</option>
+                        <option v-for="daerah in selectedWilayah.daerah" :key="daerah.id_daerah"
+                            :value="daerah.id_daerah">
+                            {{ daerah.nama_daerah }}
+                        </option>
+                    </select>
+                    <label class="text-gray-700 font-medium">Status Pembayaran : </label>
+                    <select v-model="selectedStatus" class="p-2 border rounded-md w-1/4"
+                        @change="GetTransaksiByStatusByWilayahByDaerah(selectedStatus)">
+                        <option disabled value="">Pilih Transaksi</option>
+                        <option value="SUCCESS">SUCCESS</option>
+                        <option value="PENDING">PENDING</option>
+                        <option value="CANCEL">CANCEL</option>
+                    </select>
+                </div>
+            </div>
+            <!-- Table Section -->
+            <div class="max-w-8xl mx-auto bg-white p-6 mt-6 rounded-lg shadow-md">
+                <div class="flex flex-col md:flex-row md:justify-between md:items-center mb-6">
+                    <h2 class="text-xl font-semibold text-gray-700 mb-4">
+                        Daftar Anggota
+                    </h2>
+                </div>
 
-                            <!-- Modal untuk memperbesar gambar -->
-                            <transition name="fade">
-                                <div v-if="imagePreview"
-                                    class="fixed inset-0 bg-black bg-opacity-70 flex items-center justify-center z-50">
-                                    <div class="bg-white p-4 rounded-lg shadow-lg">
-                                        <img :src="imagePreview" class="max-w-full max-h-[80vh] rounded-lg" />
-                                        <button @click="imagePreview = null"
-                                            class="mt-2 bg-red-500 text-white px-4 py-2 rounded-lg">Tutup</button>
+                <div class="overflow-x-auto">
+                    <table class="w-full border rounded-lg">
+                        <thead class="bg-gray-200 text-gray-700">
+                            <tr>
+                                <th class="px-4 py-2 text-left">ID Anggota</th>
+                                <th class="px-4 py-2 text-left">Nama Lengkap</th>
+                                <th class="px-4 py-2 text-left">Provinsi</th>
+                                <th class="px-4 py-2 text-left">Kota / Kab</th>
+                                <th class="px-4 py-2 text-left">Jabatan</th>
+                                <th class="px-4 py-2 text-left">Tingkat</th>
+                                <th class="px-4 py-2 text-center">Aksi</th>
+                            </tr>
+                        </thead>
+                        <tbody>
+                            <tr v-for="(jabatan, index) in transaksiList" :key="index" class="border-t">
+                                <td class="px-4 py-2">{{ index + 1 }}</td>
+                                <td class="px-4 py-2">{{ jabatan.nama }}</td>
+                                <td class="px-4 py-2">
+                                    {{ jabatan.wilayah ? jabatan.wilayah.nama_wilayah : "-" }}
+                                </td>
+                                <td class="px-4 py-2">
+                                    {{ jabatan.wilayah ? jabatan.wilayah.kode_wilayah : "-" }}
+                                </td>
+                                <td class="px-4 py-2">
+                                    {{ jabatan.daerah ? jabatan.daerah.nama_daerah : "-" }}
+                                </td>
+                                <td class="px-4 py-2">
+                                    {{ jabatan.daerah ? jabatan.daerah.kode_daerah : "-" }}
+                                </td>
+                                <td class="px-4 py-2">{{ jabatan.tingkat }}</td>
+                                <td class="px-4 py-2">{{ jabatan.maksimumAnggota }}</td>
+                                <td class="px-4 py-2 text-center">
+                                    <div class="flex justify-center space-x-2">
+                                        <!-- Tombol Edit -->
+                                        <button @click="openModal(index)"
+                                            class="flex items-center space-x-1 bg-blue-500 text-white px-3 py-2 rounded-lg text-sm hover:bg-blue-600 transition duration-200">
+                                            <i class="fas fa-edit"></i>
+                                        </button>
+
+                                        <!-- Tombol Hapus -->
+                                        <button @click="deleteJabatan(index)"
+                                            class="flex items-center space-x-1 bg-red-500 text-white px-3 py-2 rounded-lg text-sm hover:bg-red-600 transition duration-200">
+                                            <i class="fas fa-trash-alt"></i>
+                                        </button>
                                     </div>
-                                </div>
-                            </transition>
-                            <td class="px-4 py-2 border text-center">
-                                <button
-                                    class="bg-red-500 text-white px-4 py-2 rounded-lg hover:bg-red-600 transition duration-300 shadow-md flex items-center justify-center space-x-2"
-                                    @click="deleteAnggota(anggota.id)">
-                                    <i class="fas fa-trash"></i>
-                                </button>
-                            </td>
-                        </tr>
-                    </tbody>
-                </table>
+                                </td>
+                            </tr>
+                        </tbody>
+                    </table>
+                </div>
             </div>
         </div>
     </div>
@@ -101,98 +112,88 @@
 
 <script>
 import NavbarAdmin from "@/components/NavbarAdmin.vue";
-
+import api from "@/service/lpkni";
 export default {
     components: {
         NavbarAdmin,
     },
     data() {
         return {
-            payments: [
-                {
-                    userName: "Kristin Watson",
-                    paymentMethod: "Transfer Bank",
-                    amount: "150.00",
-                    status: "Lunas",
-                    paymentDate: "2025-03-15",
-                    buktiPembayaran: ""
-                },
-                {
-                    userName: "Marvin McKinney",
-                    paymentMethod: "Bank Transfer",
-                    amount: "250.00",
-                    status: "Belum Lunas",
-                    paymentDate: "2025-03-16",
-                    buktiPembayaran: ""
-                },
-                {
-                    userName: "Jane Cooper",
-                    paymentMethod: "Belum Bayar",
-                    amount: "100.00",
-                    status: "Belum Lunas",
-                    paymentDate: "2025-03-17",
-                    buktiPembayaran: ""
-                },
-                {
-                    userName: "Cody Fisher",
-                    paymentMethod: "E-wallet",
-                    amount: "200.00",
-                    status: "Belum Lunas",
-                    paymentDate: "2025-03-18",
-                    buktiPembayaran: ""
-                },
-                {
-                    userName: "Bessie Cooper",
-                    paymentMethod: "Transfer Bank",
-                    amount: "180.00",
-                    status: "Lunas",
-                    paymentDate: "2025-03-19",
-                    buktiPembayaran: ""
-                },
-                {
-                    userName: "Leslie Alexander",
-                    paymentMethod: "Bank Transfer",
-                    amount: "120.00",
-                    status: "Belum Lunas",
-                    paymentDate: "2025-03-20",
-                    buktiPembayaran: ""
-                },
-                {
-                    userName: "Guy Hawkins",
-                    paymentMethod: "Qris",
-                    amount: "220.00",
-                    status: "Lunas",
-                    paymentDate: "2025-03-21",
-                    buktiPembayaran: ""
-                },
-            ],
+            selectedWilayah: '',
+            selectedDaerah: '',
+            transaksiList: [],
+            wilayahList: [],
+            daerahList: [],
+            isModalOpen: false,
+            isModalDeleteOpen: false,
+            selectedJabatan: null,
+            selectedStatus: '',
         };
     },
-    methods: {
-        exportToCSV() {
-            const headers = ["No, Nama", "Metode Pembayaran", "Jumlah Pembayaran", "Status", "Waktu Pembayaran"];
-            const rows = this.payments.map((payment, index) => [
-                index + 1,
-                payment.userName,
-                payment.paymentMethod,
-                `Rp${payment.amount}`,
-                payment.status,
-                payment.paymentDate
-            ]);
-
-            const csvContent = [headers, ...rows].map(row => row.join(",")).join("\n");
-            const blob = new Blob([csvContent], { type: "text/csv" });
-
-            // Buat link untuk mendownload file
-            const link = document.createElement("a");
-            link.href = URL.createObjectURL(blob);
-            link.download = "data_pembayaran.csv";
-            link.click();
+    computed: {
+        isSidebarOpen() {
+            return this.$store.state.storeSidebar.isSidebarOpen;
         }
-    }
+    },
+    mounted() {
+        // this.GetallJabatan();
+        this.fetchWilayah();
+    },
+    methods: {
+        async fetchWilayah() {
+            await api
+                .getAllWilayah()
+                .then((res) => {
+                    this.wilayahList = res.data;
+                })
+                .catch(() => { });
+        },
+        async GetTransaksiByStatusByWilayahByDaerah(status) {
+            api.GetTransaksiByStatusByWilayahByDaerah(status, this.selectedWilayah.id_wilayah, this.selectedDaerah).then((res) => {
+                this.transaksiList = res.data
+                console.log(this.transaksiList)
+            }).catch(() => {
+
+            })
+        },
+        async GetDaerahByWilayahId(id) {
+            this.selectedDaerah = "";
+            this.selectedStatus = "";
+            await api
+                .getDaerahByWilayahId(id)
+                .then((response) => {
+                    this.daerahList = response.data;
+                })
+                .catch((error) => {
+                    console.error(error);
+                });
+        },
+        openModal(index) {
+            this.selectedJabatan = { ...this.jabatanList[index] };
+            this.isModalOpen = true;
+        },
+        closeModal() {
+            this.isModalOpen = false;
+            this.selectedJabatan = null;
+        },
+        submitEdit() {
+            const index = this.jabatanList.findIndex(
+                (j) => j.nama === this.selectedJabatan.nama
+            );
+            if (index !== -1) {
+                this.jabatanList[index] = { ...this.selectedJabatan };
+            }
+            this.closeModal();
+        },
+        deleteJabatan(index) {
+            this.jabatanList.splice(index, 1);
+        },
+    },
 };
 </script>
 
 <style scoped>
-/* Add custom styles if needed */
+.transition-all {
+    transition: all 0.3s ease-in-out;
+}
 </style>

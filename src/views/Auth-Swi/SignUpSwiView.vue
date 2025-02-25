@@ -106,6 +106,7 @@
 import Api from "@/service/swi";
 import NavbarSwiAuth from "@/components/NavbarSwi.vue";
 import FooterSwiAuth from "@/components/FooterSwiAuth.vue";
+import Swal from 'sweetalert2';
 export default {
   components: {
     NavbarSwiAuth,
@@ -167,11 +168,19 @@ export default {
     },
     submitForm() {
       if (this.isFormInvalid()) {
-        alert("Lengkapi Data Anda!");
+        Swal.fire({
+          icon: 'error',
+          title: 'Data Tidak Lengkap',
+          text: 'Lengkapi Data Diri Anda',
+        });
         return;
       }
       if (this.form.password !== this.form.confirmpassword) {
-        alert("Password Anda Tidak Cocok");
+        Swal.fire({
+          icon: 'error',
+          title: 'Password Tidak Cocok',
+          text: 'Harap Mengisi Password Dengan Benar',
+        });
         return;
       }
       const userData = {
@@ -182,23 +191,51 @@ export default {
         username: this.generatedUsername, // Use generated username
         password: this.form.password,
       };
+
+
       Api.CreateUserSwi(userData)
         .then((res) => {
-          alert(res.data.message);
-          this.$router.push("/auth/swi/login");
+          Swal.fire({
+            icon: 'success',
+            title: 'Success',
+            text: res.data.message,
+            timer: 1500,
+            showConfirmButton: false
+          }).then(() => {
+            this.$router.push("/auth/swi/login");
+          });
         })
         .catch((error) => {
           if (error.response) {
-            alert(`${error.response.data.error}`);
+            Swal.fire({
+              icon: 'error',
+              title: 'Error',
+              text: `${error.response.data.error}`,
+              timer: 1500,
+              showConfirmButton: false
+            });
           } else if (error.request) {
-            alert("No response from server.");
+            Swal.fire({
+              icon: 'error',
+              title: 'No Response from Server',
+              text: "The server did not respond.",
+              timer: 1500,
+              showConfirmButton: false
+            });
           } else {
-            alert(`Error: ${error.message}`);
+            Swal.fire({
+              icon: 'error',
+              title: 'Error',
+              text: `Error: ${error.message}`,
+              timer: 1500,
+              showConfirmButton: false
+            });
           }
         });
-    },
-  },
-};
+
+    }
+  }
+}
 </script>
 
 <style scoped>

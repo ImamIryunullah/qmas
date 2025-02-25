@@ -18,13 +18,12 @@
             </div>
             <!-- Title -->
             <h2 class="text-3xl font-bold text-gray-900 leading-tight">
-              Cake meme reflects coronavirus absurdity in a world where nothing is what it seems
+              {{ article.judul }}
             </h2>
             <p class="text-xs sm:text-sm text-red-700 mt-1">{{ article.waktu_publikasi }}</p>
             <!-- Description -->
             <p class="text-gray-700 text-sm mt-2">
-              Earlier this month, a viral video depicting hyper-realistic cakes as everyday items had folks on social
-              media double-guessing every other post, and sometimes even their own realities...
+              {{ article.deskripsi }}
             </p>
             <div class="mt-4">
             </div>
@@ -53,11 +52,9 @@
           <div class="flex-none w-80">
             <img src="@/assets/bannerberita.jpeg" alt="Trending Image"
               class="w-full h-48 object-cover rounded-lg mb-4" />
-            <h3 class="text-lg font-semibold">Cake meme reflects coronavirus absurdity in a world where nothing is what
-              it seems</h3>
+            <h3 class="text-lg font-semibold">{{ article.judul }}</h3>
             <p class="text-xs sm:text-sm text-red-700 mt-1">{{ article.waktu_publikasi }}</p>
-            <p class="text-sm text-gray-700">The body of the late US Rep. John Lewis on Sunday will make the final
-              journey across the famous bridge in Selma, Alabama....</p>
+            <p class="text-sm text-gray-700">{{ article.deskripsi }}</p>
             <router-link :to="'/suara-konsumen/detail/1'">
               <button class="text-red-600 hover:text-red-800 font-semibold mt-4">Baca Selengkapnya</button>
             </router-link>
@@ -67,10 +64,9 @@
           <div class="flex-none w-80">
             <img src="@/assets/bannerberita.jpeg" alt="Trending Image"
               class="w-full h-48 object-cover rounded-lg mb-4" />
-            <h3 class="text-lg font-semibold">John Lewis' final journey across Edmund Pettus Bridge in procession</h3>
+            <h3 class="text-lg font-semibold">{{ article.judul }}</h3>
             <p class="text-xs sm:text-sm text-red-700 mt-1">{{ article.waktu_publikasi }}</p>
-            <p class="text-sm text-gray-700">The body of the late US Rep. John Lewis on Sunday will make the final
-              journey across the famous bridge in Selma, Alabama...</p>
+            <p class="text-sm text-gray-700">{{ article.deskripsi }}</p>
             <router-link :to="'/suara-konsumen/detail/1'">
               <button class="text-red-600 hover:text-red-800 font-semibold mt-4">Baca Selengkapnya</button>
             </router-link>
@@ -80,10 +76,9 @@
           <div class="flex-none w-80">
             <img src="@/assets/bannerberita.jpeg" alt="Trending Image"
               class="w-full h-48 object-cover rounded-lg mb-4" />
-            <h3 class="text-lg font-semibold">John Lewis' final journey across Edmund Pettus Bridge in procession</h3>
+            <h3 class="text-lg font-semibold">{{ article.judul }}</h3>
             <p class="text-xs sm:text-sm text-red-700 mt-1">{{ article.waktu_publikasi }}</p>
-            <p class="text-sm text-gray-700">The body of the late US Rep. John Lewis on Sunday will make the final
-              journey across the famous bridge in Selma, Alabama...</p>
+            <p class="text-sm text-gray-700">{{ article.deskripsi }}</p>
             <router-link :to="'/suara-konsumen/detail/1'">
               <button class="text-red-600 hover:text-red-800 font-semibold mt-4">Baca Selengkapnya</button>
             </router-link>
@@ -91,10 +86,9 @@
           <div class="flex-none w-80">
             <img src="@/assets/bannerberita.jpeg" alt="Trending Image"
               class="w-full h-48 object-cover rounded-lg mb-4" />
-            <h3 class="text-lg font-semibold">John Lewis' final journey across Edmund Pettus Bridge in procession</h3>
+            <h3 class="text-lg font-semibold">{{ article.judul }}</h3>
             <p class="text-xs sm:text-sm text-red-700 mt-1">{{ article.waktu_publikasi }}</p>
-            <p class="text-sm text-gray-700">The body of the late US Rep. John Lewis on Sunday will make the final
-              journey across the famous bridge in Selma, Alabama...</p>
+            <p class="text-sm text-gray-700">{{ article.deskripsi }}</p>
             <router-link :to="'/suara-konsumen/detail/1'">
               <button class="text-red-600 hover:text-red-800 font-semibold mt-4">Baca Selengkapnya</button>
             </router-link>
@@ -102,25 +96,14 @@
           <div class="flex-none w-80">
             <img src="@/assets/bannerberita.jpeg" alt="Trending Image"
               class="w-full h-48 object-cover rounded-lg mb-4" />
-            <h3 class="text-lg font-semibold">John Lewis' final journey across Edmund Pettus Bridge in procession</h3>
+            <h3 class="text-lg font-semibold">{{ article.judul }}</h3>
             <p class="text-xs sm:text-sm text-red-700 mt-1">{{ article.waktu_publikasi }}</p>
-            <p class="text-sm text-gray-700">The body of the late US Rep. John Lewis on Sunday will make the final
-              journey across the famous bridge in Selma, Alabama...</p>
+            <p class="text-sm text-gray-700">{{ article.deskripsi }}</p>
             <router-link :to="'/suara-konsumen/detail/1'">
               <button class="text-red-600 hover:text-red-800 font-semibold mt-4">Baca Selengkapnya</button>
             </router-link>
           </div>
-          <div class="flex-none w-80">
-            <img src="@/assets/bannerberita.jpeg" alt="Trending Image"
-              class="w-full h-48 object-cover rounded-lg mb-4" />
-            <h3 class="text-lg font-semibold">John Lewis' final journey across Edmund Pettus Bridge in procession</h3>
-            <p class="text-xs sm:text-sm text-red-700 mt-1">{{ article.waktu_publikasi }}</p>
-            <p class="text-sm text-gray-700">The body of the late US Rep. John Lewis on Sunday will make the final
-              journey across the famous bridge in Selma, Alabama...</p>
-            <router-link :to="'/suara-konsumen/detail/1'">
-              <button class="text-red-600 hover:text-red-800 font-semibold mt-4">Baca Selengkapnya</button>
-            </router-link>
-          </div>
+
         </div>
       </section>
       <div class="w-full mx-auto mt-2 border-t-2 border-gray-500"></div>
@@ -133,15 +116,9 @@
             <img src="@/assets/bannerberita.jpeg" alt="Featured Article Image"
               class="w-full h-64 object-cover rounded-t-lg" />
             <div class="p-4">
-              <h3 class="text-2xl sm:text-3xl font-bold text-gray-900">Beloved Arizona coach loses battle with
-                coronavirus</h3>
+              <h3 class="text-2xl sm:text-3xl font-bold text-gray-900">{{ article.judul }}</h3>
               <p class="text-xs sm:text-sm text-red-700 mt-1">{{ article.waktu_publikasi }}</p>
-              <p class="text-xs sm:text-sm text-gray-600 mt-2">Lorem ipsum dolor, sit amet consectetur adipisicing elit.
-                Aspernatur iure repudiandae quo rerum reiciendis totam numquam error obcaecati commodi nulla!
-                Lorem ipsum dolor sit amet consectetur adipisicing elit. Accusamus error excepturi eaque. Velit ratione
-                placeat cum laborum dignissimos voluptas molestias labore? Ullam minima tenetur eius veritatis excepturi
-                nesciunt, ad corrupti maxime aut eligendi consequuntur obcaecati, rem quis unde, accusamus repellendus.
-                Aut quod, quis sint maxime consequuntur omnis magnam sequi alias!</p>
+              <p class="text-xs sm:text-sm text-gray-600 mt-2">{{ article.deskripsi }}</p>
               <!-- Baca Selengkapnya Button -->
               <router-link :to="'/suara-konsumen/detail/1'">
                 <button class="text-red-600 hover:text-red-800 font-semibold mt-4">Baca Selengkapnya</button>
@@ -158,8 +135,7 @@
               <div class="w-2/3 sm:w-3/4">
                 <h4 class="text-lg font-semibold text-gray-800">John Lewis, civil rights giant</h4>
                 <p class="text-xs sm:text-sm text-red-700 mt-1">{{ article.waktu_publikasi }}</p>
-                <p class="text-xs sm:text-sm text-gray-500">Lorem ipsum dolor sit amet consectetur adipisicing elit.
-                  Voluptatum repellendus aperiam quasi!</p>
+                <p class="text-xs sm:text-sm text-gray-500">{{ article.deskripsi }}</p>
                 <!-- Baca Selengkapnya Button -->
                 <router-link :to="'/suara-konsumen/detail/1'">
                   <button class="text-red-600 hover:text-red-800 font-semibold mt-4">Baca Selengkapnya</button>
@@ -173,10 +149,9 @@
               <img src="@/assets/bannerberita.jpeg" alt="Article 2"
                 class="w-1/3 sm:w-1/4 h-20 object-cover rounded-lg" />
               <div class="w-2/3 sm:w-3/4">
-                <h4 class="text-lg font-semibold text-gray-800">Beloved Arizona coach loses battle with coronavirus</h4>
+                <h4 class="text-lg font-semibold text-gray-800">{{ article.judul }}</h4>
                 <p class="text-xs sm:text-sm text-red-700 mt-1">{{ article.waktu_publikasi }}</p>
-                <p class="text-xs sm:text-sm text-gray-500">Lorem ipsum dolor sit amet consectetur adipisicing elit.
-                  Corporis exercitationem architecto suscipit.</p>
+                <p class="text-xs sm:text-sm text-gray-500">{{ article.deskripsi }}</p>
                 <!-- Baca Selengkapnya Button -->
                 <router-link :to="'/suara-konsumen/detail/1'">
                   <button class="text-red-600 hover:text-red-800 font-semibold mt-4">Baca Selengkapnya</button>
@@ -190,10 +165,9 @@
               <img src="@/assets/bannerberita.jpeg" alt="Article 3"
                 class="w-1/3 sm:w-1/4 h-20 object-cover rounded-lg" />
               <div class="w-2/3 sm:w-3/4">
-                <h4 class="text-lg font-semibold text-gray-800">Beloved Arizona coach loses battle with coronavirus</h4>
+                <h4 class="text-lg font-semibold text-gray-800">{{ article.judul }}</h4>
                 <p class="text-xs sm:text-sm text-red-700 mt-1">{{ article.waktu_publikasi }}</p>
-                <p class="text-xs sm:text-sm text-gray-500">Lorem ipsum dolor sit amet consectetur, adipisicing elit.
-                  Eius esse labore dignissimos.</p>
+                <p class="text-xs sm:text-sm text-gray-500">{{ article.deskripsi }}</p>
                 <!-- Baca Selengkapnya Button -->
                 <router-link :to="'/suara-konsumen/detail/1'">
                   <button class="text-red-600 hover:text-red-800 font-semibold mt-4">Baca Selengkapnya</button>
@@ -319,8 +293,6 @@
           Next
         </button>
       </div>
-
-
     </div>
   </div>
   <FooterNews />
@@ -344,9 +316,9 @@ export default {
         waktu_publikasi: '17 Agustus 1945',
         deskripsi: 'Lorem, ipsum dolor sit amet consectetur adipisicing elit. Doloremque harum autem repellendus repellat a doloribus ea quas, tenetur velit. Aliquam.'
       },
-      currentPage: 1,  // Keeps track of the current page
-      articlesPerPage: 1, // Limits the number of articles per page
-      articles: [        // Sample data for articles
+      currentPage: 1,
+      articlesPerPage: 1,
+      articles: [
         { id: 1, judul: 'Cake meme reflects coronavirus absurdity...', deskripsi: 'A viral video depicting hyper-realistic cakes...', gambar: '@/assets/bannerberita.jpeg' },
         { id: 2, judul: 'John Lewis makes final journey...', deskripsi: 'The body of the late US Rep. John Lewis...', gambar: '@/assets/bannerberita.jpeg' },
         { id: 3, judul: 'Beloved Arizona coach loses battle...', deskripsi: 'The Arizona coach lost his battle with...', gambar: '@/assets/bannerberita.jpeg' },
@@ -358,12 +330,12 @@ export default {
   },
   computed: {
     totalPages() {
-      return Math.ceil(this.articles.length / this.articlesPerPage); // Calculate total pages based on articles
+      return Math.ceil(this.articles.length / this.articlesPerPage);
     },
     paginatedArticles() {
       const start = (this.currentPage - 1) * this.articlesPerPage;
       const end = start + this.articlesPerPage;
-      return this.articles.slice(start, end); // Return a slice of articles for the current page
+      return this.articles.slice(start, end);
     }
   },
   methods: {

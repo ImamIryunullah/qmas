@@ -4,7 +4,7 @@
     </div>
 
     <div class="bg-green-100 w-full min-h-screen flex items-center justify-center p-6 mx-auto">
-        <div class="w-full max-w-5xl bg-white p-8 rounded-lg shadow-xl border border-gray-200">
+        <div class="w-full max-w-4xl bg-white p-8 rounded-lg shadow-xl border border-gray-200">
             <div
                 class="w-full max-w-5xl bg-white p-6 md:p-8 rounded-lg border border-gray-200 flex flex-col md:flex-row items-center">
                 <!-- Gambar di Sisi Kiri -->
@@ -15,31 +15,34 @@
 
                 <!-- Teks di Sisi Kanan -->
                 <div class="md:w-2/3 text-center md:text-left mt-4 md:mt-0">
-                    <h2 class="text-2xl md:text-3xl font-bold text-black uppercase tracking-wide">
+                    <h2 class="text-2xl sm:text-3xl font-bold text-black uppercase tracking-wide">
                         Form Audit Kelayakan Warung
                     </h2>
-                    <p class="text-black mt-2 md:mt-3 font-semibold text-base md:text-lg">
+                    <p class="text-black mt-2 sm:mt-3 font-semibold text-base sm:text-lg">
                         DASAR UU PERLINDUNGAN KONSUMEN
                     </p>
-                    <p class="text-red-600 font-semibold text-base md:text-sm">
+                    <p class="text-red-600 font-semibold text-base sm:text-sm">
                         NO 8 TAHUN 1999 PASAL 4
                     </p>
-                    <p class="text-black font-medium text-sm md:text-base leading-relaxed mt-1 md:mt-2 italic">
+                    <p class="text-black font-medium text-sm sm:text-base leading-relaxed mt-1 sm:mt-2 italic">
                         "Hak atas Kenyamanan, Keamanan, Keselamatan dalam mengkonsumsi barang dan/atau jasa."
                     </p>
-
                 </div>
+
             </div>
 
 
 
             <form @submit.prevent="SubmitData">
                 <!-- Informasi Warung -->
-
                 <h3
                     class="text-2xl font-semibold text-gray-700 mt-8 mb-6 border-b-2 border-gray-400 pb-2 flex items-center gap-2">
-                    <i class="fas fa-store text-red-500"></i> Informasi Warung
+                    <i class="fas fa-store text-green-700"></i> Informasi Warung
                 </h3>
+                <p class="text-sm text-gray-500 font-medium mb-4">
+                    Pastikan Anda mengisi informasi dengan benar untuk memudahkan verifikasi dan proses lebih lanjut.
+                </p>
+
 
                 <div class="flex justify-end mt-4">
                     <button
@@ -92,7 +95,7 @@
 
                 <!-- Audit Kriteria -->
                 <h3 class="text-xl font-semibold text-gray-700 mt-6 mb-4 flex items-center">
-                    <i class="fas fa-clipboard-check text-red-600 mr-2 "></i> Audit Kriteria
+                    <i class="fas fa-clipboard-check text-green-700 mr-2 "></i> Audit Kriteria
                 </h3>
 
                 <div v-for="(section, index) in auditSections" :key="index" class="mb-6">
@@ -162,6 +165,7 @@
 <script>
 import NavbarSwiLanding from '@/components/NavbarSwiLanding.vue';
 import swi from '@/service/swi';
+import Swal from 'sweetalert2';
 export default {
     components: {
         NavbarSwiLanding
@@ -250,7 +254,11 @@ export default {
     methods: {
         submitForm() {
             this.showModal = false;
-            this.$toast.success("Berhasil Dikirim");
+            Swal.fire({
+                icon: 'success',
+                title: 'Berhasil Dikirim',
+                confirmButtonText: 'Ok'
+            });
         },
         getfullPathImage(img) {
             return swi.getfullpathImageSwi(img)

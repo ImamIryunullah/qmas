@@ -1,7 +1,7 @@
 import axios from "axios";
 
-const baseURL = "http://192.168.1.50:3000/api";
-const IMG = "http://192.168.1.50:3000/";
+const baseURL = "http://192.168.1.39:3000/api";
+const IMG = "http://192.168.1.39:3000/";
 const API = axios.create({
   baseURL: baseURL,
   withCredentials: true,
@@ -30,6 +30,18 @@ export default {
   CreateUser(data) {
     return API.post("/user", data);
   },
+  RequesTokenResetPassword(data) {
+    return API.post("/auth/reset-password-token", data);
+  },
+  RequestResetPassword(data) {
+    return API.post("/auth/reset-password", data);
+  },
+  CheckpasswordToken(token) {
+    return API.get(`/auth/check-password-token/${token}`);
+  },
+  ChangePassword(token, data) {
+    return API.post(`/auth/reset-password/${token}`, data);
+  }, //$2a$10$YH4DB5Dw7v5n/H3QSqNiS.ts9HKYkk5buZDOwjBRyIjSufnAwunXm
   CreateDataUserImage(data) {
     return API.post("/data-anggota", data, {
       headers: { "Content-Type": "multipart/form-data" },
@@ -51,10 +63,7 @@ export default {
   getUserData() {
     return API.get("/data-anggota");
   },
-  /*Admin*/
-  getAllUserData() {
-    return API.get("/data-anggota/all");
-  },
+
   /*Wilayah*/
   getAllWilayah() {
     return API.get("/wilayah");
@@ -95,14 +104,46 @@ export default {
   GetJabatanByWilayahDaerahId(wilayah_id, daerah_id) {
     return API.get(`/jabatan/wilayah/${wilayah_id}/daerah/${daerah_id}`);
   },
+  /*Image*/
+  getfullpathImage(img) {
+    return `${IMG}${img}`;
+  },
+  getHealthlpkni() {
+    return API.get("/health");
+  },
+
+  /*Admin*/
+  getAllUserData() {
+    return API.get("/data-anggota/all");
+  },
   GetJabatanByWilayahIdAdmin(id) {
     return API.get(`/jabatans/wilayah/${id}`);
   },
   GetJabatanByDaerahIdAdmin(id) {
     return API.get(`/jabatans/daerah/${id}`);
   },
-  /*Image*/
-  getfullpathImage(img) {
-    return `${IMG}${img}`;
+  GetTransaksiByStatus(status) {
+    return API.get(`/transaksi-anggota/status/${status}`);
+  },
+  GetTransaksiByStatusByWilayahByDaerah(status, wilayahID, daerahID) {
+    // Membuat object untuk menyimpan parameter query
+    let queryParams = {};
+
+    // Menambahkan parameter ke queryParams jika ada
+    if (status) {
+      queryParams.statusPembayaran = status;
+    }
+    if (wilayahID) {
+      queryParams.wilayahID = wilayahID;
+    }
+    if (daerahID) {
+      queryParams.daerahID = daerahID;
+    }
+
+    // Mengubah queryParams object menjadi string query
+    const queryString = new URLSearchParams(queryParams).toString();
+
+    // Menggunakan queryString dalam request GET
+    return API.get(`/transaksi-anggota?${queryString}`);
   },
 };

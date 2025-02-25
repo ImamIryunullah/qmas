@@ -2,7 +2,8 @@
     <div>
         <NavbarAdmin />
 
-        <div class="bg-gray-100 w-full h-full min-h-screen pl-28 mx-auto p-6">
+        <div class="bg-gray-100 w-full h-full min-h-screen transition-all pl-28 mx-auto p-6"
+            :class="isSidebarOpen ? 'ml-40' : 'ml-0'">
             <!-- Page Title -->
             <div class="flex flex-col md:flex-row md:justify-between md:items-center mb-6 gap-y-2 gap-x-4">
                 <div class="max-w-xl">
@@ -16,10 +17,9 @@
             </div>
 
 
-            <!-- Table Section -->
             <div class="overflow-x-auto bg-white rounded-lg shadow-md p-4">
                 <table class="w-full table-auto">
-                    <thead class="bg-gray-700 text-white">
+                    <thead class="bg-red-600 text-white">
                         <tr>
                             <th class="px-4 py-3 border">No</th>
                             <th class="px-4 py-3 border">Nama</th>
@@ -49,8 +49,6 @@
                                     {{ complaint.publish }}
                                 </span>
                             </td>
-
-                            <!-- Tombol Detail -->
                             <td class="px-4 py-3 border text-center">
                                 <button @click="openDetail(complaint)"
                                     class="bg-blue-500 text-white px-3 py-2 rounded-md hover:bg-blue-600 transition duration-200">
@@ -62,21 +60,72 @@
                 </table>
             </div>
 
+            <!-- Mobile View -->
+            <div class="block sm:hidden mt-4">
+                <div v-for="(complaint, index) in paginatedComplaints" :key="index"
+                    class="bg-white rounded-lg shadow-md p-4 mb-4">
+                    <div class="flex justify-between">
+                        <div class="font-semibold text-red-700">No</div>
+                        <div>{{ (currentPage - 1) * itemsPerPage + index + 1 }}</div>
+                    </div>
+                    <div class="flex justify-between mt-2">
+                        <div class="font-semibold text-red-700">Nama</div>
+                        <div>{{ complaint.nama }}</div>
+                    </div>
+                    <div class="flex justify-between mt-2">
+                        <div class="font-semibold text-red-700">Email</div>
+                        <div>{{ complaint.email }}</div>
+                    </div>
+                    <div class="flex justify-between mt-2">
+                        <div class="font-semibold text-red-700">Provinsi</div>
+                        <div>{{ complaint.wilayah }}</div>
+                    </div>
+                    <div class="flex justify-between mt-2">
+                        <div class="font-semibold text-red-700">Kota/Kab</div>
+                        <div>{{ complaint.daerah }}</div>
+                    </div>
+                    <div class="flex justify-between mt-2">
+                        <div class="font-semibold text-red-700">Judul</div>
+                        <div>{{ complaint.judul.slice(0, 50) }}...</div>
+                    </div>
+                    <div class="flex justify-between mt-2">
+                        <div class="font-semibold text-red-700">Publish</div>
+                        <div>
+                            <span
+                                :class="{ 'text-green-500': complaint.publish === 'Setuju', 'text-red-500': complaint.publish === 'Ditolak' }">
+                                {{ complaint.publish }}
+                            </span>
+                        </div>
+                    </div>
+                    <div class="flex justify-center mt-4">
+                        <button @click="openDetail(complaint)"
+                            class="bg-blue-500 text-white px-4 py-2 rounded-md hover:bg-blue-600 transition duration-200">
+                            🔍 Detail
+                        </button>
+                    </div>
+                </div>
+            </div>
+
+
             <div class="flex flex-wrap items-center justify-center md:justify-between mt-4 gap-2">
+                <!-- Previous Button -->
                 <button @click="prevPage" :disabled="currentPage === 1"
-                    class="bg-gray-300 px-4 py-2 rounded-md hover:bg-gray-400 disabled:opacity-50">
+                    class="bg-gray-300 px-4 py-2 rounded-md hover:bg-gray-400 disabled:opacity-50 w-full sm:w-auto">
                     ⬅️ Previous
                 </button>
 
-                <span class="text-gray-700 font-semibold w-full md:w-auto text-center">
+                <!-- Page Info -->
+                <span class="text-gray-700 font-semibold w-full sm:w-auto text-center">
                     Page {{ currentPage }} of {{ totalPages }}
                 </span>
 
+                <!-- Next Button -->
                 <button @click="nextPage" :disabled="currentPage === totalPages"
-                    class="bg-gray-300 px-4 py-2 rounded-md hover:bg-gray-400 disabled:opacity-50">
+                    class="bg-gray-300 px-4 py-2 rounded-md hover:bg-gray-400 disabled:opacity-50 w-full sm:w-auto">
                     Next ➡️
                 </button>
             </div>
+
 
             <!-- Modal for Viewing Full Details -->
             <transition name="fade">
@@ -163,6 +212,11 @@ export default {
             return this.complaints.slice(start, end);
         },
 
+
+        isSidebarOpen() {
+            return this.$store.state.storeSidebar.isSidebarOpen;
+        },
+
     },
     methods: {
         prevPage() {
@@ -182,3 +236,10 @@ export default {
     }
 };
 </script>
+
+<style>
+/* Add custom styles if needed */
+.transition-all {
+    transition: all 0.3s ease-in-out;
+}
+</style>

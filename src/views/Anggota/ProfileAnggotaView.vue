@@ -1,16 +1,12 @@
 <template>
-  <div class="w-full min-h-screen h-full bg-gray-100">
-    <!-- Navbar -->
-    <NavbarAnggota />
 
+  <!-- Navbar -->
+  <NavbarAnggota />
+  <div class="w-full min-h-screen h-full bg-gray-100">
     <!-- Content Section -->
-    <div class="flex flex-col items-center p-6 flex-grow mt-6 ml-20">
+    <div class="flex flex-col items-center p-6 flex-grow ml-11">
       <div class="bg-white w-full max-w-3xl border border-b-2 shadow-md p-8 rounded-lg animate-fadeInUp">
         <!-- Profile Title -->
-        <h2
-          class="text-3xl sm:text-4xl font-semibold text-transparent bg-clip-text bg-gradient-to-r from-gray-800 to-gray-500 text-center mb-6 animate-fadeInUp">
-          Profile
-        </h2>
 
         <!-- Profile Information Section -->
         <div class="space-y-6">
@@ -96,7 +92,7 @@
               <p class="text-lg font-semibold">Status:</p>
               <p class="text-lg font-semibold">
                 <span
-                  :class="{ 'text-yellow-500 font-semibold': dataUser.status === 'PENDING', 'font-semibold text-green-500': dataUser.status === 'Dietujui' }">
+                  :class="{ 'text-yellow-500 font-semibold': dataUser.status === 'PENDING', 'font-semibold text-green-500': dataUser.status === 'SUCCESS' }">
                   {{ dataUser.status }}
                 </span>
               </p>
