@@ -7,25 +7,24 @@
                 <img src="@/assets/iconlpkni.png" alt="LPKNI" class="w-15 h-12 mr-3 mt-2" />
                 LPKNI
             </router-link>
-
             <!-- Desktop Header Links -->
             <ul class="hidden md:flex space-x-6">
                 <li class="relative group">
                     <button class="text-white hover:text-gray-300 flex items-center space-x-2">
                         <i class="fas fa-clipboard-check"></i>
-                        <span>Pendaftaran</span>
+                        <span>Daftar</span>
                         <i class="fas fa-chevron-down ml-1"></i>
                     </button>
                     <div class="">
                         <ul
                             class="absolute min-w-[150px] bg-white text-black shadow-md rounded-md hidden group-hover:block z-10">
                             <li>
-                                <router-link to="/auth/login" class="block px-4 py-2 text-sm hover:bg-gray-200">Daftar
+                                <router-link to="/auth/register-anggota" class="block px-4 py-2 text-sm hover:bg-gray-200">
                                     Anggota LPKNI</router-link>
                             </li>
                             <li>
-                                <router-link to="/auth/swi/login"
-                                    class="block px-4 py-2 text-sm hover:bg-gray-200">Daftar
+                                <router-link to="/auth/swi/register"
+                                    class="block px-4 py-2 text-sm hover:bg-gray-200">
                                     Standar Warung Indonesia</router-link>
                             </li>
                         </ul>
@@ -64,6 +63,28 @@
                         <i class="fas fa-phone-alt"></i>
                         <span>Contact</span>
                     </a>
+                </li>
+                                <li class="relative group">
+                    <button class="text-white hover:text-gray-300 flex items-center space-x-2">
+                        <i class="fas fa-clipboard-check"></i>
+                        <span>Login</span>
+                        <i class="fas fa-chevron-down ml-1"></i>
+                    </button>
+                    <div class="">
+                        <ul
+                            class="absolute min-w-[150px] bg-white text-black shadow-md rounded-md hidden group-hover:block z-10">
+                            <li>
+                                <router-link to="/auth/login" class="block px-4 py-2 text-sm hover:bg-gray-200">
+                                    LPKNI</router-link>
+                            </li>
+                            <li>
+                                <router-link to="/auth/swi/login"
+                                    class="block px-4 py-2 text-sm hover:bg-gray-200">
+                                    Standar Warung Indonesia</router-link>
+                            </li>
+                        </ul>
+                    </div>
+
                 </li>
             </ul>
 
@@ -114,7 +135,6 @@
                         <span>Contact</span>
                     </a>
                 </li>
-
                 <!-- Dropdown Pendaftaran -->
                 <li class="relative">
                     <button @click="toggleDropdown"
@@ -129,16 +149,15 @@
 
                     <ul v-show="isDropdownOpen" class="mt-2 bg-white text-black rounded shadow-lg overflow-hidden">
                         <li>
-                            <router-link to="/auth/login" class="block px-4 py-2 text-sm hover:bg-gray-200">Daftar
-                                Anggota LPKNI</router-link>
+                            <router-link to="/auth/register-anggota" class="block px-4 py-2 text-sm hover:bg-gray-200">
+                                LPKNI</router-link>
                         </li>
                         <li>
-                            <router-link to="/auth/swi/login" class="block px-4 py-2 text-sm hover:bg-gray-200">Daftar
+                            <router-link to="/auth/swi/register" class="block px-4 py-2 text-sm hover:bg-gray-200">
                                 Standar Warung Indonesia</router-link>
                         </li>
                     </ul>
                 </li>
-
                 <li>
                     <router-link to="/suara-konsumen" class="flex items-center space-x-2 hover:text-gray-300">
                         <i class="fas fa-newspaper w-5 h-5"></i>
@@ -151,9 +170,30 @@
                         <span>Pengaduan</span>
                     </router-link>
                 </li>
+                <li class="relative">
+                    <button @click="toggleDropdownLogin"
+                        class="flex items-center w-full justify-between hover:text-gray-300">
+                        <div class="flex items-center space-x-2">
+                            <i class="fas fa-clipboard-check w-5 h-5"></i>
+                            <span>Login</span>
+                        </div>
+                        <i class="fas fa-chevron-down w-5 h-5 transition-transform"
+                            :class="{ 'rotate-180': isDropdownOpen }"></i>
+                    </button>
+
+                    <ul v-show="isDropdownOpenLogin" class="mt-2 bg-white text-black rounded shadow-lg overflow-hidden">
+                        <li>
+                            <router-link to="/auth/login" class="block px-4 py-2 text-sm hover:bg-gray-200">
+                                Anggota LPKNI</router-link>
+                        </li>
+                        <li>
+                            <router-link to="/auth/swi/login" class="block px-4 py-2 text-sm hover:bg-gray-200">
+                                Standar Warung Indonesia</router-link>
+                        </li>
+                    </ul>
+                </li>
             </ul>
         </div>
-
     </header>
 </template>
 
@@ -165,20 +205,28 @@ export default {
             isMenuOpen: false, // To toggle the mobile menu
             isNavbarVisible: true,
             lastScrollY: 0,
-            isDropdownOpen: false
+            isDropdownOpen: false,
+            isDropdownOpenLogin : false
         };
     },
     methods: {
+        closeMenu() {
+            this.isMenuOpen = false;
+        },
         toggleMenu() {
-            this.isMenuOpen = !this.isMenuOpen;
+            this.isMenuOpen = true;
         },
         toggleDropdown() {
             this.isDropdownOpen = !this.isDropdownOpen;
+        },
+        toggleDropdownLogin() {
+            this.isDropdownOpenLogin = !this.isDropdownOpenLogin;
         },
         handleScroll() {
             const currentScrollY = window.scrollY;
             this.isNavbarVisible = currentScrollY < this.lastScrollY || currentScrollY < 50; // Navbar will show if scroll is upwards or at the top
             this.lastScrollY = currentScrollY;
+            this.closeMenu()
         },
     },
     mounted() {

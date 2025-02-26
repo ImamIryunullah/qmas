@@ -1,7 +1,6 @@
 <template>
     <div>
         <NavbarAdmin />
-
         <div class="bg-gray-100 min-h-screen p-6 transition-all" :class="isSidebarOpen ? 'pl-72' : 'pl-20'">
             <!-- Page Header -->
             <div class="max-w-8xl mx-auto bg-white p-6 md:p-8 rounded-xl shadow-lg">
@@ -23,14 +22,14 @@
                 </h2>
                 <div class="grid grid-cols-1 sm:grid-cols-2 lg:flex lg:items-center gap-4">
                     <label class="text-gray-700 font-medium">Provinsi :</label>
-                    <select v-model="selectedWilayah" class="p-2 border rounded-md w-1/4">
+                    <select v-model="selectedWilayah" class="p-2 border rounded-md w-1/2">
                         <option :value="''">Pilih Wilayah</option>
                         <option v-for="wilayah in wilayahList" :key="wilayah.id_wilayah" :value="wilayah">
                             {{ wilayah.nama_wilayah }}
                         </option>
                     </select>
                     <label class="text-gray-700 font-medium">Kota/Kab : </label>
-                    <select v-model="selectedDaerah" class="p-2 border rounded-md w-1/4">
+                    <select v-model="selectedDaerah" class="p-2 border rounded-md w-1/2">
                         <option disabled :value="''">Pilih Daerah</option>
                         <option v-for="daerah in selectedWilayah.daerah" :key="daerah.id_daerah"
                             :value="daerah.id_daerah">
@@ -38,7 +37,7 @@
                         </option>
                     </select>
                     <label class="text-gray-700 font-medium">Status Pembayaran : </label>
-                    <select v-model="selectedStatus" class="p-2 border rounded-md w-1/4"
+                    <select v-model="selectedStatus" class="p-2 border rounded-md w-1/2"
                         @change="GetTransaksiByStatusByWilayahByDaerah(selectedStatus)">
                         <option disabled value="">Pilih Transaksi</option>
                         <option value="SUCCESS">SUCCESS</option>

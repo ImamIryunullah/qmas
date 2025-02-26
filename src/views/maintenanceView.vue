@@ -68,7 +68,7 @@ export default {
         return {
             // Initial countdown time (1 hour = 3600 seconds)
             timeLeft: {
-                hours: 1,
+                hours: 12,
                 minutes: 0,
                 seconds: 0
             },

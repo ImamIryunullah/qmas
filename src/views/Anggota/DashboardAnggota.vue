@@ -181,11 +181,11 @@
                     </div>
 
                     <!-- Jumlah Terisi -->
-                    <div class="border-l-4 border-blue-500 pl-4">
+                    <!-- <div class="border-l-4 border-blue-500 pl-4">
                         <div class="text-sm font-medium text-gray-500">Terisi:</div>
                         <div class="text-lg text-gray-900 font-semibold">{{ data_anggota.jabatanStruktural.terisi }}
                         </div>
-                    </div>
+                    </div> -->
                 </div>
             </div>
 

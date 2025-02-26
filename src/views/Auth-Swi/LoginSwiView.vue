@@ -115,7 +115,6 @@ export default {
   methods: {
     async getHealth() {
       await swi.getHealthSwi().then(() => {
-
       }).catch(() => {
         this.$router.push('/maintenance');
       })
@@ -139,6 +138,7 @@ export default {
   }
 };
 </script>
+
 
 <style scoped>
 .input-field {

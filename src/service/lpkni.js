@@ -1,7 +1,6 @@
 import axios from "axios";
-
-const baseURL = "http://192.168.1.39:3000/api";
-const IMG = "http://192.168.1.39:3000/";
+const baseURL = "https://lpkni.id/api"; // Ganti dengan domain Anda
+const IMG = "https://lpkni.id/"; // Ganti dengan domain Anda
 const API = axios.create({
   baseURL: baseURL,
   withCredentials: true,

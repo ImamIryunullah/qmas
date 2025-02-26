@@ -6,7 +6,7 @@
       <div class="bg-white h-screen w-full max-w-xl p-10 pb-28 rounded-lg shadow-md">
         <h3 class="text-lg font-semibold text-center mb-4">ID Card Anda</h3>
         <div class="w-full h-full" v-if="pdfUrl">
-          <embed :src="pdfUrl" type="">
+          <embed :src="pdfUrl" type="" class="w-full h-full">
           <!-- <iframe :src="pdfUrl" class="w-full h-full" frameborder="0"></iframe> -->
         </div>
         <div class="w-full flex items-center justify-center" v-else>
@@ -104,7 +104,8 @@ export default {
       pdfUrl: '',
       loading: false,
       errorpdf: false,
-      existingPdfBytes: null
+      existingPdfBytes: null,
+      tanggalBergabung: "",
     };
   },
   methods: {
@@ -115,16 +116,15 @@ export default {
         console.log(userData);
         this.user = userData.user
         this.data_anggota = userData.data_anggota
-        this.kode_idcard = this.data_anggota.daerah.kode_daerah + this.data_anggota.id_data_anggota
+        this.kode_idcard = this.data_anggota.daerah.kode_daerah + "." + this.data_anggota.id_data_anggota
+        this.tanggalBergabung = this.data_anggota.createdAt
         // setTimeout(() => {
 
         // }, 1000);
-
+        this.generatePdf();
       } catch (error) {
         console.log(error)
       }
-
-
     },
     getFullPathImage(img) {
       return lpkni.getfullpathImage(img)
@@ -140,16 +140,13 @@ export default {
           const size = Math.min(img.width, img.height); // Ukuran terkecil untuk membuat lingkaran
           canvas.width = size;
           canvas.height = size;
-
           // Buat lingkaran sebagai area pemotongan
           ctx.beginPath();
           ctx.arc(size / 2, size / 2, size / 2, 0, Math.PI * 2);
           ctx.closePath();
           ctx.clip(); // Gunakan clip untuk memotong gambar
-
           // Gambar image dalam lingkaran
           ctx.drawImage(img, 0, 0, size, size);
-
           // Konversi ke blob agar bisa digunakan di PDF
           canvas.toBlob(blob => {
             resolve(blob);
@@ -161,6 +158,22 @@ export default {
       });
     }
     ,
+    calculateTextWidth(text, fontSize) {
+      const charWidth = fontSize * 0.5; // Perkiraan lebar per karakter
+      return text.length * charWidth;
+    },
+    wrapText(text, maxLength) {
+      const lines = [];
+      let start = 0;
+      while (start < text.length) {
+        lines.push(text.substring(start, start + maxLength));
+        start += maxLength;
+      }
+      return lines;
+    },
+    camelize(str) {
+      return str.charAt(0).toUpperCase() + str.slice(1).toLowerCase();
+    },
     async generatePdf() {
       try {
         this.loading = true;
@@ -182,35 +195,88 @@ export default {
 
         // ✅ Tambahkan gambar bulat ke dalam PDF
         page.drawImage(image, {
-          x: 62, // Sesuaikan posisi X
-          y: 191, // Sesuaikan posisi Y
-          width: 100, // Sesuaikan ukuran gambar
-          height: 100, // Sesuaikan ukuran gambar
+          x: 64.4, // Sesuaikan posisi X
+          y: 194, // Sesuaikan posisi Y
+          width: 95, // Sesuaikan ukuran gambar
+          height: 95, // Sesuaikan ukuran gambar
+        });
+        // Menambahkan nama lengkap (centering)
+        const fullName = this.data_anggota.nama_lengkap.toUpperCase(); // Menggunakan nama dengan huruf besar
+        const fullNameWidth = this.calculateTextWidth(fullName, 19);
+        const pageWidth = page.getWidth();
+        // Tentukan posisi X agar nama tetap berada di tengah
+        let nameXPosition = (pageWidth - fullNameWidth) / 2;
+        var fontpanjang = false;
+        // Jika nama lebih panjang dari 30 karakter, geser ke kiri
+        if (fullName.length > 20 && fullName.length < 25  ) {
+          nameXPosition =25; // Geser ke kiri agar tidak terlalu panjang
+        }else if (fullName.length > 5 &&fullName.length < 12 ){
+          nameXPosition = 90
+        } 
+        else if (fullName.length <= 5){
+          nameXPosition = 95
+        } else if(fullName.length > 25){
+          nameXPosition = 13
+          fontpanjang =true
+        }
+
+        // Pecah nama menjadi beberapa baris jika panjangnya lebih dari 30 karakter
+        const nameLines = this.wrapText(fullName, 30);
+        let nameYPosition = 172; // Posisi Y nama
+        nameLines.forEach((line) => {
+          page.drawText(line, { x: nameXPosition, y: nameYPosition, size: fontpanjang?  10 :12, color: rgb(1, 1, 1) });
+
+          // Jika ada lebih dari satu baris, tambahkan jarak Y
+          nameYPosition -= 1;
+        });
+        // Menambahkan ID
+        page.drawText("ID", { x: 22, y: 140, size: 12, color: rgb(1, 1, 1) });
+        page.drawText(":", { x: 75, y: 140, size: 12, color: rgb(1, 1, 1) });
+        page.drawText(this.kode_idcard, { x: 85, y: 139, size: 12, color: rgb(1, 1, 1) });
+
+        // Menambahkan Jabatan
+        const jabatan = this.data_anggota.jabatanStruktural.nama.toUpperCase()
+        const jabatanLines = this.wrapText(jabatan, 18); // Memecah teks jabatan jika lebih dari 21 karakter
+        let jabatanYPosition = nameYPosition - 50; // Menyesuaikan posisi Y berdasarkan nama
+
+        jabatanLines.forEach((line, index) => {
+          page.drawText(index === 0 ? "JABATAN" : "", { x: 20, y: jabatanYPosition, size: 10, color: rgb(1, 1, 1) });
+          page.drawText(index === 0 ? ":" : "", { x: 75, y: jabatanYPosition, size: 10, color: rgb(1, 1, 1) });
+          page.drawText(line, { x: 85, y: jabatanYPosition, size: 10, color: rgb(1, 1, 1) });
+
+          // Jika ada lebih dari satu baris, tambahkan jarak Y
+          jabatanYPosition -= 15;
         });
 
-        // ✅ Tambahkan teks ke dalam PDF
+        // Menambahkan Alamat
+        const alamat = this.data_anggota.alamat.toUpperCase();
+        const alamatLines = this.wrapText(alamat, 21); // Memecah teks alamat jika lebih dari 21 karakter
+        let alamatYPosition = jabatanYPosition - 0; // Menyesuaikan posisi Y berdasarkan jabatan
 
-        page.drawText(":", { x: 75, y: 140, size: 12, color: rgb(1, 1, 1) });
-        page.drawText(":", { x: 75, y: 123, size: 12, color: rgb(1, 1, 1) });
-        page.drawText(":", { x: 75, y: 107, size: 12, color: rgb(1, 1, 1) });
-        page.drawText("ID", { x: 22, y: 140, size: 12, color: rgb(1, 1, 1) });
-        page.drawText(this.kode_idcard, { x: 50, y: 140, size: 12, color: rgb(1, 1, 1) });
-        page.drawText("Jabatan", { x: 20, y: 123, size: 12, color: rgb(1, 1, 1) });
-        page.drawText("Alamat", { x: 20, y: 107, size: 12, color: rgb(1, 1, 1) });
-        page.drawText("ID", { x: 22, y: 140, size: 12, color: rgb(1, 1, 1) });
+        alamatLines.forEach((line, index) => {
+          page.drawText(index === 0 ? "ALAMAT" : "", { x: 20, y: alamatYPosition, size: 10, color: rgb(1, 1, 1) });
+          page.drawText(index === 0 ? ":" : "", { x: 75, y: alamatYPosition, size: 10, color: rgb(1, 1, 1) });
+          page.drawText(line, { x: 85, y: alamatYPosition, size: 10, color: rgb(1, 1, 1) });
+
+          // Jika ada lebih dari satu baris, tambahkan jarak Y
+          alamatYPosition -= 15;
+        });
+        page.drawText(this.tanggalBergabung.split('T')[0].split('-')[0], { x: 100, y: 10, size: 12, color: rgb(1, 1, 1) });
+
         // ✅ Simpan PDF
         const pdfBytes = await pdfDoc.save();
         const pdfBlob = new Blob([pdfBytes], { type: 'application/pdf' });
         // ✅ Buat URL objek untuk ditampilkan di frontend
         this.pdfUrl = URL.createObjectURL(pdfBlob);
       } catch (error) {
-
         console.error("Gagal membuat PDF:", error);
         this.$toast.error("Gagal membuat PDF. Silakan coba lagi.");
       } finally {
-        this.loading = false
+        this.loading = false;
       }
     }
+
+
 
   },
 };

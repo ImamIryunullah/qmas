@@ -228,6 +228,7 @@ export default {
             lightboxIndex: 0,
             daerahList: [],
             wilayahList: [], // To store the list of provinces
+            lastIndexImage: []
         };
     },
     mounted() {
@@ -270,7 +271,11 @@ export default {
             if (file) {
                 this.form.file.push(file)
                 this.imageUsers[index] = URL.createObjectURL(file);
-                this.imageInputs.push({ keterangan: "", required: false })
+                if (this.imageUsers[index] && !this.lastIndexImage[index]) {
+                    this.imageInputs.push({ keterangan: "", required: false })
+                    this.lastIndexImage[index] = true
+                }
+
             }
         },
         openLightbox(index) {

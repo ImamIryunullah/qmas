@@ -55,6 +55,7 @@
                         <label class="block text-gray-600 font-medium mb-1">Tingkat</label>
                         <select v-model="jabatan.tingkat" class="w-full p-2 border rounded-md" name="" id="">
                             <option value="" disabled>Pilih Tingkat</option>
+                            <option value="Pusat">Pusat</option>
                             <option value="Wilayah">Provinsi</option>
                             <option value="Daerah">Kota/Kab</option>
                             <option value="Region 1">Region 1</option>
@@ -332,7 +333,7 @@ export default {
                 maksimumAnggota: this.jabatan.maksimumAnggota,
                 wilayah_id: this.jabatan.selectedWilayah.id_wilayah,
                 daerah_id: this.jabatan.selectedDaerah,
-                tingkat: this.tingkat,
+                tingkat: this.jabatan.tingkat,
             };
             console.log(formData);
             api

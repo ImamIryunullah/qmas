@@ -66,7 +66,7 @@ export default {
         { label: "Data Pembayaran", path: "/admin/data-pembayaran-anggota", icon: "fas fa-wallet" },
         { label: "Management Jabatan", path: "/admin/management-jabatan", icon: "fas fa-briefcase" },
         { label: "Data Pengaduan", path: "/admin/data-pengaduan", icon: "fas fa-exclamation-triangle" },
-        { label: "Manage Portal Suara", path: "/admin/pengaduan-suara-konsumen", icon: "fas fa-newspaper" },
+        { label: "Manage Suara Konsumen", path: "/admin/pengaduan-suara-konsumen", icon: "fas fa-newspaper" },
       ]
     };
   },

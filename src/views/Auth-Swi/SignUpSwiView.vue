@@ -1,28 +1,11 @@
 <template>
-  <!-- Modal Awal -->
-  <div v-if="showModal"
-    class="fixed inset-0 flex items-center justify-center bg-black bg-opacity-50 z-50 animate__animated animate__fadeIn">
-    <div class="bg-white w-11/12 md:w-2/3 lg:w-1/2 p-8 rounded-lg shadow-lg text-center relative">
-      <h2 class="text-2xl font-bold text-green-700 mb-4">Selamat Datang di SWI</h2>
-      <p class="text-gray-600 text-lg leading-relaxed">
-        Standarisasi Warung Indonesia (SWI) adalah program yang membantu pemilik warung mendapatkan
-        sertifikasi warung Indonesia, standarisasi keamanan dan kebersihan, serta promosi usaha. Dengan bergabung di
-        SWI,
-        warung Anda akan mendapatkan kepercayaan lebih dari pelanggan dan keuntungan promosi dari kami.
-      </p>
-      <button @click="closeModal"
-        class="mt-6 px-6 py-3 bg-green-600 text-white font-semibold rounded-lg hover:bg-green-800 transition duration-300">
-        Selanjutnya
-      </button>
-    </div>
-  </div>
 
   <!-- Form Pendaftaran -->
   <div class="pb-20 bg-white">
     <NavbarSwiAuth />
   </div>
 
-  <div v-if="isMounted && !showModal" class="flex justify-center w-full h-full bg-green-200 pb-20 pt-20">
+  <div v-if="isMounted" class="flex justify-center w-full h-full bg-green-200 pb-20 pt-20">
     <div
       class="w-full lg:w-100 h-full flex flex-col justify-center items-center px-8 lg:px-20 bg-white border border-gray-300 rounded-lg shadow-lg animate-fadeInUp">
 
@@ -114,7 +97,6 @@ export default {
   },
   data() {
     return {
-      showModal: false,
       isMounted: false,
       passwordVisible: false, // Menyembunyikan atau menampilkan password
       form: {
@@ -131,9 +113,6 @@ export default {
   mounted() {
     this.isMounted = true;
 
-    setTimeout(() => {
-      this.showModal = true;
-    }, 3000);
   },
   computed: {
     // Generate username based on first name, last name, and email
@@ -162,9 +141,6 @@ export default {
         !this.form.password ||
         !this.form.confirmpassword
       );
-    },
-    closeModal() {
-      this.showModal = false;
     },
     submitForm() {
       if (this.isFormInvalid()) {

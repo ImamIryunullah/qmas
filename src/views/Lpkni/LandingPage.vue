@@ -6,26 +6,26 @@
 
         <section class="flex flex-col md:flex-row items-center justify-center pt-14 bg-red-700 text-white">
             <!-- Left Section (Text Content) -->
-            <div class="md:w-1/2 text-center md:text-left px-4 pt-5 sm:text-base">
+            <div class="md:w-1/2 text-center md:text-left px-[1.5rem] sm:px-4 pt-5 sm:text-base">
                 <!-- Typing Effect for Heading -->
-                <div class="flex items-center justify-center">
+                <div class="flex items-center justify-start text-start">
                     <h1 id="typing" class="text-4xl md:text-5xl font-bold mb-4"></h1>
                 </div>
 
-                <p class="mb-6 text-lg text-justify">LPKNI merupakan salah satu lembaga atau institusi yang mempunyai
+                <p class="mb-6 text-sm sm:text-lg text-justify">LPKNI merupakan salah satu lembaga atau institusi yang mempunyai
                     tugas
                     pokok dan
                     fungsinya adalah melindungi hak setiap warga negara baik perseorangan (konsumen) maupun badan yang
                     harus mendapatkan perlakuan yang layak selaku konsumen khususnya dan masyarakat sebagai warga negara
                     Indonesia pada umumnya.</p>
-                <div class="flex space-x-4">
-                    <a href="/auth/login"
-                        class="bg-white text-red-600 px-6 py-2 rounded-lg font-semibold hover:bg-gray-100 transition duration-300">
-                        LPKNI
+                <div class="flex space-x-4 justify-center md:justify-start">
+                    <a href="/auth/register-anggota"
+                        class="bg-white text-red-600 px-6 py-2 rounded-lg font-bold sm:font-semibold hover:bg-gray-100 transition duration-300">
+                        Daftar LPKNI
                     </a>
-                    <a href="/auth/swi/login"
-                        class="bg-white text-red-600 px-6 py-2 rounded-lg font-semibold hover:bg-gray-100 transition duration-300 ">
-                        Standarisasi Warung Indonesia
+                    <a href="/auth/swi/register"
+                        class="bg-white text-red-600 px-6 py-2 rounded-lg font-bold sm:font-semibold hover:bg-gray-100 transition duration-300 ">
+                        Daftar SWI
                     </a>
                 </div>
 
@@ -36,8 +36,8 @@
                 <img src="@/assets/animasi1.png" alt="LPKNI" class="rounded-lg w-full mx-auto responsive-image" />
             </div>
         </section>
-        <section id="about" class="py-16 px-6 bg-red-50 text-center">
-            <h2 class="text-4xl font-bold text-gray-800 mb-6">
+        <section id="about" class="py-14 sm:py-16 px-6 bg-red-50 text-center">
+            <h2 class="text-3xl sm:text-4xl font-bold text-gray-800 mb-6">
                 Keuntungan Menjadi Bagian Dari Kami
             </h2>
 

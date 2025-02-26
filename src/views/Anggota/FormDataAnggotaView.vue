@@ -125,6 +125,7 @@
               class="w-full p-3 border border-gray-300 rounded-lg focus:outline-none focus:ring-2 focus:ring-red-600 transition duration-200 ease-in-out mt-2"
               required>
               <option disabled hidden :value="''">Pilih Tingkat</option>
+              <option value="Pusat">Pusat</option>
               <option value="Provinsi">Provinsi</option>
               <option value="Kota/Kab">Kota/Kab</option>
               <option value="Region 1">Region 1</option>
