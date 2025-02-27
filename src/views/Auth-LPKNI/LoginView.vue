@@ -6,7 +6,7 @@
   <div v-if="isMounted"
     class=" flex justify-center w-full h-full bg-gradient-to-r from-red-400 to-red-600 pb-20 pt-20 ">
     <div class="hidden lg:flex lg:w-1/2 rounded-l-lg overflow-hidden border-2 border-white object-cover">
-      <img src="@/assets/pasar.jpg" alt="Login Illustration" class="w-full h-full object-cover ">
+      <img src="@/assets/gaga.jpg" alt="Login Illustration" class="w-full h-full object-cover ">
     </div>
 
     <div class="w-100 bg-white rounded-lg  flex flex-col lg:flex-row animate-fadeInUp">

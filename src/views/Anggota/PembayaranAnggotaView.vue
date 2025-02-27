@@ -1,127 +1,121 @@
 <template>
-  <NavbarAnggota />
-  <div class="bg-gray-100 min-h-screen min-w-screen flex justify-center items-center p-6">
-    <div class="w-full max-w-2xl ml-12">
-      <!-- Subscription Info Section -->
-      <section
-        class="text-center mb-8 rounded-lg py-8 bg-gradient-to-r from-red-700 to-red-500 shadow-xl flex flex-col justify-between h-full">
-        <!-- Description Text (Top) -->
-        <p class="text-sm font-semibold text-white uppercase tracking-wide sm:text-base mb-2">
-          Jumlah Pembayaran
-        </p>
-
-        <!-- Total Amount -->
-        <p class="text-2xl font-extrabold text-white my-4 sm:text-4xl">
-          Rp 600.000,00
-        </p>
-
-        <!-- Additional Text: Contextual Explanation (Bottom) -->
-        <p class="text-xs text-white sm:text-base">
-          Segera lakukan pembayaran untuk melanjutkan proses pendaftaran.
-        </p>
-        <p class="text-xs text-white sm:text-base mb-1">
-          Sebagai Syarat Wajib Menjadi Bagian Dari Anggota LPKNI
-        </p>
-        <p class="text-xs text-white font-semibold sm:text-base mb-1">
-          ( Masa Berlaku 5 Tahun )
-        </p>
-
-        <!-- Payment Details -->
-        <div class="space-y-4 p-6 font-mono">
-          <!-- Account Number Section -->
-          <div class="flex flex-col sm:flex-row">
-            <div class="flex items-center mb-4 sm:mb-0">
-              <label class="block text-sm font-medium text-white mr-3 text-left">
-                No Rekening: <strong>{{ banks[0].accountNumber }}</strong>
-              </label>
-              <button @click="copyToClipboard(banks[0].accountNumber)"
-                class="text-gray-500 hover:text-gray-700 transition-all duration-200 ease-in-out items-left">
-                <i class="fa fa-copy text-yellow-500 text-lg"></i>
-              </button>
+  <div class="w-screen bg-gray-100 min-h-screen h-full flex">
+    <NavbarAnggota />
+    <div class="w-screen min-h-screen bg-gray-100 h-full flex justify-center items-center">
+      <div class="w-full h-full max-w-2xl bg-white p-6 mr-8 mt-12 mb-12 rounded-lg shadow-xl">
+        <!-- Subscription Info Section -->
+        <section class="text-center mb-8 py-8 bg-red-600 rounded-lg shadow-xl flex flex-col justify-between h-full">
+          <p class="text-sm font-semibold text-white uppercase tracking-wide sm:text-base mb-2">
+            Jumlah Pembayaran
+          </p>
+          <p class="text-2xl font-extrabold text-white my-4 sm:text-4xl">
+            Rp 600.000,00
+          </p>
+          <p class="text-xs text-white sm:text-base">
+            Segera lakukan pembayaran untuk melanjutkan proses pendaftaran.
+          </p>
+          <p class="text-xs text-white sm:text-base mb-1">
+            Sebagai Syarat Wajib Menjadi Bagian Dari Anggota LPKNI
+          </p>
+          <p class="text-xs text-white font-semibold sm:text-base mb-1">
+            ( Masa Berlaku 5 Tahun )
+          </p>
+          <div class="space-y-4 p-6 font-mono">
+            <div class="flex flex-col sm:flex-row">
+              <div class="flex items-center mb-4 sm:mb-0">
+                <label class="block text-sm font-medium text-white mr-3 text-left">
+                  No Rekening: <strong>{{ banks[0].accountNumber }}</strong>
+                </label>
+                <button @click="copyToClipboard(banks[0].accountNumber)"
+                  class="text-gray-500 hover:text-gray-700 transition-all duration-200 ease-in-out items-left">
+                  <i class="fa fa-copy text-yellow-500 text-lg"></i>
+                </button>
+              </div>
             </div>
-          </div>
-
-          <!-- Account Holder Name Section -->
-          <div class="flex flex-col sm:flex-row">
-            <div class="flex items-center mb-4 sm:mb-0">
-              <label class="block text-sm font-medium text-white text-left mr-3">
-                Atas Nama : <strong>{{ banks[0].accountHolderName }}</strong>
-              </label>
+            <div class="flex flex-col sm:flex-row">
+              <div class="flex items-center mb-4 sm:mb-0">
+                <label class="block text-sm font-medium text-white text-left mr-3">
+                  Atas Nama : <strong>{{ banks[0].accountHolderName }}</strong>
+                </label>
+              </div>
             </div>
-          </div>
-
-          <!-- Bank Section -->
-          <div class="flex flex-col sm:flex-row">
-            <div class="flex items-center">
-              <label class="block text-sm font-medium text-white mr-3">
-                BANK : <strong>BCA</strong>
-              </label>
-            </div>
-          </div>
-        </div>
-      </section>
-
-
-      <section class="space-y-6 mb-6">
-        <div class="space-y-4">
-          <label class="block text-sm font-medium text-gray-700">Upload Bukti Pembayaran</label>
-          <div class="relative mt-2">
-            <input type="file" class="input-field w-full opacity-0 absolute top-0 left-0" @change="handleFileChange"
-              required />
-            <div
-              class="flex items-center justify-center bg-gray-100 hover:bg-gray-200 cursor-pointer border-2 border-gray-300 p-6 rounded-lg text-gray-500 transition-all duration-300 ease-in-out">
-              <span class="mr-2 text-lg">📎</span>
-              <span class="text-sm font-medium">Upload File</span>
-            </div>
-            <p class="text-xs text-gray-500 mt-1">Max: 3MB | Format: jpg, jpeg, png</p>
-            <div v-if="fileName" class="mt-2 text-2xl font-bold text-gray-700">
-              <strong>Nama File :</strong> {{ fileName }}
-              <div v-if="fileType.startsWith('image')">
-                <img :src="fileUrl" alt="Uploaded Image" class="mt-4 w-32 h-32 object-cover rounded-lg" />
+            <div class="flex flex-col sm:flex-row">
+              <div class="flex items-center">
+                <label class="block text-sm font-medium text-white mr-3">
+                  BANK : <strong>BCA</strong>
+                </label>
               </div>
             </div>
           </div>
+        </section>
 
-          <!-- Input Jumlah Pembayaran Section -->
-          <div class="border-b-2 pt-2 pb-2 p-2">
-            <label class="block text-sm font-medium text-gray-700">Input Jumlah Pembayaran</label>
+        <!-- Form Section -->
+        <section class="space-y-6 mb-6">
+          <div class="space-y-4">
+            <label class="block text-sm font-medium text-gray-700">Upload Bukti Pembayaran</label>
             <div class="relative mt-2">
-              <input v-model="jumlahPembayaran"
-                class="input-field w-full p-3 bg-white border border-gray-300 rounded-lg focus:ring-2 focus:ring-red-500"
-                type="number" placeholder="Rp." required />
+              <!-- Input File dengan posisi relative dan z-index yang tepat -->
+              <div
+                class="flex items-center justify-center bg-gray-100 hover:bg-gray-200 cursor-pointer border-2 border-gray-300 p-6 rounded-lg text-gray-500 transition-all duration-300 ease-in-out z-10 relative">
+                <input type="file" class="input-field w-full opacity-0 absolute top-0 left-0 z-0"
+                  @change="handleFileChange" required />
+                <span class="mr-2 text-lg">📎</span>
+                <span class="text-sm font-medium">Upload File</span>
+              </div>
+              <p class="text-xs text-gray-500 mt-1">Max: 3MB | Format: jpg, jpeg, png</p>
+              <div v-if="fileName" class="mt-2 text-2xl font-bold text-gray-700">
+                <!-- <strong>Nama File :</strong> {{ fileName }} -->
+                <div v-if="fileType.startsWith('image')">
+                  <img :src="fileUrl" alt="Uploaded Image" class="mt-4 w-32 h-32 object-cover rounded-lg"
+                    @click="ope()" />
+                </div>
+              </div>
+            </div>
+
+            <div class="border-b-2 pt-2 pb-2 p-2">
+              <label class="block text-sm font-medium text-gray-700">Input Jumlah Pembayaran</label>
+              <div class="relative mt-2">
+                <input v-model="jumlahPembayaranDisplay" @input="formatInputAmount"
+                  class="input-field w-full p-3 bg-white border font-semibold border-gray-300 rounded-lg focus:ring-2 focus:ring-red-500"
+                  type="text" placeholder="Rp." required />
+              </div>
             </div>
           </div>
-        </div>
-      </section>
+        </section>
 
-      <!-- Submit Button -->
-      <div v-if="selectedPaymentMethod">
-        <button type="submit" @click="submitForm()"
-          class="w-full bg-red-500 text-white px-6 py-2 rounded-lg font-semibold hover:bg-red-600 transition duration-300 ease-in-out">
-          Bayar Sekarang
-        </button>
+        <!-- Submit Button -->
+        <div v-if="selectedPaymentMethod">
+          <button type="submit" @click="submitForm()"
+            class="w-full bg-red-500 text-white px-6 py-2 rounded-lg font-semibold hover:bg-red-600 transition duration-300 ease-in-out">
+            Bayar Sekarang
+          </button>
+        </div>
       </div>
     </div>
   </div>
-
+  <vue-easy-lightbox :visible="lightboxVisible" :imgs="fileUrl" @hide="lightboxVisible = false" />
 </template>
+
 
 <script>
 import NavbarAnggota from '@/components/NavbarAnggota.vue';
 import lpkni from '@/service/lpkni';
 import api from '@/service/lpkni';
 import Swal from 'sweetalert2';
-
+import VueEasyLightbox from 'vue-easy-lightbox';
 export default {
   components: {
-    NavbarAnggota
+    NavbarAnggota,
+    VueEasyLightbox
   },
   data() {
     return {
       jumlahPembayaran: null,
+      jumlahPembayaranDisplay: 'Rp',  // this will hold the formatted amount with 'Rp.'
       fileType: '',
       fileUrl: '',
       fileName: '',
+      lightboxVisible: false,
       selectedVendor: { label: 'Transfer Bank', value: 'BCA' },
       selectedPaymentMethod: 'Transfer Bank',
       isDropdownOpen: false,
@@ -143,6 +137,25 @@ export default {
     }
   },
   methods: {
+    openLightbox() {
+      this.lightboxVisible = true;
+    },
+    formatInputAmount() {
+      // Remove non-numeric characters and only keep digits
+      let formattedAmount = this.jumlahPembayaranDisplay.replace(/[^\d]/g, '');
+
+      // Format number with dots as thousands separator
+      formattedAmount = formattedAmount.replace(/\B(?=(\d{3})+(?!\d))/g, '.');
+
+      // Add 'Rp' at the beginning of the formatted number
+      formattedAmount = 'Rp ' + formattedAmount;
+
+      // Update the display value with the formatted number
+      this.jumlahPembayaranDisplay = formattedAmount;
+
+      // Save the raw number (without formatting) for actual submission
+      this.jumlahPembayaran = parseInt(formattedAmount.replace(/[^\d]/g, ''), 10);
+    },
     handleFileChange(event) {
       const file = event.target.files[0];
       if (!file) {
@@ -181,7 +194,8 @@ export default {
           icon: 'info',
           title: 'Harap Upload Bukti Pembayaran',
           text: 'Silakan upload bukti pembayaran untuk melanjutkan.',
-          confirmButtonText: 'Ok'
+          confirmButtonText: 'Ok',
+          confirmButtonColor: '#22c55e',
         });
         return;
       }
@@ -191,7 +205,8 @@ export default {
           icon: 'info',
           title: 'Harap Masukkan Jumlah Pembayaran',
           text: 'Silakan masukkan jumlah pembayaran Anda.',
-          confirmButtonText: 'Ok'
+          confirmButtonText: 'Ok',
+          confirmButtonColor: '#22c55e',
         });
         return;
       }
@@ -200,7 +215,8 @@ export default {
           icon: 'info',
           title: 'Jumlah Pembayaran Tidak Valid!',
           text: 'Silakan masukkan jumlah pembayaran Sesuai dengan Nomimal Tercantum!',
-          confirmButtonText: 'Ok'
+          confirmButtonText: 'Ok',
+          confirmButtonColor: '#22c55e',
         });
         return;
       }
@@ -212,12 +228,12 @@ export default {
         reverseButtons: false,
         denyButtonText: `Tidak`,
         icon: 'info',
+        confirmButtonColor: '#22c55e',
 
       }).then(async (result) => {
-        if (result.isDenied) {
+        if (result.isDenied || !result.isConfirmed || result.isDismissed) {
           return
         }
-
         const formPembayaran = {
           jumlahPembayaran: this.jumlahPembayaran,
           metodePembayaran: this.selectedPaymentMethod,
@@ -230,7 +246,8 @@ export default {
             icon: 'success',
             title: 'Pembayaran Berhasil!',
             text: 'Pembayaran Anda telah berhasil diproses.',
-            confirmButtonText: 'Ok'
+            confirmButtonText: 'Ok',
+            confirmButtonColor: '#22c55e',
           });
 
           setTimeout(() => {
@@ -241,7 +258,8 @@ export default {
             icon: 'error',
             title: 'Pembayaran Gagal!',
             text: 'Terjadi kesalahan saat memproses pembayaran.',
-            confirmButtonText: 'Ok'
+            confirmButtonText: 'Ok',
+            confirmButtonColor: '#22c55e',
           });
         });
       })

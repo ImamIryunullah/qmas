@@ -1,10 +1,12 @@
 <template>
 
-  <div class="w-screen h-screen min-h-screen flex flex-col bg-gray-100 p-6 ">
+  <div class="w-screen h-screen min-h-screen flex flex-col bg-gray-100">
     <NavbarAnggota />
     <div class="flex flex-col items-center justify-center p-10 h-full bg-gray-100 flex-grow">
       <div class="bg-white h-screen w-full max-w-xl p-10 pb-28 rounded-lg shadow-md">
-        <h3 class="text-lg font-semibold text-center mb-4">ID Card Anda</h3>
+        <h3 class="text-xl font-semibold text-center mb-4">ID Card Anda</h3>
+        <h3 class="text-sm font-semibold text-left mb-4">Jabatan : {{ data_anggota.jabatanStruktural.nama }}</h3>
+        <h3 class="text-sm font-semibold text-left mb-4">Tingkat : {{ data_anggota.jabatanStruktural.tingkat }}</h3>
         <div class="w-full h-full" v-if="pdfUrl">
           <embed :src="pdfUrl" type="" class="w-full h-full">
           <!-- <iframe :src="pdfUrl" class="w-full h-full" frameborder="0"></iframe> -->
@@ -86,7 +88,9 @@ export default {
         },
         jabatanStruktural: {
           nama: "",
-          maksimumAnggota: 0
+          maksimumAnggota: 0,
+          tingkat: ''
+
         },
         imageUsers: [
           { imageUrl: "", keterangan: "" },
@@ -121,7 +125,7 @@ export default {
         // setTimeout(() => {
 
         // }, 1000);
-        this.generatePdf();
+        await this.generatePdf();
       } catch (error) {
         console.log(error)
       }
@@ -177,8 +181,35 @@ export default {
     async generatePdf() {
       try {
         this.loading = true;
-        this.existingPdfBytes = await fetch('/pusatmerah.pdf').then(res => res.arrayBuffer());
-        const pdfDoc = await PDFDocument.load(this.existingPdfBytes);
+        let PDFName = ""
+        switch (this.data_anggota.jabatanStruktural.tingkat) {
+          case "Pusat":
+            PDFName = "Pusat";
+            break;
+          case "Kota/Kab":
+            PDFName = "Kota-Kab";
+            break;
+          case "Provinsi":
+            PDFName = "Provinsi";
+            break;
+          case "Region 1":
+            PDFName = "Provinsi";
+            break;
+          case "Region 2":
+            PDFName = "Kota-Kab";
+            break;
+          default:
+            break;
+        }
+        console.log(PDFName)
+        const response = await fetch(`http://192.168.10.2:3000/assets/${PDFName}.pdf`);
+        if (!response.ok) {
+          throw new Error('PDF not found or failed to load');
+
+        }
+        const pdfBuffer = await response.arrayBuffer();
+        // Memuat PDF
+        const pdfDoc = await PDFDocument.load(pdfBuffer);
         const page = pdfDoc.getPages()[0];
 
         // Ambil URL gambar asli dari backend
@@ -208,23 +239,22 @@ export default {
         let nameXPosition = (pageWidth - fullNameWidth) / 2;
         var fontpanjang = false;
         // Jika nama lebih panjang dari 30 karakter, geser ke kiri
-        if (fullName.length > 20 && fullName.length < 25  ) {
-          nameXPosition =25; // Geser ke kiri agar tidak terlalu panjang
-        }else if (fullName.length > 5 &&fullName.length < 12 ){
+        if (fullName.length > 20 && fullName.length < 25) {
+          nameXPosition = 25; // Geser ke kiri agar tidak terlalu panjang
+        } else if (fullName.length > 5 && fullName.length < 12) {
           nameXPosition = 90
-        } 
-        else if (fullName.length <= 5){
-          nameXPosition = 95
-        } else if(fullName.length > 25){
-          nameXPosition = 13
-          fontpanjang =true
         }
-
+        else if (fullName.length <= 5) {
+          nameXPosition = 95
+        } else if (fullName.length > 25) {
+          nameXPosition = 13
+          fontpanjang = true
+        }
         // Pecah nama menjadi beberapa baris jika panjangnya lebih dari 30 karakter
         const nameLines = this.wrapText(fullName, 30);
         let nameYPosition = 172; // Posisi Y nama
         nameLines.forEach((line) => {
-          page.drawText(line, { x: nameXPosition, y: nameYPosition, size: fontpanjang?  10 :12, color: rgb(1, 1, 1) });
+          page.drawText(line, { x: nameXPosition, y: nameYPosition, size: fontpanjang ? 10 : 12, color: rgb(1, 1, 1) });
 
           // Jika ada lebih dari satu baris, tambahkan jarak Y
           nameYPosition -= 1;

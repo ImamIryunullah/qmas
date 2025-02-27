@@ -62,11 +62,13 @@ export default {
       currentDate: new Date(),
       menuItems: [
         { label: "Dashboard", path: "/admin/dashboard", icon: "fas fa-home" },
-        { label: "Data Pendaftaran", path: "/admin/data-pendaftaran-anggota", icon: "fas fa-user-check" },
+        { label: "Data Anggota", path: "/admin/data-pendaftaran-anggota", icon: "fas fa-user-check" },
         { label: "Data Pembayaran", path: "/admin/data-pembayaran-anggota", icon: "fas fa-wallet" },
         { label: "Management Jabatan", path: "/admin/management-jabatan", icon: "fas fa-briefcase" },
         { label: "Data Pengaduan", path: "/admin/data-pengaduan", icon: "fas fa-exclamation-triangle" },
-        { label: "Manage Suara Konsumen", path: "/admin/pengaduan-suara-konsumen", icon: "fas fa-newspaper" },
+        { label: "Tambah Berita/Suara Konsumen", path: "/admin/pengaduan-suara-konsumen", icon: "fas fa-newspaper" },
+        { label: "Daftar Berita/Suara Konsumen", path: "/admin/daftar-suara-konsumen", icon: "fas fa-newspaper" },
+        { label: "Laporan Kegiatan Anggota", path: "/admin/laporan-kegiatan", icon: "fas fa-calendar-alt" },
       ]
     };
   },

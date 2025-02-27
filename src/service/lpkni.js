@@ -1,6 +1,6 @@
 import axios from "axios";
-const baseURL = "https://lpkni.id/api"; // Ganti dengan domain Anda
-const IMG = "https://lpkni.id/"; // Ganti dengan domain Anda
+const baseURL = "http://192.168.10.2:3000/api"; // Ganti dengan domain Anda
+const IMG = "http://192.168.10.2:3000/"; // Ganti dengan domain Anda
 const API = axios.create({
   baseURL: baseURL,
   withCredentials: true,
@@ -17,6 +17,32 @@ export default {
     return API.post("/pengaduan/anggota", data, {
       headers: { "Content-Type": "multipart/form-data" },
     });
+  },
+  GetAllPengaduanAdmin() {
+    return API.get("/pengaduan");
+  },
+  CreateSuaraKonsumenAdmin(data) {
+    return API.post("/berita", data, {
+      headers: { "Content-Type": "multipart/form-data" },
+    });
+  },
+
+  getAllSuaraKonsumen() {
+    return API.get("/berita");
+  },
+  getAllSuaraKonsumenPublish() {
+    return API.get("/berita/publish");
+  },
+  getSuaraKonsumenByid(id) {
+    return API.get(`/berita/${id}`);
+  },
+  UpdateSuaraKonsumen(id, data) {
+    return API.put(`/berita/${id}`, data, {
+      headers: { "Content-Type": "multipart/form-data" },
+    });
+  },
+  DeleteSuaraKonsumen(id, data) {
+    return API.delete(`/berita/${id}`, data);
   },
   /*Auth*/
   LoginPost(data) {
@@ -74,22 +100,12 @@ export default {
   getDaerahByWilayahId(id) {
     return API.get(`/daerah/wilayah/${id}`);
   },
-  /*Berita*/
-  GetallKategoriBerita() {
-    return API.get("/berita/kategori");
-  },
-  GetAllBerita() {
-    return API.get("/berita");
-  },
-  GetBeritaById(id) {
-    return API.get(`/berita/${id}`);
-  },
-  DeleteBerita(id) {
-    return API.delete(`/berita/${id}`);
-  },
   /*Jabatan*/
   CreateJabatan(data) {
     return API.post(`/jabatans`, data);
+  },
+  DeleteJabatan(id) {
+    return API.delete(`/jabatans/${id}`);
   },
   GetallJabatan() {
     return API.get("/jabatans");
@@ -103,6 +119,7 @@ export default {
   GetJabatanByWilayahDaerahId(wilayah_id, daerah_id) {
     return API.get(`/jabatan/wilayah/${wilayah_id}/daerah/${daerah_id}`);
   },
+
   /*Image*/
   getfullpathImage(img) {
     return `${IMG}${img}`;
@@ -125,10 +142,7 @@ export default {
     return API.get(`/transaksi-anggota/status/${status}`);
   },
   GetTransaksiByStatusByWilayahByDaerah(status, wilayahID, daerahID) {
-    // Membuat object untuk menyimpan parameter query
     let queryParams = {};
-
-    // Menambahkan parameter ke queryParams jika ada
     if (status) {
       queryParams.statusPembayaran = status;
     }
@@ -138,11 +152,13 @@ export default {
     if (daerahID) {
       queryParams.daerahID = daerahID;
     }
-
-    // Mengubah queryParams object menjadi string query
     const queryString = new URLSearchParams(queryParams).toString();
-
-    // Menggunakan queryString dalam request GET
     return API.get(`/transaksi-anggota?${queryString}`);
+  },
+  getAllTransaksiAdmin() {
+    return API.get("/transaksi-anggota/all");
+  },
+  UpdateTransaksiAnggotaAdmin(id, status) {
+    return API.put(`/transaksi-anggota/${id}/${status}`);
   },
 };

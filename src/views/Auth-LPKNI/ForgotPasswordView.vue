@@ -99,6 +99,7 @@ export default {
           text: 'Token yang Anda masukkan valid.',
           timer: 1500,
           showConfirmButton: false
+
         });
       }).catch(() => {
         Swal.fire({

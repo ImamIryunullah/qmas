@@ -1,184 +1,185 @@
 <template>
-  <NavbarAnggota />
-  <div class="bg-gray-100 min-h-screen flex justify-center items-center pl-16">
-    <div class="w-full max-w-2xl bg-white p-8 rounded-lg shadow-xl animate-fadeInUp">
-      <div class="text-center mb-8">
-        <h2
-          class="text-4xl font-extrabold text-center text-transparent bg-clip-text bg-gradient-to-r from-black to-black mb-4 flex items-center justify-center space-x-2">
-          <i class="fas fa-user-circle text-3xl text-black mt-2"></i>
-          <span>Data Diri</span>
-        </h2>
+  <div class="w-screen bg-gray-100 min-h-screen h-full flex">
+    <div class="bg-gray-100 text-white">
+      <NavbarAnggota />
+    </div>
+    <div class="flex-1 flex justify-center items-center bg-gray-100 mr-6 mt-20 mb-12">
+      <div
+        class="justify-center items-center w-full h-full min-h-screen max-w-2xl bg-white p-6 rounded-lg shadow-xl animate-fadeInUp mt-12 mb-12">
+        <div class="text-center mb-8">
+          <h2
+            class="text-4xl font-extrabold text-center text-transparent bg-clip-text bg-gradient-to-r from-black to-black mb-4 flex items-center justify-center space-x-2">
+            <i class="fas fa-user-circle text-3xl text-black mt-2"></i>
+            <span>Data Diri</span>
+          </h2>
 
-        <p class="text-lg text-gray-600 mb-6 max-w-2xl mx-auto justify">
-          Informasi ini diperlukan untuk melengkapi data Anda dan memastikan kelengkapan proses verifikasi.
-        </p>
-      </div>
-      <form @submit.prevent="dataLengkap ? UpdatData() : SubmitData()">
-        <div class="grid grid-cols-1 sm:grid-cols-2 gap-6">
-          <div>
-            <label class="text-sm text-gray-500 font-bold">Nama Lengkap</label>
-            <input v-model="userData.nama_lengkap" type="text" placeholder="Nama Lengkap"
-              class="w-full p-3 border border-gray-300 rounded-lg focus:outline-none focus:ring-2 focus:ring-red-600 transition duration-200 ease-in-out mt-2"
-              required />
-          </div>
-          <div>
-            <label class="text-sm text-gray-500 font-bold">Alamat Lengkap</label>
-            <input v-model="userData.alamat" type="text" placeholder="Alamat Lengkap"
-              class="w-full p-3 border border-gray-300 rounded-lg focus:outline-none focus:ring-2 focus:ring-red-600 transition duration-200 ease-in-out mt-2"
-              required />
-          </div>
-
-
-          <div>
-            <label class="text-sm text-gray-500 font-bold">Nomor Induk Kependudukan</label>
-            <input v-model="userData.nik" type="number" placeholder="NIK"
-              class="w-full p-3 border border-gray-300 rounded-lg focus:outline-none focus:ring-2 focus:ring-red-600 transition duration-200 ease-in-out mt-2"
-              required />
-          </div>
-
-
-          <div>
-            <label class="text-sm text-gray-500 font-bold">Tempat Lahir</label>
-            <input v-model="userData.tempatLahir" type="text" placeholder="Tempat Lahir"
-              class="w-full p-3 border border-gray-300 rounded-lg focus:outline-none focus:ring-2 focus:ring-red-600 transition duration-200 ease-in-out mt-2"
-              required />
-          </div>
-
-
-          <div>
-            <label class="text-sm text-gray-500 font-bold">Tanggal Lahir</label>
-            <input v-model="userData.tanggalLahir" type="date" placeholder="Tanggal Lahir"
-              class="w-full p-3 border border-gray-300 rounded-lg focus:outline-none focus:ring-2 focus:ring-red-600 transition duration-200 ease-in-out mt-2"
-              required />
-          </div>
-
-
-          <div>
-            <label class="text-sm text-gray-500 font-bold">Pekerjaan</label>
-            <input v-model="userData.pekerjaan" type="text" placeholder="Pekerjaan"
-              class="w-full p-3 border border-gray-300 rounded-lg focus:outline-none focus:ring-2 focus:ring-red-600 transition duration-200 ease-in-out mt-2"
-              required />
-          </div>
-
-
-          <div>
-            <label class="text-sm text-gray-500 font-bold">Status Kawin</label>
-            <select v-model="userData.statusPerkawinan" required
-              class="w-full p-3 border border-gray-300 rounded-lg focus:outline-none focus:ring-2 focus:ring-red-600 transition duration-200 ease-in-out mt-2">
-              <option value="" disabled>Pilih Status Kawin</option>
-              <option value="Kawin">Kawin</option>
-              <option value="Belum Kawin">Belum Kawin</option>
-              <option value="Cerai Hidup">Cerai Hidup</option>
-              <option value="Cerai Mati">Cerai Mati</option>
-            </select>
-          </div>
-
-
-          <div>
-            <label class="text-sm text-gray-500 font-bold">Agama</label>
-            <select v-model="userData.agama"
-              class="w-full p-3 border border-gray-300 rounded-lg focus:outline-none focus:ring-2 focus:ring-red-600 transition duration-200 ease-in-out mt-2"
-              required>
-              <option value="" disabled>Pilih Agama</option>
-              <option value="Islam">Islam</option>
-              <option value="Kristen Protestan">Kristen Protestan</option>
-              <option value="Kristen Katholik">Kristen Katholik</option>
-              <option value="Hindu">Hindu</option>
-              <option value="Buddha">Buddha</option>
-              <option value="Konghucu">Konghucu</option>
-            </select>
-          </div>
-
-
-          <div>
-            <label class="text-sm text-gray-500 font-bold">Provinsi</label>
-            <select v-model="userData.wilayahId" @change="GetDaerahByWilayahId(userData.wilayahId)"
-              class="w-full p-3 border border-gray-300 rounded-lg focus:outline-none focus:ring-2 focus:ring-red-600 transition duration-200 ease-in-out mt-2"
-              required>
-              <option :value="0" selected disabled>Pilih Wilayah</option>
-              <option v-for="wilayah in wilayahList" :key="wilayah.id_wilayah" :value="wilayah.id_wilayah">
-                {{ wilayah.kode_wilayah + " - " + wilayah.nama_wilayah }}
-              </option>
-            </select>
-          </div>
-
-
-          <div>
-            <label class="text-sm text-gray-500 font-bold">Kota / Kabupaten</label>
-            <select v-model="userData.daerahId" :disabled="userData.wilayahId === 0"
-              @change="getJabatanBywilayahAndDaerah(userData.wilayahId, userData.daerahId)"
-              class="w-full p-3 border border-gray-300 rounded-lg focus:outline-none focus:ring-2 focus:ring-red-600 transition duration-200 ease-in-out mt-2"
-              required>
-              <option :value="0" selected disabled>Pilih Daerah</option>
-              <option v-for="daerah in daerahList" :key="daerah.id_daerah" :value="daerah.id_daerah">
-                {{ daerah.kode_daerah + " - " + daerah.nama_daerah }}
-              </option>
-            </select>
-          </div>
-
-
-
-          <div>
-            <label class="text-sm text-gray-500 font-bold">Tingkat</label>
-            <select v-model="userData.jabatanStruktural.tingkat" :disabled="!userData.daerahId"
-              @change="filterJabatanTingkat()"
-              class="w-full p-3 border border-gray-300 rounded-lg focus:outline-none focus:ring-2 focus:ring-red-600 transition duration-200 ease-in-out mt-2"
-              required>
-              <option disabled hidden :value="''">Pilih Tingkat</option>
-              <option value="Pusat">Pusat</option>
-              <option value="Provinsi">Provinsi</option>
-              <option value="Kota/Kab">Kota/Kab</option>
-              <option value="Region 1">Region 1</option>
-              <option value="Region 2">Region 2</option>
-            </select>
-          </div>
-
-          <div>
-            <label class="text-sm text-gray-500 font-bold">Jabatan</label>
-            <select v-model="userData.jabatanStrukturalId" :disabled="!userData.daerahId"
-              class="w-full p-3 border border-gray-300 rounded-lg focus:outline-none focus:ring-2 focus:ring-red-600 transition duration-200 ease-in-out mt-2"
-              required>
-              <option disabled hidden :value="0">Pilih Jabatan</option>
-              <option v-for="jabatan in filterJabatanList" :key="jabatan.id" :value="jabatan.id">{{ jabatan.wilayah &&
-                !jabatan.daerah ?
-                jabatan.wilayah.kode_wilayah + " - " + jabatan.nama : jabatan.daerah.kode_daerah + " - " + jabatan.nama
-                }}
-              </option>
-            </select>
-          </div>
-
-
-
-          <div v-for="(image, index) in imageInputs" :key="index">
-            <label class="text-sm text-gray-500 font-bold">{{ image.keterangan }}</label>
-            <input :required="!UpdateGambar ? image.required : false" type="file"
-              @change="handleFileUpload($event, index)"
-              class="w-full p-3 border border-gray-300 rounded-lg focus:outline-none focus:ring-2 focus:ring-green-600 transition duration-200 ease-in-out transform mt-2 hover:scale-105" />
-            <img v-if="imageUsers[index]"
-              :src="dataLengkap && !UpdateGambar[index] ? getFullpathImage(imageUsers[index].imageUrl) : imageUsers[index]"
-              alt="uploaded" @click="openLightbox(index)"
-              class="w-40 h-auto items-start object-contain rounded-lg shadow-md mt-4">
-          </div>
-
-
+          <p class="text-lg text-gray-600 mb-6 max-w-2xl mx-auto justify">
+            Informasi ini diperlukan untuk melengkapi data Anda dan memastikan kelengkapan proses verifikasi.
+          </p>
         </div>
-        <button type="submit"
-          class="mt-6 w-full bg-red-600 text-white px-6 py-2 rounded-lg font-bold hover:bg-red-700 transition">
-          {{ dataLengkap ? 'Update Data' : 'Submit Data' }}
-        </button>
-      </form>
-    </div>
+        <form @submit.prevent="dataLengkap ? UpdatData() : SubmitData()">
+          <div class="grid grid-cols-1 sm:grid-cols-2 gap-6">
+            <div>
+              <label class="text-sm text-gray-500 font-bold">Nama Lengkap</label>
+              <input v-model="userData.nama_lengkap" type="text" placeholder="Nama Lengkap"
+                class="w-full p-3 border border-gray-300 rounded-lg focus:outline-none focus:ring-2 focus:ring-red-600 transition duration-200 ease-in-out mt-2"
+                required />
+            </div>
+            <div>
+              <label class="text-sm text-gray-500 font-bold">Alamat Lengkap</label>
+              <input v-model="userData.alamat" type="text" placeholder="Alamat Lengkap"
+                class="w-full p-3 border border-gray-300 rounded-lg focus:outline-none focus:ring-2 focus:ring-red-600 transition duration-200 ease-in-out mt-2"
+                required />
+            </div>
+            <div>
+              <label class="text-sm text-gray-500 font-bold">Nomor Induk Kependudukan</label>
+              <input v-model="userData.nik" type="number" placeholder="NIK"
+                class="w-full p-3 border border-gray-300 rounded-lg focus:outline-none focus:ring-2 focus:ring-red-600 transition duration-200 ease-in-out mt-2"
+                required />
+            </div>
 
-    <div v-if="isLoading" class="fixed inset-0 flex items-center justify-center bg-black bg-opacity-50 z-50">
-      <div class="text-white text-lg">Sedang Memuat...</div>
-      <div class="spinner-border animate-spin border-4 border-t-4 border-white rounded-full w-16 h-16 ml-2"></div>
-    </div>
 
-    <vue-easy-lightbox :visible="lightboxVisible"
-      :imgs="dataLengkap && !UpdateGambar.length > 0 ? imageUrl : imageUsers" :index="lightboxIndex"
-      @hide="lightboxVisible = false" />
+            <div>
+              <label class="text-sm text-gray-500 font-bold">Tempat Lahir</label>
+              <input v-model="userData.tempatLahir" type="text" placeholder="Tempat Lahir"
+                class="w-full p-3 border border-gray-300 rounded-lg focus:outline-none focus:ring-2 focus:ring-red-600 transition duration-200 ease-in-out mt-2"
+                required />
+            </div>
+
+
+            <div>
+              <label class="text-sm text-gray-500 font-bold">Tanggal Lahir</label>
+              <input v-model="userData.tanggalLahir" type="date" placeholder="Tanggal Lahir"
+                class="w-full p-3 border border-gray-300 rounded-lg focus:outline-none focus:ring-2 focus:ring-red-600 transition duration-200 ease-in-out mt-2"
+                required />
+            </div>
+
+
+            <div>
+              <label class="text-sm text-gray-500 font-bold">Pekerjaan</label>
+              <input v-model="userData.pekerjaan" type="text" placeholder="Pekerjaan"
+                class="w-full p-3 border border-gray-300 rounded-lg focus:outline-none focus:ring-2 focus:ring-red-600 transition duration-200 ease-in-out mt-2"
+                required />
+            </div>
+
+
+            <div>
+              <label class="text-sm text-gray-500 font-bold">Status Kawin</label>
+              <select v-model="userData.statusPerkawinan" required
+                class="w-full p-3 border border-gray-300 rounded-lg focus:outline-none focus:ring-2 focus:ring-red-600 transition duration-200 ease-in-out mt-2">
+                <option value="" disabled>Pilih Status Kawin</option>
+                <option value="Kawin">Kawin</option>
+                <option value="Belum Kawin">Belum Kawin</option>
+                <option value="Cerai Hidup">Cerai Hidup</option>
+                <option value="Cerai Mati">Cerai Mati</option>
+              </select>
+            </div>
+
+
+            <div>
+              <label class="text-sm text-gray-500 font-bold">Agama</label>
+              <select v-model="userData.agama"
+                class="w-full p-3 border border-gray-300 rounded-lg focus:outline-none focus:ring-2 focus:ring-red-600 transition duration-200 ease-in-out mt-2"
+                required>
+                <option value="" disabled>Pilih Agama</option>
+                <option value="Islam">Islam</option>
+                <option value="Kristen Protestan">Kristen Protestan</option>
+                <option value="Kristen Katholik">Kristen Katholik</option>
+                <option value="Hindu">Hindu</option>
+                <option value="Buddha">Buddha</option>
+                <option value="Konghucu">Konghucu</option>
+              </select>
+            </div>
+
+
+            <div>
+              <label class="text-sm text-gray-500 font-bold">Provinsi</label>
+              <select v-model="userData.wilayahId" @change="GetDaerahByWilayahId(userData.wilayahId)"
+                class="w-full p-3 border border-gray-300 rounded-lg focus:outline-none focus:ring-2 focus:ring-red-600 transition duration-200 ease-in-out mt-2"
+                required>
+                <option :value="0" selected disabled>Pilih Wilayah</option>
+                <option v-for="wilayah in wilayahList" :key="wilayah.id_wilayah" :value="wilayah.id_wilayah">
+                  {{ wilayah.kode_wilayah + " - " + wilayah.nama_wilayah }}
+                </option>
+              </select>
+            </div>
+
+
+            <div>
+              <label class="text-sm text-gray-500 font-bold">Kota / Kabupaten</label>
+              <select v-model="userData.daerahId" :disabled="userData.wilayahId === 0"
+                @change="getJabatanBywilayahAndDaerah(userData.wilayahId, userData.daerahId)"
+                class="w-full p-3 border border-gray-300 rounded-lg focus:outline-none focus:ring-2 focus:ring-red-600 transition duration-200 ease-in-out mt-2"
+                required>
+                <option :value="0" selected disabled>Pilih Daerah</option>
+                <option v-for="daerah in daerahList" :key="daerah.id_daerah" :value="daerah.id_daerah">
+                  {{ daerah.kode_daerah + " - " + daerah.nama_daerah }}
+                </option>
+              </select>
+            </div>
+
+
+
+            <div>
+              <label class="text-sm text-gray-500 font-bold">Tingkat</label>
+              <select v-model="userData.jabatanStruktural.tingkat" :disabled="!userData.daerahId"
+                @change="filterJabatanTingkat()"
+                class="w-full p-3 border border-gray-300 rounded-lg focus:outline-none focus:ring-2 focus:ring-red-600 transition duration-200 ease-in-out mt-2"
+                required>
+                <option disabled hidden :value="''">Pilih Tingkat</option>
+                <option value="Pusat">Pusat</option>
+                <option value="Provinsi">Provinsi</option>
+                <option value="Kota/Kab">Kota/Kab</option>
+                <option value="Region 1">Region 1</option>
+                <option value="Region 2">Region 2</option>
+              </select>
+            </div>
+
+            <div>
+              <label class="text-sm text-gray-500 font-bold">Jabatan</label>
+              <select v-model="userData.jabatanStrukturalId" :disabled="!userData.daerahId"
+                class="w-full p-3 border border-gray-300 rounded-lg focus:outline-none focus:ring-2 focus:ring-red-600 transition duration-200 ease-in-out mt-2"
+                required>
+                <option disabled hidden :value="0">Pilih Jabatan</option>
+                <option v-for="jabatan in filterJabatanList" :key="jabatan.id" :value="jabatan.id">{{ jabatan.wilayah &&
+                  !jabatan.daerah ?
+                  jabatan.wilayah.kode_wilayah + " - " + jabatan.nama : jabatan.daerah.kode_daerah + " - " +
+                  jabatan.nama
+                  }}
+                </option>
+              </select>
+            </div>
+            <div v-for="(image, index) in imageInputs" :key="index">
+              <label class="text-sm text-gray-500 font-bold">{{ image.keterangan }}</label>
+              <input :required="!UpdateGambar ? image.required : false" type="file"
+                @change="handleFileUpload($event, index)"
+                class="w-full p-3 border border-gray-300 rounded-lg focus:outline-none focus:ring-2 focus:ring-green-600 transition duration-200 ease-in-out transform mt-2 hover:scale-105" />
+              <p class="text-xs text-gray-500 mt-1">Max: 3MB | Format: jpg, jpeg, png</p>
+              <img v-if="imageUsers[index]"
+                :src="dataLengkap && !UpdateGambar[index] ? getFullpathImage(imageUsers[index].imageUrl) : imageUsers[index]"
+                alt="uploaded" @click="openLightbox(index)"
+                class="w-40 h-auto items-start object-contain rounded-lg shadow-md mt-4">
+            </div>
+
+          </div>
+          <div class="items-center justify-center flex">
+            <button type="submit"
+              class="mt-12 w-1/2 bg-red-600 text-white px-6 py-2 rounded-lg font-bold hover:bg-red-700 transition">
+              {{ dataLengkap ? 'Update Data' : 'Submit Data' }}
+            </button>
+          </div>
+        </form>
+      </div>
+      <div v-if="isLoading" class="fixed inset-0 flex items-center justify-center bg-black bg-opacity-50 z-50">
+        <div class="text-white text-lg">Sedang Memuat...</div>
+        <div class="spinner-border animate-spin border-4 border-t-4 border-white rounded-full w-16 h-16 ml-2"></div>
+      </div>
+
+      <vue-easy-lightbox :visible="lightboxVisible"
+        :imgs="dataLengkap && !UpdateGambar.length > 0 ? imageUrl : imageUsers" :index="lightboxIndex"
+        @hide="lightboxVisible = false" />
+    </div>
   </div>
-
 </template>
 
 
@@ -340,6 +341,7 @@ export default {
               title: "Informasi!",
               text: "Data Belum Terverifikasi, Harap Menyelesaikan Pembayaran.!",
               showConfirmButton: true,
+              confirmButtonColor: '#22c55e',
             })
           }
           await this.GetDaerahByWilayahId(this.userData.wilayahId)
@@ -355,6 +357,7 @@ export default {
             title: "Informasi!",
             text: "Harap Lengkapi Data Diri Anda!",
             showConfirmButton: true,
+            confirmButtonColor: '#22c55e',
           })
         }
       }).catch((error) => {
@@ -389,12 +392,13 @@ export default {
         text: 'Apakah Anda Yakin Data Sudah Benar?',
         showDenyButton: true,
         confirmButtonText: "Ya",
-        reverseButtons: true,
+        reverseButtons: false,
         denyButtonText: `Tidak`,
+        confirmButtonColor: '#22c55e',
         icon: 'info',
 
       }).then(async (result) => {
-        if (result.isDenied) {
+        if (result.isDenied || !result.isConfirmed || result.isDismissed) {
           return
         }
         const forms = {
@@ -420,6 +424,7 @@ export default {
             icon: "success",
             title: "Informasi!",
             text: "Berhasil Menambahkan Data!",
+            confirmButtonColor: '#22c55e',
             showConfirmButton: true,
           })
         } catch (error) {
@@ -427,6 +432,7 @@ export default {
             icon: "error",
             title: "Informasi!",
             text: "Gagal Menambahkan Data!",
+            confirmButtonColor: '#22c55e',
             showConfirmButton: true,
           })
           console.log(error)
@@ -442,9 +448,11 @@ export default {
         showDenyButton: true,
         confirmButtonText: "Ya",
         denyButtonText: `Tidak`,
-        icon: 'info'
+        confirmButtonColor: '#22c55e',
+        icon: 'info',
+
       }).then(async (result) => {
-        if (result.isDenied) {
+        if (result.isDenied || !result.isConfirmed || result.isDismissed) {
           return
         }
         this.isLoading = true;
@@ -469,6 +477,7 @@ export default {
             icon: "success",
             title: "Informasi!",
             text: "Data Berhasil Di Perbarui!",
+            confirmButtonColor: '#22c55e',
             showConfirmButton: true,
           })
         }).catch(() => {
@@ -476,6 +485,7 @@ export default {
             icon: "error",
             title: "Informasi!",
             text: "Gagal Memperbarui Data!",
+            confirmButtonColor: '#22c55e',
             showConfirmButton: true,
           })
         }).finally(() => {

@@ -2,7 +2,7 @@
     <div>
         <NavbarAdmin />
 
-        <div class="bg-gray-100 min-h-screen p-6 ml-10">
+        <div class="bg-gray-100 min-h-screen p-6 ml-10" :class="isSidebarOpen ? 'ml-52' : 'ml-0'">
             <!-- Page Header -->
             <div class="max-w-6xl mx-auto bg-white p-6 md:p-8 rounded-xl shadow-lg">
                 <div class="flex flex-col md:flex-row md:items-center md:justify-between">
@@ -56,25 +56,28 @@
                         <select v-model="jabatan.tingkat" class="w-full p-2 border rounded-md" name="" id="">
                             <option value="" disabled>Pilih Tingkat</option>
                             <option value="Pusat">Pusat</option>
-                            <option value="Wilayah">Provinsi</option>
-                            <option value="Daerah">Kota/Kab</option>
+                            <option value="Provinsi">Provinsi</option>
+                            <option value="Kota/Kab">Kota/Kab</option>
                             <option value="Region 1">Region 1</option>
                             <option value="Region 2">Region 2</option>
                         </select>
                     </div>
                     <div class="flex items-end">
                         <button type="submit" class="bg-red-500 text-white px-6 py-2 rounded-lg hover:bg-red-700">
-                            Tambah Jabatan
+                            <label class="font-semibold">Tambah Jabatan
+                                <i class="fa-solid fa-address-card"></i>
+                            </label>
                         </button>
                     </div>
                 </form>
             </div>
             <div class="max-w-6xl mx-auto bg-white p-6 mt-6 rounded-lg shadow-md">
+                <h1 class="font-semibold pb-2">Filter Jabatan</h1>
                 <div class="grid grid-cols-1 sm:grid-cols-2 lg:flex lg:items-center gap-4">
                     <label class="text-gray-700 font-medium">Wilayah :</label>
                     <select v-model="selectedWilayah" class="p-2 border rounded-md"
                         @change="GetJabatanByWilayahId(selectedWilayah.id_wilayah)">
-                        <option :value="0">Semua Wilayah</option>
+                        <option disabled :value="0">Pilih Wilayah</option>
                         <option v-for="wilayah in wilayahList" :key="wilayah.id_wilayah" :value="wilayah">
                             {{ wilayah.nama_wilayah }}
                         </option>
@@ -82,7 +85,7 @@
                     <label class="text-gray-700 font-medium">Daerah : </label>
                     <select v-model="selectedDaerah" class="p-2 border rounded-md"
                         @change="GetJabatanByDaerahId(selectedDaerah.id_daerah)">
-                        <option disabled :value="0">Semua Daerah</option>
+                        <option disabled :value="0">Pilih Daerah</option>
                         <option v-for="daerah in selectedWilayah.daerah" :key="daerah.id_daerah" :value="daerah">
                             {{ daerah.nama_daerah }}
                         </option>
@@ -138,15 +141,16 @@
                                 <td class="px-4 py-2 text-center">
                                     <div class="flex justify-center space-x-2">
                                         <!-- Tombol Edit -->
-                                        <button @click="openModal(index)"
+                                        <!-- <button @click="openModal(index)"
                                             class="flex items-center space-x-1 bg-blue-500 text-white px-3 py-2 rounded-lg text-sm hover:bg-blue-600 transition duration-200">
                                             <i class="fas fa-edit"></i>
-                                        </button>
+                                        </button> -->
 
                                         <!-- Tombol Hapus -->
-                                        <button @click="deleteJabatan(index)"
+                                        <button @click="DeleteJabatan(jabatan.id)"
                                             class="flex items-center space-x-1 bg-red-500 text-white px-3 py-2 rounded-lg text-sm hover:bg-red-600 transition duration-200">
                                             <i class="fas fa-trash-alt"></i>
+                                            <label for="">Delete</label>
                                         </button>
                                     </div>
                                 </td>
@@ -156,15 +160,12 @@
                 </div>
             </div>
         </div>
-
         <!-- Edit Modal -->
-        <transition name="fade">
+        <!-- <transition name="fade">
             <div v-if="isModalOpen"
                 class="fixed inset-0 flex items-center justify-center bg-gray-900 bg-opacity-50 z-50">
                 <div class="bg-white p-6 rounded-lg shadow-lg w-96">
                     <h2 class="text-xl font-semibold mb-4">Edit Jabatan</h2>
-
-                    <!-- Form -->
                     <form @submit.prevent="submitEdit">
                         <div class="mb-4">
                             <label class="block text-gray-700">Nama Jabatan:</label>
@@ -175,8 +176,12 @@
                         <div class="mb-4">
                             <label class="block text-gray-700">Tingkat Jabatan:</label>
                             <select v-model="selectedJabatan.tingkat" class="w-full px-3 py-2 border rounded-md">
-                                <option value="Wilayah">Wilayah</option>
-                                <option value="Daerah">Daerah</option>
+                                <option value="" disabled>Pilih Tingkat</option>
+                                <option value="Pusat">Pusat</option>
+                                <option value="Provinsi">Provinsi</option>
+                                <option value="Kota/Kab">Kota/Kab</option>
+                                <option value="Region 1">Region 1</option>
+                                <option value="Region 2">Region 2</option>
                             </select>
                         </div>
 
@@ -186,7 +191,7 @@
                                 class="w-full px-3 py-2 border rounded-md" required />
                         </div>
 
-                        <!-- Actions -->
+               
                         <div class="flex justify-end space-x-4">
                             <button type="button" @click="closeModal"
                                 class="px-4 py-2 bg-gray-400 text-white rounded-md">
@@ -199,30 +204,8 @@
                     </form>
                 </div>
             </div>
-        </transition>
-        <transition name="fade">
-            <div v-if="isModalDeleteOpen"
-                class="fixed inset-0 flex items-center justify-center bg-gray-900 bg-opacity-50 z-50">
-                <div class="bg-white p-6 rounded-lg shadow-lg w-96">
-                    <h2 class="text-xl font-semibold mb-4 text-red-600">Konfirmasi Penghapusan</h2>
+        </transition> -->
 
-                    <p class="text-gray-700 mb-4">Apakah Anda yakin ingin menghapus jabatan <strong>{{
-                        'asda' }}</strong>?</p>
-
-                    <!-- Actions -->
-                    <div class="flex justify-end space-x-4">
-                        <button type="button" @click="isModalDeleteOpen = false"
-                            class="px-4 py-2 bg-gray-400 text-white rounded-md">
-                            Batal
-                        </button>
-                        <button type="button" @click="deleteJabatan"
-                            class="px-4 py-2 bg-red-600 text-white rounded-md hover:bg-red-700">
-                            Hapus
-                        </button>
-                    </div>
-                </div>
-            </div>
-        </transition>
 
     </div>
 </template>
@@ -230,6 +213,7 @@
 <script>
 import NavbarAdmin from "@/components/NavbarAdmin.vue";
 import api from "@/service/lpkni";
+import Swal from "sweetalert2";
 export default {
     components: {
         NavbarAdmin,
@@ -254,12 +238,42 @@ export default {
         };
     },
     computed: {
+        isSidebarOpen() {
+            return this.$store.state.storeSidebar.isSidebarOpen;
+        }
     },
     mounted() {
         // this.GetallJabatan();
         this.fetchWilayah();
     },
     methods: {
+        DeleteJabatan(id) {
+            Swal.fire({
+                title: "Informasi",
+                text: 'Apakah Anda Yakin ingin Mengahapus Jabatan?',
+                showDenyButton: true,
+                confirmButtonText: "Ya",
+                confirmButtonColor: '#22c55e',
+                denyButtonText: `Tidak`,
+                icon: 'warning',
+                reverseButtons: true
+
+            }).then(async (result) => {
+                if (result.isDenied || !result.isConfirmed || result.isDismissed) {
+                    return
+                }
+                api.DeleteJabatan(id).then(() => {
+                    this.$toast.success('Delete Berita Berhasil!')
+                    setTimeout(() => {
+                        window.location.reload()
+                    }, 500);
+
+                }).catch(() => {
+                    this.$toast.error('Delete Berita Gagal!')
+                })
+            })
+
+        },
         async fetchWilayah() {
             await api
                 .getAllWilayah()
@@ -340,6 +354,9 @@ export default {
                 .CreateJabatan(formData)
                 .then(() => {
                     this.$toast.success("Berhasil Menambahkan Jabatan");
+                    setTimeout(() => {
+                        window.location.reload();
+                    }, 500);
                 })
                 .catch(() => {
                     this.$toast.success("Gagal Menambahkan Jabatan");

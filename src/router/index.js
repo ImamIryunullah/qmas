@@ -20,13 +20,15 @@ import DashboardAnggota from "@/views/Anggota/DashboardAnggota.vue";
 import FormPengaduanAnggotaView from "@/views/Anggota/FormPengaduanAnggotaView.vue";
 import PembayaranAnggotaView from "@/views/Anggota/PembayaranAnggotaView.vue";
 import IdCardAnggotaView from "@/views/Anggota/IdCardAnggotaView.vue";
+import UploadKegiatan from "@/views/Anggota/UploadKegiatan.vue";
 /* Admin */
 import DataPendaftaranAnggota from "@/views/Admin/DataPendaftaranAnggota.vue";
 import DashboardAdmin from "@/views/Admin/DashboardAdmin.vue";
 import DataPembayaran from "@/views/Admin/DataPembayaran.vue";
 import DataPengaduanAdmin from "@/views/Admin/DataPengaduanAdmin.vue";
 import ManagementJabatan from "@/views/Admin/ManagementJabatan.vue";
-import KelolaPengaduanData from "@/views/Admin/KelolaPengaduanData.vue";
+import TambahSuaraKonsumen from "@/views/Admin/TambahSuaraKonsumen.vue";
+import KegiatanAnggotaAdmin from "@/views/Admin/KegiatanAnggotaAdmin.vue";
 /* Tanpa Role Suara Konsumen */
 import LoginSwiView from "@/views/Auth-Swi/LoginSwiView.vue";
 import SignUpSwiView from "@/views/Auth-Swi/SignUpSwiView.vue";
@@ -39,6 +41,8 @@ import MaintenanceView from "@/views/maintenanceView.vue";
 import PengaduanSwi from "@/views/swi/PengaduanSwi.vue";
 import CetakSertifikatSwi from "@/views/swi/CetakSertifikatSwi.vue";
 import PembayaranSwi from "@/views/swi/PembayaranSwi.vue";
+import EditSuaraKonsumen from "@/views/Admin/EditSuaraKonsumen.vue";
+import DaftarSuaraKonsumen from "@/views/Admin/DaftarSuaraKonsumen.vue";
 
 const routes = [
   {
@@ -235,6 +239,16 @@ const routes = [
       title: "ID Card Anggota",
     },
   },
+  {
+    path: "/anggota/upload-kegiatan",
+    name: "Upload Kegiatan",
+    component: UploadKegiatan,
+    meta: {
+      requiresAuth: true,
+      requiredRole: "anggota",
+      title: "Upload Kegiatan",
+    },
+  },
   /* Tanpa Role LPKNI */
   {
     path: "/",
@@ -288,6 +302,7 @@ const routes = [
       title: "Data Pengaduan",
     },
   },
+
   {
     path: "/admin/management-jabatan",
     name: "Management Jabatan",
@@ -299,13 +314,43 @@ const routes = [
     },
   },
   {
+    path: "/admin/laporan-kegiatan",
+    name: "Management Kegiatan Anggota",
+    component: KegiatanAnggotaAdmin,
+    meta: {
+      requiresAuth: true,
+      requiredRole: "admin",
+      title: "Management Kegiatan Anggota",
+    },
+  },
+  {
     path: "/admin/pengaduan-suara-konsumen",
     name: "Pengaduan Suara Konsumen",
-    component: KelolaPengaduanData,
+    component: TambahSuaraKonsumen,
     meta: {
       requiresAuth: true,
       requiredRole: "admin",
       title: "Pengaduan Suara Konsumen",
+    },
+  },
+  {
+    path: "/admin/edit-suara-konsumen/:id",
+    name: "Edit Suara Konsumen",
+    component: EditSuaraKonsumen,
+    meta: {
+      requiresAuth: true,
+      requiredRole: "admin",
+      title: "Edit Suara Konsumen",
+    },
+  },
+  {
+    path: "/admin/daftar-suara-konsumen",
+    name: "Daftar Suara Konsumen",
+    component: DaftarSuaraKonsumen,
+    meta: {
+      requiresAuth: true,
+      requiredRole: "admin",
+      title: "Daftar Suara Konsumen",
     },
   },
 ];

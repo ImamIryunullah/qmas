@@ -6,7 +6,6 @@
             <span class="sr-only">Open sidebar</span>
             <i class="fa fa-bars fa-2x"></i>
         </button>
-
         <!-- Sidebar -->
         <aside
             :class="{ 'translate-x-0': sidebarOpen, '-translate-x-full': !sidebarOpen, 'sm:w-64 sm:translate-x-0': sidebarOpen || isDesktop }"
@@ -66,9 +65,9 @@ import Swal from 'sweetalert2';
 export default {
     data() {
         return {
-            sidebarOpen: false, // Sidebar awalnya tertutup di mode mobile
-            isDesktop: window.innerWidth >= 768, // Periksa apakah mode desktop atau tidak
-            currentTime: "", // Waktu sekarang
+            sidebarOpen: false,
+            isDesktop: window.innerWidth >= 768,
+            currentTime: "",
             menuItems: [
                 { label: "Dashboard", path: "/swi/dashboard", icon: "fas fa-home" },
                 { label: "Data Diri & Warung", path: "/swi/data-diri", icon: "fas fa-user-check" },

@@ -102,8 +102,6 @@
         <div class="w-full mx-auto border-t-2 border-gray-300"></div>
         <!-- Latest News Section -->
         <section class="container mx-auto px-3 py-5">
-            <!-- Title Section -->
-            <h2 class="text-xl font-semibold mb-6">Latest News</h2>
 
             <!-- Horizontal Scrollable Container for Articles -->
             <div class="flex overflow-x-auto space-x-6">
@@ -176,14 +174,6 @@
                 </article>
             </div>
         </section>
-
-
-        <div class="w-full mx-auto mt-2 border-t-2 border-gray-300"></div>
-        <div class="container mx-auto px-4 py-6 md:px-8 sm:px-8">
-            <div class="bg-black   text-white p-4 rounded-lg mb-1">
-                <h3 class="font-semibold text-lg text-center">YANG MUNGKIN ANDA CARI</h3>
-            </div>
-        </div>
 
 
         <section class="container mx-auto px-4 py-3">

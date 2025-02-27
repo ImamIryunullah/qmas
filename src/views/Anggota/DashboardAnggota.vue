@@ -1,360 +1,378 @@
 <template>
-
-    <NavbarAnggota />
-    <div class=" bg-gray-100 w-full min-h-screen h-full transition-all" :class="isSidebarOpen ? 'pl-36' : 'pl-16'">
-        <div class="container mx-auto p-2">
-            <!-- Dashboard Header -->
-            <div class="text-center mb-12 py-6">
-                <!-- Heading with classic, clean font and prominent size -->
-                <h1 class="text-3xl font-normal text-gray-800 mb-4">Dashboard Anggota LPKNI</h1>
-
-                <!-- Description with a more subtle, classic font size and spacing -->
-                <p class="text-lg sm:text-xl text-gray-600 max-w-lg mx-auto justify">
-                    Akses lengkap untuk melihat informasi terkait anggota dan pengguna. Temukan segala hal yang perlu
-                    Anda ketahui tentang status dan data pengguna Anda.
-                </p>
-            </div>
-
-            <!-- Anggota Details -->
-            <div class="bg-white p-6 sm:p-8 rounded-xl shadow-lg hover:shadow-xl transition-shadow mb-8">
-                <h2 class="text-2xl font-semibold text-gray-700 mb-6 flex items-center">
-                    <i class="fas fa-user text-blue-500 mr-3"></i> Informasi Anggota
-                </h2>
-
-                <!-- Grid Layout -->
-                <div class="grid grid-cols-1 sm:grid-cols-2 md:grid-cols-3 lg:grid-cols-3 gap-6">
-                    <!-- Nama Lengkap -->
-                    <div>
-                        <div class="font-medium text-gray-600 border-l-4 border-blue-500 pl-4">Nama Lengkap:</div>
-                        <div class="text-lg text-gray-800 font-semibold mt-1">{{ data_anggota.nama_lengkap }}</div>
-                    </div>
-
-                    <!-- Pekerjaan -->
-                    <div>
-                        <div class="font-medium text-gray-600 border-l-4 border-blue-500 pl-4">Pekerjaan:</div>
-                        <div class="text-lg text-gray-800 mt-1">{{ data_anggota.pekerjaan }}</div>
-                    </div>
-
-                    <!-- Tanggal Lahir -->
-                    <div>
-                        <div class="font-medium text-gray-600 border-l-4 border-blue-500 pl-4">Tanggal Lahir:</div>
-                        <div class="text-lg text-gray-800 mt-1">{{ new
-                            Date(data_anggota.tanggalLahir).toLocaleDateString('en-CA') }}</div>
-                    </div>
-
-                    <!-- Tempat Lahir -->
-                    <div>
-                        <div class="font-medium text-gray-600 border-l-4 border-blue-500 pl-4">Tempat Lahir:</div>
-                        <div class="text-lg text-gray-800 mt-1">{{ data_anggota.tempatLahir }}</div>
-                    </div>
-
-                    <!-- Status Perkawinan -->
-                    <div>
-                        <div class="font-medium text-gray-600 border-l-4 border-blue-500 pl-4">Status Perkawinan:</div>
-                        <div class="text-lg text-gray-800 mt-1">{{ data_anggota.statusPerkawinan }}</div>
-                    </div>
-
-                    <!-- Status -->
-                    <div>
-                        <div class="font-medium text-gray-600 border-l-4 pl-4" :class="{
-                            'border-gray-500': data_anggota.status === 'CANCEL',
-                            'border-yellow-500': data_anggota.status === 'PENDING',
-                            'border-green-500': data_anggota.status === 'SUCCESS'
-                        }">
-                            Status:
-                        </div>
-                        <div class="text-lg mt-1 flex items-center relative group">
-                            <!-- Conditional rendering for icon and status text color -->
-                            <span v-if="data_anggota.status === 'CANCEL'" class="text-gray-600 mr-2">
-                                <i class="fas fa-times-circle"></i> <!-- Icon for CANCEL -->
-                            </span>
-                            <span v-if="data_anggota.status === 'PENDING'" class="text-yellow-500 mr-2">
-                                <i class="fas fa-clock"></i> <!-- Icon for PENDING -->
-                            </span>
-                            <span v-if="data_anggota.status === 'SUCCESS'" class="text-green-500 mr-2">
-                                <i class="fas fa-check-circle"></i> <!-- Icon for SUCCESS -->
-                            </span>
-
-                            <!-- Status Text -->
-                            <span :class="{
-                                'text-gray-600': data_anggota.status === 'CANCEL',
-                                'text-yellow-500': data_anggota.status === 'PENDING',
-                                'text-green-500': data_anggota.status === 'SUCCESS'
-                            }" class="cursor-pointer" :title="statusTooltip">
-                                {{ data_anggota.status }}
-                            </span>
-
-                            <!-- Tooltip Text -->
-                            <div v-if="data_anggota.status === 'PENDING'"
-                                class="absolute left-1/2 transform -translate-x-1/2 bg-yellow-500 text-white text-xs rounded-md px-3 py-2 mt-1 opacity-0 group-hover:opacity-100 transition-opacity duration-300">
-                                Tunggu hingga tim kami memverifikasi data anda
-                            </div>
-                            <div v-if="data_anggota.status === 'SUCCESS'"
-                                class="absolute left-1/2 transform -translate-x-1/2 bg-green-500 text-white text-xs rounded-md px-2 py-1 mt-1 opacity-0 group-hover:opacity-100 transition-opacity duration-300">
-                                Anda sudah menjadi bagian dari tim LPKNI
-                            </div>
-                            <div v-if="data_anggota.status === 'CANCEL'"
-                                class="absolute left-1/2 transform -translate-x-1/2 bg-gray-500 text-white text-xs rounded-md px-2 py-1 mt-1 opacity-0 group-hover:opacity-100 transition-opacity duration-300">
-                                Pembatalan status. Hubungi kami untuk informasi lebih lanjut
-                            </div>
-                        </div>
-                    </div>
-
-
-                    <!-- Alamat (span 3 kolom untuk tampilan lebar) -->
-                    <div class="md:col-span-3">
-                        <div class="font-medium text-gray-600 border-l-4 border-blue-500 pl-4">Alamat:</div>
-                        <div class="text-lg text-gray-800 mt-1">{{ data_anggota.alamat }}</div>
-                    </div>
+    <div class="w-screen min-h-screen h-full flex bg-gray-100">
+        <NavbarAnggota />
+        <div class="bg-gray-100 w-full min-h-screen h-full transition-all mt-10 mr-12 mb-12">
+            <div class="container mx-auto">
+                <div class="text-center py-2">
+                    <h1 class="text-3xl font-normal text-gray-800">Halo! {{ data_anggota.nama_lengkap }}</h1>
+                    <p class="text-lg sm:text-xl text-gray-600 max-w-lg mx-auto justify-center">
+                        Akses lengkap untuk melihat informasi terkait data diri kamu {{ data_anggota.nama_lengkap }}.
+                    </p>
                 </div>
-            </div>
 
+                <!-- Anggota Details -->
+                <div class="bg-white p-6 sm:p-8 rounded-xl shadow-lg hover:shadow-xl transition-shadow mb-8">
+                    <h2 class="text-2xl font-semibold text-gray-700 mb-6 flex items-center">
+                        <i class="fas fa-user text-blue-500 mr-3"></i> Informasi Anggota
+                    </h2>
 
-            <!-- Daerah and Wilayah -->
-            <div class="bg-white p-6 sm:p-8 rounded-xl shadow-lg hover:shadow-xl transition-shadow mb-8">
-                <h2 class="text-2xl font-semibold text-gray-700 mb-6 flex items-center">
-                    <i class="fas fa-map-marker-alt text-blue-500 mr-3"></i> Daerah dan Wilayah
-                </h2>
+                    <!-- Grid Layout -->
+                    <div class="grid grid-cols-1 sm:grid-cols-2 md:grid-cols-3 lg:grid-cols-4 gap-6">
+                        <!-- Nama Lengkap -->
+                        <div>
+                            <div class="font-medium text-gray-600 border-l-4 border-blue-500 pl-4">Nama Lengkap:</div>
+                            <div class="text-lg text-gray-800 font-semibold mt-1">{{ data_anggota.nama_lengkap }}</div>
+                        </div>
 
-                <!-- Grid Layout -->
-                <div class="grid grid-cols-1 sm:grid-cols-2 md:grid-cols-4 gap-6">
-                    <!-- Nama Daerah -->
-                    <div>
-                        <div class="text-sm font-medium text-gray-600 border-l-4 border-blue-500 pl-4">Nama Daerah:
+                        <!-- Pekerjaan -->
+                        <div>
+                            <div class="font-medium text-gray-600 border-l-4 border-blue-500 pl-4">Pekerjaan:</div>
+                            <div class="text-lg text-gray-800 mt-1">{{ data_anggota.pekerjaan }}</div>
                         </div>
-                        <div class="text-lg text-gray-800 font-semibold mt-1">{{ data_anggota.daerah.nama_daerah }}
-                        </div>
-                    </div>
 
-                    <!-- Kode Daerah -->
-                    <div>
-                        <div class="text-sm font-medium text-gray-600 border-l-4 border-blue-500 pl-4">Kode Daerah:
+                        <!-- Tanggal Lahir -->
+                        <div>
+                            <div class="font-medium text-gray-600 border-l-4 border-blue-500 pl-4">Tanggal Lahir:</div>
+                            <div class="text-lg text-gray-800 mt-1">{{ new
+                                Date(data_anggota.tanggalLahir).toLocaleDateString('en-CA') }}</div>
                         </div>
-                        <div class="text-lg text-gray-800 font-semibold mt-1">{{ data_anggota.daerah.kode_daerah }}
-                        </div>
-                    </div>
 
-                    <!-- Nama Wilayah -->
-                    <div>
-                        <div class="text-sm font-medium text-gray-600 border-l-4 border-blue-500 pl-4">Nama Wilayah:
+                        <!-- Tempat Lahir -->
+                        <div>
+                            <div class="font-medium text-gray-600 border-l-4 border-blue-500 pl-4">Tempat Lahir:</div>
+                            <div class="text-lg text-gray-800 mt-1">{{ data_anggota.tempatLahir }}</div>
                         </div>
-                        <div class="text-lg text-gray-800 font-semibold mt-1">{{ data_anggota.wilayah.nama_wilayah }}
-                        </div>
-                    </div>
 
-                    <!-- Kode Wilayah -->
-                    <div>
-                        <div class="text-sm font-medium text-gray-600 border-l-4 border-blue-500 pl-4">Kode Wilayah:
+                        <!-- Status Perkawinan -->
+                        <div>
+                            <div class="font-medium text-gray-600 border-l-4 border-blue-500 pl-4">Status Perkawinan:
+                            </div>
+                            <div class="text-lg text-gray-800 mt-1">{{ data_anggota.statusPerkawinan }}</div>
                         </div>
-                        <div class="text-lg text-gray-800 font-semibold mt-1">{{ data_anggota.wilayah.kode_wilayah }}
+
+                        <!-- Status -->
+                        <div>
+                            <div class="font-medium text-gray-600 border-l-4 pl-4" :class="{
+                                'border-gray-500': data_anggota.status === 'CANCEL',
+                                'border-yellow-500': data_anggota.status === 'PENDING',
+                                'border-green-500': data_anggota.status === 'SUCCESS'
+                            }">
+                                Status:
+                            </div>
+                            <div class="text-lg mt-1 flex items-center relative group">
+                                <!-- Conditional rendering for icon and status text color -->
+                                <span v-if="data_anggota.status === 'CANCEL'" class="text-gray-600 mr-2">
+                                    <i class="fas fa-times-circle"></i> <!-- Icon for CANCEL -->
+                                </span>
+                                <span v-if="data_anggota.status === 'PENDING'" class="text-yellow-500 mr-2">
+                                    <i class="fas fa-clock"></i> <!-- Icon for PENDING -->
+                                </span>
+                                <span v-if="data_anggota.status === 'SUCCESS'" class="text-green-500 mr-2">
+                                    <i class="fas fa-check-circle"></i> <!-- Icon for SUCCESS -->
+                                </span>
+
+                                <!-- Status Text -->
+                                <span :class="{
+                                    'text-gray-600': data_anggota.status === 'CANCEL',
+                                    'text-yellow-500': data_anggota.status === 'PENDING',
+                                    'text-green-500': data_anggota.status === 'SUCCESS'
+                                }" class="cursor-pointer" :title="statusTooltip">
+                                    {{ data_anggota.status }}
+                                </span>
+
+                                <!-- Tooltip Text -->
+                                <div v-if="data_anggota.status === 'PENDING'"
+                                    class="absolute left-1/2 transform -translate-x-1/2 bg-yellow-500 text-white text-xs rounded-md px-3 py-2 mt-1 opacity-0 group-hover:opacity-100 transition-opacity duration-300">
+                                    Tunggu hingga tim kami memverifikasi data anda
+                                </div>
+                                <div v-if="data_anggota.status === 'SUCCESS'"
+                                    class="absolute left-1/2 transform -translate-x-1/2 bg-green-500 text-white text-xs rounded-md px-2 py-1 mt-1 opacity-0 group-hover:opacity-100 transition-opacity duration-300">
+                                    Anda sudah menjadi bagian dari tim LPKNI
+                                </div>
+                                <div v-if="data_anggota.status === 'CANCEL'"
+                                    class="absolute left-1/2 transform -translate-x-1/2 bg-gray-500 text-white text-xs rounded-md px-2 py-1 mt-1 opacity-0 group-hover:opacity-100 transition-opacity duration-300">
+                                    Pembatalan status. Hubungi kami untuk informasi lebih lanjut
+                                </div>
+                            </div>
+                        </div>
+
+                        <!-- Alamat (span 3 kolom untuk tampilan lebar) -->
+                        <div class="md:col-span-3">
+                            <div class="font-medium text-gray-600 border-l-4 border-blue-500 pl-4">Alamat:</div>
+                            <div class="text-lg text-gray-800 mt-1">{{ data_anggota.alamat }}</div>
                         </div>
                     </div>
                 </div>
-            </div>
 
-            <!-- Jabatan Struktural -->
-            <div class="bg-white p-6 sm:p-8 rounded-lg shadow-md mb-8">
-                <h2 class="text-2xl font-semibold text-gray-700 mb-6 flex items-center">
-                    <i class="fas fa-user-tie text-blue-500 mr-3"></i> Jabatan Struktural
-                </h2>
+                <!-- Daerah and Wilayah -->
+                <div class="bg-white p-6 sm:p-8 rounded-xl shadow-lg hover:shadow-xl transition-shadow mb-8">
+                    <h2 class="text-2xl font-semibold text-gray-700 mb-6 flex items-center">
+                        <i class="fas fa-map-marker-alt text-blue-500 mr-3"></i> Daerah dan Wilayah
+                    </h2>
 
-                <!-- Grid Layout -->
-                <div class="grid grid-cols-1 sm:grid-cols-2 md:grid-cols-4 gap-6">
-                    <!-- Nama Jabatan -->
-                    <div class="border-l-4 border-blue-500 pl-4">
-                        <div class="text-sm font-medium text-gray-500">Nama Jabatan:</div>
-                        <div class="text-lg text-gray-900 font-semibold">{{ data_anggota.jabatanStruktural.nama }}</div>
-                    </div>
+                    <!-- Grid Layout -->
+                    <div class="grid grid-cols-1 sm:grid-cols-2 md:grid-cols-4 gap-6">
+                        <!-- Nama Daerah -->
+                        <div>
+                            <div class="text-sm font-medium text-gray-600 border-l-4 border-blue-500 pl-4">Nama Daerah:
+                            </div>
+                            <div class="text-lg text-gray-800 font-semibold mt-1">{{ data_anggota.daerah.nama_daerah }}
+                            </div>
+                        </div>
 
-                    <!-- Maksimum Anggota -->
-                    <div class="border-l-4 border-blue-500 pl-4">
-                        <div class="text-sm font-medium text-gray-500">Maksimum Anggota:</div>
-                        <div class="text-lg text-gray-900 font-semibold">{{
-                            data_anggota.jabatanStruktural.maksimumAnggota }}</div>
-                    </div>
+                        <!-- Kode Daerah -->
+                        <div>
+                            <div class="text-sm font-medium text-gray-600 border-l-4 border-blue-500 pl-4">Kode Daerah:
+                            </div>
+                            <div class="text-lg text-gray-800 font-semibold mt-1">{{ data_anggota.daerah.kode_daerah }}
+                            </div>
+                        </div>
 
-                    <!-- Tingkat Jabatan -->
-                    <div class="border-l-4 border-blue-500 pl-4">
-                        <div class="text-sm font-medium text-gray-500">Tingkat:</div>
-                        <div class="text-lg text-gray-900 font-semibold">{{ data_anggota.jabatanStruktural.tingkat }}
+                        <!-- Nama Wilayah -->
+                        <div>
+                            <div class="text-sm font-medium text-gray-600 border-l-4 border-blue-500 pl-4">Nama Wilayah:
+                            </div>
+                            <div class="text-lg text-gray-800 font-semibold mt-1">{{ data_anggota.wilayah.nama_wilayah
+                                }}
+                            </div>
+                        </div>
+
+                        <!-- Kode Wilayah -->
+                        <div>
+                            <div class="text-sm font-medium text-gray-600 border-l-4 border-blue-500 pl-4">Kode Wilayah:
+                            </div>
+                            <div class="text-lg text-gray-800 font-semibold mt-1">{{ data_anggota.wilayah.kode_wilayah
+                                }}
+                            </div>
                         </div>
                     </div>
+                </div>
 
-                    <!-- Jumlah Terisi -->
-                    <!-- <div class="border-l-4 border-blue-500 pl-4">
+                <!-- Jabatan Struktural -->
+                <div class="bg-white p-6 sm:p-8 rounded-lg shadow-md mb-8">
+                    <h2 class="text-2xl font-semibold text-gray-700 mb-6 flex items-center">
+                        <i class="fas fa-user-tie text-blue-500 mr-3"></i> Jabatan Struktural
+                    </h2>
+
+                    <!-- Grid Layout -->
+                    <div class="grid grid-cols-1 sm:grid-cols-2 md:grid-cols-4 gap-6">
+                        <!-- Nama Jabatan -->
+                        <div class="border-l-4 border-blue-500 pl-4">
+                            <div class="text-sm font-medium text-gray-500">Nama Jabatan:</div>
+                            <div class="text-lg text-gray-900 font-semibold">{{ data_anggota.jabatanStruktural.nama }}
+                            </div>
+                        </div>
+
+                        <!-- Maksimum Anggota -->
+                        <div class="border-l-4 border-blue-500 pl-4">
+                            <div class="text-sm font-medium text-gray-500">Maksimum Anggota:</div>
+                            <div class="text-lg text-gray-900 font-semibold">{{
+                                data_anggota.jabatanStruktural.maksimumAnggota }}</div>
+                        </div>
+
+                        <!-- Tingkat Jabatan -->
+                        <div class="border-l-4 border-blue-500 pl-4">
+                            <div class="text-sm font-medium text-gray-500">Tingkat:</div>
+                            <div class="text-lg text-gray-900 font-semibold">{{ data_anggota.jabatanStruktural.tingkat
+                                }}
+                            </div>
+                        </div>
+
+                        <!-- Jumlah Terisi -->
+                        <!-- <div class="border-l-4 border-blue-500 pl-4">
                         <div class="text-sm font-medium text-gray-500">Terisi:</div>
                         <div class="text-lg text-gray-900 font-semibold">{{ data_anggota.jabatanStruktural.terisi }}
                         </div>
                     </div> -->
+                    </div>
                 </div>
-            </div>
-
-            <!-- User Information -->
-            <div class="bg-white p-6 rounded-2xl shadow-md mt-8">
-                <h2 class="text-2xl font-semibold text-gray-700 mb-6 flex items-center">
-                    <i class="fas fa-user text-gray-600 mr-3"></i>
-                    Data User
-                </h2>
-
-                <div class="grid grid-cols-1 sm:grid-cols-2 md:grid-cols-3 gap-x-8 gap-y-6">
-                    <!-- Email -->
-                    <div class="bg-gray-50 p-4 rounded-lg shadow-sm hover:shadow-md transition">
-                        <div class="text-sm font-medium text-gray-500 border-b pb-2 mb-2">Email</div>
-                        <div class="text-lg text-gray-800 font-semibold">{{ user.email }}</div>
-                    </div>
-
-                    <!-- Nomor HP -->
-                    <div class="bg-gray-50 p-4 rounded-lg shadow-sm hover:shadow-md transition">
-                        <div class="text-sm font-medium text-gray-500 border-b pb-2 mb-2">Nomor HP</div>
-                        <div class="text-lg text-gray-800 font-semibold">{{ user.no_hp }}</div>
-                    </div>
-
-                    <!-- Nama Depan -->
-                    <div class="bg-gray-50 p-4 rounded-lg shadow-sm hover:shadow-md transition">
-                        <div class="text-sm font-medium text-gray-500 border-b pb-2 mb-2">Nama Depan</div>
-                        <div class="text-lg text-gray-800 font-semibold">{{ user.nama_depan }}</div>
-                    </div>
-
-                    <!-- Nama Belakang -->
-                    <div class="bg-gray-50 p-4 rounded-lg shadow-sm hover:shadow-md transition">
-                        <div class="text-sm font-medium text-gray-500 border-b pb-2 mb-2">Nama Belakang</div>
-                        <div class="text-lg text-gray-800 font-semibold">{{ user.nama_belakang }}</div>
-                    </div>
-
-                    <!-- Role -->
-                    <!-- <div class="bg-gray-50 p-4 rounded-lg shadow-sm hover:shadow-md transition">
-                        <div class="text-sm font-medium text-gray-500 border-b pb-2 mb-2">Role</div>
-                        <div class="text-lg text-gray-800 font-semibold">{{ user.role }}</div>
-                    </div> -->
-                </div>
-            </div>
-
-            <!-- Image Uploads -->
-            <div class="bg-white p-6 rounded-lg shadow-md mt-8">
-                <h2
-                    class="text-2xl font-semibold text-gray-700 mb-6 flex items-center justify-start sm:justify-center md:justify-start">
-                    <!-- Font Awesome Icon for Photo -->
-                    <i class="fas fa-camera text-gray-600 mr-3"></i>
-                    Foto
-                </h2>
-
-                <!-- Grid Layout for Images -->
-                <div class="grid gap-2 grid-cols-1 sm:grid-cols-2 lg:grid-cols-3 ">
-                    <!-- First Image Block -->
-                    <div class="flex flex-col items-center">
-                        <div v-if="data_anggota.imageUsers.length > 0"
-                            class="w-50 h-32 overflow-hidden rounded-lg border-2 border-gray-300 mb-2">
-                            <img :src="getFullpathImage(data_anggota.imageUsers[0].imageUrl)" alt="Foto 3x4"
-                                class="w-full h-full object-cover transition-transform duration-300 transform hover:scale-105"
-                                @click="openLightbox(0)" />
+                <!-- User Information -->
+                <div class="bg-white p-6 rounded-2xl shadow-md mt-8">
+                    <h2 class="text-2xl font-semibold text-gray-700 mb-6 flex items-center">
+                        <i class="fas fa-user text-gray-600 mr-3"></i>
+                        Data User
+                    </h2>
+                    <div class="grid grid-cols-1 sm:grid-cols-2 md:grid-cols-3 gap-x-8 gap-y-6">
+                        <!-- Email -->
+                        <div class="bg-gray-50 p-4 rounded-lg shadow-sm hover:shadow-md transition">
+                            <div class="text-sm font-medium text-gray-500 border-b pb-2 mb-2">Email</div>
+                            <div class="text-lg text-gray-800 font-semibold">{{ user.email }}</div>
                         </div>
-                        <div v-else>
-                            <label for="">Gambar Tidak Tersedia</label>
+                        <!-- Nomor HP -->
+                        <div class="bg-gray-50 p-4 rounded-lg shadow-sm hover:shadow-md transition">
+                            <div class="text-sm font-medium text-gray-500 border-b pb-2 mb-2">Nomor HP</div>
+                            <div class="text-lg text-gray-800 font-semibold">{{ user.no_hp }}</div>
                         </div>
-                        <div v-if="data_anggota.imageUsers.length > 0">
-                            <p class="text-sm text-gray-600 text-center">{{ data_anggota.imageUsers[0].keterangan }}</p>
+                        <!-- Nama Depan -->
+                        <div class="bg-gray-50 p-4 rounded-lg shadow-sm hover:shadow-md transition">
+                            <div class="text-sm font-medium text-gray-500 border-b pb-2 mb-2">Nama Depan</div>
+                            <div class="text-lg text-gray-800 font-semibold">{{ user.nama_depan }}</div>
                         </div>
-                    </div>
-                    <!-- Second Image Block -->
-                    <div class="flex flex-col items-center">
-                        <div v-if="data_anggota.imageUsers.length > 0"
-                            class="w-50 h-32 overflow-hidden rounded-lg border-2 border-gray-300 mb-2">
-                            <img :src="getFullpathImage(data_anggota.imageUsers[1].imageUrl)" alt="Foto KTP"
-                                class="w-full h-full object-cover transition-transform duration-300 transform hover:scale-105"
-                                @click="openLightbox(1)" />
-                        </div>
-                        <div v-else>
-                            <label for="">Gambar Tidak Tersedia</label>
-                        </div>
-                        <div v-if="data_anggota.imageUsers.length > 0">
-                            <p class="text-sm text-gray-600 text-center">{{ data_anggota.imageUsers[1].keterangan }}</p>
+                        <!-- Nama Belakang -->
+                        <div class="bg-gray-50 p-4 rounded-lg shadow-sm hover:shadow-md transition">
+                            <div class="text-sm font-medium text-gray-500 border-b pb-2 mb-2">Nama Belakang</div>
+                            <div class="text-lg text-gray-800 font-semibold">{{ user.nama_belakang }}</div>
                         </div>
                     </div>
                 </div>
-            </div>
-
-            <!-- Informasi Transaksi -->
-            <div class="bg-white p-6 rounded-lg shadow-md mt-8">
-                <h2 class="text-2xl font-semibold text-gray-700 mb-6 flex items-center">
-                    <i class="fas fa-credit-card text-gray-600 mr-3"></i>
-                    Informasi Transaksi
-                </h2>
-                <div v-if="transaksiAnggota">
-                    <div v-for="(transaksi, index) in transaksiAnggota" :key="transaksi.id"
-                        class="grid grid-cols-1 gap-4 sm:grid-cols-2 md:grid-cols-3 lg:grid-cols-6">
-
-                        <!-- Metode Pembayaran -->
-                        <div class="">
-                            <div class="text-sm font-medium text-gray-600">Metode Pembayaran:</div>
-                            <div class="text-lg text-gray-800 font-semibold">{{ transaksi.metodePembayaran }}</div>
-                        </div>
-
-                        <!-- Vendor Pembayaran -->
-                        <div class="">
-                            <div class="text-sm font-medium text-gray-600">Vendor Pembayaran:</div>
-                            <div class="text-lg text-gray-800 font-semibold">{{ transaksi.vendorPembayaran }}</div>
-                        </div>
-
-                        <!-- Status Pembayaran -->
-                        <div class="">
-                            <div class="text-sm font-medium text-gray-600">Status Pembayaran:</div>
-                            <div class="flex items-center space-x-2">
-                                <i v-if="transaksi.statusPembayaran === 'SUCCESS'"
-                                    class="fas fa-check text-green-500"></i>
-                                <i v-else class="fas fa-exclamation-triangle text-yellow-500"></i>
-                                <div class="text-lg font-semibold" :class="{
-                                    'text-green-600': transaksi.statusPembayaran === 'SUCCESS',
-                                    'text-yellow-600': transaksi.statusPembayaran === 'PENDING'
-                                }">
-                                    {{ transaksi.statusPembayaran }}
-                                </div>
+                <!-- Image Uploads -->
+                <div class="bg-white p-6 rounded-lg shadow-md mt-8">
+                    <h2
+                        class="text-2xl font-semibold text-gray-700 mb-6 flex items-center justify-start sm:justify-center md:justify-start">
+                        <!-- Font Awesome Icon for Photo -->
+                        <i class="fas fa-camera text-gray-600 mr-3"></i>
+                        Foto
+                    </h2>
+                    <!-- Grid Layout for Images -->
+                    <div class="grid gap-2 grid-cols-1 sm:grid-cols-2 lg:grid-cols-3 ">
+                        <!-- First Image Block -->
+                        <div class="flex flex-col items-center">
+                            <div v-if="data_anggota.imageUsers.length > 0"
+                                class="w-50 h-32 overflow-hidden rounded-lg border-2 border-gray-300 mb-2">
+                                <img :src="getFullpathImage(data_anggota.imageUsers[0].imageUrl)" alt="Foto 3x4"
+                                    class="w-full h-full object-cover transition-transform duration-300 transform hover:scale-105"
+                                    @click="openLightbox(0)" />
+                            </div>
+                            <div v-else>
+                                <label for="">Gambar Tidak Tersedia</label>
+                            </div>
+                            <div v-if="data_anggota.imageUsers.length > 0">
+                                <p class="text-sm text-gray-600 text-center">{{ data_anggota.imageUsers[0].keterangan }}
+                                </p>
                             </div>
                         </div>
-                        <div class="">
-                            <div class="text-sm font-medium text-gray-600">Jumlah Pembayaran :</div>
-                            <div class="text-lg text-gray-800 font-semibold">{{ formatRupiah(transaksi.jumlahPembayaran)
-                                }}</div>
-                        </div>
-                        <!-- Bukti Pembayaran -->
-                        <div class="flex flex-col items-center ">
-                            <div class="text-sm font-medium text-gray-600">Bukti Pembayaran:</div>
-                            <div class="flex flex-col items-center">
-                                <div v-if="transaksi.imageUsers && transaksi.imageUsers.length > 0"
-                                    class="w-48 h-32 overflow-hidden rounded-lg border-2 border-gray-300 mb-2">
-                                    <img :src="getFullpathImage(transaksi.imageUsers[0].imageUrl)"
-                                        alt="Foto Bukti Pembayaran"
-                                        class="w-full h-full object-cover transition-transform duration-300 transform hover:scale-105"
-                                        @click="openLightbox(index + 2)" />
-                                </div>
-                                <div v-else>
-                                    <label class="text-gray-500">Gambar Tidak Tersedia</label>
-                                </div>
+                        <!-- Second Image Block -->
+                        <div class="flex flex-col items-center">
+                            <div v-if="data_anggota.imageUsers.length > 0"
+                                class="w-50 h-32 overflow-hidden rounded-lg border-2 border-gray-300 mb-2">
+                                <img :src="getFullpathImage(data_anggota.imageUsers[1].imageUrl)" alt="Foto KTP"
+                                    class="w-full h-full object-cover transition-transform duration-300 transform hover:scale-105"
+                                    @click="openLightbox(1)" />
+                            </div>
+                            <div v-else>
+                                <label for="">Gambar Tidak Tersedia</label>
+                            </div>
+                            <div v-if="data_anggota.imageUsers.length > 0">
+                                <p class="text-sm text-gray-600 text-center">{{ data_anggota.imageUsers[1].keterangan }}
+                                </p>
                             </div>
                         </div>
-
-                        <!-- Waktu Pembayaran -->
-                        <div class="">
-                            <div class="text-sm font-medium text-gray-600">Waktu Pembayaran:</div>
-                            <div class="text-lg text-gray-800 font-semibold">{{
-                                transaksi.tanggalPembayaran.split('T')[0] }}
-                            </div>
-                        </div>
-                        <!-- <div class="divide-x-8"></div> -->
                     </div>
+                </div>
+                <!-- Informasi Kegiatan -->
+                <div class="bg-white p-6 rounded-lg shadow-md mt-8">
+                    <h2 class="text-2xl font-semibold text-gray-700 mb-6 flex items-center">
+                        <i class="fas fa-credit-card text-gray-600 mr-3"></i>
+                        Informasi Transaksi
+                    </h2>
+                    <div v-if="transaksiAnggota">
+                        <div v-for="(transaksi, index) in transaksiAnggota" :key="transaksi.id"
+                            class="grid grid-cols-1 gap-4 sm:grid-cols-2 md:grid-cols-3 lg:grid-cols-6">
 
+                            <!-- Metode Pembayaran -->
+                            <div class="">
+                                <div class="text-sm font-medium text-gray-600">Metode Pembayaran:</div>
+                                <div class="text-lg text-gray-800 font-semibold">{{ transaksi.metodePembayaran }}</div>
+                            </div>
+
+                            <!-- Vendor Pembayaran -->
+                            <div class="">
+                                <div class="text-sm font-medium text-gray-600">Vendor Pembayaran:</div>
+                                <div class="text-lg text-gray-800 font-semibold">{{ transaksi.vendorPembayaran }}</div>
+                            </div>
+
+                            <!-- Status Pembayaran -->
+                            <div class="">
+                                <div class="text-sm font-medium text-gray-600">Status Pembayaran:</div>
+                                <div class="flex items-center space-x-2">
+                                    <i v-if="transaksi.statusPembayaran === 'SUCCESS'"
+                                        class="fas fa-check text-green-500"></i>
+                                    <i v-else class="fas fa-exclamation-triangle text-yellow-500"></i>
+                                    <div class="text-lg font-semibold" :class="{
+                                        'text-green-600': transaksi.statusPembayaran === 'SUCCESS',
+                                        'text-yellow-600': transaksi.statusPembayaran === 'PENDING'
+                                    }">
+                                        {{ transaksi.statusPembayaran }}
+                                    </div>
+                                </div>
+                            </div>
+                            <div class="">
+                                <div class="text-sm font-medium text-gray-600">Jumlah Pembayaran :</div>
+                                <div class="text-lg text-gray-800 font-semibold">{{
+                                    formatRupiah(transaksi.jumlahPembayaran)
+                                    }}</div>
+                            </div>
+                            <!-- Bukti Pembayaran -->
+                            <div class="flex flex-col items-center ">
+                                <div class="text-sm font-medium text-gray-600">Bukti Pembayaran:</div>
+                                <div class="flex flex-col items-center">
+                                    <div v-if="transaksi.imageUsers"
+                                        class="w-48 h-32 overflow-hidden rounded-lg border-2 border-gray-300 mb-2">
+                                        <img :src="getFullpathImage(transaksi.imageUsers.imageUrl)"
+                                            alt="Foto Bukti Pembayaran"
+                                            class="w-full h-full object-cover transition-transform duration-300 transform hover:scale-105"
+                                            @click="openLightbox(index + 2)" />
+                                    </div>
+                                    <div v-else>
+                                        <label class="text-gray-500">Gambar Tidak Tersedia</label>
+                                    </div>
+                                </div>
+                            </div>
+
+                            <!-- Waktu Pembayaran -->
+                            <div class="">
+                                <div class="text-sm font-medium text-gray-600">Waktu Pembayaran:</div>
+                                <div class="text-lg text-gray-800 font-semibold">{{
+                                    transaksi.tanggalPembayaran.split('T')[0] }}
+                                </div>
+                            </div>
+                            <!-- <div class="divide-x-8"></div> -->
+                        </div>
+
+                    </div>
+                    <div v-else>
+                        <h1>Belum Ada Transaksi Yang Anda Lakukan!</h1>
+                    </div>
+                    <!-- Grid Layout -->
                 </div>
-                <div v-else>
-                    <h1>Belum Ada Transaksi Yang Anda Lakukan!</h1>
+                <div class="bg-white p-6 rounded-lg shadow-md mt-8">
+                    <h2 class="text-2xl font-semibold text-gray-700 mb-6 flex items-center">
+                        <i class="	fas fa-calendar-alt text-gray-600 mr-3"></i>
+                        Data Kegitan {{ data_anggota.nama_lengkap }}
+                    </h2>
+                    <div v-if="KegiatanAnggota">
+                        <div v-for="(Kegiatan) in KegiatanAnggota" :key="Kegiatan.id"
+                            class="grid grid-cols-1 gap-4 sm:grid-cols-2 md:grid-cols-3 lg:grid-cols-6">
+
+                            <!-- Metode Pembayaran -->
+                            <div class="">
+                                <div class="text-sm font-medium text-gray-600">Nama Kegiatan:</div>
+                                <div class="text-lg text-gray-800 font-semibold">{{ Kegiatan.nama }}</div>
+                            </div>
+
+                            <!-- Vendor Pembayaran -->
+                            <div class="">
+                                <div class="text-sm font-medium text-gray-600">Judul Kegiatan:</div>
+                                <div class="text-lg text-gray-800 font-semibold">{{ Kegiatan.judul }}</div>
+                            </div>
+
+                            <div class="">
+                                <div class="text-sm font-medium text-gray-600">Deskripsi Kegiatan :</div>
+                                <div class="text-lg text-gray-800 font-semibold">{{
+                                    Kegiatan.deskripsi
+                                    }}</div>
+                            </div>
+                        </div>
+                    </div>
+                    <div v-else>
+                        <h1>Belum Ada Kegiatan Yang Anda Lakukan!</h1>
+                    </div>
+                    <!-- Grid Layout -->
                 </div>
-                <!-- Grid Layout -->
             </div>
-
-
-
+            <vue-easy-lightbox :visible="lightboxVisible" :imgs="imageUrls" :index="lightboxIndex"
+                @hide="lightboxVisible = false" />
         </div>
-        <!-- Lightbox Modal -->
-        <vue-easy-lightbox :visible="lightboxVisible" :imgs="imageUrls" :index="lightboxIndex"
-            @hide="lightboxVisible = false" />
     </div>
 </template>
 
@@ -406,6 +424,13 @@ export default {
                 nama_belakang: "",
                 role: ""
             },
+
+            kegiatan: {
+                nama: "",
+                judul: "",
+                deskripsi: "",
+            },
+
             imageUrls: [],
             lightboxVisible: false,
             lightboxIndex: 0,
@@ -419,9 +444,6 @@ export default {
         getUserStatusLpkni() {
             return this.$store.state.storeLpkni.userLpkni.data_anggota.status;// if GetgetUserStatusLpkni === SUCCESS
         },
-        isSidebarOpen() {
-            return this.$store.state.storeSidebar.isSidebarOpen;
-        }
 
     },
     watch: {
@@ -453,6 +475,7 @@ export default {
                     title: "Informasi!",
                     text: "Data Belum Terverifikasi, Harap Menyelesaikan Pembayaran! Jika Sudah Melakukan Pembayaran, Abaikan Pesan ini",
                     showConfirmButton: true,
+                    confirmButtonColor: '#22c55e',
                 })
             }
         });

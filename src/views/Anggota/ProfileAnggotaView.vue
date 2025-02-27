@@ -1,14 +1,10 @@
 <template>
-
-  <!-- Navbar -->
-  <NavbarAnggota />
-  <div class="w-full min-h-screen h-full bg-gray-100">
-    <!-- Content Section -->
-    <div class="flex flex-col items-center p-6 flex-grow ml-11">
+  <div class="w-screen min-h-screen h-full flex bg-gray-100">
+    <div class="bg-gray-100 text-white">
+      <NavbarAnggota />
+    </div>
+    <div class="flex-1 flex justify-center items-center bg-gray-100 mr-5 mt-12 mb-12">
       <div class="bg-white w-full max-w-3xl border border-b-2 shadow-md p-8 rounded-lg animate-fadeInUp">
-        <!-- Profile Title -->
-
-        <!-- Profile Information Section -->
         <div class="space-y-6">
           <!-- Profile Picture -->
           <div class="flex justify-center">
@@ -62,32 +58,22 @@
               <p class="text-sm text-gray-600">Alamat:</p>
               <p class="text-lg font-semibold">{{ dataUser.alamat }}</p>
             </div>
-
-            <!-- Phone Number -->
             <div>
               <p class="text-sm text-gray-600">Phone Number:</p>
               <p class="text-lg font-semibold">{{ user.no_hp }}</p>
             </div>
-
-            <!-- Jabatan Struktural -->
             <div>
               <p class="text-sm text-gray-600">Jabatan Struktural:</p>
               <p class="text-lg font-semibold">{{ dataUser.jabatanStruktural.nama }}</p>
             </div>
-
-            <!-- Status Perkawinan -->
             <div>
               <p class="text-sm text-gray-600">Status Perkawinan:</p>
               <p class="text-lg font-semibold">{{ dataUser.statusPerkawinan }}</p>
             </div>
-
-            <!-- Agama -->
             <div>
               <p class="text-sm text-gray-600">Agama:</p>
               <p class="text-lg font-semibold">{{ dataUser.agama }}</p>
             </div>
-
-            <!-- Status -->
             <div>
               <p class="text-lg font-semibold">Status:</p>
               <p class="text-lg font-semibold">

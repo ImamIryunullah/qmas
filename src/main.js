@@ -10,10 +10,12 @@ import "animate.css";
 import ToastPlugin from "vue-toast-notification";
 import "vue-toast-notification/dist/theme-bootstrap.css";
 import VueEasyLightbox from "vue-easy-lightbox";
+import Vue3SocialSharingPlugin from "vue3-social-sharing";
 createApp(App)
   .use(store)
   .use(router)
   .use(ToastPlugin, { position: "top-right", duration: 1000 })
   .use(VueSweetalert2)
   .use(VueEasyLightbox)
+  .use(Vue3SocialSharingPlugin)
   .mount("#app");

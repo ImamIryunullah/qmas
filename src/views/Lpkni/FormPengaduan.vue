@@ -11,7 +11,7 @@
                     Form Pengaduan
                 </h2>
                 <p class="text-center text-gray-600 mt-2 text-sm md:text-base leading-relaxed">
-                    <i class="fas fa-info-circle text-gray-500 mr-2"></i>
+                    <i class="fas fa-info-circle text-gray-500 mr-2 justify"></i>
                     Laporkan masalah atau keluhan Anda agar dapat segera ditindaklanjuti.
                     Kami berkomitmen untuk menjaga kenyamanan, keamanan, dan keadilan bagi semua pihak.
                 </p>
@@ -23,7 +23,6 @@
                         <input id="nama" v-model="form.nama" type="text" class="input-field w-full sm:w-2/3"
                             placeholder="Nama Pengadu" required />
                     </div>
-
 
                     <div class="flex flex-col sm:flex-row items-center space-x-4 mb-4">
                         <label for="email"
@@ -198,8 +197,6 @@ export default {
     },
     data() {
         return {
-            fileList: [],
-            fileNames: [],
             location: null,
             error: null,
             isMounted: false,

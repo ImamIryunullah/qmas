@@ -1,177 +1,150 @@
 <template>
-  <NavbarAnggota />
-
-  <div v-if="isMounted" class="w-full min-h-screen flex justify-center items-center bg-white text-xl p-4 ml-6">
-
-    <div class="flex flex-col items-center p-6 flex-grow">
-      <div class="bg-white w-full max-w-screen-md p-6 rounded-lg shadow-2xl border box-border animate-fadeInUp ">
-        <h2 class="text-2xl md:text-3xl font-bold text-center text-gray-800 border-b-2 border-gray-300 pb-3">
-          <i class="fas fa-exclamation-circle text-yellow-500 mr-2"></i>
-          Form Pengaduan
-        </h2>
-        <p class="text-center text-gray-600 mt-2 text-sm md:text-base leading-relaxed">
-          <i class="fas fa-info-circle text-gray-500 mr-2"></i>
-          Laporkan masalah atau keluhan Anda agar dapat segera ditindaklanjuti.
-          Kami berkomitmen untuk menjaga kenyamanan, keamanan, dan keadilan bagi semua pihak.
-        </p>
-        <form @submit.prevent="submitForm" class="space-y-6 mt-8">
-
-          <!-- Nama Pengadu -->
-          <div class="flex flex-col sm:flex-row items-center space-x-4 mb-4">
-            <label for="nama" class="block text-sm font-semibold text-red-700 w-full sm:w-1/3">Nama Pengadu</label>
-            <input id="nama" v-model="form.nama" type="text" class="input-field w-full sm:w-2/3"
-              placeholder="Nama Pengadu" required />
-          </div>
-
-          <!-- Email -->
-          <div class="flex flex-col sm:flex-row items-center space-x-4 mb-4">
-            <label for="email" class="block text-sm font-semibold text-red-700 w-full sm:w-1/3">Email</label>
-            <input id="email" v-model="form.email" type="email" class="input-field w-full sm:w-2/3"
-              placeholder="Email Anda" required />
-          </div>
-
-          <!-- Provinsi -->
-          <div class="flex flex-col sm:flex-row items-center space-x-4 mb-4">
-            <label class="block text-sm font-semibold text-red-700 w-full sm:w-1/3">Provinsi</label>
-            <select required v-model="form.wilayahId" @change="GetDaerahByWilayahId(form.wilayahId)"
-              class="input-field w-full sm:w-2/3">
-              <option :value=null selected disabled>Pilih Provinsi</option>
-              <option v-for="wilayah in wilayahList" :key="wilayah.id_wilayah" :value="wilayah.id_wilayah">
-                {{ wilayah.kode_wilayah + " " + wilayah.nama_wilayah }}
-              </option>
-            </select>
-          </div>
-
-          <!-- Kota / Kabupaten -->
-          <div class="flex flex-col sm:flex-row items-center space-x-4 mb-4">
-            <label class="block text-sm font-semibold text-red-700 w-full sm:w-1/3">Kota / Kabupaten</label>
-            <select required v-model="form.daerahId" :disabled="form.wilayahId === 0"
-              class="input-field w-full sm:w-2/3">
-              <option :value=null disabled hidden>Pilih Daerah</option>
-              <option v-for="daerah in daerahList" :key="daerah.id_daerah" :value="daerah.id_daerah">
-                {{ daerah.kode_daerah + " " + daerah.nama_daerah }}
-              </option>
-            </select>
-          </div>
-
-          <!-- Koordinat -->
-          <div class="flex flex-col sm:flex-row items-center space-x-4 mb-4">
-            <label for="koordinat" class="block text-sm font-semibold text-red-700 w-full sm:w-1/3">Koordinat :
-              lat,long</label>
-            <label class="input-field w-full sm:w-2/3">
-              {{ location ? `${location.latitude} , ${location.longitude}` : 'Tidak Tersedia' }}
-            </label>
-          </div>
-
-          <!-- Kategori Pengaduan -->
-          <div class="flex flex-col space-y-4 mb-4">
-            <div class="flex flex-col sm:flex-row items-center space-x-4">
-              <label for="kategori" class="block text-sm font-semibold text-red-700 w-full sm:w-1/3">Kategori
-                Pengaduan</label>
-              <select required id="kategori" v-model="form.kategori" class="input-field w-full sm:w-2/3">
-                <option disabled :value=null>Pilih Kategori</option>
-                <option value="Masalah Pembayaran">Masalah Pembayaran</option>
-                <option value="Sertifikasi">Sertifikasi</option>
-                <option value="Fasilitas">Fasilitas</option>
-                <option value="Masalah Administrasi">Masalah Administrasi</option>
-                <option value=''>Lainnya</option>
+  <div class="w-screen min-h-screen h-full flex bg-gray-100">
+    <NavbarAnggota />
+    <div v-if="isMounted" class="flex justify-center items-center text-xl mt-20 mr-6 w-full h-full mb-12">
+      <div class="flex flex-col justify-center items-center flex-grow">
+        <div class="bg-white w-full max-w-screen-md p-6 rounded-lg shadow-2xl border box-border animate-fadeInUp ">
+          <h2 class="text-2xl md:text-3xl font-bold text-center text-gray-800 border-b-2 border-gray-300 pb-3">
+            <i class="fas fa-exclamation-circle text-yellow-500 mr-2"></i>
+            Form Pengaduan
+          </h2>
+          <p class="text-center text-gray-600 mt-2 text-sm md:text-base leading-relaxed">
+            <i class="fas fa-info-circle text-gray-500 mr-2"></i>
+            Laporkan masalah atau keluhan Anda agar dapat segera ditindaklanjuti.
+            Kami berkomitmen untuk menjaga kenyamanan, keamanan, dan keadilan bagi semua pihak.
+          </p>
+          <form @submit.prevent="submitForm" class="space-y-6 mt-8">
+            <div class="flex flex-col sm:flex-row items-center space-x-4 mb-4">
+              <label for="nama" class="block text-sm font-semibold text-red-700 w-full sm:w-1/3">Nama Pengadu</label>
+              <input id="nama" v-model="form.nama" type="text" class="input-field w-full sm:w-2/3"
+                placeholder="Nama Pengadu" required />
+            </div>
+            <div class="flex flex-col sm:flex-row items-center space-x-4 mb-4">
+              <label for="email" class="block text-sm font-semibold text-red-700 w-full sm:w-1/3">Email</label>
+              <input id="email" v-model="form.email" type="email" class="input-field w-full sm:w-2/3"
+                placeholder="Email Anda" required />
+            </div>
+            <div class="flex flex-col sm:flex-row items-center space-x-4 mb-4">
+              <label class="block text-sm font-semibold text-red-700 w-full sm:w-1/3">Provinsi</label>
+              <select required v-model="form.wilayahId" @change="GetDaerahByWilayahId(form.wilayahId)"
+                class="input-field w-full sm:w-2/3">
+                <option :value=null selected disabled>Pilih Provinsi</option>
+                <option v-for="wilayah in wilayahList" :key="wilayah.id_wilayah" :value="wilayah.id_wilayah">
+                  {{ wilayah.kode_wilayah + " " + wilayah.nama_wilayah }}
+                </option>
               </select>
             </div>
-
-            <div v-if="form.kategori === ''" class="flex flex-col sm:flex-row items-center space-x-4 mb-4">
-              <label for="keterangan-lainnya"
-                class="block text-sm font-semibold text-red-700 w-full sm:w-1/3">Keterangan Lainnya</label>
-              <input required id="keterangan-lainnya" v-model="kategori_lainnya" type="text"
-                class="input-field w-full sm:w-2/3" placeholder="Jelaskan kategori pengaduan lainnya..." />
+            <div class="flex flex-col sm:flex-row items-center space-x-4 mb-4">
+              <label class="block text-sm font-semibold text-red-700 w-full sm:w-1/3">Kota / Kabupaten</label>
+              <select required v-model="form.daerahId" :disabled="form.wilayahId === 0"
+                class="input-field w-full sm:w-2/3">
+                <option :value=null selected disabled hidden>Pilih Daerah</option>
+                <option v-for="daerah in daerahList" :key="daerah.id_daerah" :value="daerah.id_daerah">
+                  {{ daerah.kode_daerah + " " + daerah.nama_daerah }}
+                </option>
+              </select>
             </div>
-          </div>
+            <div class="flex flex-col sm:flex-row items-center space-x-4 mb-4">
+              <label for="koordinat" class="block text-sm font-semibold text-red-700 w-full sm:w-1/3">Koordinat :
+                lat,long</label>
+              <label class="input-field w-full sm:w-2/3">
+                {{ location ? `${location.latitude} , ${location.longitude}` : 'Tidak Tersedia' }}
+              </label>
+            </div>
 
-          <!-- Judul Pengaduan -->
-          <div class="flex flex-col sm:flex-row items-center space-x-4 mb-4">
-            <label for="judul" class="block text-sm font-semibold text-red-700 w-full sm:w-1/3">Judul Pengaduan</label>
-            <input required id="judul" v-model="form.judul" type="text" class="input-field w-full sm:w-2/3"
-              placeholder="Judul Pengaduan" />
-          </div>
-
-          <!-- Deskripsi Pengaduan -->
-          <div class="flex flex-col sm:flex-row items-center space-x-4 mb-4">
-            <label for="deskripsi" class="block text-sm font-semibold text-red-700 w-full sm:w-1/3">Deskripsi
-              Pengaduan</label>
-            <textarea required id="deskripsi" v-model="form.deskripsi" class="input-field w-full sm:w-2/3"
-              placeholder="Jelaskan pengaduan Anda" rows="4"></textarea>
-          </div>
-
-          <!-- Lampiran -->
-          <div>
-            <div v-for="(image, index) in imageInputs" :key="index" class="flex flex-col space-y-2 mb-4">
-              <div class="flex flex-col sm:flex-row items-center justify-between w-full">
-                <label class="block text-sm font-semibold w-full sm:w-1/3 text-left"
-                  :class="index === 0 ? 'text-red-700' : 'text-gray-500'">
-                  Lampiran Bukti {{ index + 1 }}
-                  <span v-if="index > 0" class="text-gray-400 text-xs">(Opsional)</span>
-                </label>
-                <input :required="index === 0" type="file" @change="handleFileUpload($event, index)"
-                  class="input-field w-full sm:w-2/3" />
+            <div class="flex flex-col space-y-4 mb-4">
+              <div class="flex flex-col sm:flex-row items-center space-x-4">
+                <label for="kategori" class="block text-sm font-semibold text-red-700 w-full sm:w-1/3">Kategori
+                  Pengaduan</label>
+                <select required id="kategori" v-model="form.kategori" class="input-field w-full sm:w-2/3">
+                  <option disabled :value=null>Pilih Kategori</option>
+                  <option value="Masalah Pembayaran">Masalah Pembayaran</option>
+                  <option value="Sertifikasi">Sertifikasi</option>
+                  <option value="Fasilitas">Fasilitas</option>
+                  <option value="Masalah Administrasi">Masalah Administrasi</option>
+                  <option value=''>Lainnya</option>
+                </select>
               </div>
-
-              <div class="flex flex-col items-end">
-                <label v-if="imageUsers[index]"
-                  class="block text-center font-semibold text-red-700 text-sm w-full sm:w-auto">Bukti {{ index + 1
-                  }}</label>
-                <img v-if="imageUsers[index]" :src="imageUsers[index]" alt="uploaded" @click="openLightbox(index)"
-                  class="w-40 h-auto object-contain rounded-lg shadow-md mt-2">
-                <input v-if="imageUsers[index]" v-model="form.keterangan[index]" type="text"
-                  placeholder="Masukkan keterangan"
-                  class="input-field w-full sm:w-2/3 mt-2 p-2 border border-gray-300 rounded-lg shadow-sm" />
+              <div v-if="form.kategori === ''" class="flex flex-col sm:flex-row items-center space-x-4 mb-4">
+                <label for="keterangan-lainnya"
+                  class="block text-sm font-semibold text-red-700 w-full sm:w-1/3">Keterangan Lainnya</label>
+                <input required id="keterangan-lainnya" v-model="form.kategori_lainnya" type="text"
+                  class="input-field w-full sm:w-2/3" placeholder="Jelaskan kategori pengaduan lainnya..." />
               </div>
             </div>
-          </div>
-
-          <!-- Harapan Penyelesaian -->
-          <div class="flex flex-col sm:flex-row items-center space-x-4 mb-4">
-            <label for="harapan" class="block text-sm font-semibold text-red-700 w-full sm:w-1/3">Harapan
-              Penyelesaian</label>
-            <textarea required id="harapan" v-model="form.harapan" class="input-field w-full sm:w-2/3"
-              placeholder="Harapan Penyelesaian"></textarea>
-          </div>
-
-          <!-- Tindak Lanjut -->
-          <div class="flex flex-col sm:flex-row items-center space-x-4 mb-4">
-            <label for="publish" class="block text-sm font-semibold text-red-700 w-full sm:w-1/3">Apakah Bisa Kami
-              Publish?</label>
-            <select required id="publish" v-model="form.publish" class="input-field w-full sm:w-2/3">
-              <option :value="true">Ya, bisa dipublikasikan</option>
-              <option :value="false">Tidak, jangan publikasikan</option>
-            </select>
-          </div>
-
-          <p class="text-xs text-gray-500 italic font-extrabold text-left">
-            Dengan memilih "Ya", Anda mengizinkan informasi ini untuk dipublikasikan secara umum.
-          </p>
-
-          <!-- Submit Button -->
-          <div class="flex justify-center">
-            <button type="submit"
-              class="w-full bg-red-600 text-white p-3 rounded-lg font-semibold hover:bg-red-700 transition-transform transform hover:scale-105">
-              Kirim Pengaduan
-            </button>
-          </div>
-        </form>
-
+            <div class="flex flex-col sm:flex-row items-center space-x-4 mb-4">
+              <label for="judul" class="block text-sm font-semibold text-red-700 w-full sm:w-1/3">Judul
+                Pengaduan</label>
+              <input required id="judul" v-model="form.judul" type="text" class="input-field w-full sm:w-2/3"
+                placeholder="Judul Pengaduan" />
+            </div>
+            <div class="flex flex-col sm:flex-row items-center space-x-4 mb-4">
+              <label for="deskripsi" class="block text-sm font-semibold text-red-700 w-full sm:w-1/3">Deskripsi
+                Pengaduan</label>
+              <textarea required id="deskripsi" v-model="form.deskripsi" class="input-field w-full sm:w-2/3"
+                placeholder="Jelaskan pengaduan Anda" rows="4"></textarea>
+            </div>
+            <div>
+              <div v-for="(image, index) in imageInputs" :key="index" class="flex flex-col space-y-2 mb-4">
+                <div class="flex flex-col sm:flex-row items-center justify-between w-full">
+                  <label class="block text-sm font-semibold w-full sm:w-1/3 text-left"
+                    :class="index === 0 ? 'text-red-700' : 'text-gray-500'">
+                    Lampiran Bukti {{ index + 1 }}
+                    <span v-if="index > 0" class="text-gray-400 text-xs">(Opsional)</span>
+                  </label>
+                  <input :required="index === 0" type="file" @change="handleFileUpload($event, index)"
+                    class="input-field w-full sm:w-2/3" />
+                </div>
+                <p class="text-xs text-gray-500 mt-1">Max: 3MB | Format: jpg, jpeg, png</p>
+                <div class="flex flex-col items-end">
+                  <label v-if="imageUsers[index]"
+                    class="block text-center font-semibold text-red-700 text-sm w-full sm:w-auto">Bukti {{ index + 1
+                    }}</label>
+                  <img v-if="imageUsers[index]" :src="imageUsers[index]" alt="uploaded" @click="openLightbox(index)"
+                    class="w-40 h-auto object-contain rounded-lg shadow-md mt-2">
+                  <input v-if="imageUsers[index]" v-model="form.keterangan[index]" type="text"
+                    placeholder="Masukkan keterangan" required
+                    class="input-field w-full sm:w-2/3 mt-2 p-2 border border-gray-300 rounded-lg shadow-sm" />
+                </div>
+              </div>
+            </div>
+            <div class="flex flex-col sm:flex-row items-center space-x-4 mb-4">
+              <label for="harapan" class="block text-sm font-semibold text-red-700 w-full sm:w-1/3">Harapan
+                Penyelesaian</label>
+              <textarea required id="harapan" v-model="form.harapan" class="input-field w-full sm:w-2/3"
+                placeholder="Harapan Penyelesaian"></textarea>
+            </div>
+            <div class="flex flex-col sm:flex-row items-center space-x-4 mb-4">
+              <label for="publish" class="block text-sm font-semibold text-red-700 w-full sm:w-1/3">Apakah Bisa Kami
+                Publish?</label>
+              <select required id="publish" v-model="form.publish" class="input-field w-full sm:w-2/3">
+                <option :value="true">Ya, bisa dipublikasikan</option>
+                <option :value="false">Tidak, jangan publikasikan</option>
+              </select>
+            </div>
+            <p class="text-xs text-gray-500 italic font-extrabold text-left">
+              Dengan memilih "Ya", Anda mengizinkan informasi ini untuk dipublikasikan secara umum.
+            </p>
+            <div class="flex justify-center">
+              <button type="submit"
+                class="w-1/2 bg-red-600 text-white p-2 rounded-lg font-semibold hover:bg-red-700 transition-transform transform hover:scale-105">
+                Kirim
+              </button>
+            </div>
+          </form>
+        </div>
+        <vue-easy-lightbox :visible="lightboxVisible" :imgs="dataLengkap ? imageUrl : imageUsers" :index="lightboxIndex"
+          @hide="lightboxVisible = false" />
       </div>
-      <vue-easy-lightbox :visible="lightboxVisible" :imgs="dataLengkap ? imageUrl : imageUsers" :index="lightboxIndex"
-        @hide="lightboxVisible = false" />
     </div>
   </div>
 </template>
-
 <script>
 import VueEasyLightbox from 'vue-easy-lightbox';
 import NavbarAnggota from '@/components/NavbarAnggota.vue';
 import api from '@/service/lpkni';
 import lpkni from '@/service/lpkni';
 import Swal from 'sweetalert2';
-
 export default {
   components: {
     NavbarAnggota,
@@ -179,8 +152,6 @@ export default {
   },
   data() {
     return {
-      fileList: [],
-      fileNames: [],
       location: null,
       error: null,
       isMounted: false,
@@ -251,7 +222,7 @@ export default {
       }
 
       if (file) {
-        this.form.file.push(file)
+        this.form.file[index] = file
         this.imageUsers[index] = URL.createObjectURL(file);
         if (this.imageUsers[index] && !this.lastIndexImage[index]) {
           this.imageInputs.push({ keterangan: "", required: false })
@@ -278,6 +249,25 @@ export default {
       })
     },
     async submitForm() {
+      if (this.form.daerahId === null) {
+        Swal.fire({
+          icon: 'info',
+          title: 'Informasi',
+          text: 'Harap Mengisi Daerah',
+        });
+        return
+      }
+      if (this.form.wilayahId === null) {
+        Swal.fire({
+          icon: 'info',
+          title: 'Informasi',
+          text: 'Harap Mengisi Wilayah',
+        });
+        return
+      }
+      if (this.form.kategori_lainnya !== '') {
+        this.form.kategori = this.form.kategori_lainnya;
+      }
       await lpkni.CreatePengaduanAnggota(this.form).then(() => {
         Swal.fire({
           icon: 'success',

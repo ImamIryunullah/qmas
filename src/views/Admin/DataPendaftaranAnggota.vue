@@ -1,136 +1,209 @@
 <template>
   <div>
-    <NavbarAdmin /> <!-- Navbar yang bisa dibuka/tutup -->
-    <div class="bg-gray-100 w-full h-full min-h-screen p-6 transition-all duration-300"
-      :class="isSidebarOpen ? 'ml-60' : 'ml-12'">
-      <!-- Dashboard Header -->
-      <div class="flex flex-col md:flex-row md:justify-between md:items-center mb-6 gap-4">
-        <h1 class="text-2xl md:text-3xl font-bold text-gray-800 text-center md:text-left">📋 DATA PENDAFTARAN ANGGOTA
-        </h1>
-        <button @click="exportToCSV"
-          class="w-full md:w-auto flex items-center justify-center bg-green-500 text-white px-4 py-2 rounded-lg hover:bg-green-600 transition duration-300 shadow-md">
-          <i class="fas fa-file-csv mr-2"></i> Export CSV
-        </button>
-      </div>
-
-      <!-- Table Section -->
-      <div class="overflow-x-auto bg-white rounded-lg shadow-lg">
-        <!-- Filters -->
-        <div class="flex justify-between items-center p-4 border-b bg-gray-50">
-          <div class="flex space-x-4">
-            <select class="px-4 py-2 rounded-md border border-gray-300 focus:ring focus:ring-blue-200">
-              <option value="100">Show 100</option>
-              <option value="50">Show 50</option>
-              <option value="25">Show 25</option>
-            </select>
-            <select class="px-4 py-2 rounded-md border border-gray-300 focus:ring focus:ring-blue-200">
-              <option value="all">Semua Data</option>
-              <option value="science">Provinsi</option>
-              <option value="arts">Kota Kabupaten</option>
-            </select>
-          </div>
-          <div class="flex items-center space-x-4 relative">
-            <i class="fas fa-search absolute left-6 top-1/2 transform -translate-y-1/2 text-gray-400"></i>
-            <input type="text"
-              class="pl-10 pr-4 py-2 rounded-md border border-gray-300 focus:ring focus:ring-blue-200 w-64"
-              placeholder="Cari Anggota" />
+    <NavbarAdmin />
+    <div class="bg-gray-100 min-h-screen p-6 transition-all" :class="isSidebarOpen ? 'pl-72' : 'pl-20'">
+      <!-- Page Header -->
+      <div class="max-w-8xl mx-auto bg-white p-6 md:p-8 rounded-xl shadow-lg">
+        <div class="flex flex-col md:flex-row md:items-center md:justify-between">
+          <div>
+            <h1 class="text-2xl md:text-3xl font-bold text-gray-800">
+              📌 Management Anggota
+            </h1>
+            <p class="text-gray-600 mt-2">
+              Kelola Anggota tingkat Provinsi dan Kota/Kabupaten.
+            </p>
           </div>
         </div>
+      </div>
 
-        <!-- Table -->
-        <table class="w-full h-full table-auto border-red-950">
-          <thead class="bg-red-500 text-white">
-            <tr>
-              <th class="px-4 py-3 border text-center">Anggota ID</th>
-              <th class="px-4 py-3 border text-center">Nama Lengkap</th>
-              <th class="px-4 py-3 border text-center">Alamat Lengkap</th>
-              <th class="px-4 py-3 border text-center">NIK</th>
-              <th class="px-4 py-3 border text-center">Tempat Lahir</th>
-              <th class="px-4 py-3 border text-center">Tanggal Lahir</th>
-              <th class="px-4 py-3 border text-center">Pekerjaan</th>
-              <th class="px-4 py-3 border text-center">Agama</th>
-              <th class="px-4 py-3 border text-center">Provinsi</th>
-              <th class="px-4 py-3 border text-center">Kota/Kab</th>
-              <th class="px-4 py-3 border text-center">Jabatan</th>
-              <th class="px-4 py-3 border text-center">Tingkat</th>
-              <th class="px-4 py-3 border text-center">Foto KTP</th>
-              <th class="px-4 py-3 border text-center">Pas Foto</th>
-              <th class="px-4 py-3 border text-center">Status</th>
-              <th class="px-4 py-3 border text-center">Aksi</th>
-            </tr>
-          </thead>
-          <tbody>
-            <!-- Dynamic Data Rows -->
-            <tr v-for="(anggota, index) in listDataAnggota" :key="index" class="text-black hover:bg-gray-100 transition"
-              :class="{ 'bg-gray-50': index % 2 === 0 }">
-              <td class="px-4 py-3 border text-center">{{ anggota.daerah.kode_daerah + "." + anggota.id_data_anggota }}
-              </td>
-              <td class="px-4 py-3 border text-center">{{ anggota.nama_lengkap }}</td>
-              <td class="px-4 py-3 border text-center">{{ anggota.alamat }}</td>
-              <td class="px-4 py-3 border text-center">{{ anggota.nik }}</td>
-              <td class="px-4 py-3 border text-center">{{ anggota.tempatLahir }}</td>
-              <td class="px-4 py-3 border text-center">{{ anggota.tanggalLahir.split('T')[0] }}</td>
-              <td class="px-4 py-3 border text-center">{{ anggota.pekerjaan }}</td>
-              <td class="px-4 py-3 border text-center">{{ anggota.agama }}</td>
-              <td class="px-4 py-3 border text-center">{{ anggota.wilayah.nama_wilayah }}</td>
-              <td class="px-4 py-3 border text-center">{{ anggota.daerah.nama_daerah }}</td>
-              <td class="px-4 py-3 border text-center">{{ anggota.jabatanStruktural.nama }}</td>
-              <td class="px-4 py-3 border text-center">{{ anggota.jabatanStruktural.tingkat }}</td>
-              <td class="px-4 py-3 border text-center">
-                <div v-if="anggota.imageUsers.length > 0">
-                  <img :src="getFullPathImage(anggota.imageUsers[0].imageUrl)" alt="Foto"
-                    class="w-full h-full object-cover rounded-md shadow-md mx-auto cursor-pointer"
-                    @click="openImagePreview(anggota.imageUsers[0].imageUrl, 'Foto')" />
-                </div>
-                <div v-else>
-                  <label for="">Gambar Tidak Tersedia</label>
-                </div>
-              </td>
+      <div class="max-w-8xl mx-auto bg-white p-6 mt-6 rounded-lg shadow-md">
+        <h2 class="text-xl font-semibold text-gray-700 mb-4">
+          Filter Anggota
+        </h2>
+        <div class="grid grid-cols-1 sm:grid-cols-2 lg:flex lg:items-center gap-4">
+          <label class="text-gray-700 font-medium">Provinsi :</label>
+          <select v-model="selectedWilayah" class="p-2 border rounded-md w-auto">
+            <option :value="''">Pilih Wilayah</option>
+            <option v-for="wilayah in wilayahList" :key="wilayah.id_wilayah" :value="wilayah">
+              {{ wilayah.nama_wilayah }}
+            </option>
+          </select>
+          <label class="text-gray-700 font-medium">Kota/Kab : </label>
+          <select v-model="selectedDaerah" class="p-2 border rounded-md w-auto">
+            <option disabled :value="''">Pilih Daerah</option>
+            <option v-for="daerah in selectedWilayah.daerah" :key="daerah.id_daerah" :value="daerah.id_daerah">
+              {{ daerah.nama_daerah }}
+            </option>
+          </select>
+          <label class="text-gray-700 font-medium">Status Anggota : </label>
+          <select v-model="selectedStatus" class="p-2 border rounded-md w-auto">
+            <option disabled value="">Pilih Status</option>
+            <option value="SUCCESS">SUCCESS</option>
+            <option value="PENDING">PENDING</option>
+            <option value="CANCEL">CANCEL</option>
+          </select>
+        </div>
+      </div>
+      <!-- Table Section -->
+      <div class="max-w-8xl mx-auto bg-white p-6 mt-6 rounded-lg shadow-md">
+        <div class="flex flex-col md:flex-row md:justify-between md:items-center mb-6">
+          <h2 class="text-xl font-semibold text-gray-700 mb-4">
+            Daftar Anggota
+          </h2>
+        </div>
+        <div class="overflow-x-auto">
+          <table class="w-full border rounded-lg">
+            <thead class="bg-gray-200 text-gray-700">
+              <tr>
+                <th class="px-4 py-2 text-left">ID Anggota</th>
+                <th class="px-4 py-2 text-left">Nama Lengkap</th>
+                <th class="px-4 py-2 text-left">Provinsi</th>
+                <th class="px-4 py-2 text-left">Kota / Kab</th>
+                <th class="px-4 py-2 text-left">Jabatan</th>
+                <th class="px-4 py-2 text-left">Tingkat</th>
+                <th class="px-4 py-2 text-left">Status</th>
+                <th class="px-4 py-2 text-center">Tampilkan Detail</th>
+              </tr>
+            </thead>
+            <tbody>
+              <tr v-for="data in listDataAnggota" :key="data.id" class="border-t">
+                <td class="px-4 py-2 border border-b-2">{{ data.daerah.kode_daerah
+                  + '.' + data.id_data_anggota }}</td>
+                <td class="px-4 py-2 border border-b-2">{{ data.nama_lengkap }}</td>
+                <td class="px-4 py-2 border border-b-2">
+                  {{ data.wilayah ? data.wilayah.nama_wilayah : "-" }}
+                </td>
+                <td class="px-4 py-2 border border-b-2">
+                  {{ data.daerah ? data.daerah.nama_daerah : "-" }}
+                </td>
+                <td class="px-4 py-2 border border-b-2">
+                  {{ data.jabatanStruktural ?
+                    data.jabatanStruktural.nama :
+                    "-" }}
+                </td>
+                <td class="px-4 py-2 border border-b-2">{{ data.jabatanStruktural ?
+                  data.jabatanStruktural.tingkat :
+                  "-" }}</td>
+                <td class="px-4 py-2 border border-b-2 text-center font-semibold">
+                  <!-- Conditional Rendering of Status with Icon and Color -->
+                  <span :class="{
+                    'text-yellow-500': data.status === 'PENDING',
+                    'text-green-500': data.status === 'SUCCESS',
+                    'text-red-500': data.status === 'CANCEL'
+                  }">
+                    <!-- PENDING Status with Icon -->
+                    <i v-if="data.status === 'PENDING'" class="fas fa-hourglass-half"></i> <!-- Icon for PENDING -->
+                    <!-- SUCCESS Status with Icon -->
+                    <i v-if="data.status === 'SUCCESS'" class="fas fa-check-circle"></i> <!-- Icon for SUCCESS -->
+                    <!-- CANCEL Status with Icon -->
+                    <i v-if="data.status === 'CANCEL'" class="fas fa-times-circle"></i> <!-- Icon for CANCEL -->
+                  </span>
+                  <span :class="{
+                    'text-yellow-500': data.status === 'PENDING',
+                    'text-green-500': data.status === 'SUCCESS',
+                    'text-red-500': data.status === 'CANCEL'
+                  }">
+                    {{ data.status }}
+                  </span>
+                </td>
 
-              <!-- Kolom KTP -->
-              <td class="px-4 py-3 border text-center">
-                <div v-if="anggota.imageUsers.length > 0">
-                  <img :src="getFullPathImage(anggota.imageUsers[1].imageUrl)" alt="KTP"
-                    class="w-full h-full object-cover rounded-md shadow-md mx-auto cursor-pointer"
-                    @click="openImagePreview(anggota.imageUsers[1].imageUrl, 'KTP')" />
-                </div>
-                <div v-else>
-                  <label for="">Gambar Tidak Tersedia</label>
-                </div>
+                <td class="px-4 py-2 border border-b-2 text-center">
+                  <div class="flex justify-center space-x-2">
+                    <button @click="openModal(data)"
+                      class="flex items-center space-x-1 bg-blue-500 text-white px-3 py-2 rounded-lg text-sm hover:bg-blue-600 transition duration-200">
+                      <h1>Lihat</h1>
+                      <i class="fa-solid fa-bars"></i>
+                    </button>
+                  </div>
+                </td>
+              </tr>
+            </tbody>
+          </table>
+        </div>
+      </div>
 
-              </td>
-              <td class="px-4 py-3 border">{{ anggota.status }}</td>
-              <!-- Kolom Aksi -->
-              <td class="px-4 py-3 border text-center">
-                <div class="justify-center space-y-2">
-                  <!-- Setujui Button -->
-                  <button @click="updateStatusAnggota(anggota.id_data_anggota, `SUCCESS`)"
-                    class="bg-green-500 text-white hover:bg-green-600 focus:ring-4 focus:ring-green-300 font-semibold rounded-lg py-2 px-4 flex items-center transition-all duration-300 ease-in-out transform hover:scale-105">
-                    <i class="fas fa-check mr-2"></i> Setujui
-                  </button>
-                  <!-- Pending Button -->
-                  <button @click="updateStatusAnggota(anggota.id_data_anggota, `PENDING`)"
-                    class="bg-yellow-500 text-white hover:bg-yellow-600 focus:ring-4 focus:ring-yellow-300 font-semibold rounded-lg py-2 px-4 flex items-center transition-all duration-300 ease-in-out transform hover:scale-105">
-                    <i class="fas fa-clock mr-2"></i> Pending
-                  </button>
-                  <!-- Tolak Button -->
-                  <button @click="updateStatusAnggota(anggota.id_data_anggota, `CANCEL`)"
-                    class="bg-red-500 text-white hover:bg-red-600 focus:ring-4 focus:ring-red-300 font-semibold rounded-lg py-2 px-4 flex items-center transition-all duration-300 ease-in-out transform hover:scale-105">
-                    <i class="fas fa-times mr-2"></i> Tolak
-                  </button>
-                </div>
-              </td>
+      <!-- Modal -->
+      <div v-if="isModalOpen" class="fixed inset-0 flex items-center justify-center bg-black bg-opacity-50 z-50">
+        <div class="bg-white p-6 rounded-lg shadow-lg max-w-screen-3xl w-full">
+          <h3 class="text-xl font-semibold text-gray-800 mb-4">Data Anggota</h3>
 
+          <div class="overflow-x-auto">
 
-            </tr>
-          </tbody>
-        </table>
+            <table class="w-full border rounded-lg">
+              <thead class="bg-gray-200 text-gray-700">
+                <tr class="border-t">
+                  <th class="px-4 py-2 border border-b-2  ">NIK</th>
+                  <th class="px-4 py-2 border border-b-2 ">alamat</th>
+                  <th class="px-4 py-2 border border-b-2 ">Agama</th>
+                  <th class="px-4 py-2 border border-b-2 ">pekerjaan</th>
+                  <th class="px-4 py-2 border border-b-2 ">Tempat Lahir</th>
+                  <th class="px-4 py-2 border border-b-2 ">Tanggal Lahir</th>
+                  <th class="px-4 py-2 border border-b-2 ">Status Kawin</th>
+                  <th class="px-4 py-2 text-center">Aksi</th>
+                </tr>
+              </thead>
+              <tbody>
+                <tr class="border-t">
+                  <td class="px-4 py-2 border border-b-2 ">{{ SelecteAnggota.nik }}</td>
+                  <td class="px-4 py-2 border border-b-2 ">{{ SelecteAnggota.alamat
+                  }}</td>
+                  <td class="px-4 py-2 border border-b-2 ">{{ SelecteAnggota.agama }}</td>
+                  <td class="px-4 py-2 border border-b-2 ">{{ SelecteAnggota.pekerjaan }}</td>
+                  <td class="px-4 py-2 border border-b-2 ">{{ SelecteAnggota.tempatLahir }}</td>
+                  <td class="px-4 py-2 border border-b-2 ">{{ SelecteAnggota.tanggalLahir.split('T')[0] }}</td>
+                  <td class="px-4 py-2 border border-b-2 ">{{ SelecteAnggota.statusPerkawinan }}</td>
+
+                  <td class="px-4 py-2 border border-b-2  text-center">
+                    <div class="flex justify-center space-x-2">
+                      <button @click="updateStatusAnggota(SelecteAnggota.id_data_anggota, 'SUCCESS')"
+                        class="bg-green-500 text-white p-3 rounded-md font-semibold hover:bg-green-600">
+                        <i class="fa-regular fa-circle-check"></i>
+                        <h1 for="">Sukses
+                        </h1>
+                      </button>
+                      <button @click="updateStatusAnggota(SelecteAnggota.id_data_anggota, 'PENDING')"
+                        class="bg-yellow-500 text-white p-3 rounded-md font-semibold hover:bg-yellow-600">
+                        <i class="fa-solid fa-clock"></i>
+                        <h1 for="">Pending
+                        </h1>
+                      </button>
+                      <button @click="updateStatusAnggota(SelecteAnggota.id_data_anggota, 'CANCEL')"
+                        class="bg-red-500 text-white p-3 rounded-md font-semibold  hover:bg-red-600">
+                        <i class="fa-solid fa-ban"></i>
+                        <h1 for="">Cancel
+                        </h1>
+                      </button>
+                    </div>
+                  </td>
+                </tr>
+              </tbody>
+            </table>
+            <div class="items-center justify-center grid grid-cols-2 gap-20 mt-10  border border-b-2">
+              <div class="items-center justify-center">
+                <label class="text-center"><strong>{{ SelecteAnggota.imageUsers[0].keterangan }}</strong></label>
+                <img :src="getFullPathImage(SelecteAnggota.imageUsers[0].imageUrl)" alt=""
+                  class="w-auto h-auto object-contain rounded-md" />
+              </div>
+              <div class="items-center justify-center">
+                <label class="text-center"><strong>{{ SelecteAnggota.imageUsers[1].keterangan }}</strong></label>
+                <img :src="getFullPathImage(SelecteAnggota.imageUsers[1].imageUrl)" alt=""
+                  class="w-auto h-auto object-contain rounded-md" />
+              </div>
+            </div>
+          </div>
+          <div class="mt-6">
+            <button @click="closeModal" class="ml-4 bg-gray-500 text-white px-4 py-2 rounded-md hover:bg-gray-600">
+              Close
+            </button>
+          </div>
+        </div>
       </div>
     </div>
-    <vue-easy-lightbox :visible="lightboxVisible" :imgs="imagePreview" :index="lightboxIndex"
-      @hide="lightboxVisible = false" />
   </div>
+  <vue-easy-lightbox :visible="lightboxVisible" :imgs="imagePreview" :index="lightboxIndex"
+    @hide="lightboxVisible = false" />
 </template>
+
 <script>
 import NavbarAdmin from "@/components/NavbarAdmin.vue";
 import api from "@/service/lpkni";
@@ -144,16 +217,25 @@ export default {
   },
   data() {
     return {
+      selectedWilayah: '',
+      selectedDaerah: '',
+      transaksiList: [],
+      wilayahList: [],
+      daerahList: [],
       imageTitle: "",
       imagePreview: null,
       listDataAnggota: [],
       lightboxIndex: 0,
       lightboxVisible: false,
+      selectedStatus: '',
+      SelecteAnggota: {},
+      isModalOpen: false,
 
     };
   },
   mounted() {
     this.GetAllAnggota()
+    this.fetchWilayah()
   },
   computed: {
     isSidebarOpen() {
@@ -161,6 +243,13 @@ export default {
     },
   },
   methods: {
+    async fetchWilayah() {
+      await api.getAllWilayah()
+        .then((res) => {
+          this.wilayahList = res.data;
+        })
+        .catch(() => { });
+    },
     getFullPathImage(img) {
       return api.getfullpathImage(img)
     },
@@ -178,22 +267,28 @@ export default {
       this.imageTitle = title;
       this.lightboxVisible = true
     },
+    openModal(data) {
+      this.SelecteAnggota = data;
+      this.isModalOpen = true;
+    },
+    closeModal() {
+      this.isModalOpen = false;
+    },
     async updateStatusAnggota(id, data) {
       Swal.fire({
         title: "Info",
         text: "Apakah Anda Yakin Ingin Merubah Status Anggota?",
         icon: "warning",
         showCancelButton: true,
-        confirmButtonColor: "#3085d6",
+        confirmButtonColor: '#22c55e',
         cancelButtonColor: "#d33",
         confirmButtonText: "Ya",
         cancelButtonText: 'Tidak',
         reverseButtons: false
       }).then(async (result) => {
-        if (!result.isConfirmed) {
+        if (result.isDenied || !result.isConfirmed || result.isDismissedd) {
           return
         }
-
         const form = {
           status: data
         }

@@ -22,8 +22,7 @@
                         <a href="https://www.instagram.com/lpkni_official/" target="_blank" class="hover:text-gray-300">
                             <i class="fab fa-instagram text-xl"></i>
                         </a>
-                        <a href="https://www.youtube.com/user/ConsumersIntl" target="_blank"
-                            class="hover:text-gray-300">
+                        <a href="https://www.youtube.com/@channellpkni" target="_blank" class="hover:text-gray-300">
                             <i class="fab fa-youtube text-xl"></i>
                         </a>
                         <a href="https://www.linkedin.com/company/consumers-international/?trk=hb_tab_compy_id_1709164"
@@ -50,11 +49,11 @@
                         Anda!
                     </p>
                     <div class="grid grid-cols-2 gap-2 text-center">
-                        <router-link to="/auth/login"
+                        <router-link to="/auth/register-anggota"
                             class="bg-white text-red-600 hover:text-gray-600 px-6 py-2 rounded-lg font-semibold hover:bg-gray-100 transition">
                             LPKNI
                         </router-link>
-                        <router-link to="/auth/swi/login"
+                        <router-link to="/auth/swi/register"
                             class="bg-white text-red-600 hover:text-gray-600 px-6 py-2 rounded-lg font-semibold hover:bg-gray-100 transition">
                             SWI
                         </router-link>

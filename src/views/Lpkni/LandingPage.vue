@@ -12,7 +12,8 @@
                     <h1 id="typing" class="text-4xl md:text-5xl font-bold mb-4"></h1>
                 </div>
 
-                <p class="mb-6 text-sm sm:text-lg text-justify">LPKNI merupakan salah satu lembaga atau institusi yang mempunyai
+                <p class="mb-6 text-sm sm:text-lg text-justify">LPKNI merupakan salah satu lembaga atau institusi yang
+                    mempunyai
                     tugas
                     pokok dan
                     fungsinya adalah melindungi hak setiap warga negara baik perseorangan (konsumen) maupun badan yang
@@ -119,73 +120,56 @@
         </section>
         <!-- Track Record Section -->
         <section id="track-record" class="py-20 px-6 bg-white">
-            <h2 class="text-3xl font-semibold text-center mb-2 text-red-700 flex items-center justify-center">
+            <h2
+                class="text-3xl md:text-4xl font-semibold text-center mb-4 text-red-700 flex items-center justify-center">
                 <!-- Icon before the title -->
-                <i class="fas fa-arrow-right text-red-700 mr-3"></i>
-                Perjalanan LPKNI
+                <i class="fas fa-newspaper text-red-700 mr-3"></i>
+                <span class="text-base md:text-xl">PORTAL SUARA KONSUMEN</span>
             </h2>
 
+
             <p class="text-lg text-gray-600 max-w-3xl mx-auto mb-12 text-justify">
-                Selama bertahun-tahun, LPKNI telah aktif bekerja untuk melindungi hak-hak konsumen, menyelesaikan
-                perselisihan,
-                dan meningkatkan kesadaran konsumen. Berikut ini adalah beberapa kegiatan dan pencapaian penting kami.
+                LPKNI berkomitmen untuk memberikan wadah bagi masyarakat Indonesia dalam menyampaikan suara dan
+                keluhan terkait produk atau layanan yang diterima. Kami berusaha memastikan bahwa setiap suara konsumen
+                didengar dengan adil, dan sebagai hasil dari upaya ini, kami terus meningkatkan kualitas layanan dan
+                perlindungan
+                konsumen di seluruh Indonesia. Kami percaya bahwa transparansi dan komunikasi yang baik adalah kunci
+                untuk
+                menciptakan hubungan yang saling menguntungkan antara produsen dan konsumen.
             </p>
-            <!-- Image Grid -->
-            <div class="grid grid-cols-1 md:grid-cols-4 gap-8">
-                <!-- Image 1 -->
-                <div
-                    class="bg-gray-100 p-4 rounded-lg shadow-lg hover:shadow-2xl transform transition duration-500 ease-in-out hover:scale-105">
-                    <img src="@/assets/kegiatan1.png" alt="LPKNI Event 1"
-                        class="rounded-lg w-full object-cover transition duration-300 ease-in-out hover:opacity-80 max-h-80">
-                    <h3 class="text-xl font-semibold mt-4 hover:text-red-600">Presentasi Standarisasi Warung Indonesia
-                    </h3>
-                    <p class="text-gray-600 mt-2 text-justify">
-                        Presentasi Standarisasi Warung Indonesia bersama Kementrian Pariwisata dan Ekonomi Kreatif di
-                        Jakarta 12 September 2023 yang dilakukan oleh LPKNI merupakan bentuk Follow up atas hasil Rakor
-                        I yang diadakan di Kab. Pasuruan Jawa Timur.
-                    </p>
-                </div>
-                <!-- Image 1 -->
-                <div
-                    class="bg-gray-100 p-4 rounded-lg shadow-lg hover:shadow-2xl transform transition duration-500 ease-in-out hover:scale-105">
-                    <img src="@/assets/kegiatan1.png" alt="LPKNI Event 1"
-                        class="rounded-lg w-full object-cover transition duration-300 ease-in-out hover:opacity-80 max-h-80">
-                    <h3 class="text-xl font-semibold mt-4 hover:text-red-600">Presentasi Standarisasi Warung Indonesia
-                    </h3>
-                    <p class="text-gray-600 mt-2 text-justify">
-                        Presentasi Standarisasi Warung Indonesia bersama Kementrian Pariwisata dan Ekonomi Kreatif di
-                        Jakarta 12 September 2023 yang dilakukan oleh LPKNI merupakan bentuk Follow up atas hasil Rakor
-                        I yang diadakan di Kab. Pasuruan Jawa Timur.
-                    </p>
-                </div>
-                <!-- Image 2 -->
-                <div
-                    class="bg-gray-100 p-4 rounded-lg shadow-lg hover:shadow-2xl transform transition duration-500 ease-in-out hover:scale-105">
-                    <img src="@/assets/kegiatan2.jpeg" alt="LPKNI Event 2"
-                        class="rounded-lg w-full object-cover transition duration-300 ease-in-out hover:opacity-80 max-h-80">
-                    <h3 class="text-xl font-semibold mt-4 hover:text-red-600">Pelaksanaan Operasi Pasar</h3>
-                    <p class="text-gray-600 mt-2 text-justify">
-                        Pelaksanaan Operasi Pasar Minyak Goreng Murah bermerk Letizia Sabtu, 9 September 2023 di pasar
-                        Bunulrejo Kota Malang berjalan dengan lancar dan antusias warga yang sangat luar biasa. Terima
-                        kasih atas dukungan serta support rekan" LPKNI dan Dinas terkait.
-                    </p>
-                </div>
-                <!-- Image 3 -->
-                <div
-                    class="bg-gray-100 p-4 rounded-lg shadow-lg hover:shadow-2xl transform transition duration-500 ease-in-out hover:scale-105">
-                    <img src="@/assets/kegiatan3.png" alt="LPKNI Event 3"
-                        class="rounded-lg w-full object-cover transition duration-300 ease-in-out hover:opacity-80 max-h-80">
-                    <h3 class="text-xl font-semibold mt-4 hover:text-red-600">Operasi Pasar Minyak Goreng</h3>
-                    <p class="text-gray-600 mt-2 text-justify">
-                        Presiden LPKNI Nanang Nilson, S.H.,M.H dalam waktu dekat akan menggalakkan operasi pasar Minyak
-                        Goreng Murah merk Letizia harga Rp. 15.000/liter dimulai dari Pasar Bunul Pada tgl. 9 Sept 2023.
-                    </p>
+
+            <!-- Button to navigate to 'suara-konsumen' page -->
+            <div class="flex justify-center mb-8">
+                <a href="/suara-konsumen"
+                    class="bg-red-600 text-white px-6 py-3 rounded-lg font-semibold hover:bg-red-700 transition duration-300">
+                    Kunjungi Suara Konsumen
+                </a>
+            </div>
+
+
+            <!-- Image Grid with Right Alignment -->
+            <div class="grid grid-cols-1 md:grid-cols-2 lg:grid-cols-4 gap-6 h-auto">
+                <div v-for="suaraKonsumen in SuaraKonsumeList" :key="suaraKonsumen.id" class="flex justify-end">
+                    <!-- Image Box -->
+                    <div
+                        class="bg-gray-100 p-4 rounded-lg shadow-lg hover:shadow-2xl transform transition duration-500 ease-in-out hover:scale-105 w-full">
+                        <img :src="getfullPathImage(suaraKonsumen.media[0].imageUrl)" alt=""
+                            class="rounded-md w-full object-contain transition duration-300 ease-in-out hover:opacity-80 max-h-80">
+                        <h3 class="text-xl font-semibold mt-4 hover:text-red-600 text-left">
+                            {{ suaraKonsumen.judul }}
+                        </h3>
+                        <p class="text-gray-600 mt-2">
+                            {{ getTruncatedDescription(suaraKonsumen.deskripsi1, 300) }}
+                        </p>
+                    </div>
                 </div>
             </div>
+
         </section>
+
         <section id="services" class="py-20 px-6 bg-red-50">
             <h2 class="text-3xl font-semibold text-center mb-10 animate__animated animate__fadeIn">Layanan Kami</h2>
-            <div class="grid grid-cols-1 md:grid-cols-3 gap-10">
+            <div class="grid grid-cols-1 md:grid-cols-2 gap-10">
                 <!-- Service Card 1 -->
                 <div
                     class="bg-white p-6 rounded-lg shadow-lg transform transition-all duration-300 hover:scale-105 hover:shadow-2xl animate__animated animate__fadeInUp">
@@ -292,7 +276,7 @@
                         class="text-red-600 hover:text-red-800 transition-transform duration-300 text-2xl">
                         <i class="fab fa-instagram"></i>
                     </a>
-                    <a href="https://www.youtube.com/user/ConsumersIntl" target="_blank"
+                    <a href="https://www.youtube.com/@channellpkni" target="_blank"
                         class="text-red-600 hover:text-red-800 transition-transform duration-300 text-2xl">
                         <i class="fab fa-youtube"></i>
                     </a>
@@ -313,7 +297,7 @@
 <script>
 import FooterLandingPage from '@/components/FooterLandingPage.vue';
 import NavbarLandingPage from '@/components/NavbarLandingPage.vue';
-
+import lpkni from '@/service/lpkni';
 // Move the type function outside of the component
 function type(element, text, i) {
     if (i < text.length) {
@@ -337,21 +321,33 @@ export default {
     name: 'LandingPage',
     data() {
         return {
-
             expanded: false,
-            shortText: `
-                Lembaga Pengaduan Konsumen Korban Perbankan, Finance, Koperasi, Pinjol dan Perusahaan atau Lembaga yang curang. Jika anda mengalami masalah hukum terkait, silakan mengunjungi kantor LPKNI dan bertemu dengan Bapak Nanang Nilson, atau bisa juga WhatsApp di nomor 0813-3301-5767.
-                <br><br>
-                Lembaga Perlindungan Konsumen Nasional Indonesia (LPKNI) Kota Malang siap menjalankan tugasnya setelah dilantik dalam acara Pelantikan dan Penyerahan SK Jabatan yang berlangsung di Kantor LPKNI Ruko Pelita, Jalan Puntodewo Kav. 2, Kota Malang.
-            `,
-            filters: ["About", "Services", "Contact"]
+            SuaraKonsumeList: [],
         };
     },
     mounted() {
         this.typeWriterEffect();
         this.addFadeInAnimation();
+        this.getAllBerita()
     },
     methods: {
+        getTruncatedDescription(text, karakter) {
+            if (text.length > karakter) {
+                return text.slice(0, karakter) + '...'; // Menambahkan elipsis (...) jika lebih dari 200 karakter
+            }
+            return text;
+        },
+        getAllBerita() {
+            lpkni.getAllSuaraKonsumen().then((res) => {
+                this.SuaraKonsumeList = res.data
+                console.log(this.SuaraKonsumeList)
+            }).catch(() => {
+
+            })
+        },
+        getfullPathImage(img) {
+            return lpkni.getfullpathImage(img)
+        },
         // Method for Typing Effect
         typeWriterEffect() {
             const text = "Lembaga Perlindungan Konsumen Nasional Indonesia";

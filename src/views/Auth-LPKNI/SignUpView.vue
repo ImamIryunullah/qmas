@@ -33,6 +33,7 @@
           <input v-model="form.no_hp" id="no_hp" type="text" placeholder="No Hp"
             class="p-3 border border-gray-300 rounded-lg focus:outline-none focus:ring-2 focus:ring-red-600 transition duration-200 ease-in-out transform hover:scale-105"
             required />
+          <p class="text-xs text-red-500 mt-1 font-bold">*Harap Masukkan Nomor Hp Aktif</p>
         </div>
 
         <div class="flex flex-col space-y-2">
@@ -40,6 +41,7 @@
           <input v-model="form.email" id="email" type="email" placeholder="Email"
             class="p-3 border border-gray-300 rounded-lg focus:outline-none focus:ring-2 focus:ring-red-600 transition duration-200 ease-in-out transform hover:scale-105"
             required />
+          <p class="text-xs text-red-500 mt-1 font-bold">*Harap Masukkan Email Aktif</p>
         </div>
 
         <!-- Password Fields -->
