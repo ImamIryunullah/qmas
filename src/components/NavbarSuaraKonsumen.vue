@@ -15,10 +15,10 @@
         <a href="https://www.instagram.com/lpkni_official/" target="_blank" class="hover:text-gray-400">
           <i class="fab fa-instagram fa-sm sm:fa-xs"></i>
         </a>
-        <a href="https://linkedin.com/company/consumers-international" target="_blank" class="hover:text-gray-400">
+        <a href="https://www.facebook.com/lpkni.pusat" target="_blank" class="hover:text-gray-400">
           <i class="fab fa-linkedin fa-sm sm:fa-xs"></i>
         </a>
-        <a href="https://www.youtube.com/user/ConsumersIntl" target="_blank" class="hover:text-gray-400">
+        <a href="https://www.youtube.com/@channellpkni" target="_blank" class="hover:text-gray-400">
           <i class="fab fa-youtube fa-sm sm:fa-xs"></i>
         </a>
       </div>
@@ -65,11 +65,10 @@
 
       <!-- Scrollable Container -->
       <div class="flex space-x-3 overflow-x-auto whitespace-nowrap scrollbar-hide py-2 px-2">
-        <router-link v-for="(provinsi, index) in provinsiList" :key="index"
-          :to="{ name: 'Kategori Suara Konsumen', params: { kategori: provinsi } }"
+        <button v-for="wilayah in wilayahList" :key="wilayah.id_wilayah" @click="routeWilayah(wilayah.id_wilayah)"
           class="bg-gray-100 text-gray-700 text-center py-2 px-4 rounded-lg hover:bg-red-500 hover:text-white transition flex-shrink-0">
-          {{ provinsi }}
-        </router-link>
+          {{ wilayah.nama_wilayah }}
+        </button>
       </div>
     </div>
   </nav>
@@ -77,6 +76,8 @@
 </template>
 
 <script>
+// import router from "@/router";
+import api from "@/service/lpkni";
 export default {
   data() {
     return {
@@ -84,20 +85,27 @@ export default {
       dropdownOpen: false,
       currentDate: this.formatDate(new Date()),
       currentDay: this.getDayInIndonesian(new Date()),
-      provinsiList: [
-        "Aceh", "Sumatera Utara", "Sumatera Barat", "Riau", "Kepulauan Riau", "Jambi",
-        "Sumatera Selatan", "Bangka Belitung", "Bengkulu", "Lampung", "Banten", "DKI Jakarta",
-        "Jawa Barat", "Jawa Tengah", "DI Yogyakarta", "Jawa Timur", "Bali", "Nusa Tenggara Barat",
-        "Nusa Tenggara Timur", "Kalimantan Barat", "Kalimantan Tengah", "Kalimantan Selatan",
-        "Kalimantan Timur", "Kalimantan Utara", "Sulawesi Utara", "Gorontalo", "Sulawesi Tengah",
-        "Sulawesi Selatan", "Sulawesi Tenggara", "Sulawesi Barat", "Maluku", "Maluku Utara",
-        "Papua", "Papua Barat"
+      wilayahList: [
       ]
     };
   },
+  mounted() {
+    this.fetchWilayah()
+  },
   methods: {
+    async routeWilayah(id) {
+      await this.$router.push(`/suara-konsumen/wilayah/${id}`)
+      window.location.reload()
+    },
     toggleMenu() {
       this.isMenuOpen = !this.isMenuOpen;
+    },
+    async fetchWilayah() {
+      await api.getAllWilayah()
+        .then((res) => {
+          this.wilayahList = res.data;
+        })
+        .catch(() => { });
     },
     toggleDropdown() {
       this.dropdownOpen = !this.dropdownOpen;

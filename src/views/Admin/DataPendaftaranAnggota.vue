@@ -62,6 +62,7 @@
                 <th class="px-4 py-2 text-left">Jabatan</th>
                 <th class="px-4 py-2 text-left">Tingkat</th>
                 <th class="px-4 py-2 text-left">Status</th>
+                <th class="px-4 py-2 text-left">Keterangan Status</th>
                 <th class="px-4 py-2 text-center">Tampilkan Detail</th>
               </tr>
             </thead>
@@ -106,7 +107,9 @@
                     {{ data.status }}
                   </span>
                 </td>
-
+                <td class="px-4 py-2 border border-b-2">{{ data.keterangan ?
+                  data.keterangan :
+                  "-" }}</td>
                 <td class="px-4 py-2 border border-b-2 text-center">
                   <div class="flex justify-center space-x-2">
                     <button @click="openModal(data)"
@@ -124,7 +127,13 @@
 
       <!-- Modal -->
       <div v-if="isModalOpen" class="fixed inset-0 flex items-center justify-center bg-black bg-opacity-50 z-50">
+
         <div class="bg-white p-6 rounded-lg shadow-lg max-w-screen-3xl w-full">
+          <div class="flex justify-end">
+            <button @click="closeModal" class="ml-4 bg-red-500 text-white px-4 py-2 rounded-md hover:bg-red-600">
+              Close
+            </button>
+          </div>
           <h3 class="text-xl font-semibold text-gray-800 mb-4">Data Anggota</h3>
 
           <div class="overflow-x-auto">
@@ -178,24 +187,26 @@
                 </tr>
               </tbody>
             </table>
-            <div class="items-center justify-center grid grid-cols-2 gap-20 mt-10  border border-b-2">
-              <div class="items-center justify-center">
-                <label class="text-center"><strong>{{ SelecteAnggota.imageUsers[0].keterangan }}</strong></label>
-                <img :src="getFullPathImage(SelecteAnggota.imageUsers[0].imageUrl)" alt=""
-                  class="w-auto h-auto object-contain rounded-md" />
+            <div class="grid grid-cols-1 sm:grid-cols-2 gap-10 mt-10 border border-b-2 p-5">
+              <!-- Gambar pertama -->
+              <div class="flex flex-col items-center justify-center text-center">
+                <label><strong>{{ SelecteAnggota.imageUsers[0].keterangan }}</strong></label>
+                <img @click="openImagePreview(SelecteAnggota.imageUsers[0].imageUrl)"
+                  :src="getFullPathImage(SelecteAnggota.imageUsers[0].imageUrl)" alt=""
+                  class="w-48 h-48 object-contain rounded-md mt-4 hover:cursor-pointer" />
               </div>
-              <div class="items-center justify-center">
-                <label class="text-center"><strong>{{ SelecteAnggota.imageUsers[1].keterangan }}</strong></label>
+
+              <!-- Gambar kedua -->
+              <div class="flex flex-col items-center justify-center text-center">
+                <label><strong>{{ SelecteAnggota.imageUsers[1].keterangan }}</strong></label>
                 <img :src="getFullPathImage(SelecteAnggota.imageUsers[1].imageUrl)" alt=""
-                  class="w-auto h-auto object-contain rounded-md" />
+                  class="w-48 h-48 object-contain rounded-md mt-4 hover:cursor-pointer"
+                  @click="openImagePreview(SelecteAnggota.imageUsers[1].imageUrl)" />
               </div>
             </div>
+
           </div>
-          <div class="mt-6">
-            <button @click="closeModal" class="ml-4 bg-gray-500 text-white px-4 py-2 rounded-md hover:bg-gray-600">
-              Close
-            </button>
-          </div>
+
         </div>
       </div>
     </div>
@@ -275,22 +286,33 @@ export default {
       this.isModalOpen = false;
     },
     async updateStatusAnggota(id, data) {
+      var keterangan = ""
       Swal.fire({
         title: "Info",
-        text: "Apakah Anda Yakin Ingin Merubah Status Anggota?",
+        text: `Apakah Anda Yakin Ingin Merubah Status Anggota ke ${data}?`,
         icon: "warning",
         showCancelButton: true,
         confirmButtonColor: '#22c55e',
         cancelButtonColor: "#d33",
         confirmButtonText: "Ya",
         cancelButtonText: 'Tidak',
-        reverseButtons: false
+        reverseButtons: false,
+        inputPlaceholder: 'Keterangan Status',
+        input: "text",
+        inputValidator: (value) => {
+          if (!value) {
+            return "Harap Mengisi Keterangan Status";
+          }
+          keterangan = value
+        }
+
       }).then(async (result) => {
         if (result.isDenied || !result.isConfirmed || result.isDismissedd) {
           return
         }
         const form = {
-          status: data
+          status: data,
+          keterangan: keterangan
         }
         await api.UpdateStatusAnggota(id, form).then(() => {
           this.$toast.success('Status Berhasil Di-Rubah!')

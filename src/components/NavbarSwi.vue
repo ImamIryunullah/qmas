@@ -19,12 +19,12 @@
                         <ul
                             class="absolute min-w-[150px] bg-white text-black shadow-md rounded-md hidden group-hover:block z-10">
                             <li>
-                                <router-link to="/auth/register-anggota" class="block px-4 py-2 text-sm hover:bg-green-800">
+                                <router-link to="/auth/register-anggota"
+                                    class="block px-4 py-2 text-sm hover:bg-green-800">
                                     Anggota LPKNI</router-link>
                             </li>
                             <li>
-                                <router-link to="/auth/swi/register"
-                                    class="block px-4 py-2 text-sm hover:bg-green-800">
+                                <router-link to="/auth/swi/register" class="block px-4 py-2 text-sm hover:bg-green-800">
                                     Standar Warung Indonesia</router-link>
                             </li>
                         </ul>
@@ -46,7 +46,8 @@
                     </router-link>
                 </li>
                 <li>
-                    <router-link to="/pengaduan" class="text-green-600 hover:text-green-800 flex items-center space-x-2">
+                    <router-link to="/pengaduan"
+                        class="text-green-600 hover:text-green-800 flex items-center space-x-2">
                         <i class="fas fa-exclamation-triangle"></i>
                         <span>Pengaduan</span>
                     </router-link>
@@ -64,7 +65,7 @@
                         <span>Contact</span>
                     </a>
                 </li>
-                                <li class="relative group">
+                <li class="relative group">
                     <button class="text-green-600 hover:text-green-800 flex items-center space-x-2">
                         <i class="fas fa-clipboard-check"></i>
                         <span>Login</span>
@@ -78,8 +79,7 @@
                                     LPKNI</router-link>
                             </li>
                             <li>
-                                <router-link to="/auth/swi/login"
-                                    class="block px-4 py-2 text-sm hover:bg-green-800">
+                                <router-link to="/auth/swi/login" class="block px-4 py-2 text-sm hover:bg-green-800">
                                     Standar Warung Indonesia</router-link>
                             </li>
                         </ul>
@@ -206,7 +206,7 @@ export default {
             isNavbarVisible: true,
             lastScrollY: 0,
             isDropdownOpen: false,
-            isDropdownOpenLogin : false
+            isDropdownOpenLogin: false
         };
     },
     methods: {

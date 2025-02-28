@@ -221,8 +221,9 @@
                         class="text-2xl font-semibold text-gray-700 mb-6 flex items-center justify-start sm:justify-center md:justify-start">
                         <!-- Font Awesome Icon for Photo -->
                         <i class="fas fa-camera text-gray-600 mr-3"></i>
-                        Foto
+                        Foto Dan Dokumen
                     </h2>
+
                     <!-- Grid Layout for Images -->
                     <div class="grid gap-2 grid-cols-1 sm:grid-cols-2 lg:grid-cols-3 ">
                         <!-- First Image Block -->
@@ -257,6 +258,16 @@
                                 </p>
                             </div>
                         </div>
+                        <div class="flex flex-col items-center">
+                            <div class="bg bg-red-500 w-32 p-1 rounded-md">
+
+                                <button @click="downloadFile()"
+                                    class="w-full px-1 text-white font-semibold rounded-md hover:bg-red-600 transition duration-200">
+                                    Download AD ART
+                                </button>
+                            </div>
+                        </div>
+
                     </div>
                 </div>
                 <!-- Informasi Kegiatan -->
@@ -340,17 +351,10 @@
                         <i class="	fas fa-calendar-alt text-gray-600 mr-3"></i>
                         Data Kegitan {{ data_anggota.nama_lengkap }}
                     </h2>
-                    <div v-if="KegiatanAnggota">
-                        <div v-for="(Kegiatan) in KegiatanAnggota" :key="Kegiatan.id"
+                    <div v-if="kegiatanAnggota">
+                        <div v-for="(Kegiatan) in kegiatanAnggota" :key="Kegiatan.id"
                             class="grid grid-cols-1 gap-4 sm:grid-cols-2 md:grid-cols-3 lg:grid-cols-6">
 
-                            <!-- Metode Pembayaran -->
-                            <div class="">
-                                <div class="text-sm font-medium text-gray-600">Nama Kegiatan:</div>
-                                <div class="text-lg text-gray-800 font-semibold">{{ Kegiatan.nama }}</div>
-                            </div>
-
-                            <!-- Vendor Pembayaran -->
                             <div class="">
                                 <div class="text-sm font-medium text-gray-600">Judul Kegiatan:</div>
                                 <div class="text-lg text-gray-800 font-semibold">{{ Kegiatan.judul }}</div>
@@ -358,9 +362,35 @@
 
                             <div class="">
                                 <div class="text-sm font-medium text-gray-600">Deskripsi Kegiatan :</div>
+                                <div class="text-lg text-gray-800 font-semibold">
+                                    {{ Kegiatan.deskripsi }}
+                                </div>
+                            </div>
+
+                            <div class="">
+                                <div class="text-sm font-medium text-gray-600">Tangal Kegiatan :</div>
                                 <div class="text-lg text-gray-800 font-semibold">{{
-                                    Kegiatan.deskripsi
+                                    Kegiatan.tanggal.split('T')[0]
                                     }}</div>
+                            </div>
+                            <div class="flex flex-col items-center ">
+                                <div class="text-sm font-medium text-gray-600">Bukti Kegiatan:</div>
+                                <div v-if="Kegiatan.media" class=" flex flex-col items-center">
+                                    <div v-for="media in Kegiatan.media" :key="media.id"
+                                        class="w-48 h-32 overflow-hidden rounded-lg border-2 border-gray-300 mb-2">
+                                        <img :src="getFullpathImage(media.imageUrl)" alt="Foto Bukti Pembayaran"
+                                            class="w-full h-full object-cover transition-transform duration-300 transform hover:scale-105"
+                                            @click="openLightboxKegiatan(media.imageUrl)" />
+                                    </div>
+                                </div>
+                                <div v-else>
+                                    <label class="text-gray-500">Gambar Tidak Tersedia</label>
+                                </div>
+                            </div>
+                            <div class="">
+                                <div class="text-sm font-medium text-gray-600">Aksi :</div>
+                                <button @click="deleteKegiatanAnggota(Kegiatan.id)"
+                                    class="bg-red-600 items-center text-white font-semibold justify-center rounded-md  w-20 h-20">Hapus</button>
                             </div>
                         </div>
                     </div>
@@ -424,13 +454,8 @@ export default {
                 nama_belakang: "",
                 role: ""
             },
-
-            kegiatan: {
-                nama: "",
-                judul: "",
-                deskripsi: "",
-            },
-
+            kegiatanAnggota: [{ judul: '', deskripsi: '', tanggal: '', media: [{ imageUrl: '', deskripsi: '' }] }],
+            FotoKegiatan: [],
             imageUrls: [],
             lightboxVisible: false,
             lightboxIndex: 0,
@@ -445,15 +470,6 @@ export default {
             return this.$store.state.storeLpkni.userLpkni.data_anggota.status;// if GetgetUserStatusLpkni === SUCCESS
         },
 
-    },
-    watch: {
-        getUserStatusLpkni(newStatus) {
-            if (newStatus === "SUCCESS") {
-                this.showSuccessModal = true;
-            } else {
-                this.showSuccessModal = false;
-            }
-        },
     },
 
     mounted() {
@@ -481,19 +497,77 @@ export default {
         });
     },
     methods: {
-        formatTanggal(tanggal) {
-            // Mengonversi tanggal yang diberikan menjadi objek Date
-            const [day, month, year] = tanggal.split('/');  // Memisahkan berdasarkan '/' (tanggal, bulan, tahun)
-            const formattedDate = new Date(year, month - 1, day); // Membuat objek Date
+        getTruncatedDescription(text, karakter) {
+            if (text.length > karakter) {
+                return text.slice(0, karakter) + '...'; // Menambahkan elipsis (...) jika lebih dari 200 karakter
+            }
+            return text;
+        },
+        async deleteKegiatanAnggota(id) {
+            Swal.fire({
+                title: "Informasi",
+                text: 'Apakah Anda Yakin Ingin Menghapus Kegiatan Ini?',
+                showDenyButton: true,
+                confirmButtonText: "Ya",
+                reverseButtons: false,
+                denyButtonText: `Tidak`,
+                confirmButtonColor: '#22c55e',
+                icon: 'info',
 
-            // Menggunakan toLocaleDateString untuk format YYYY-MM-DD
-            return formattedDate.toISOString().split('T')[0];  // Mengambil hanya bagian tanggal
+            }).then(async (result) => {
+                if (result.isDenied || !result.isConfirmed || result.isDismissed) {
+                    return
+                }
+                await api.DeleteKegiatan(id).then(() => {
+                    Swal.fire({
+                        icon: 'success',
+                        title: 'Berhasil!',
+                        text: 'berhasil Menghapus Kegiatan Anda!'
+                    })
+                    setTimeout(() => {
+                        window.location.reload()
+                    }, 1000);
+
+                }).catch(() => {
+                    Swal.fire({
+                        icon: 'error',
+                        title: 'Gagal!',
+                        text: 'Gagal Menghapus Kegiatan Anda!'
+                    })
+                })
+            })
+        },
+        async downloadFile() {
+            const fileUrl = "http://192.168.10.2:3000/assets/adart.pdf";
+            try {
+                const response = await fetch(fileUrl);
+                if (!response.ok) {
+                    throw new Error("Failed to fetch file");
+                }
+                const blob = await response.blob();
+                const link = document.createElement('a');
+                link.href = URL.createObjectURL(blob);
+                link.download = "adart.pdf";
+                link.click();
+            } catch (error) {
+                console.error("Gagal mengunduh file:", error);
+            }
+        },
+        formatTanggal(tanggal) {
+            const [day, month, year] = tanggal.split('/');
+            const formattedDate = new Date(year, month - 1, day);
+            return formattedDate.toISOString().split('T')[0];
         },
         formatRupiah(angka) {
             if (typeof angka !== 'number' || isNaN(angka)) {
                 return 'nilai tidak valid';
             }
             return "Rp " + angka.toLocaleString('id-ID');
+        },
+        openLightboxKegiatan(url) {
+            this.lightboxVisible = true; // Menampilkan lightbox
+            // this.lightboxIndex = index;
+            this.imageUrls = api.getfullpathImage(url)
         },
         openLightbox(index) {
             this.lightboxIndex = index;
@@ -511,7 +585,8 @@ export default {
                 this.user = userData.user
                 this.data_anggota = userData.data_anggota
                 this.transaksiAnggota = userData.data_anggota.transaksiAnggota
-                console.log(this.transaksiAnggota)
+                this.kegiatanAnggota = userData.data_anggota.kegiatanAnggota
+                console.log(this.kegiatanAnggota)
             } catch (error) {
                 console.log(error)
             }

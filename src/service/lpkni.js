@@ -6,7 +6,14 @@ const API = axios.create({
   withCredentials: true,
 });
 
+const Image = axios.create({
+  baseURL: IMG,
+  withCredentials: true,
+});
 export default {
+  DownloadImage(url) {
+    return Image.get(url, { responseType: "blob" });
+  },
   /*Pengaduan*/
   CreatePengaduanKonsumen(data) {
     return API.post("/pengaduan/konsumen", data, {
@@ -26,12 +33,28 @@ export default {
       headers: { "Content-Type": "multipart/form-data" },
     });
   },
-
+  CreateKegiatanAnggota(data) {
+    return API.post("/kegiatan-anggota", data, {
+      headers: { "Content-Type": "multipart/form-data" },
+    });
+  },
+  getAllKegiatanAnggotaa() {
+    return API.get("/kegiatan-anggota");
+  },
+  DeleteKegiatan(id) {
+    return API.delete(`/kegiatan-anggota/${id}`);
+  },
   getAllSuaraKonsumen() {
     return API.get("/berita");
   },
   getAllSuaraKonsumenPublish() {
     return API.get("/berita/publish");
+  },
+  getAllSuaraKonsumenPublishBywilayahID(id) {
+    return API.get(`/berita/wilayah/${id}`);
+  },
+  getSuaraKonsumenterbaru() {
+    return API.get("/berita-terbaru");
   },
   getSuaraKonsumenByid(id) {
     return API.get(`/berita/${id}`);

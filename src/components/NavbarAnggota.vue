@@ -109,7 +109,6 @@ export default {
   methods: {
     toggleSidebar() {
       this.isSidebarOpen = !this.isSidebarOpen;
-      this.$route.pat
     },
     goToProfile() {
       this.$router.push("/anggota/profile");

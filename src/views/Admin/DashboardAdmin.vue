@@ -55,7 +55,9 @@ export default {
         { title: "Total Pendaftaran Disetujui", total: "15", icon: "fas fa-check-circle", bgColor: "bg-blue-500", link: '/admin/data-pendaftaran-anggota' },
         { title: "Total Pengaduan", total: "3", icon: "fas fa-exclamation-triangle", bgColor: "bg-purple-500", link: '/admin/data-pengaduan' },
         // { title: "Tim Pusat", total: "15", icon: "fas fa-users", bgColor: "bg-red-400", link: '/admin/data-pendaftaran-anggota' },
+        { title: "Data Transaksi", total: "13", icon: "fas fa-wallet", bgColor: "bg-gray-900", link: '/admin/data-pendaftaran-anggota' },
         { title: "Data Transaksi", total: "13", icon: "fas fa-wallet", bgColor: "bg-gray-900", link: '/admin/data-pendaftaran-anggota' }
+
       ],
       listDataAnggota: [] // To store the list of members
     }

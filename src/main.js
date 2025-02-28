@@ -11,6 +11,8 @@ import ToastPlugin from "vue-toast-notification";
 import "vue-toast-notification/dist/theme-bootstrap.css";
 import VueEasyLightbox from "vue-easy-lightbox";
 import Vue3SocialSharingPlugin from "vue3-social-sharing";
+import "font-awesome/css/font-awesome.min.css";
+
 createApp(App)
   .use(store)
   .use(router)

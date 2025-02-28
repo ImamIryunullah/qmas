@@ -93,15 +93,17 @@
                     <div>
                         <div v-for="(image, index) in imageInputs" :key="index" class="flex flex-col space-y-2 mb-4">
                             <div class="flex flex-col sm:flex-row items-center justify-between w-full">
-                                <label class="block text-sm font-semibold w-full sm:w-1/3 text-left"
-                                    :class="index === 0 ? 'text-red-700' : 'text-gray-500'">
+                                <label class="block text-sm font-semibold w-full sm:w-1/3 text-left text-red-500">
                                     Lampiran Gambar {{ index + 1 }}
                                     <span v-if="index > 0" class="text-gray-400 text-xs">(Opsional)</span>
                                 </label>
-                                <input :required="index === 0" type="file" @change="handleFileUpload($event, index)"
+                                <input type="file" @change="handleFileUpload($event, index)"
                                     class="input-field w-full sm:w-2/3" />
                             </div>
-                            <p class="text-xs text-gray-500 mt-1">Max: 3MB | Format: jpg, jpeg, png</p>
+                            <p class="text-xs font-semibold text-red-500 mt-1">*Max: 3MB | Format: jpg, jpeg, png</p>
+                            <p class="text-xs font-semibold text-red-500 mt-1">*Untuk Menghapus gambar, Silahkan Merubah
+                                Keterangan,
+                                Kemudian Upload Foto Baru</p>
                             <div class="flex flex-col items-end">
                                 <label v-if="imageUsers[index]"
                                     class="block text-center font-semibold text-red-700 text-sm w-full sm:w-auto">Gambar
@@ -110,6 +112,8 @@
                                 <img v-if="imageUsers[index]" :src="imageUsers[index]" alt="uploaded"
                                     @click="openLightbox(index)"
                                     class="w-40 h-auto object-contain rounded-lg shadow-md mt-2">
+                                <p class=" text-red-500 mt-1 text-1xl font-semibold">*Keterangan Gambar {{ index + 1 }}
+                                </p>
                                 <input v-if="imageUsers[index]" v-model="form.keterangan[index]" type="text"
                                     placeholder="Masukkan keterangan" required
                                     class="input-field w-full sm:w-2/3 mt-2 p-2 border border-gray-300 rounded-lg shadow-sm" />
@@ -189,6 +193,9 @@ export default {
         }
     },
     methods: {
+        getfullpathImage(img) {
+            return api.getfullpathImage(img)
+        },
         handleFileUpload(event, index) {
             const file = event.target.files[0];
             if (!file) {
@@ -254,8 +261,12 @@ export default {
                 this.DataBerita = res.data
                 console.log(this.DataBerita)
                 this.form = this.DataBerita
+                this.imageInputs = this.DataBerita.media ? this.DataBerita.media.map(item => this.getfullpathImage(item.imageUrl)) : this.imageInputs = [
+                    { keterangan: "", required: true },
+                ],
+                    this.imageUsers = this.DataBerita.media ? this.DataBerita.media.map(item => this.getfullpathImage(item.imageUrl)) : []
                 this.form.file = []
-                this.form.keterangan = []
+                this.form.keterangan = this.DataBerita.media ? this.DataBerita.media.map(item => item.deskripsi) : []
                 this.form.tanggal = this.form.tanggal.split('T')[0]
                 this.GetDaerahByWilayahId(this.DataBerita.wilayahId)
 
@@ -281,4 +292,12 @@ export default {
 
 <style scoped>
 /* Add custom styles if needed */
+.input-field {
+    padding: 0.5rem;
+    border: 1px solid #ddd;
+    border-radius: 0.375rem;
+    font-size: 1rem;
+    outline: none;
+    transition: border-color 0.3s;
+}
 </style>

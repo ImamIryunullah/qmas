@@ -1,48 +1,62 @@
 import { createRouter, createWebHistory } from "vue-router";
 import store from "@/store/store";
 /* Import Views */
-import SuaraKonsumenView from "@/views/SuaraKonsumen/SuaraKonsumenView.vue";
-import DetailSuaraKonsumenView from "@/views/SuaraKonsumen/DetailSuaraKonsumenView.vue";
-import KategoriView from "@/views/SuaraKonsumen/KategoriView.vue";
+const SuaraKonsumenView = () =>
+  import("@/views/SuaraKonsumen/SuaraKonsumenView.vue");
+const DetailSuaraKonsumenView = () =>
+  import("@/views/SuaraKonsumen/DetailSuaraKonsumenView.vue");
+const KategoriView = () => import("@/views/SuaraKonsumen/KategoriView.vue");
 /* Auth LPKNI */
-import LoginView from "@/views/Auth-LPKNI/LoginView.vue";
-import SignUpView from "@/views/Auth-LPKNI/SignUpView.vue";
-import ForgotPasswordView from "@/views/Auth-LPKNI/ForgotPasswordView.vue";
-import RequestResetPassword from "@/views/Auth-LPKNI/RequestResetPassword.vue";
+const LoginView = () => import("@/views/Auth-LPKNI/LoginView.vue");
+const SignUpView = () => import("@/views/Auth-LPKNI/SignUpView.vue");
+const ForgotPasswordView = () =>
+  import("@/views/Auth-LPKNI/ForgotPasswordView.vue");
+const RequestResetPassword = () =>
+  import("@/views/Auth-LPKNI/RequestResetPassword.vue");
 
 /* LPNI */
-import Dashboard from "@/views/Lpkni/LandingPage.vue";
+const Dashboard = () => import("@/views/Lpkni/LandingPage.vue");
 /* Anggota */
-import FormPengaduan from "@/views/Lpkni/FormPengaduan.vue";
-import ProfileAnggotaView from "@/views/Anggota/ProfileAnggotaView.vue";
-import PendaftaranAnggotaView from "@/views/Anggota/FormDataAnggotaView.vue";
-import DashboardAnggota from "@/views/Anggota/DashboardAnggota.vue";
-import FormPengaduanAnggotaView from "@/views/Anggota/FormPengaduanAnggotaView.vue";
-import PembayaranAnggotaView from "@/views/Anggota/PembayaranAnggotaView.vue";
-import IdCardAnggotaView from "@/views/Anggota/IdCardAnggotaView.vue";
-import UploadKegiatan from "@/views/Anggota/UploadKegiatan.vue";
+const FormPengaduan = () => import("@/views/Lpkni/FormPengaduan.vue");
+const ProfileAnggotaView = () =>
+  import("@/views/Anggota/ProfileAnggotaView.vue");
+const PendaftaranAnggotaView = () =>
+  import("@/views/Anggota/FormDataAnggotaView.vue");
+const DashboardAnggota = () => import("@/views/Anggota/DashboardAnggota.vue");
+const FormPengaduanAnggotaView = () =>
+  import("@/views/Anggota/FormPengaduanAnggotaView.vue");
+const PembayaranAnggotaView = () =>
+  import("@/views/Anggota/PembayaranAnggotaView.vue");
+const IdCardAnggotaView = () => import("@/views/Anggota/IdCardAnggotaView.vue");
+const UploadKegiatan = () => import("@/views/Anggota/UploadKegiatan.vue");
 /* Admin */
-import DataPendaftaranAnggota from "@/views/Admin/DataPendaftaranAnggota.vue";
-import DashboardAdmin from "@/views/Admin/DashboardAdmin.vue";
-import DataPembayaran from "@/views/Admin/DataPembayaran.vue";
-import DataPengaduanAdmin from "@/views/Admin/DataPengaduanAdmin.vue";
-import ManagementJabatan from "@/views/Admin/ManagementJabatan.vue";
-import TambahSuaraKonsumen from "@/views/Admin/TambahSuaraKonsumen.vue";
-import KegiatanAnggotaAdmin from "@/views/Admin/KegiatanAnggotaAdmin.vue";
+const DataPendaftaranAnggota = () =>
+  import("@/views/Admin/DataPendaftaranAnggota.vue");
+const DashboardAdmin = () => import("@/views/Admin/DashboardAdmin.vue");
+const DataPembayaran = () => import("@/views/Admin/DataPembayaran.vue");
+const DataPengaduanAdmin = () => import("@/views/Admin/DataPengaduanAdmin.vue");
+const ManagementJabatan = () => import("@/views/Admin/ManagementJabatan.vue");
+const TambahSuaraKonsumen = () =>
+  import("@/views/Admin/TambahSuaraKonsumen.vue");
+const KegiatanAnggotaAdmin = () =>
+  import("@/views/Admin/KegiatanAnggotaAdmin.vue");
 /* Tanpa Role Suara Konsumen */
-import LoginSwiView from "@/views/Auth-Swi/LoginSwiView.vue";
-import SignUpSwiView from "@/views/Auth-Swi/SignUpSwiView.vue";
-import RequestResetPasswordSwi from "@/views/Auth-Swi/RequestResetPasswordSwi.vue";
-import ForgotPasswordSwiView from "@/views/Auth-Swi/ForgotPasswordSwiView.vue";
-import DataDiriKonsumen from "@/views/swi/DataDiriKonsumen.vue";
-import KelayakanWarung from "@/views/swi/KelayakanWarung.vue";
-import DashboardSwi from "@/views/swi/DashboardSwi.vue";
-import MaintenanceView from "@/views/maintenanceView.vue";
-import PengaduanSwi from "@/views/swi/PengaduanSwi.vue";
-import CetakSertifikatSwi from "@/views/swi/CetakSertifikatSwi.vue";
-import PembayaranSwi from "@/views/swi/PembayaranSwi.vue";
-import EditSuaraKonsumen from "@/views/Admin/EditSuaraKonsumen.vue";
-import DaftarSuaraKonsumen from "@/views/Admin/DaftarSuaraKonsumen.vue";
+const LoginSwiView = () => import("@/views/Auth-Swi/LoginSwiView.vue");
+const SignUpSwiView = () => import("@/views/Auth-Swi/SignUpSwiView.vue");
+const RequestResetPasswordSwi = () =>
+  import("@/views/Auth-Swi/RequestResetPasswordSwi.vue");
+const ForgotPasswordSwiView = () =>
+  import("@/views/Auth-Swi/ForgotPasswordSwiView.vue");
+const DataDiriKonsumen = () => import("@/views/swi/DataDiriKonsumen.vue");
+const KelayakanWarung = () => import("@/views/swi/KelayakanWarung.vue");
+const DashboardSwi = () => import("@/views/swi/DashboardSwi.vue");
+const MaintenanceView = () => import("@/views/maintenanceView.vue");
+const PengaduanSwi = () => import("@/views/swi/PengaduanSwi.vue");
+const CetakSertifikatSwi = () => import("@/views/swi/CetakSertifikatSwi.vue");
+const PembayaranSwi = () => import("@/views/swi/PembayaranSwi.vue");
+const EditSuaraKonsumen = () => import("@/views/Admin/EditSuaraKonsumen.vue");
+const DaftarSuaraKonsumen = () =>
+  import("@/views/Admin/DaftarSuaraKonsumen.vue");
 
 const routes = [
   {
@@ -62,7 +76,7 @@ const routes = [
     component: DetailSuaraKonsumenView,
   },
   {
-    path: "/suara-konsumen/kategori/:kategori",
+    path: "/suara-konsumen/wilayah/:wilayahid",
     name: "Kategori Suara Konsumen",
     component: KategoriView,
   },
@@ -358,7 +372,28 @@ const routes = [
 const router = createRouter({
   history: createWebHistory(process.env.BASE_URL),
   routes,
+  scrollBehavior() {
+    // Fungsi untuk scroll ke atas dengan smooth scrolling
+    window.scrollTo({
+      top: 0,
+      behavior: "smooth",
+    });
+    return { top: 0 };
+  },
 });
+
+// const router = createRouter({
+//   history: createWebHistory(process.env.BASE_URL),
+//   routes,
+//   scrollBehavior(to, from, savedPosition) {
+//     // Jika ada savedPosition (misalnya dari tombol 'back' browser), gunakan posisi tersebut
+//     if (savedPosition) {
+//       return savedPosition;
+//     }
+//     // Secara default, scroll ke atas
+//     return { top: 0 };
+//   },
+// });
 
 router.beforeEach(async (to, from, next) => {
   var isAuthenticated = null;

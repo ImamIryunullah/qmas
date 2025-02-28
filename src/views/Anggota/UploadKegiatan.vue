@@ -38,6 +38,12 @@
                                 class="input-field w-full sm:w-2/3" placeholder="Jelaskan Kegiatan Anda"
                                 rows="4"></textarea>
                         </div>
+                        <div class="flex flex-col sm:flex-row items-center space-x-4 mb-4">
+                            <label for="deskripsi"
+                                class="block text-sm font-semibold text-red-700 w-full sm:w-1/3">Tanggal Kegiatan
+                            </label>
+                            <input type="date" class="input-field w-full sm:w-2/3" v-model="form.tanggal">
+                        </div>
                         <div>
                             <div v-for="(image, index) in imageInputs" :key="index"
                                 class="flex flex-col space-y-2 mb-4">
@@ -61,7 +67,7 @@
                                         @click="openLightbox(index)"
                                         class="w-40 h-auto object-contain rounded-lg shadow-md mt-2">
                                     <input v-if="imageUsers[index]" v-model="form.keterangan[index]" type="text"
-                                        placeholder="Masukkan keterangan"
+                                        placeholder="Masukkan keterangan" required
                                         class="input-field w-full sm:w-2/3 mt-2 p-2 border border-gray-300 rounded-lg shadow-sm" />
                                 </div>
                             </div>
@@ -100,7 +106,7 @@ export default {
             form: {
                 judul: '',
                 deskripsi: '',
-
+                tanggal: '',
                 file: [],
                 keterangan: []
             },
@@ -118,27 +124,83 @@ export default {
         this.isMounted = true;
     },
     methods: {
+        handleFileUpload(event, index) {
+            const file = event.target.files[0];
+            if (!file) {
+                Swal.fire({
+                    icon: 'error',
+                    title: 'Tidak ada file yang dipilih!',
+                    text: 'Silakan pilih file untuk diunggah.',
+                });
+                return;
+            }
+            // Validasi ukuran file
+            var sizeInMb = file.size / 1024;
+            var sizeLimit = 1024 * 5;
+            if (sizeInMb > sizeLimit) {
+                Swal.fire({
+                    icon: 'error',
+                    title: 'Ukuran Gambar Terlalu Besar',
+                    text: 'Ukuran Gambar Terlalu Besar, Maksimal 5 MB',
+                });
+                return;
+            }
+            // Validasi tipe file (hanya gambar)
+            const allowedTypes = ['image/jpeg', 'image/png', 'image/jpg'];
+            if (!allowedTypes.includes(file.type)) {
+                Swal.fire({
+                    icon: 'error',
+                    title: 'Format File Tidak Didukung',
+                    text: 'Gunakan File Png, Jpg, atau Jpeg',
+                });
+                return;
+            }
+
+            if (file) {
+                this.form.file[index] = file
+                this.imageUsers[index] = URL.createObjectURL(file);
+                if (this.imageUsers[index] && !this.lastIndexImage[index]) {
+                    this.imageInputs.push({ keterangan: "", required: false })
+                    this.lastIndexImage[index] = true
+                }
+            }
+        },
         openLightbox(index) {
             this.lightboxVisible = true;
             this.lightboxIndex = index;
         },
         async submitForm() {
-            await lpkni.CreatePengaduanAnggota(this.form).then(() => {
-                Swal.fire({
-                    icon: 'success',
-                    title: 'Berhasil Mengirim Kegiatan',
-                    text: 'Kegiatan Anda telah berhasil dikirim.',
-                });
-                this.resetForm(); // Reset form setelah upload
-                setTimeout(() => {
-                    window.location.reload();
-                }, 1000);
-            }).catch(() => {
-                Swal.fire({
-                    icon: 'error',
-                    title: 'Gagal Mengirim Kegiatan',
-                    text: 'Terdapat kesalahan saat mengirim Kegiatan.',
-                });
+            Swal.fire({
+                title: "Informasi",
+                text: 'Apakah Anda Yakin Data Sudah Benar?',
+                showDenyButton: true,
+                confirmButtonText: "Ya",
+                reverseButtons: false,
+                denyButtonText: `Tidak`,
+                confirmButtonColor: '#22c55e',
+                icon: 'info',
+
+            }).then(async (result) => {
+                if (result.isDenied || !result.isConfirmed || result.isDismissed) {
+                    return
+                }
+                await lpkni.CreateKegiatanAnggota(this.form).then(() => {
+                    Swal.fire({
+                        icon: 'success',
+                        title: 'Berhasil Mengirim Kegiatan',
+                        text: 'Kegiatan Anda telah berhasil dikirim.',
+                    });
+                    // this.resetForm();
+                    setTimeout(() => {
+                        window.location.reload();
+                    }, 1000);
+                }).catch(() => {
+                    Swal.fire({
+                        icon: 'error',
+                        title: 'Gagal Mengirim Kegiatan',
+                        text: 'Terdapat kesalahan saat mengirim Kegiatan.',
+                    });
+                })
             })
         },
         resetForm() {

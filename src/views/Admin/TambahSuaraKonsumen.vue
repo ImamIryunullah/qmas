@@ -247,16 +247,30 @@ export default {
             })
         },
         async TambahBerita() {
-            console.log(this.form)
-            api.CreateSuaraKonsumenAdmin(this.form).then(() => {
-                this.$toast.success('Suara Konsumen Berhasil Di Tambahkan')
-                setTimeout(() => {
-                    window.location.reload()
-                }, 1000);
-            }).catch(() => {
-                this.$toast.error('Suara Konsumen gagal Di Tambahkan')
-            })
+            Swal.fire({
+                title: "Informasi",
+                text: 'Apakah Anda Yakin Ingin Semuanya Sudah Benar?',
+                showDenyButton: true,
+                confirmButtonText: "Ya",
+                reverseButtons: false,
+                denyButtonText: `Tidak`,
+                confirmButtonColor: '#22c55e',
+                icon: 'info',
 
+            }).then(async (result) => {
+                if (result.isDenied || !result.isConfirmed || result.isDismissed) {
+                    return
+                }
+                console.log(this.form)
+                api.CreateSuaraKonsumenAdmin(this.form).then(() => {
+                    this.$toast.success('Suara Konsumen Berhasil Di Tambahkan')
+                    setTimeout(() => {
+                        window.location.reload()
+                    }, 1000);
+                }).catch(() => {
+                    this.$toast.error('Suara Konsumen gagal Di Tambahkan')
+                })
+            })
         },
     },
 };

@@ -41,7 +41,7 @@
                 <li class="relative group">
                     <button class="text-white hover:text-gray-300 flex items-center space-x-2">
                         <i class="fas fa-clipboard-check"></i>
-                        <span>Login</span>
+                        <span>Masuk</span>
                         <i class="fas fa-chevron-down ml-1"></i>
                     </button>
                     <div class="">
@@ -75,20 +75,20 @@
                 <li>
                     <a href="/#services" class="text-white hover:text-gray-300 flex items-center space-x-2">
                         <i class="fas fa-cogs"></i>
-                        <span>Services</span>
+                        <span>Layanan</span>
                     </a>
                 </li>
                 <li>
                     <a href="/#about" class="text-white hover:text-gray-300 flex items-center space-x-2">
                         <i class="fas fa-info-circle"></i>
-                        <span>About</span>
+                        <span>Tentang</span>
                     </a>
                 </li>
 
                 <li>
                     <a href="/#contact" class="text-white hover:text-gray-300 flex items-center space-x-2">
                         <i class="fas fa-phone-alt"></i>
-                        <span>Contact</span>
+                        <span>Kontak</span>
                     </a>
                 </li>
             </ul>
@@ -112,19 +112,19 @@
                 <li>
                     <a href="/#about" class="flex items-center space-x-2 hover:text-gray-300">
                         <i class="fas fa-info-circle w-5 h-5"></i>
-                        <span>About</span>
+                        <span>Tentang</span>
                     </a>
                 </li>
                 <li>
                     <a href="/#services" class="flex items-center space-x-2 hover:text-gray-300">
                         <i class="fas fa-cogs w-5 h-5"></i>
-                        <span>Services</span>
+                        <span>Layanan</span>
                     </a>
                 </li>
                 <li>
                     <a href="/#contact" class="flex items-center space-x-2 hover:text-gray-300">
                         <i class="fas fa-phone-alt w-5 h-5"></i>
-                        <span>Contact</span>
+                        <span>Kontak</span>
                     </a>
                 </li>
                 <li class="relative">
@@ -145,6 +145,27 @@
                         <li>
                             <router-link to="/auth/swi/register"
                                 class="block px-4 py-2 text-sm hover:bg-gray-200">Standar Warung Indonesia</router-link>
+                        </li>
+                    </ul>
+                </li>
+                <li class="relative">
+                    <button @click="toggleDropdownLogin"
+                        class="flex items-center w-full justify-between hover:text-gray-300">
+                        <div class="flex items-center space-x-2">
+                            <i class="fas fa-clipboard-check w-5 h-5"></i>
+                            <span>Masuk</span>
+                        </div>
+                        <i class="fas fa-chevron-down w-5 h-5 transition-transform"
+                            :class="{ 'rotate-180': isDropdownOpenLogin }"></i>
+                    </button>
+                    <ul v-show="isDropdownOpenLogin" class="mt-2 bg-white text-black rounded shadow-lg overflow-hidden">
+                        <li>
+                            <router-link to="/auth/login"
+                                class="block px-4 py-2 text-sm hover:bg-gray-200">LPKNI</router-link>
+                        </li>
+                        <li>
+                            <router-link to="/auth/swi/login" class="block px-4 py-2 text-sm hover:bg-gray-200">Standar
+                                Warung Indonesia</router-link>
                         </li>
                     </ul>
                 </li>
@@ -173,6 +194,7 @@ export default {
             isNavbarVisible: true,
             lastScrollY: 0,
             isDropdownOpen: false,
+            isDropdownOpenLogin: false
         };
     },
     methods: {
@@ -181,6 +203,9 @@ export default {
         },
         toggleDropdown() {
             this.isDropdownOpen = !this.isDropdownOpen; // Toggle dropdown visibility
+        },
+        toggleDropdownLogin() {
+            this.isDropdownOpenLogin = !this.isDropdownOpenLogin; // Toggle dropdown visibility
         },
         handleScroll() {
             const currentScrollY = window.scrollY;
@@ -229,18 +254,18 @@ export default {
 /* Small tablets (like iPad portrait) */
 @media (min-width: 481px) and (max-width: 768px) {
     .text-2xl {
-        font-size: 1.5rem;
+        font-size: 1rem;
         /* Adjust font size for tablets */
     }
 
     .text-3xl {
-        font-size: 2rem;
+        font-size: 1rem;
         /* Adjust for iPad screens */
     }
 
     .container {
-        padding-left: 1.5rem;
-        padding-right: 1.5rem;
+        padding-left: 1rem;
+        padding-right: 1rem;
     }
 }
 
@@ -277,6 +302,137 @@ export default {
     .container {
         padding-left: 2.5rem;
         padding-right: 2.5rem;
+    }
+}
+
+/* Styles for screens smaller than 768px (tablet) */
+@media (max-width: 768px) {
+
+    /* Make the navbar text even smaller */
+    header .text-white {
+        font-size: 0.75rem;
+        /* Smaller font size */
+        /* Adjust font size further */
+    }
+
+    /* Make icons smaller */
+    header i {
+        font-size: 1rem;
+        /* Further reduce icon size */
+        /* Smaller icon size for tablet */
+    }
+
+    /* Adjust navbar items for smaller screens */
+    header .container {
+        padding: 0 10px;
+        /* Reduce padding even more */
+        /* Smaller padding to fit more content */
+    }
+
+    /* Adjust mobile menu button */
+    .block.md\:hidden button {
+        font-size: 1.125rem;
+        /* Slightly smaller hamburger button */
+        /* A little smaller font size for mobile */
+    }
+
+    /* Adjust dropdown menu for smaller tablets */
+    header .md\:hidden .space-x-6 {
+        flex-direction: column;
+        /* Stack navbar items vertically */
+        /* Stack items to fit better */
+    }
+
+    /* Adjust the dropdown menu for mobile/tablets */
+    .md\:hidden .w-64 {
+        width: 100%;
+        /* Ensure the dropdown fills the screen width */
+        /* Full-width dropdown on smaller screens */
+    }
+
+    /* Adjust the button sizes */
+    header button {
+        padding: 4px 8px;
+        /* Make the button smaller */
+        /* Reduce the button padding */
+    }
+}
+
+
+/* Styles for screens smaller than 820px */
+@media (max-width: 820px) {
+    header .text-white {
+        font-size: 0.300rem;
+        /* Smaller font size */
+        /* Even smaller font size for better fit on small screens */
+    }
+
+    /* Make icons even smaller */
+    header i {
+        font-size: 0.250rem;
+        /* Smaller icon size */
+        /* Further reduced icon size */
+    }
+
+    /* Adjust navbar items for smaller screens */
+    header .container {
+        padding: 0 5px;
+        /* Reduce padding more */
+        /* Even less padding to utilize space efficiently */
+    }
+
+    /* Adjust mobile menu button */
+    .block.md\:hidden button {
+        font-size: 0.2rem;
+        /* Make hamburger button smaller */
+        /* Smaller font size for the mobile hamburger button */
+    }
+
+    /* Adjust dropdown menu for smaller screens */
+    header .md\:hidden .space-x-6 {
+        flex-direction: column;
+        /* Stack navbar items vertically */
+        /* Make sure items stack properly */
+    }
+
+    /* Adjust the dropdown menu for mobile/tablets */
+    .md\:hidden .w-64 {
+        width: 100%;
+        /* Ensure full-width for dropdown */
+    }
+
+    /* Adjust button spacing and padding */
+    header button {
+        padding: 4px 10px;
+        /* Reduce padding to make the buttons more compact */
+        /* Smaller button for better mobile use */
+    }
+}
+
+@media (max-width: 1024px) {
+    header .text-white {
+        font-size: 0.875rem;
+    }
+
+    header i {
+        font-size: 1.25rem;
+    }
+
+    header .container {
+        padding: 0 20px;
+
+    }
+
+    .block.md\:hidden button {
+        font-size: 1.25rem;
+    }
+
+    header .md\:hidden .space-x-6 {
+        flex-direction: column;
+    }
+
+    .md\:hidden .w-64 {
+        width: 100%;
     }
 }
 </style>

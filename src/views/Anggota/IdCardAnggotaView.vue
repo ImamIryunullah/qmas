@@ -8,8 +8,8 @@
         <h3 class="text-sm font-semibold text-left mb-4">Jabatan : {{ data_anggota.jabatanStruktural.nama }}</h3>
         <h3 class="text-sm font-semibold text-left mb-4">Tingkat : {{ data_anggota.jabatanStruktural.tingkat }}</h3>
         <div class="w-full h-full" v-if="pdfUrl">
-          <embed :src="pdfUrl" type="" class="w-full h-full">
-          <!-- <iframe :src="pdfUrl" class="w-full h-full" frameborder="0"></iframe> -->
+          <!-- <embed :src="pdfUrl" type="" class="w-full h-full"> -->
+          <iframe loading="lazy" :src="pdfUrl" class="w-full h-full" frameborder="0"></iframe>
         </div>
         <div class="w-full flex items-center justify-center" v-else>
           Harap Tekan Cetak ID Card

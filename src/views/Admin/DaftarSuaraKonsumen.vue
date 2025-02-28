@@ -2,7 +2,7 @@
     <div>
         <NavbarAdmin />
 
-        <div class="bg-gray-100 min-h-screen p-6 ml-11" :class="isSidebarOpen ? 'pl-56' : 'ml-0'">
+        <div class="transition-all bg-gray-100 min-h-screen p-6 ml-11" :class="isSidebarOpen ? 'pl-60' : 'pl-10'">
             <!-- Page Header -->
             <div class="w-auto mx-auto bg-white p-6 md:p-8 rounded-xl shadow-lg">
                 <div class="flex flex-col md:flex-row md:items-center md:justify-between">
@@ -36,7 +36,6 @@
                                 <th class="px-4 py-2 text-center">Deskripsi 2</th>
                                 <th class="px-4 py-2 text-center">Deskripsi 3</th>
                                 <th class="px-4 py-2 text-center">Sudah Di Publish</th>
-
                                 <th class="px-4 py-2 text-center">Aksi</th>
                             </tr>
                         </thead>
@@ -98,9 +97,10 @@
             </div>
 
         </div>
-        <vue-easy-lightbox :visible="lightboxVisible" :imgs="imageUsers" :index="lightboxIndex"
-            @hide="lightboxVisible = false" />
+
     </div>
+    <vue-easy-lightbox :visible="lightboxVisible" :imgs="imageUsers" :index="lightboxIndex"
+        @hide="lightboxVisible = false" />
 </template>
 
 <script>

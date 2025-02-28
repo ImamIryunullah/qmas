@@ -34,7 +34,8 @@
 
             <!-- Right Section (Image) -->
             <div class="md:w-[30%] w-3/4 mt-5 md:mt-0">
-                <img src="@/assets/animasi1.png" alt="LPKNI" class="rounded-lg w-full mx-auto responsive-image" />
+                <img src="@/assets/animasi1.png" loading="lazy" alt="LPKNI"
+                    class="rounded-lg w-full mx-auto responsive-image" />
             </div>
         </section>
         <section id="about" class="py-14 sm:py-16 px-6 bg-red-50 text-center">
@@ -146,16 +147,15 @@
                 </a>
             </div>
 
-
-            <!-- Image Grid with Right Alignment -->
             <div class="grid grid-cols-1 md:grid-cols-2 lg:grid-cols-4 gap-6 h-auto">
-                <div v-for="suaraKonsumen in SuaraKonsumeList" :key="suaraKonsumen.id" class="flex justify-end">
+                <div v-for="suaraKonsumen in SuaraKonsumeList.slice(0, 4)" :key="suaraKonsumen.id"
+                    @click="routingTo(suaraKonsumen.id)" class="flex justify-end">
                     <!-- Image Box -->
                     <div
                         class="bg-gray-100 p-4 rounded-lg shadow-lg hover:shadow-2xl transform transition duration-500 ease-in-out hover:scale-105 w-full">
-                        <img :src="getfullPathImage(suaraKonsumen.media[0].imageUrl)" alt=""
-                            class="rounded-md w-full object-contain transition duration-300 ease-in-out hover:opacity-80 max-h-80">
-                        <h3 class="text-xl font-semibold mt-4 hover:text-red-600 text-left">
+                        <img :src="getfullPathImage(suaraKonsumen.media[0].imageUrl)" alt="" loading="lazy"
+                            class="rounded-md w-full transition duration-300 ease-in-out hover:opacity-80 max-h-52 object-cover">
+                        <h3 class="text-xl font-semibold mt-4 hover:text-red-600 text-left cursor-pointer">
                             {{ suaraKonsumen.judul }}
                         </h3>
                         <p class="text-gray-600 mt-2">
@@ -164,12 +164,10 @@
                     </div>
                 </div>
             </div>
-
         </section>
-
         <section id="services" class="py-20 px-6 bg-red-50">
             <h2 class="text-3xl font-semibold text-center mb-10 animate__animated animate__fadeIn">Layanan Kami</h2>
-            <div class="grid grid-cols-1 md:grid-cols-2 gap-10">
+            <div class="grid grid-cols-1 md:grid-cols-3 gap-10">
                 <!-- Service Card 1 -->
                 <div
                     class="bg-white p-6 rounded-lg shadow-lg transform transition-all duration-300 hover:scale-105 hover:shadow-2xl animate__animated animate__fadeInUp">
@@ -248,7 +246,8 @@
                     Hubungi Kami
                 </h2>
 
-                <p class="text-lg sm:text-xl text-gray-600 mb-8">Have questions or want to learn more? Contact us now!
+                <p class="text-lg sm:text-xl text-gray-600 mb-8">Punya Pertanyaan Atau Ingin Tahu Lebih Lanjut? Kontak
+                    Kami Sekarang!
                 </p>
 
                 <!-- Contact Buttons -->
@@ -287,7 +286,6 @@
                 </div>
             </div>
         </section>
-
         <!-- Footer -->
         <FooterLandingPage />
 
@@ -331,6 +329,9 @@ export default {
         this.getAllBerita()
     },
     methods: {
+        routingTo(id) {
+            this.$router.push(`/suara-konsumen/detail/${id}`)
+        },
         getTruncatedDescription(text, karakter) {
             if (text.length > karakter) {
                 return text.slice(0, karakter) + '...'; // Menambahkan elipsis (...) jika lebih dari 200 karakter
@@ -435,6 +436,167 @@ html {
 @media (max-width: 100px) {
     .responsive-image {
         width: 80%;
+    }
+}
+
+/* Styles for screens below 1024px */
+@media (max-width: 1024px) {
+
+    /* Reduce font size for better fit on tablet screens */
+    header .text-white {
+        font-size: 0.875rem;
+    }
+
+    header i {
+        font-size: 1.25rem;
+    }
+
+    /* Adjust padding and size of navbar container */
+    header .container {
+        padding: 0 20px;
+    }
+
+    /* Reduce size of navbar items and buttons */
+    .block.md\:hidden button {
+        font-size: 1.25rem;
+    }
+
+    header .md\:hidden .space-x-6 {
+        flex-direction: column;
+    }
+
+    .md\:hidden .w-64 {
+        width: 100%;
+    }
+
+    /* Adjust section titles and paragraph spacing */
+    h2 {
+        font-size: 2rem;
+    }
+
+    .text-lg {
+        font-size: 1rem;
+    }
+
+    /* Adjust padding for the content area */
+    .container.mx-auto {
+        padding: 0 20px;
+    }
+
+    /* Adjust image width */
+    .w-full {
+        width: 100%;
+    }
+}
+
+/* Styles for screens below 820px */
+@media (max-width: 820px) {
+    header .text-white {
+        font-size: 0.75rem;
+        /* Even smaller font for mobile */
+    }
+
+    header i {
+        font-size: 1rem;
+    }
+
+    header .container {
+        padding: 0 10px;
+        /* Reduced padding */
+    }
+
+    /* Adjust layout for smaller screens */
+    .block.md\:hidden button {
+        font-size: 1.125rem;
+    }
+
+    /* Adjust spacing and width for sections */
+    section {
+        padding: 12px 6px;
+        /* Smaller padding */
+    }
+
+    h2 {
+        font-size: 1.5rem;
+    }
+
+    .text-lg {
+        font-size: 0.9rem;
+    }
+
+    /* Adjust grid layout for items */
+    .grid-cols-1 {
+        grid-template-columns: 1fr;
+    }
+
+    .grid-cols-2 {
+        grid-template-columns: 1fr;
+    }
+
+    /* Adjust image widths */
+    .w-full {
+        width: 100%;
+    }
+
+    /* Reduce button sizes */
+    .bg-red-600 {
+        padding: 10px 12px;
+    }
+}
+
+/* Styles for screens below 768px */
+@media (max-width: 768px) {
+
+    /* Adjust font sizes even smaller */
+    header .text-white {
+        font-size: 0.625rem;
+        /* Smaller font for small screens */
+    }
+
+    header i {
+        font-size: 0.875rem;
+    }
+
+    /* Adjust container padding */
+    header .container {
+        padding: 0 5px;
+        /* Further reduce padding */
+    }
+
+    /* Adjust buttons and icons */
+    .block.md\:hidden button {
+        font-size: 1rem;
+    }
+
+    section {
+        padding: 10px 4px;
+    }
+
+    h2 {
+        font-size: 1.25rem;
+    }
+
+    .text-lg {
+        font-size: 0.8rem;
+    }
+
+    /* Adjust grid layout */
+    .grid-cols-1 {
+        grid-template-columns: 1fr;
+    }
+
+    .grid-cols-2 {
+        grid-template-columns: 1fr;
+    }
+
+    /* Adjust width of images */
+    .w-full {
+        width: 100%;
+        height: auto;
+    }
+
+    .bg-red-600 {
+        padding: 8px 10px;
     }
 }
 </style>

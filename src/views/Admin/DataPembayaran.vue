@@ -69,7 +69,7 @@
                         </thead>
                         <tbody>
                             <tr v-for="(data, index) in transaksiList" :key="index" class="border-t">
-                                <td class="px-4 py-2 border border-b-2 border border-b-2">{{ data.daerah.kode_daerah
+                                <td class="px-4 py-2 border border-b-2">{{ data.daerah.kode_daerah
                                     + '.' + data.id_data_anggota }}</td>
                                 <td class="px-4 py-2 border border-b-2">{{ data.nama_lengkap }}</td>
                                 <td class="px-4 py-2 border border-b-2">
@@ -130,7 +130,17 @@
 
             <!-- Modal -->
             <div v-if="isModalOpen" class="fixed inset-0 flex items-center justify-center bg-black bg-opacity-50 z-50">
+
                 <div class="bg-white p-6 rounded-lg shadow-lg max-w-screen-xl w-full">
+                    <!-- Close Button -->
+
+                    <div class="flex justify-end">
+                        <button @click="closeModal"
+                            class="ml-4 bg-red-500 text-white px-4 py-2 rounded-md hover:bg-red-600">
+                            Close
+                        </button>
+                    </div>
+
                     <h3 class="text-xl font-semibold text-gray-800 mb-4">Daftar Transaksi Anggota</h3>
                     <!-- Transaction Table in Modal -->
                     <div class="overflow-x-auto">
@@ -183,6 +193,7 @@
                                     <td class="px-4 py-2">{{ transaksi.vendorPembayaran }}</td>
                                     <td class="px-4 py-2 text-center">
                                         <img :src="getfullPathImage(transaksi.imageUsers.imageUrl)"
+                                            @click="openLightbox(getfullPathImage(transaksi.imageUsers.imageUrl))"
                                             alt="Transaksi Image" class="w-20 h-20 object-cover rounded-md" />
                                     </td>
                                     <td class="px-4 py-2 text-center">
@@ -221,26 +232,24 @@
                         </table>
                     </div>
 
-                    <!-- Close Button -->
-                    <div class="mt-6">
-                        <button @click="closeModal"
-                            class="ml-4 bg-gray-500 text-white px-4 py-2 rounded-md hover:bg-gray-600">
-                            Close
-                        </button>
-                    </div>
+
                 </div>
             </div>
         </div>
     </div>
+    <vue-easy-lightbox :visible="lightboxVisible" :imgs="imageUsers" :index="lightboxIndex"
+        @hide="lightboxVisible = false" />
 </template>
 
 <script>
 import NavbarAdmin from "@/components/NavbarAdmin.vue";
 import api from "@/service/lpkni";
 import Swal from "sweetalert2";
+import VueEasyLightbox from 'vue-easy-lightbox';
 export default {
     components: {
         NavbarAdmin,
+        VueEasyLightbox
     },
     data() {
         return {
@@ -251,7 +260,10 @@ export default {
             daerahList: [],
             isModalOpen: false,
             selectedStatus: '',
-            selectedTransaksi: []
+            selectedTransaksi: [],
+            imageUsers: null,
+            lightboxVisible: false
+
         };
     },
     computed: {
@@ -264,6 +276,11 @@ export default {
         this.getAlltransaksi();
     },
     methods: {
+        openLightbox(index) {
+            this.lightboxVisible = true;
+            this.imageUsers = index
+            // this.lightboxIndex = index;
+        },
         async fetchWilayah() {
             await api.getAllWilayah()
                 .then((res) => {

@@ -67,7 +67,7 @@
                 <!-- <strong>Nama File :</strong> {{ fileName }} -->
                 <div v-if="fileType.startsWith('image')">
                   <img :src="fileUrl" alt="Uploaded Image" class="mt-4 w-32 h-32 object-cover rounded-lg"
-                    @click="ope()" />
+                    @click="openLightbox()" />
                 </div>
               </div>
             </div>
@@ -82,7 +82,6 @@
             </div>
           </div>
         </section>
-
         <!-- Submit Button -->
         <div v-if="selectedPaymentMethod">
           <button type="submit" @click="submitForm()"
@@ -263,12 +262,7 @@ export default {
           });
         });
       })
-
-
-
     },
-
-
     toggleDropdown() {
       this.isDropdownOpen = !this.isDropdownOpen;
     },
