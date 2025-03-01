@@ -82,13 +82,13 @@
                                     {{ data.publish ? 'Bisa Di Publish' : "Tidak Bisa Di Publish" }}
                                 </td>
                                 <td class="px-4 py-2 border border-b-2">{{ data.created_at.split('T')[0]
-                                }}
+                                    }}
                                 </td>
                                 <td class="px-4 py-2 border border-b-2">{{ data.created_at.split('T')[1].split('-')[0]
-                                }}
+                                    }}
                                 </td>
                                 <td class="px-4 py-2 border border-b-2">{{ data.data_anggota ? 'Anggota' : "Konsumen"
-                                }}
+                                    }}
                                 </td>
                                 <td class="px-4 py-2 text-center">
                                     <div class="flex justify-center space-x-2">
@@ -125,43 +125,70 @@
             </div>
 
             <!-- Modal for Viewing Pengaduan -->
-            <!-- Modal for Viewing Pengaduan -->
             <div v-if="isModalOpen" class="fixed inset-0 flex items-center justify-center bg-black bg-opacity-50 z-50">
-                <div class="bg-white p-6 rounded-lg shadow-lg max-w-screen-xl w-full">
-                    <h3 class="text-xl font-semibold text-gray-800 mb-4">Detail Pengaduan</h3>
+                <div class="bg-white p-8 rounded-2xl shadow-2xl max-w-4xl w-full sm:w-4/5 md:w-3/4 lg:w-1/2 relative">
+                    <!-- Close Button -->
+                    <button @click="closeModal" class="absolute top-4 right-4 text-gray-600 hover:text-gray-900">
+                        &times;
+                    </button>
 
-                    <!-- Detail of Pengaduan -->
-                    <div class="mb-4">
-                        <p><strong>Judul:</strong> {{ selectedPengaduan.judul }}</p>
-                        <p><strong>Deskripsi:</strong> {{ selectedPengaduan.deskripsi }}</p>
-                        <p><strong>Kategori:</strong> {{ selectedPengaduan.kategori }}</p>
-                        <p><strong>Publikasi:</strong> {{ selectedPengaduan.publish ? 'Ya' : 'Tidak' }}</p>
-                        <p><strong>Tindak Lanjut:</strong> {{ selectedPengaduan.tindak_lanjut }}</p>
-                        <p><strong>Pengaduan Dari:</strong> {{ selectedPengaduan.data_anggota ? 'Anggota' : 'Konsumen'
-                            }}</p>
-                        <p><strong>Email Pengadu:</strong> {{ selectedPengaduan.email }}</p>
-                        <p><strong>Wilayah:</strong> {{ selectedPengaduan.wilayah.nama_wilayah }}</p>
-                        <p><strong>Daerah:</strong> {{ selectedPengaduan.daerah.nama_daerah }}</p>
-                        <p><strong>Alamat Pengadu:</strong> {{ selectedPengaduan.data_anggota ?
-                            selectedPengaduan.data_anggota.alamat : 'Tidak Tersedia' }}</p>
-                        <p><strong>Status Pengadu:</strong> {{ selectedPengaduan.status }}</p>
+                    <!-- Modal Header -->
+                    <h3 class="text-3xl font-bold text-gray-800 mb-6 text-center border-b pb-4">Detail Pengaduan</h3>
+
+                    <!-- Modal Content: Pengaduan Details -->
+                    <div class="space-y-4 text-gray-700">
+                        <div class="grid grid-cols-1 sm:grid-cols-2 gap-4">
+                            <p><strong>Judul:</strong> {{ selectedPengaduan.judul }}</p>
+                            <p><strong>Kategori:</strong> {{ selectedPengaduan.kategori }}</p>
+                            <p><strong>Publikasi:</strong> {{ selectedPengaduan.publish ? 'Ya' : 'Tidak' }}</p>
+                            <p><strong>Tindak Lanjut:</strong> {{ selectedPengaduan.tindak_lanjut }}</p>
+                            <p><strong>Pengaduan Dari:</strong> {{ selectedPengaduan.data_anggota ? 'Anggota' :
+                                'Konsumen' }}</p>
+                            <p><strong>Email Pengadu:</strong> {{ selectedPengaduan.email }}</p>
+                            <p><strong>Wilayah:</strong> {{ selectedPengaduan.wilayah.nama_wilayah }}</p>
+                            <p><strong>Daerah:</strong> {{ selectedPengaduan.daerah.nama_daerah }}</p>
+                            <div v-if="selectedPengaduan.data_anggota">
+                                <p><strong>Alamat Pengadu:</strong> {{ selectedPengaduan.data_anggota.alamat }}</p>
+                            </div>
+                            <p><strong>Status Pengadu:</strong> <span class="px-2 py-1 rounded-md" :class="{
+                                'bg-green-500 text-white': selectedPengaduan.status === 'Selesai',
+                                'bg-yellow-500 text-white': selectedPengaduan.status === 'Diproses',
+                                'bg-red-500 text-white': selectedPengaduan.status === 'Ditolak'
+                            }">
+                                    {{ selectedPengaduan.status }}
+                                </span>
+                            </p>
+                        </div>
+                        <div>
+                            <p class="text-gray-600"><strong>Deskripsi:</strong></p>
+                            <div class="p-4 bg-gray-100 rounded-md">{{ selectedPengaduan.deskripsi }}</div>
+                        </div>
+
                     </div>
-
-                    <!-- Display Images Associated with Pengaduan -->
-                    <div v-if="selectedPengaduan.media && selectedPengaduan.media.length > 0"
-                        class="grid grid-cols-2 gap-4">
-                        <div v-for="(media, index) in selectedPengaduan.media" :key="index"
-                            class="flex flex-col items-center">
-                            <img :src="getfullPathImage(media.imageUrl)" alt="Image"
-                                class="w-40 h-40 object-cover rounded-md mb-2">
-                            <p class="text-sm text-center">{{ media.deskripsi }}</p>
+                    <!-- Container Bukti Pengaduan -->
+                    <div class="items-center flex justify-center bg-gray-500 rounded-lg p-4">
+                        <div v-if="selectedPengaduan.media && selectedPengaduan.media.length > 0" class="w-full">
+                            <h4 class="text-lg font-semibold text-white mb-3 text-center">Bukti Pengaduan:</h4>
+                            <div class="grid grid-cols-2 gap-4 sm:grid-cols-3 md:grid-cols-4">
+                                <div v-for="(media, index) in selectedPengaduan.media" :key="index"
+                                    class="flex flex-col items-center">
+                                    <img :src="getfullPathImage(media.imageUrl)" alt="Image"
+                                        class="w-32 h-32 object-cover rounded-lg shadow-md mb-2 hover:scale-105 transition-transform cursor-pointer"
+                                        @click="openPreview(media.imageUrl)">
+                                    <p class="text-xs text-center text-white">{{ media.deskripsi }}</p>
+                                </div>
+                            </div>
                         </div>
                     </div>
 
+
+                    <!-- Display Images Associated with Pengaduan -->
+
+
                     <!-- Close Modal Button -->
-                    <div class="mt-6">
+                    <div class="mt-6 flex justify-center">
                         <button @click="closeModal"
-                            class="ml-4 bg-gray-500 text-white px-4 py-2 rounded-md hover:bg-gray-600">
+                            class="bg-red-500 text-white px-6 py-2 rounded-lg hover:bg-red-600 transition-all">
                             Close
                         </button>
                     </div>
