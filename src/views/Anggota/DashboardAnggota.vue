@@ -95,7 +95,13 @@
                                 </div>
                             </div>
                         </div>
-
+                        <div>
+                            <div class="md:col-span-3 text-red-500">
+                                <div class="font-medium text-gray-600 border-l-4 border-blue-500 pl-4">*Keterangan
+                                    Status:</div>
+                                <div class="text-lg text-red-500 font-semibold mt-1">{{ data_anggota.keterangan }}</div>
+                            </div>
+                        </div>
                         <!-- Alamat (span 3 kolom untuk tampilan lebar) -->
                         <div class="md:col-span-3">
                             <div class="font-medium text-gray-600 border-l-4 border-blue-500 pl-4">Alamat:</div>
@@ -174,6 +180,12 @@
                         <div class="border-l-4 border-blue-500 pl-4">
                             <div class="text-sm font-medium text-gray-500">Tingkat:</div>
                             <div class="text-lg text-gray-900 font-semibold">{{ data_anggota.jabatanStruktural.tingkat
+                                }}
+                            </div>
+                        </div>
+                        <div class="border-l-4 border-blue-500 pl-4">
+                            <div class="text-sm font-medium text-gray-500">Alamat Kantor:</div>
+                            <div class="text-lg text-gray-900 font-semibold">{{ data_anggota.alamatkantor
                                 }}
                             </div>
                         </div>
@@ -586,7 +598,7 @@ export default {
                 this.data_anggota = userData.data_anggota
                 this.transaksiAnggota = userData.data_anggota.transaksiAnggota
                 this.kegiatanAnggota = userData.data_anggota.kegiatanAnggota
-                console.log(this.kegiatanAnggota)
+                console.log(this.data_anggota)
             } catch (error) {
                 console.log(error)
             }

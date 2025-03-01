@@ -25,17 +25,23 @@
               </figcaption>
               <div class="w-full mx-auto mt-2 border-t-2 border-gray-300"></div>
             </figure>
-            <h3 class="text-lg sm:text-2xl font-semibold mt-2">{{ berita.judul }}</h3>
-            <p class="text-xs sm:text-sm text-gray-500 mt-4 underline"><span
-                class="font-semibold text-sm underline">Berita
-                Dirilis Pada
-              </span>{{
-                berita.created_at.split('T')[0] }}
+            <h3 class="mb-6 text-2xl sm:text-3xl font-semibold text-gray-900 sm:text-left mt-2 leading-tight">
+              {{ berita.judul }}
+            </h3>
+            <div class="flex flex-col sm:flex-row justify-between items-start sm:items-center">
+              <p class="text-xs sm:text-sm text-gray-500 mt-2 sm:mt-0">
+                <span class="font-semibold text-sm underline">Berita Dirilis Pada: </span>{{
+                  berita.created_at.split('T')[0] }}
+              </p>
+              <p class="text-justify leading-losse text-red-600 mt-4 sm:mt-0 font-semibold">
+                {{ berita.wilayah.nama_wilayah }}, {{ berita.daerah.nama_daerah }}
+              </p>
+            </div>
+
+            <!-- News Time -->
+            <p class="text-xs sm:text-sm text-gray-500 mt-2 font-semibold">
+              Waktu: {{ berita.created_at.split('T')[1] }} WIB
             </p>
-            <p class="text-justify leading-losse text-red-600 mt-2 ">{{ berita.wilayah.nama_wilayah }}, {{
-              berita.daerah.nama_daerah }}</p>
-            <p class="text-xs sm:text-sm text-gray-500 mt-2 font-semibold">Waktu: {{ berita.created_at.split('T')[1] }}
-              WIB</p>
             <p class="text-xs sm:text-sm text-red-600 mt-4 font-bold underline">{{ berita.kategori }}</p>
             <div class="space-y-7">
               <p class="text-justify mt-6 px-6 py-4 leading-losse">{{ berita.deskripsi1 }}</p>
@@ -96,27 +102,34 @@
               </div>
             </div>
             <div class="w-full mx-auto mt-2 border-t-2 border-gray-300"></div>
-            <div class="items-center flex justify-center">
-              <div class="w-full sm:w-1/2 lg:w-2/3 p-1">
-                <h3 class="text-xl font-semibold text-gray-800 mb-4 flex">Ingin Memasang Iklan?</h3>
-                <p class="text-sm text-gray-600 mb-4 justify">
-                  Apakah Anda ingin memasarkan produk atau usaha Anda di seluruh Indonesia? Bergabunglah
-                  dengan
-                  kami dan
-                  dapatkan akses untuk memasang iklan di platform kami untuk memasarkan produk anda untuk menjangkau
-                  lebih
-                  banyak
-                </p>
-                <div class="flex justify-center">
-                  <a href="https://wa.me/6281333015767" target="_blank">
-                    <button
-                      class="bg-red-500 text-white px-2 py-2 rounded-md font-semibold hover:bg-red-600 transition-all">
-                      Pasang Iklan Sekarang
-                    </button>
-                  </a>
+            <div class="bg-gray-100 py-10">
+              <div class="container mx-auto px-6 sm:px-12 lg:px-24">
+                <div
+                  class="flex flex-col sm:flex-row items-center justify-center space-y-6 sm:space-y-0 sm:space-x-6 bg-white shadow-lg rounded-lg p-8">
+                  <!-- Left Section: Text Content -->
+                  <div class="sm:w-1/2 text-center sm:text-left">
+                    <h3 class="text-2xl sm:text-3xl font-semibold text-gray-600 mb-4">
+                      <i class="fas fa-question-circle tex-gray-300"></i> Ingin Memasang Iklan?
+                    </h3>
+                    <p class="text-sm sm:text-base text-gray-600 mb-6">
+                      Apakah Anda ingin memasarkan produk atau usaha Anda di seluruh Indonesia? Bergabunglah dengan kami
+                      dan dapatkan akses untuk memasang iklan di platform kami untuk menjangkau lebih banyak pelanggan.
+                    </p>
+                  </div>
+
+                  <!-- Right Section: Call to Action Button -->
+                  <div class="sm:w-1/3 text-center">
+                    <a href="https://wa.me/6281333015767" target="_blank">
+                      <button
+                        class="bg-red-600 text-white text-lg px-6 py-3 rounded-lg font-semibold hover:bg-red-700 transition-all w-full sm:w-auto">
+                        Pasang Iklan
+                      </button>
+                    </a>
+                  </div>
                 </div>
               </div>
             </div>
+
           </article>
 
         </div>
@@ -140,7 +153,7 @@
                 berita.daerah.nama_daerah }}</p>
               <p class="text-sm text-gray-500">{{ singkatDeskripsi(data.deskripsi1, 100) }}</p>
               <!-- <router-link :to="`/suara-konsumen/detail/${data.id}`"> -->
-              <button @click="routerPush(data.id)"
+              <button @click="routerPush(data.id, data.judul)"
                 class="text-red-600 hover:text-red-800 font-semibold mt-4 w-full text-center">
                 Baca Selengkapnya
               </button>
@@ -149,9 +162,12 @@
             </div>
           </div>
         </div>
-
       </div>
     </section>
+    <div v-if="isLoading" class="fixed inset-0 flex items-center justify-center bg-black bg-opacity-50 z-50">
+      <div class="text-white text-lg">Sedang Memuat...</div>
+      <div class="spinner-border animate-spin border-4 border-t-4 border-white rounded-full w-16 h-16 ml-2"></div>
+    </div>
     <FooterNews />
   </div>
 </template>
@@ -165,11 +181,11 @@ export default {
   components: {
     FooterNews,
     NavbarNews
-
   },
   data() {
     return {
       showPopup: true,
+      isLoading: false,
       adImage,
       idBerita: this.$route.query.id || this.$route.params.id,
       currentUrl: window.location.href,  // Get the current URL of the page
@@ -196,13 +212,9 @@ export default {
     // }
   },
   methods: {
-    // limitedSuaraKonsumenList() {
-    //   return this.suaraKonsumenList
-    //     .sort((a, b) => new Date(b.waktu_publikasi) - new Date(a.waktu_publikasi))
-    //     .slice(0, 5);
-    // },\
-    async routerPush(id) {
-      await this.$router.push(`/suara-konsumen/detail/${id}`)
+
+    async routerPush(id, judul) {
+      await this.$router.push(`/suara-konsumen/detail/${id}/${judul}`)
       window.location.reload()
     },
     closePopup() {
@@ -212,10 +224,13 @@ export default {
       this.showShareOptions = !this.showShareOptions;
     },
     async getSuaraKonsumenTerbaru() {
+      this.isLoading = true;
       await lpkni.getSuaraKonsumenterbaru().then((res) => {
         this.suaraKonsumenTerbaruList = res.data
       }).catch(() => {
 
+      }).finally(() => {
+        this.isLoading = false
       })
     },
     async getSuaraKonsumenByid(id) {

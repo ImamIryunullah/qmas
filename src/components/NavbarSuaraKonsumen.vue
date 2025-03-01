@@ -33,29 +33,17 @@
           <img src="@/assets/iconlpkni.png" alt="LPKNI" class="w-15 h-12 mr-3 mt-2">
           LPKNI
         </router-link>
-
-        <span class="text-white font-extrabold ml-2 sm:ml-4 hidden sm:inline-block"> | </span>
         <div class="flex items-center w-full sm:w-auto sm:flex-row flex-col ml-2 sm:ml-4">
-          <router-link to="/suara-konsumen" class="text-white text-xl font-bold flex items-center">
-            Suara Konsumen
-          </router-link>
         </div>
       </div>
 
-
+      <router-link to="/suara-konsumen" class="text-white text-xl font-bold flex items-center">
+        Suara Konsumen
+      </router-link>
       <!-- Date Section -->
       <div class="text-white w-full sm:w-auto mt-2 sm:mt-0">
-        <span>{{ currentDay }}, {{ currentDate }}</span>
-      </div>
 
-      <!-- Search Section -->
-      <div class="flex space-x-6 items-center w-full sm:w-auto mt-2 sm:mt-0">
-        <div class="relative w-full sm:w-auto">
-          <input type="text"
-            class="pl-10 pr-4 py-2 rounded-lg text-gray-800 placeholder-gray-500 focus:outline-none w-full"
-            placeholder="Search..." />
-          <i class="fas fa-search absolute left-3 top-1/2 transform -translate-y-1/2 text-gray-500"></i>
-        </div>
+        <span>{{ currentDay }}, {{ currentDate }}</span>
       </div>
     </div>
   </header>

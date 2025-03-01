@@ -137,6 +137,10 @@
           @hide="lightboxVisible = false" />
       </div>
     </div>
+    <div v-if="isLoading" class="fixed inset-0 flex items-center justify-center bg-black bg-opacity-50 z-50">
+      <div class="text-white text-lg">Sedang Memuat...</div>
+      <div class="spinner-border animate-spin border-4 border-t-4 border-white rounded-full w-16 h-16 ml-2"></div>
+    </div>
   </div>
 </template>
 <script>
@@ -155,6 +159,7 @@ export default {
       location: null,
       error: null,
       isMounted: false,
+      isLoading: false,
       form: {
         nama: '',
         email: '',
@@ -268,6 +273,7 @@ export default {
       if (this.form.kategori_lainnya !== '') {
         this.form.kategori = this.form.kategori_lainnya;
       }
+      this.isLoading = true
       await lpkni.CreatePengaduanAnggota(this.form).then(() => {
         Swal.fire({
           icon: 'success',
@@ -283,6 +289,8 @@ export default {
           title: 'Gagal Mengirim Pengaduan',
           text: 'Terdapat kesalahan saat mengirim pengaduan.',
         });
+      }).finally(() => {
+        this.isLoading = false
       })
     },
     validateForm() {

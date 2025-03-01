@@ -11,7 +11,7 @@
                     Form Pengaduan
                 </h2>
                 <p class="text-center text-gray-600 mt-2 text-sm md:text-base leading-relaxed">
-                    <i class="fas fa-info-circle text-gray-500 mr-2 justify"></i>
+                    <i class="fas fa-info-circle text-gray-500 mr-2"></i>
                     Laporkan masalah atau keluhan Anda agar dapat segera ditindaklanjuti.
                     Kami berkomitmen untuk menjaga kenyamanan, keamanan, dan keadilan bagi semua pihak.
                 </p>
@@ -42,7 +42,6 @@
                             </option>
                         </select>
                     </div>
-
                     <div class="flex flex-col sm:flex-row items-center space-x-4 mb-4">
                         <label class="block text-sm font-semibold text-red-700 w-full sm:w-1/3">Kota / Kabupaten</label>
                         <select required v-model="form.daerahId" :disabled="form.wilayahId === 0"
@@ -62,9 +61,6 @@
                             {{ location ? `${location.latitude} , ${location.longitude}` : 'Tidak Tersedia' }}
                         </label>
                     </div>
-
-
-
                     <div class="flex flex-col space-y-4 mb-4">
 
                         <div class="flex flex-col sm:flex-row items-center space-x-4">
@@ -81,8 +77,6 @@
                                 <option value=''>Lainnya</option>
                             </select>
                         </div>
-
-
                         <div v-if="form.kategori === ''" class="flex flex-col sm:flex-row items-center space-x-4 mb-4">
                             <label for="keterangan-lainnya"
                                 class="block text-sm font-semibold text-red-700 w-full sm:w-1/3">
@@ -93,24 +87,18 @@
                                 placeholder="Jelaskan kategori pengaduan lainnya..." />
                         </div>
                     </div>
-
-
                     <div class="flex flex-col sm:flex-row items-center space-x-4 mb-4">
                         <label for="judul" class="block text-sm font-semibold text-red-700 w-full sm:w-1/3">Judul
                             Pengaduan</label>
                         <input required id="judul" v-model="form.judul" type="text" class="input-field w-full sm:w-2/3"
                             placeholder="Judul Pengaduan" />
                     </div>
-
-
                     <div class="flex flex-col sm:flex-row items-center space-x-4 mb-4">
                         <label for="deskripsi"
                             class="block text-sm font-semibold text-red-700 w-full sm:w-1/3">Deskripsi Pengaduan</label>
                         <textarea required id="deskripsi" v-model="form.deskripsi" class="input-field w-full sm:w-2/3"
                             placeholder="Jelaskan pengaduan Anda" rows="4"></textarea>
                     </div>
-
-
                     <div>
                         <div v-for="(image, index) in imageInputs" :key="index" class="flex flex-col space-y-2 mb-4">
 

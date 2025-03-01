@@ -21,7 +21,7 @@
           :class="{ 'bg-grey-200 text-black bg-red-700': $route.path === '/anggota/profile' }"
           class="flex items-center py-3 px-4 mb-2 font-semibold rounded-md w-full bg-red-600 hover:bg-red-800">
           <i class="fas fa-user mr-2"></i>
-          <span>Profile</span>
+          <span>{{ Name }}</span>
         </button>
         <button @click="logout"
           class="flex font-semibold items-center py-3 px-4 rounded-md w-full bg-red-600 hover:bg-red-800">
@@ -62,6 +62,7 @@
           </li>
         </ul>
       </nav>
+
       <!-- Profile & Logout Buttons -->
       <div class="mt-auto">
         <button @click="goToProfile"
@@ -75,6 +76,7 @@
         </button>
       </div>
     </aside>
+    <!-- Display Current Date & Time -->
 
     <!-- Konten Utama -->
     <main class="flex-1 p-6 md:ml-64 mt-12 md:mt-0 z-10">
@@ -90,6 +92,8 @@ export default {
   data() {
     return {
       isSidebarOpen: false,
+      currentDate: new Date(),
+      Name: this.$store.state.storeLpkni.userLpkni.user.nama_depan,
       menuItems: [
         { label: "Dashboard", path: "/anggota/dashboard", icon: "fas fa-home" },
         { label: "Data Diri", path: "/anggota/data-diri", icon: "fas fa-user-check" },
@@ -105,6 +109,7 @@ export default {
     routerPath() {
       return this.$route.path
     },
+
   },
   methods: {
     toggleSidebar() {
@@ -116,13 +121,14 @@ export default {
     async logout() {
       try {
         await this.$store.dispatch("logoutLpkni");
+        await this.$router.push("/auth/login");
         Swal.fire({
           icon: "success",
           title: "Berhasil Logout",
           showConfirmButton: false,
           timer: 1500,
         });
-        await this.$router.push("/auth/login");
+
       } catch (e) {
         console.log(e);
         Swal.fire({

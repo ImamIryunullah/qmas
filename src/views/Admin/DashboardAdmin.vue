@@ -13,29 +13,24 @@
           Lembaga Perlindungan Konsumen Indonesia
         </p>
       </div>
-
       <!-- Dashboard Stats Cards -->
       <div class="grid grid-cols-1 sm:grid-cols-2 lg:grid-cols-3 xl:grid-cols-4 gap-6 gap-y-10">
         <div v-for="(item, index) in dashboardData" :key="index" @click="Tolink(item.link)"
           class="p-6 bg-white rounded-xl shadow-md transition transform hover:cursor-pointer hover:scale-105 hover:shadow-lg flex flex-col items-center min-h-[10rem]">
-
           <!-- Icon Container -->
           <div class="w-14 h-14 flex items-center justify-center rounded-full" :class="item.bgColor">
             <i :class="item.icon" class="text-white text-2xl"></i>
           </div>
-
           <!-- Title & Data -->
           <h3 class="text-lg md:text-xl font-semibold text-gray-800 mt-4 text-center">
             {{ item.title }}
           </h3>
           <p class="text-lg text-gray-600 font-medium">{{ item.total }}</p>
-
         </div>
       </div>
     </div>
   </div>
 </template>
-
 <script>
 import NavbarAdmin from '@/components/NavbarAdmin.vue';
 import lpkni from '@/service/lpkni'; // Importing the lpkni service

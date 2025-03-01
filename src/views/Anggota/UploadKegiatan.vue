@@ -56,7 +56,6 @@
                                     <input :required="index === 0" type="file" @change="handleFileUpload($event, index)"
                                         class="input-field w-full sm:w-2/3" />
                                 </div>
-
                                 <div class="flex flex-col items-end">
                                     <label v-if="imageUsers[index]"
                                         class="block text-center font-semibold text-red-700 text-sm w-full sm:w-auto">Foto
@@ -85,6 +84,10 @@
                     :index="lightboxIndex" @hide="lightboxVisible = false" />
             </div>
         </div>
+        <div v-if="isLoading" class="fixed inset-0 flex items-center justify-center bg-black bg-opacity-50 z-50">
+            <div class="text-white text-lg">Sedang Memuat...</div>
+            <div class="spinner-border animate-spin border-4 border-t-4 border-white rounded-full w-16 h-16 ml-2"></div>
+        </div>
     </div>
 </template>
 
@@ -101,6 +104,7 @@ export default {
         return {
             fileList: [],
             fileNames: [],
+            isLoading: false,
             error: null,
             isMounted: false,
             form: {
@@ -184,6 +188,7 @@ export default {
                 if (result.isDenied || !result.isConfirmed || result.isDismissed) {
                     return
                 }
+                this.isLoading = true
                 await lpkni.CreateKegiatanAnggota(this.form).then(() => {
                     Swal.fire({
                         icon: 'success',
@@ -199,6 +204,8 @@ export default {
                         icon: 'error',
                         title: 'Gagal Mengirim Kegiatan',
                         text: 'Terdapat kesalahan saat mengirim Kegiatan.',
+                    }).finally(() => {
+                        this.isLoading = false
                     });
                 })
             })

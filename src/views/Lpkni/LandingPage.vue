@@ -1,9 +1,11 @@
 <template>
+
     <div class="mb-10">
+
         <NavbarLandingPage />
     </div>
-    <div class="bg-red-100 min-h-screen">
 
+    <div class="bg-red-100 min-h-screen">
         <section class="flex flex-col md:flex-row items-center justify-center pt-14 bg-red-700 text-white">
             <!-- Left Section (Text Content) -->
             <div class="md:w-1/2 text-center md:text-left px-[1.5rem] sm:px-4 pt-5 sm:text-base">
@@ -29,9 +31,7 @@
                         Daftar SWI
                     </a>
                 </div>
-
             </div>
-
             <!-- Right Section (Image) -->
             <div class="md:w-[30%] w-3/4 mt-5 md:mt-0">
                 <img src="@/assets/animasi1.png" loading="lazy" alt="LPKNI"
@@ -288,7 +288,10 @@
         </section>
         <!-- Footer -->
         <FooterLandingPage />
-
+        <div v-if="isLoading" class="fixed inset-0 flex items-center justify-center bg-black bg-opacity-50 z-50">
+            <div class="text-white text-lg">Sedang Memuat...</div>
+            <div class="spinner-border animate-spin border-4 border-t-4 border-white rounded-full w-16 h-16 ml-2"></div>
+        </div>
     </div>
 </template>
 
@@ -314,13 +317,14 @@ function type(element, text, i) {
 export default {
     components: {
         NavbarLandingPage,
-        FooterLandingPage
+        FooterLandingPage,
     },
     name: 'LandingPage',
     data() {
         return {
             expanded: false,
             SuaraKonsumeList: [],
+            isLoading: false
         };
     },
     mounted() {
@@ -339,11 +343,14 @@ export default {
             return text;
         },
         getAllBerita() {
+            this.isLoading = true;
             lpkni.getAllSuaraKonsumen().then((res) => {
                 this.SuaraKonsumeList = res.data
                 console.log(this.SuaraKonsumeList)
             }).catch(() => {
 
+            }).finally(() => {
+                this.isLoading = false;
             })
         },
         getfullPathImage(img) {

@@ -1,7 +1,7 @@
 <template>
   <div class="w-screen min-h-screen h-full flex bg-gray-100">
     <div class="bg-gray-100 text-white">
-      <NavbarAnggota />
+      <NavbarAdmin />
     </div>
     <div class="flex-1 flex justify-center items-center bg-gray-100 mr-5 mt-12 mb-12">
       <div class="bg-white w-full max-w-3xl border border-b-2 shadow-md p-8 rounded-lg animate-fadeInUp">
@@ -87,26 +87,22 @@
         </div>
       </div>
     </div>
-    <div v-if="isLoading" class="fixed inset-0 flex items-center justify-center bg-black bg-opacity-50 z-50">
-      <div class="text-white text-lg">Sedang Memuat...</div>
-      <div class="spinner-border animate-spin border-4 border-t-4 border-white rounded-full w-16 h-16 ml-2"></div>
-    </div>
   </div>
 </template>
 
 <script>
-import NavbarAnggota from "@/components/NavbarAnggota.vue";
+import NavbarAdmin from "@/components/NavbarAdmin.vue";
+// import NavbarAnggota from "@/components/NavbarAnggota.vue";
 import api from "@/service/lpkni";
 
 export default {
   components: {
-    NavbarAnggota,
+    NavbarAdmin,
   },
 
   data() {
     return {
       user: {},
-      isLoading: false,
       dataUser: {
         id_data_anggota: null,
         userId: null,
@@ -183,9 +179,8 @@ export default {
     closeLightbox() {
       this.showLightbox = false;
     },
-    async getProfile() {
-      this.isLoading = true
-      await api
+    getProfile() {
+      api
         .getUserData()
         .then((response) => {
           this.user = response.data.user;
@@ -193,9 +188,7 @@ export default {
         })
         .catch((error) => {
           console.error(error);
-        }).finally(() => {
-          this.isLoading = false;
-        })
+        });
     },
     openEditModal() {
       this.isModalOpen = true;

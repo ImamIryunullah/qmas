@@ -61,6 +61,7 @@
                 <th class="px-4 py-2 text-left">Kota / Kab</th>
                 <th class="px-4 py-2 text-left">Jabatan</th>
                 <th class="px-4 py-2 text-left">Tingkat</th>
+                <th class="px-4 py-2 text-left">Alamat Kantor</th>
                 <th class="px-4 py-2 text-left">Status</th>
                 <th class="px-4 py-2 text-left">Keterangan Status</th>
                 <th class="px-4 py-2 text-center">Tampilkan Detail</th>
@@ -107,6 +108,9 @@
                     {{ data.status }}
                   </span>
                 </td>
+                <td class="px-4 py-2 border border-b-2">{{ data.alamatkantor ?
+                  data.alamatkantor :
+                  "-" }}</td>
                 <td class="px-4 py-2 border border-b-2">{{ data.keterangan ?
                   data.keterangan :
                   "-" }}</td>
@@ -155,7 +159,7 @@
                 <tr class="border-t">
                   <td class="px-4 py-2 border border-b-2 ">{{ SelecteAnggota.nik }}</td>
                   <td class="px-4 py-2 border border-b-2 ">{{ SelecteAnggota.alamat
-                  }}</td>
+                    }}</td>
                   <td class="px-4 py-2 border border-b-2 ">{{ SelecteAnggota.agama }}</td>
                   <td class="px-4 py-2 border border-b-2 ">{{ SelecteAnggota.pekerjaan }}</td>
                   <td class="px-4 py-2 border border-b-2 ">{{ SelecteAnggota.tempatLahir }}</td>

@@ -1,4 +1,5 @@
 <template>
+
   <div class="font-light ">
     <div class="">
       <div class="">
@@ -10,10 +11,8 @@
     </div>
   </div>
 </template>
+
 <script>
-// import FooterPortal from "@/components/FooterPortal.vue";
-
-
 export default {
   components: {
     // FooterPortal

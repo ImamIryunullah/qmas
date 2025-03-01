@@ -103,8 +103,6 @@
                 </option>
               </select>
             </div>
-
-
             <div>
               <label class="text-sm text-gray-500 font-bold">Kota / Kabupaten</label>
               <select v-model="userData.daerahId" :disabled="userData.wilayahId === 0"
@@ -117,9 +115,6 @@
                 </option>
               </select>
             </div>
-
-
-
             <div>
               <label class="text-sm text-gray-500 font-bold">Tingkat</label>
               <select v-model="userData.jabatanStruktural.tingkat" :disabled="!userData.daerahId"
@@ -145,10 +140,17 @@
                   !jabatan.daerah ?
                   jabatan.wilayah.kode_wilayah + " - " + jabatan.nama : jabatan.daerah.kode_daerah + " - " +
                   jabatan.nama
-                  }}
+                }}
                 </option>
               </select>
+              <div>
+                <label class="text-sm text-gray-500 font-bold">Alamat Kantor</label>
+                <input v-model="userData.alamatkantor" type="text" placeholder="Alamat Kantor"
+                  class="w-full p-3 border border-gray-300 rounded-lg focus:outline-none focus:ring-2 focus:ring-red-600 transition duration-200 ease-in-out mt-2"
+                  required />
+              </div>
             </div>
+
             <div v-for="(image, index) in imageInputs" :key="index">
               <label class="text-sm text-gray-500 font-bold">{{ image.keterangan }}</label>
               <input :required="!UpdateGambar ? image.required : false" type="file"
@@ -160,8 +162,8 @@
                 alt="uploaded" @click="openLightbox(index)"
                 class="w-40 h-auto items-start object-contain rounded-lg shadow-md mt-4">
             </div>
-
           </div>
+
           <div class="items-center justify-center flex">
             <button type="submit"
               class="mt-12 w-1/2 bg-red-600 text-white px-6 py-2 rounded-lg font-bold hover:bg-red-700 transition">
@@ -231,6 +233,7 @@ export default {
         agama: "",
         status: "",
         status_pembayaran: false,
+        alamatkantor: "",
         file: [],
         folder: [],
       },
@@ -415,6 +418,7 @@ export default {
           agama: this.userData.agama,
           file: this.userData.file,
           keterangan: this.userData.folder,
+          alamatkantor: this.userData.alamatkantor
         }
         this.isLoading = true;
         try {
@@ -442,6 +446,16 @@ export default {
       })
     },
     async UpdatData() {
+      if (this.userData.status === "SUCCESS") {
+        Swal.fire({
+          icon: "warning",
+          title: "Informasi!",
+          text: "Harap Hubungi Admin Untuk Merubah Data!",
+          confirmButtonColor: '#22c55e',
+          showConfirmButton: true,
+        })
+        return
+      }
       Swal.fire({
         title: "Informasi",
         text: 'Apakah Anda Yakin ingin Memperbarui Data?',
@@ -470,6 +484,7 @@ export default {
           agama: this.userData.agama,
           file: this.userData.file,
           keterangan: this.userData.folder,
+          alamatkantor: this.userData.alamatkantor
         }
 
         await lpkni.UpdateDataUserImage(forms).then(() => {

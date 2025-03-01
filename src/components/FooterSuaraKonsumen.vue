@@ -41,14 +41,21 @@
 
 
         <div>
-          <h3 class="font-semibold text-lg mb-4">Suara Konsumen</h3>
-          <p class="text-gray-300 mb-4">Subscribe to our Suara Konsumen page to stay updated on our initiatives and
-            events.</p>
-          <form action="#" method="post" class="flex flex-col">
-            <input type="email" placeholder="Enter your email" class="p-2 mb-4 text-black rounded-lg" />
-            <button type="submit"
-              class="bg-white text-red-600 px-6 py-2 rounded-lg font-semibold hover:bg-gray-100">Subscribe</button>
-          </form>
+          <h3 class="font-semibold text-lg mb-4">Jadilah Bagian dari Kami</h3>
+          <p class="text-gray-300 mb-4">
+            Bergabung dengan LPKNI dan dapatkan manfaat eksklusif dalam perlindungan dan standarisasi usaha
+            Anda!
+          </p>
+          <div class="grid grid-cols-2 gap-2 text-center">
+            <router-link to="/auth/register-anggota"
+              class="bg-white text-red-600 hover:text-gray-600 px-6 py-2 rounded-lg font-semibold hover:bg-gray-100 transition">
+              LPKNI
+            </router-link>
+            <router-link to="/auth/swi/register"
+              class="bg-white text-red-600 hover:text-gray-600 px-6 py-2 rounded-lg font-semibold hover:bg-gray-100 transition">
+              SWI
+            </router-link>
+          </div>
         </div>
       </div>
 

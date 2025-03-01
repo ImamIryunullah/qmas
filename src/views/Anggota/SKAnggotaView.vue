@@ -28,12 +28,10 @@
       <div class="spinner-border animate-spin border-4 border-t-4 border-white rounded-full w-16 h-16 ml-2"></div>
     </div>
   </div>
-
 </template>
-
 <script>
 import NavbarAnggota from '@/components/NavbarAnggota.vue';
-import { PDFDocument, rgb } from 'pdf-lib'; // Import rgb from pdf-lib
+import { PDFDocument, rgb } from 'pdf-lib';
 import fontkit from '@pdf-lib/fontkit';
 import lpkni from '@/service/lpkni';
 import Swal from 'sweetalert2';
@@ -111,6 +109,7 @@ export default {
       errorpdf: false,
       existingPdfBytes: null,
       tanggalBergabung: "",
+      Kota: ""
     };
   },
   methods: {
@@ -122,7 +121,9 @@ export default {
         this.user = userData.user
         this.data_anggota = userData.data_anggota
         this.kode_idcard = this.data_anggota.daerah.kode_daerah + "." + this.data_anggota.id_data_anggota
-        this.tanggalBergabung = this.data_anggota.createdAt
+        this.tanggalBergabung = this.data_anggota.updatedAt
+        this.Kota = this.data_anggota.daerah.nama_daerah
+
         // setTimeout(() => {
 
         // }, 1000);
@@ -164,8 +165,13 @@ export default {
     }
     ,
     calculateTextWidth(text, fontSize) {
-      const charWidth = fontSize * 0.5; // Perkiraan lebar per karakter
+      const charWidth = fontSize * 1; // Perkiraan lebar per karakter
+      console.log(text.length * charWidth)
       return text.length * charWidth;
+    },
+    calculateTextlength(text) {
+      console.log(text.length)
+      return text.length;
     },
     wrapText(text, maxLength) {
       const lines = [];
@@ -176,22 +182,19 @@ export default {
       }
       return lines;
     },
-    camelize(str) {
-      return str.charAt(0).toUpperCase() + str.slice(1).toLowerCase();
-    },
     async generatePdf() {
       try {
         this.loading = true;
         let PDFName = ""
         switch (this.data_anggota.jabatanStruktural.tingkat) {
           case "Pusat":
-            PDFName = "Pusat";
+            PDFName = "SK_PUSAT";
             break;
           case "Kota/Kab":
-            PDFName = "Kota-Kab";
+            PDFName = "SK_KOTA_KAB";
             break;
           case "Provinsi":
-            PDFName = "Provinsi";
+            PDFName = "SK_PROVINSI";
             break;
           case "Region 1":
             PDFName = "Provinsi";
@@ -202,141 +205,214 @@ export default {
           default:
             break;
         }
-        console.log(PDFName)
+
+        console.log(PDFName);
         const response = await fetch(`http://192.168.10.2:3000/assets/${PDFName}.pdf`);
         if (!response.ok) {
           throw new Error('PDF not found or failed to load');
-
         }
 
         const pdfBuffer = await response.arrayBuffer();
         // Memuat PDF
         const pdfDoc = await PDFDocument.load(pdfBuffer);
+
+        // Register fontkit agar custom font bisa di-embed
         pdfDoc.registerFontkit(fontkit);
-        const page = pdfDoc.getPages()[0];
-        const courierNewUrls = '/font/courbd.ttf'; // Ubah path sesuai lokasi file Anda
+
+        // Misalnya, ambil file CourierNew.ttf dari server atau local
+        const courierNewUrl = '/font/courbd.ttf'; // Ubah path sesuai lokasi file Anda
+        const courierNewUrls = '/font/cour.ttf'; // Ubah path sesuai lokasi file Anda
+        const courierFontBytes = await fetch(courierNewUrl).then(res => res.arrayBuffer());
         const courierFontBytess = await fetch(courierNewUrls).then(res => res.arrayBuffer());
+
+        const textColor2 = rgb(0, 0, 0);
+        // Embed font ke dalam pdfDoc yang sudah dimuat
+        const courierNewFont = await pdfDoc.embedFont(courierFontBytes);
         const courierNewFonts = await pdfDoc.embedFont(courierFontBytess);
-        // Ambil URL gambar asli dari backend
-        const imageUrl = this.getFullPathImage(this.data_anggota.imageUsers[1].imageUrl);
+        const text =
+          "SURAT PENGANGKATAN PEJABAT LPKNI CABANG " + this.Kota;
+        const page = pdfDoc.getPages()[0];
+        const midIndex = Math.floor(text.length / 2);
+        const firstPart = text.substring(0, midIndex);
+        const secondPart = text.substring(midIndex);
+        const centerX = page.getWidth() / 2; // atau bisa Anda tentukan sesuai kebutuhan
+        console.log(firstPart);
+        console.log(secondPart);
 
-        // ✅ Crop gambar agar berbentuk lingkaran
-        const circleImageBlob = await this.cropImageToCircle(imageUrl);
+        let xPosText1 = centerX;
+        const yPosText1 = 740;
+        const fontSize1 = 12;
 
-        // ✅ Konversi Blob ke ArrayBuffer agar bisa digunakan di PDF-lib
-        const circleImageBytes = await circleImageBlob.arrayBuffer();
+        let xPosText2 = xPosText1 + 7;
+        const yPosText2 = 740;
 
-        // ✅ Gunakan `embedPng()` karena hasil cropping berbentuk PNG
-        const image = await pdfDoc.embedPng(circleImageBytes);
+        // Offset vertikal untuk underline, misal 2 satuan di bawah teks
+        const underlineOffset = 2.5;
+        // Menggambar text1 dari kanan ke kiri (loop mundur)
+        for (let i = firstPart.length - 1; i >= 0; i--) {
+          const char = firstPart[i];
+          // Simpan posisi x karakter saat ini
+          const currentX = xPosText1;
 
-        // ✅ Tambahkan gambar bulat ke dalam PDF
-        page.drawImage(image, {
-          x: 64.4, // Sesuaikan posisi X
-          y: 194, // Sesuaikan posisi Y
-          width: 95, // Sesuaikan ukuran gambar
-          height: 95, // Sesuaikan ukuran gambar
-        });
-        // Ambil titik tengah halaman
-        const centerX = page.getWidth() / 2;
-        const yPosTextSK = 180;
-        const fontSize = 14;
-        const NoSK = this.data_anggota.nama_lengkap
+          // Gambar karakter
+          page.drawText(char, {
+            x: currentX,
+            y: yPosText1,
+            size: fontSize1,
+            color: textColor2, // misalnya warna yang diinginkan
+            font: courierNewFont, // pastikan font sudah didefinisikan
+          });
+
+          // Hitung lebar karakter menggunakan properti font
+          const charWidth = courierNewFont.widthOfTextAtSize(char, fontSize1);
+
+          // Gambar garis underline di bawah karakter
+          page.drawLine({
+            start: { x: currentX, y: yPosText1 - underlineOffset },
+            end: { x: currentX + charWidth, y: yPosText1 - underlineOffset },
+            thickness: 1.2,
+            color: textColor2,
+          });
+
+          // Geser posisi x ke kiri sesuai lebar karakter
+          xPosText1 -= charWidth;
+        }
+        // Menggambar text2 dari kiri ke kanan (loop normal)
+        for (let i = 0; i < secondPart.length; i++) {
+          const char = secondPart[i];
+          // Simpan posisi x karakter saat ini
+          const currentX = xPosText2;
+
+          // Gambar karakter
+          page.drawText(char, {
+            x: currentX,
+            y: yPosText2,
+            size: fontSize1,
+            color: textColor2,
+            font: courierNewFont,
+          });
+
+          // Hitung lebar karakter
+          const charWidth = courierNewFont.widthOfTextAtSize(char, fontSize1);
+
+          // Gambar garis underline di bawah karakter
+          page.drawLine({
+            start: { x: currentX, y: yPosText2 - underlineOffset },
+            end: { x: currentX + charWidth, y: yPosText2 - underlineOffset },
+            thickness: 1.2,
+            color: textColor2,
+          });
+
+          // Geser posisi x ke kanan sesuai lebar karakter
+          xPosText2 += charWidth;
+        }
+
+        const NoSK = `060.1/SPP/LPKNI/II/2025`
         const SkIndex = Math.floor(NoSK.length / 2);
         const SKfirstPart = NoSK.substring(0, SkIndex);
         const SKsecondPart = NoSK.substring(SkIndex);
-
-        console.log(SKfirstPart);
-        console.log(SKsecondPart);
-
-        // Embed font yang digunakan
-        // const timesRomanFont = await pdfDoc.embedFont(StandardFonts.Helvetica);
-
-        // Hitung lebar total SKfirstPart dan SKsecondPart
-        const widthFirstPart = courierNewFonts.widthOfTextAtSize(SKfirstPart, fontSize);
-        const widthSecondPart = courierNewFonts.widthOfTextAtSize(SKsecondPart, fontSize);
-
-        // Jika Anda ingin keseluruhan teks (gabungan kedua bagian) terpusat, hitung total lebar:
-        const totalTextWidth = widthFirstPart + widthSecondPart;
-        const startX = centerX - totalTextWidth / 2 - 5;
-
-        // Untuk SKfirstPart yang digambar dari kanan ke kiri, posisi awal harus di akhir bagian pertama:
-        let xPosText1SK = startX + widthFirstPart;
-
-        // Untuk SKsecondPart yang digambar dari kiri ke kanan, mulai dari posisi akhir SKfirstPart:
-        let xPosText2SK = startX + widthFirstPart + 7;
-
-        // --- Menggambar SKfirstPart (kanan ke kiri) ---
+        const yPosTextSK = 725;
+        let xPosText1SK = centerX;
+        let xPosText2SK = xPosText1SK + 7;
+        // Menggambar text1 dari kanan ke kiri (loop mundur)
         for (let i = SKfirstPart.length - 1; i >= 0; i--) {
           const char = SKfirstPart[i];
+          // Simpan posisi x karakter saat ini
           const currentX = xPosText1SK;
 
           // Gambar karakter
           page.drawText(char, {
             x: currentX,
             y: yPosTextSK,
-            size: fontSize,
-            color: rgb(1, 1, 1),
-            font: courierNewFonts
+            size: fontSize1,
+            color: textColor2, // misalnya warna yang diinginkan
+            font: courierNewFonts, // pastikan font sudah didefinisikan
           });
 
-          // Hitung lebar karakter dan geser posisi ke kiri
-          const charWidth = courierNewFonts.widthOfTextAtSize(char, fontSize);
+          // Hitung lebar karakter menggunakan properti font
+          const charWidth = courierNewFonts.widthOfTextAtSize(char, fontSize1);
+
+          // // Gambar garis underline di bawah karakter
+          // page.drawLine({
+          //   start: { x: currentX, y: yPosTextSK - underlineOffset },
+          //   end: { x: currentX + charWidth, y: yPosTextSK - underlineOffset },
+          //   thickness: 1.2,
+          //   color: textColor2,
+          // });
+
+          // Geser posisi x ke kiri sesuai lebar karakter
           xPosText1SK -= charWidth;
         }
-
-        // --- Menggambar SKsecondPart (kiri ke kanan) ---
+        // Menggambar text2 dari kiri ke kanan (loop normal)
         for (let i = 0; i < SKsecondPart.length; i++) {
           const char = SKsecondPart[i];
+          // Simpan posisi x karakter saat ini
           const currentX = xPosText2SK;
 
           // Gambar karakter
           page.drawText(char, {
             x: currentX,
             y: yPosTextSK,
-            size: fontSize,
-            color: rgb(1, 1, 1),
-            font: courierNewFonts
+            size: fontSize1,
+            color: textColor2,
+            font: courierNewFonts,
           });
 
-          // Hitung lebar karakter dan geser posisi ke kanan
-          const charWidth = courierNewFonts.widthOfTextAtSize(char, fontSize);
+          // Hitung lebar karakter
+          const charWidth = courierNewFonts.widthOfTextAtSize(char, fontSize1);
+
+          // // Gambar garis underline di bawah karakter
+          // page.drawLine({
+          //   start: { x: currentX, y: yPosTextSK - underlineOffset },
+          //   end: { x: currentX + charWidth, y: yPosTextSK - underlineOffset },
+          //   thickness: 1.2,
+          //   color: textColor2,
+          // });
+
+          // Geser posisi x ke kanan sesuai lebar karakter
           xPosText2SK += charWidth;
         }
 
-
-        let nameYPosition = 172; // Posisi Y nama
-        page.drawText("ID", { x: 22, y: 140, size: 12, color: rgb(1, 1, 1) });
-        page.drawText(":", { x: 75, y: 140, size: 12, color: rgb(1, 1, 1) });
-        page.drawText(this.kode_idcard, { x: 85, y: 139, size: 12, color: rgb(1, 1, 1) });
+        const fullName = this.data_anggota.nama_lengkap.toUpperCase(); // Menggunakan nama dengan huruf besar
+        const namaPosx = 68
+        page.drawText("Nama", { x: namaPosx, y: 330, size: 12, color: rgb(0, 0, 0), font: courierNewFonts, });
+        page.drawText(":", { x: namaPosx + 60, y: 330, size: 12, color: rgb(0, 0, 0), font: courierNewFonts, });
+        page.drawText(fullName, { x: namaPosx + 100, y: 330, size: 12, color: rgb(0, 0, 0), font: courierNewFonts, });
 
         // Menambahkan Jabatan
+        // const jabatan = this.data_anggota.jabatanStruktural.nama.toUpperCase()
+        const JabatanaPosx = 68
+        // page.drawText("Jabatan", { x: JabatanaPosx, y: 310, size: 12, color: rgb(0, 0, 0), font: courierNewFonts, });
+        // page.drawText(":", { x: JabatanaPosx + 60, y: 310, size: 12, color: rgb(0, 0, 0), font: courierNewFonts, });
+        // page.drawText(jabatan, { x: JabatanaPosx + 100, y: 310, size: 12, color: rgb(0, 0, 0), font: courierNewFonts, });
+
         const jabatan = this.data_anggota.jabatanStruktural.nama.toUpperCase()
-        const jabatanLines = this.wrapText(jabatan, 18); // Memecah teks jabatan jika lebih dari 21 karakter
-        let jabatanYPosition = nameYPosition - 50; // Menyesuaikan posisi Y berdasarkan nama
+        const jabatanLines = this.wrapText(jabatan, 50); // Memecah teks alamat jika lebih dari 21 karakter
+        let jabatanYPosition = 310; // Menyesuaikan posisi Y berdasarkan jabatan
 
         jabatanLines.forEach((line, index) => {
-          page.drawText(index === 0 ? "JABATAN" : "", { x: 20, y: jabatanYPosition, size: 10, color: rgb(1, 1, 1) });
-          page.drawText(index === 0 ? ":" : "", { x: 75, y: jabatanYPosition, size: 10, color: rgb(1, 1, 1) });
-          page.drawText(line, { x: 85, y: jabatanYPosition, size: 10, color: rgb(1, 1, 1) });
+          page.drawText(index === 0 ? "Jabatan" : "", { x: JabatanaPosx, y: jabatanYPosition, size: 12, color: rgb(0, 0, 0), font: courierNewFonts, });
+          page.drawText(index === 0 ? ":" : "", { x: JabatanaPosx + 60, y: jabatanYPosition, size: 12, color: rgb(0, 0, 0), font: courierNewFonts, });
+          page.drawText(line, { x: JabatanaPosx + 100, y: jabatanYPosition, size: 12, color: rgb(0, 0, 0), font: courierNewFonts, });
 
           // Jika ada lebih dari satu baris, tambahkan jarak Y
           jabatanYPosition -= 15;
         });
-
         // Menambahkan Alamat
         const alamat = this.data_anggota.alamat.toUpperCase();
-        const alamatLines = this.wrapText(alamat, 21); // Memecah teks alamat jika lebih dari 21 karakter
-        let alamatYPosition = jabatanYPosition - 0; // Menyesuaikan posisi Y berdasarkan jabatan
+        const alamatLines = this.wrapText(alamat, 50); // Memecah teks alamat jika lebih dari 21 karakter
+        let alamatYPosition = 290; // Menyesuaikan posisi Y berdasarkan jabatan
 
         alamatLines.forEach((line, index) => {
-          page.drawText(index === 0 ? "ALAMAT" : "", { x: 20, y: alamatYPosition, size: 10, color: rgb(1, 1, 1) });
-          page.drawText(index === 0 ? ":" : "", { x: 75, y: alamatYPosition, size: 10, color: rgb(1, 1, 1) });
-          page.drawText(line, { x: 85, y: alamatYPosition, size: 10, color: rgb(1, 1, 1) });
+          page.drawText(index === 0 ? "Alamat" : "", { x: JabatanaPosx, y: alamatYPosition, size: 12, color: rgb(0, 0, 0), font: courierNewFonts, });
+          page.drawText(index === 0 ? ":" : "", { x: JabatanaPosx + 60, y: alamatYPosition, size: 12, color: rgb(0, 0, 0), font: courierNewFonts, });
+          page.drawText(line, { x: JabatanaPosx + 100, y: alamatYPosition, size: 12, color: rgb(0, 0, 0), font: courierNewFonts, });
 
           // Jika ada lebih dari satu baris, tambahkan jarak Y
           alamatYPosition -= 15;
         });
-        page.drawText(this.tanggalBergabung.split('T')[0].split('-')[0], { x: 100, y: 10, size: 12, color: rgb(1, 1, 1) });
+        page.drawText(this.tanggalBergabung.split('T')[0], { x: 420, y: 186.5, size: 12, color: rgb(0, 0, 0), font: courierNewFonts, });
+        page.drawText("Malang", { x: 420, y: 200, size: 12, color: rgb(0, 0, 0), font: courierNewFonts, });
 
         // ✅ Simpan PDF
         const pdfBytes = await pdfDoc.save();

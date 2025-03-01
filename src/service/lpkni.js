@@ -6,6 +6,45 @@ const API = axios.create({
   withCredentials: true,
 });
 
+// // Interceptor request untuk menambahkan token jika sudah ada di cookie (opsional)
+// const getCSRFToken = () => {
+//   const match = document.cookie.match(new RegExp("(^| )XSRF-TOKEN=([^;]+)"));
+//   return match ? match[2] : null;
+// };
+
+// API.interceptors.request.use(
+//   async (config) => {
+//     const csrfToken = getCSRFToken();
+//     if (csrfToken) {
+//       config.headers["XSRF-TOKEN"] = csrfToken;
+//     }
+//     return config;
+//   },
+//   (error) => Promise.reject(error)
+// );
+
+// // Interceptor respons untuk menangani status 419 dan melakukan re-request
+// API.interceptors.response.use(
+//   (response) => response,
+//   async (error) => {
+//     const { config, response } = error;
+//     console.log(error);
+//     if (response && response.status === 401) {
+//       config._retry = true; // Tandai request telah di-retry satu kali
+//       // Ambil token baru dari respons
+//       const newToken = response.data.token;
+//       if (newToken) {
+//         // Perbarui header request dengan token baru
+//         config.headers["XSRF-TOKEN"] = newToken;
+//         // Jika perlu, perbarui cookie (biasanya server sudah meng-set cookie)
+//         // Lakukan re-request dengan konfigurasi yang telah diperbarui
+//         return API(config);
+//       }
+//     }
+//     return Promise.reject(error);
+//   }
+// );
+
 const Image = axios.create({
   baseURL: IMG,
   withCredentials: true,

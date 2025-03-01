@@ -17,6 +17,39 @@
 
             <!-- Desktop Header Links -->
             <ul class="hidden md:flex space-x-6">
+
+                <li>
+                    <router-link to="/suara-konsumen"
+                        class="text-white hover:text-gray-300 flex items-center space-x-2">
+                        <i class="fas fa-newspaper"></i>
+                        <span>Suara Konsumen</span>
+                    </router-link>
+                </li>
+                <li>
+                    <router-link to="/pengaduan" class="text-white hover:text-gray-300 flex items-center space-x-2">
+                        <i class="fas fa-exclamation-triangle"></i>
+                        <span>Pengaduan</span>
+                    </router-link>
+                </li>
+                <li>
+                    <a href="/#services" class="text-white hover:text-gray-300 flex items-center space-x-2">
+                        <i class="fas fa-cogs"></i>
+                        <span>Layanan</span>
+                    </a>
+                </li>
+                <li>
+                    <a href="/#about" class="text-white hover:text-gray-300 flex items-center space-x-2">
+                        <i class="fas fa-info-circle"></i>
+                        <span>Tentang</span>
+                    </a>
+                </li>
+
+                <li>
+                    <a href="/#contact" class="text-white hover:text-gray-300 flex items-center space-x-2">
+                        <i class="fas fa-phone-alt"></i>
+                        <span>Kontak</span>
+                    </a>
+                </li>
                 <li class="relative group">
                     <button class="text-white hover:text-gray-300 flex items-center space-x-2">
                         <i class="fas fa-clipboard-check"></i>
@@ -59,42 +92,10 @@
                         </ul>
                     </div>
                 </li>
-                <li>
-                    <router-link to="/suara-konsumen"
-                        class="text-white hover:text-gray-300 flex items-center space-x-2">
-                        <i class="fas fa-newspaper"></i>
-                        <span>Suara Konsumen</span>
-                    </router-link>
-                </li>
-                <li>
-                    <router-link to="/pengaduan" class="text-white hover:text-gray-300 flex items-center space-x-2">
-                        <i class="fas fa-exclamation-triangle"></i>
-                        <span>Pengaduan</span>
-                    </router-link>
-                </li>
-                <li>
-                    <a href="/#services" class="text-white hover:text-gray-300 flex items-center space-x-2">
-                        <i class="fas fa-cogs"></i>
-                        <span>Layanan</span>
-                    </a>
-                </li>
-                <li>
-                    <a href="/#about" class="text-white hover:text-gray-300 flex items-center space-x-2">
-                        <i class="fas fa-info-circle"></i>
-                        <span>Tentang</span>
-                    </a>
-                </li>
 
-                <li>
-                    <a href="/#contact" class="text-white hover:text-gray-300 flex items-center space-x-2">
-                        <i class="fas fa-phone-alt"></i>
-                        <span>Kontak</span>
-                    </a>
-                </li>
             </ul>
         </div>
 
-        <!-- Sidebar for Mobile Menu -->
         <div v-if="isMenuOpen" class="md:hidden fixed inset-0 bg-black bg-opacity-50 z-40" @click="toggleMenu"></div>
         <div v-if="isMenuOpen"
             class="fixed inset-y-0 right-0 w-64 bg-red-700 text-white z-50 transform transition-all ease-in-out"
@@ -308,106 +309,91 @@ export default {
 /* Styles for screens smaller than 768px (tablet) */
 @media (max-width: 768px) {
 
-    /* Make the navbar text even smaller */
+    /* Reduce the font size of text in span and icon further */
     header .text-white {
-        font-size: 0.75rem;
-        /* Smaller font size */
-        /* Adjust font size further */
+        font-size: 0.5rem;
+        /* Significantly smaller text size */
     }
 
-    /* Make icons smaller */
+    /* Reduce the icon size even more */
     header i {
-        font-size: 1rem;
-        /* Further reduce icon size */
-        /* Smaller icon size for tablet */
-    }
-
-    /* Adjust navbar items for smaller screens */
-    header .container {
-        padding: 0 10px;
-        /* Reduce padding even more */
-        /* Smaller padding to fit more content */
-    }
-
-    /* Adjust mobile menu button */
-    .block.md\:hidden button {
-        font-size: 1.125rem;
-        /* Slightly smaller hamburger button */
-        /* A little smaller font size for mobile */
-    }
-
-    /* Adjust dropdown menu for smaller tablets */
-    header .md\:hidden .space-x-6 {
-        flex-direction: column;
-        /* Stack navbar items vertically */
-        /* Stack items to fit better */
-    }
-
-    /* Adjust the dropdown menu for mobile/tablets */
-    .md\:hidden .w-64 {
-        width: 100%;
-        /* Ensure the dropdown fills the screen width */
-        /* Full-width dropdown on smaller screens */
-    }
-
-    /* Adjust the button sizes */
-    header button {
-        padding: 4px 8px;
-        /* Make the button smaller */
-        /* Reduce the button padding */
-    }
-}
-
-
-/* Styles for screens smaller than 820px */
-@media (max-width: 820px) {
-    header .text-white {
-        font-size: 0.300rem;
-        /* Smaller font size */
-        /* Even smaller font size for better fit on small screens */
-    }
-
-    /* Make icons even smaller */
-    header i {
-        font-size: 0.250rem;
-        /* Smaller icon size */
-        /* Further reduced icon size */
+        font-size: 0.625rem;
+        /* Significantly smaller icon size */
     }
 
     /* Adjust navbar items for smaller screens */
     header .container {
         padding: 0 5px;
-        /* Reduce padding more */
-        /* Even less padding to utilize space efficiently */
+        /* Further reduce padding for compactness */
     }
 
-    /* Adjust mobile menu button */
+    /* Adjust mobile menu button size */
     .block.md\:hidden button {
-        font-size: 0.2rem;
-        /* Make hamburger button smaller */
-        /* Smaller font size for the mobile hamburger button */
+        font-size: 1rem;
+        /* Smaller hamburger button */
     }
 
-    /* Adjust dropdown menu for smaller screens */
+    /* Stack navbar items vertically for mobile view */
     header .md\:hidden .space-x-6 {
         flex-direction: column;
-        /* Stack navbar items vertically */
-        /* Make sure items stack properly */
     }
 
-    /* Adjust the dropdown menu for mobile/tablets */
+    /* Adjust dropdown menu width and behavior for smaller screens */
     .md\:hidden .w-64 {
         width: 100%;
-        /* Ensure full-width for dropdown */
     }
 
-    /* Adjust button spacing and padding */
+    /* Adjust button sizes for better responsiveness */
     header button {
-        padding: 4px 10px;
-        /* Reduce padding to make the buttons more compact */
-        /* Smaller button for better mobile use */
+        padding: 3px 6px;
+        /* Minimized button padding */
     }
 }
+
+/* Styles for screens smaller than 820px */
+@media (max-width: 820px) {
+
+    /* Reduce the font size of text in span further */
+    header .text-white {
+        font-size: 0.375rem;
+        /* Further smaller font size */
+    }
+
+    /* Reduce icon size more */
+    header i {
+        font-size: 0.5rem;
+        /* More reduced icon size */
+    }
+
+    /* Adjust navbar container padding */
+    header .container {
+        padding: 0 3px;
+        /* Further reduced padding */
+    }
+
+    /* Make hamburger button size smaller */
+    .block.md\:hidden button {
+        font-size: 0.875rem;
+        /* Even smaller hamburger button */
+    }
+
+    /* Stack navbar items vertically in dropdown for smaller screens */
+    header .md\:hidden .space-x-6 {
+        flex-direction: column;
+    }
+
+    /* Ensure full-width dropdown */
+    .md\:hidden .w-64 {
+        width: 100%;
+    }
+
+    /* Adjust button sizes and spacing */
+    header button {
+        padding: 3px 5px;
+        /* Even smaller button size */
+    }
+}
+
 
 @media (max-width: 1024px) {
     header .text-white {

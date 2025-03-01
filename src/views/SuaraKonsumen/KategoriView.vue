@@ -17,15 +17,16 @@
         </div>
 
         <div v-if="suaraKonsumenList.length > 1">
-            <section class="container mx-auto px-4 py-12 bg-white rounded-lg shadow-md mb-5 mt-2">
+            <section class="container mx-auto px-4 py-12 bg-white rounded-lg shadow-md mb-5 mt-4">
                 <div class="flex flex-col md:flex-row items-center space-y-6 md:space-y-0 md:space-x-6">
                     <!-- Banner Image -->
                     <div class="max-w-full md:w-1/2">
-                        <!-- Menampilkan Gambar yang Responsif dengan batas ukuran -->
+                        <!-- Responsive Image with max height -->
                         <img :src="getfullpathImage(suaraKonsumenList[0].media[0].imageUrl)" alt="Trending Image"
                             class="w-full h-auto object-cover rounded-lg max-h-96" />
                     </div>
 
+                    <!-- News Content -->
                     <div class="flex flex-col justify-between space-y-4 w-full md:w-1/2">
                         <div>
                             <!-- Breaking News Alert -->
@@ -38,22 +39,25 @@
                                 {{ suaraKonsumenList[0].judul }}
                             </h2>
 
+                            <!-- Date -->
                             <p class="text-xs sm:text-sm text-red-700 mt-1">{{
-                                suaraKonsumenList[0].tanggal.split('T')[0] }}
-                            </p>
+                                suaraKonsumenList[0].tanggal.split('T')[0] }}</p>
 
-                            <!-- Description -->
+                            <!-- Region -->
                             <p class="text-gray-700 text-sm mt-2 underline">
                                 {{ suaraKonsumenList[0].wilayah.nama_wilayah }}, {{
                                     suaraKonsumenList[0].daerah.nama_daerah }}
                             </p>
+
+                            <!-- Description (Truncated) -->
                             <p class="text-gray-700 text-sm mt-2">
                                 {{ truncateDescription(suaraKonsumenList[0].deskripsi1, 200) }}
                             </p>
 
+                            <!-- Read More Button -->
                             <div class="mt-4">
-                                <!-- Read More Button -->
-                                <router-link :to="`/suara-konsumen/detail/${suaraKonsumenList[0].id}`">
+                                <router-link
+                                    :to="`/suara-konsumen/detail/${suaraKonsumenList[0].id}/${suaraKonsumenList[0].judul}`">
                                     <button class="text-red-600 hover:text-red-800 font-semibold mt-4">Baca
                                         Selengkapnya</button>
                                 </router-link>
@@ -62,6 +66,7 @@
                     </div>
                 </div>
             </section>
+
             <!-- Main Content Section -->
             <div class="container mx-auto px-4 py-6 md:px-8 sm:px-8">
                 <div class="bg-black text-white p-4 rounded-lg mb-8">
@@ -82,7 +87,11 @@
                             <img :src="getfullpathImage(data.media[0].imageUrl)" alt="Trending Image"
                                 class="w-full h-48 object-cover rounded-lg mb-4" />
 
-                            <h3 class="text-lg font-semibold text-gray-900">{{ singkatJudul(data.judul, 50) }}</h3>
+                            <RouterLink :to="`/suara-konsumen/detail/${data.id}/${data.judul}`">
+                                <h3 class="text-lg font-semibold text-gray-900 hover:text-red-900">{{
+                                    singkatJudul(data.judul, 70) }}</h3>
+                            </RouterLink>
+
                             <p class="text-xs sm:text-sm text-red-700 mt-1">{{ data.tanggal.split('T')[0] }}</p>
                             <p class="text-gray-700 text-sm mt-2 underline">
                                 {{ suaraKonsumenList[0].wilayah.nama_wilayah }}, {{
@@ -91,7 +100,7 @@
                             <p class="text-sm text-gray-700 mt-2">
                                 {{ truncateDescription(data.deskripsi1, 150) }}
                             </p>
-                            <router-link :to="`/suara-konsumen/detail/${data.id}`">
+                            <router-link :to="`/suara-konsumen/detail/${data.id}/${data.judul}`">
                                 <button class="text-red-600 hover:text-red-800 font-semibold mt-4">Baca
                                     Selengkapnya</button>
                             </router-link>
@@ -108,7 +117,11 @@
                         <article v-for="data in currentPageArticles" :key="data.id" class="p-3">
                             <img :src="getfullpathImage(data.media[0].imageUrl)" alt="Latest Story"
                                 class="w-full h-48 object-cover mb-4" />
-                            <h5 class="text-sm sm:text-base font-semibold">{{ singkatJudul(data.judul, 50) }}</h5>
+                            <RouterLink :to="`/suara-konsumen/detail/${data.id}/${data.judul}`">
+                                <h5 class="text-lg font-semibold text-gray-900 hover:text-red-900">{{
+                                    singkatJudul(data.judul, 70) }}</h5>
+                            </RouterLink>
+
                             <p class="text-xs sm:text-sm text-red-700 mt-1">{{ data.tanggal.split('T')[0] }}</p>
                             <p class="text-gray-700 text-sm mt-2 underline">
                                 {{ suaraKonsumenList[0].wilayah.nama_wilayah }}, {{
@@ -116,7 +129,7 @@
                             </p>
                             <p class="text-xs sm:text-sm text-gray-700">{{ truncateDescription(data.deskripsi1, 170) }}
                             </p>
-                            <router-link :to="`/suara-konsumen/detail/${data.id}`">
+                            <router-link :to="`/suara-konsumen/detail/${data.id}/${data.judul}`">
                                 <button
                                     class="text-red-600 hover:text-red-800 font-semibold mt-4 text-xs sm:text-sm">Baca
                                     Selengkapnya</button>
@@ -127,15 +140,32 @@
                     <!-- Pagination Controls -->
                     <div class="flex justify-center mt-6">
                         <!-- Page Number Buttons -->
-                        <div class="flex space-x-2">
-                            <button v-for="page in totalPages" :key="page" @click="changePage(page)" :class="{
-                                'px-4 py-2 bg-red-600 text-white rounded-lg hover:bg-red-800': true,
-                                'bg-red-800': currentPage === page
-                            }" class="text-white font-semibold">
-                                {{ page }}
+                        <div class="flex flex-wrap justify-center space-x-2">
+                            <!-- Previous Button -->
+                            <button @click="changePage(currentPage - 1)" :disabled="currentPage === 1"
+                                class="px-3 py-2 rounded-lg font-semibold bg-red-600 text-white hover:bg-red-700 disabled:opacity-50 mr-2 sm:px-4 sm:py-2">
+                                Prev
+                            </button>
+
+                            <!-- Page Number Buttons -->
+                            <div class="flex flex-wrap space-x-2">
+                                <button v-for="page in visiblePages" :key="page" @click="changePage(page)" :class="{
+                                    'bg-gray-300 text-white': currentPage !== page,
+                                    'bg-red-600 text-gray-700': currentPage === page
+                                }"
+                                    class="px-3 py-2 rounded-lg font-semibold hover:bg-red-700 disabled:opacity-50 sm:px-4 sm:py-2">
+                                    {{ page }}
+                                </button>
+                            </div>
+
+                            <!-- Next Button -->
+                            <button @click="changePage(currentPage + 1)" :disabled="currentPage === totalPages"
+                                class="px-3 py-2 rounded-lg font-semibold bg-red-600 text-white hover:bg-red-700 disabled:opacity-50 ml-2 sm:px-4 sm:py-2">
+                                Next
                             </button>
                         </div>
                     </div>
+
                 </section>
             </div>
         </div>
@@ -160,6 +190,10 @@
                 </div>
             </div>
         </div>
+        <div v-if="isLoading" class="fixed inset-0 flex items-center justify-center bg-black bg-opacity-50 z-50">
+            <div class="text-white text-lg">Sedang Memuat...</div>
+            <div class="spinner-border animate-spin border-4 border-t-4 border-white rounded-full w-16 h-16 ml-2"></div>
+        </div>
     </div>
     <FooterNews />
 </template>
@@ -177,10 +211,12 @@ export default {
     },
     data() {
         return {
+            maxVisiblePages: 5,
             showPopup: true,
+            isLoading: false,
             adImage,
             currentPage: 1, // Start at the first page
-            articlesPerPage: 10, // Number of articles per page
+            articlesPerPage: 4, // Number of articles per page
             // The selected region
             selectedWilayah: this.$route.params.wilayah_id, // The list of regions to choose from
             suaraKonsumenListCoba: [
@@ -235,15 +271,32 @@ export default {
             const start = (this.currentPage - 1) * this.articlesPerPage;
             const end = this.currentPage * this.articlesPerPage;
             return this.suaraKonsumenList.slice(start, end);
+        },
+        visiblePages() {
+            let pages = [];
+            let startPage = Math.max(this.currentPage - Math.floor(this.maxVisiblePages / 2), 1);
+            let endPage = Math.min(startPage + this.maxVisiblePages - 1, this.totalPages);
+
+            if (endPage - startPage < this.maxVisiblePages - 1) {
+                startPage = Math.max(endPage - this.maxVisiblePages + 1, 1);
+            }
+
+            for (let i = startPage; i <= endPage; i++) {
+                pages.push(i);
+            }
+            return pages;
         }
     },
     methods: {
         async getAllSuaraKonsumen() {
+            this.isLoading = true
             await lpkni.getAllSuaraKonsumenPublishBywilayahID(this.idWilayah).then((res) => {
                 this.suaraKonsumenList = res.data
                 console.log(this.suaraKonsumenList)
             }).catch(() => {
 
+            }).finally(() => {
+                this.isLoading = false
             })
         },
         closePopup() {
@@ -259,8 +312,9 @@ export default {
             return text.length > length ? text.slice(0, length) + '...' : text;
         },
         changePage(page) {
-            if (page < 1 || page > this.totalPages) return; // Prevent invalid pages
-            this.currentPage = page;
+            if (page > 0 && page <= this.totalPages) {
+                this.currentPage = page;
+            }
         }
     }
 };

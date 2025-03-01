@@ -28,6 +28,7 @@ const FormPengaduanAnggotaView = () =>
 const PembayaranAnggotaView = () =>
   import("@/views/Anggota/PembayaranAnggotaView.vue");
 const IdCardAnggotaView = () => import("@/views/Anggota/IdCardAnggotaView.vue");
+const SkAnggotaView = () => import("@/views/Anggota/SKAnggotaView.vue");
 const UploadKegiatan = () => import("@/views/Anggota/UploadKegiatan.vue");
 /* Admin */
 const DataPendaftaranAnggota = () =>
@@ -40,6 +41,8 @@ const TambahSuaraKonsumen = () =>
   import("@/views/Admin/TambahSuaraKonsumen.vue");
 const KegiatanAnggotaAdmin = () =>
   import("@/views/Admin/KegiatanAnggotaAdmin.vue");
+const ProfileAdminView = () => import("@/views/Admin/ProfileAdminView.vue");
+
 /* Tanpa Role Suara Konsumen */
 const LoginSwiView = () => import("@/views/Auth-Swi/LoginSwiView.vue");
 const SignUpSwiView = () => import("@/views/Auth-Swi/SignUpSwiView.vue");
@@ -71,7 +74,7 @@ const routes = [
     component: SuaraKonsumenView,
   },
   {
-    path: "/suara-konsumen/detail/:id",
+    path: "/suara-konsumen/detail/:id/:judul",
     name: "Detail Suara Konsumen",
     component: DetailSuaraKonsumenView,
   },
@@ -254,6 +257,16 @@ const routes = [
     },
   },
   {
+    path: "/anggota/sk",
+    name: "SK  Anggota",
+    component: SkAnggotaView,
+    meta: {
+      requiresAuth: true,
+      requiredRole: "anggota",
+      title: "Cetak SK Anggota",
+    },
+  },
+  {
     path: "/anggota/upload-kegiatan",
     name: "Upload Kegiatan",
     component: UploadKegiatan,
@@ -284,6 +297,16 @@ const routes = [
       requiresAuth: true,
       requiredRole: "admin",
       title: "Data Anggota Admin",
+    },
+  },
+  {
+    path: "/admin/profile",
+    name: "Profile Admin",
+    component: ProfileAdminView,
+    meta: {
+      requiresAuth: true,
+      requiredRole: "admin",
+      title: "Profile Admin",
     },
   },
   {

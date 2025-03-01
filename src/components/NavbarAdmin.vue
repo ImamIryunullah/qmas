@@ -6,7 +6,10 @@
     <div class="flex justify-between items-center mb-6 px-2">
       <div v-if="isSidebarOpen" class="flex items-center space-x-3 ml-3">
         <img src="@/assets/iconlpkni.png" alt="LPKNI Icon" class="w-6 h-8" />
-        <span class="text-gray-200 font-bold text-lg">HALO ADMIN</span>
+        <span class="text-gray-200 font-bold text-lg text-center">Admin
+          <span class="text-center">Dashboard</span>
+        </span>
+
       </div>
 
       <button @click="toggleSidebar" class="p-2 focus:outline-none text-white">
@@ -27,11 +30,14 @@
 
     <!-- Profile & Logout -->
     <div class="mt-auto pt-6 border-t border-white">
-      <div class="flex items-center py-3 px-4 rounded-md hover:bg-gray-700">
-        <i class="fas fa-user-circle text-white text-2xl"></i>
-        <span v-if="isSidebarOpen" class="ml-3 font-semibold">ADMIN</span>
-      </div>
+      <router-link :to="`/admin/profile`">
+        <div class="flex items-center py-3 px-4 rounded-md hover:bg-red-700"
+          :class="{ 'bg-grey-200 text-black bg-red-700': $route.path === `/admin/profile` }">
+          <i class="fas fa-user-circle text-white text-2xl"></i>
+          <span v-if="isSidebarOpen" class="ml-3 font-semibold">{{ Name }}</span>
 
+        </div>
+      </router-link>
 
       <!-- Display Current Date & Time -->
       <div v-if="isSidebarOpen" class="text-white text-xs mt-4 ml-3">
@@ -47,19 +53,15 @@
       </button>
     </div>
   </div>
-
-  <!-- Main Content -->
-  <!-- <div class="flex-1 transition-all duration-300" :class="isSidebarOpen ? 'mr-64 ' : 'mr-16'">
-    <slot></slot>
-  </div> -->
-
 </template>
 
 <script>
+import Swal from 'sweetalert2';
 export default {
   data() {
     return {
       currentDate: new Date(),
+      Name: this.$store.state.storeLpkni.userLpkni.user.nama_depan,
       menuItems: [
         { label: "Dashboard", path: "/admin/dashboard", icon: "fas fa-home" },
         { label: "Data Anggota", path: "/admin/data-pendaftaran-anggota", icon: "fas fa-user-check" },
@@ -83,12 +85,22 @@ export default {
     },
     async logout() {
       try {
-        await this.$store.dispatch("logout");
-        this.$toast.success("Successfully logged out.", { position: "top-right", duration: 1000 });
+        await this.$store.dispatch("logoutLpkni");
+        Swal.fire({
+          icon: "success",
+          title: "Berhasil Logout",
+          showConfirmButton: false,
+          timer: 1500,
+        });
         await this.$router.push("/auth/login");
       } catch (e) {
         console.log(e);
-        this.$toast.error("Couldn't log out.", { position: "top-right", duration: 1000 });
+        Swal.fire({
+          icon: "error",
+          title: "Gagal Logout",
+          showConfirmButton: false,
+          timer: 1500,
+        });
       }
     },
     handleResize() {
