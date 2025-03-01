@@ -82,21 +82,35 @@
                                     {{ data.publish ? 'Bisa Di Publish' : "Tidak Bisa Di Publish" }}
                                 </td>
                                 <td class="px-4 py-2 border border-b-2">{{ data.created_at.split('T')[0]
-                                    }}
+                                }}
                                 </td>
                                 <td class="px-4 py-2 border border-b-2">{{ data.created_at.split('T')[1].split('-')[0]
-                                    }}
+                                }}
                                 </td>
                                 <td class="px-4 py-2 border border-b-2">{{ data.data_anggota ? 'Anggota' : "Konsumen"
-                                    }}
+                                }}
                                 </td>
                                 <td class="px-4 py-2 text-center">
                                     <div class="flex justify-center space-x-2">
-                                        <button @click="openModal(data)"
-                                            class="flex items-center space-x-1 bg-blue-500 text-white px-3 py-2 rounded-lg text-sm hover:bg-blue-600 transition duration-200">
-                                            <h1>Lihat</h1>
-                                            <i class="fa-solid fa-bars"></i>
-                                        </button>
+                                        <div class="flex justify-center space-x-2 font-semibold">
+                                            <button @click="openModal(data)"
+                                                class="flex items-center space-x-1 bg-blue-500 text-white px-3 py-2 rounded-lg text-sm hover:bg-blue-600 transition duration-200">
+                                                <h1>Lihat</h1>
+                                                <i class="fa-solid fa-bars"></i>
+                                            </button>
+                                            <button @click="TambahBerita(data)"
+                                                class="flex items-center space-x-1 bg-green-500 text-white px-3 py-2 rounded-lg text-sm hover:bg-green-600 transition duration-200">
+                                                <h1>Tambah Suara Konsumen
+                                                    <i class="fa-solid fa-plus"></i>
+                                                </h1>
+                                            </button>
+                                            <button @click="DeletePengaduan(data.id)"
+                                                class="flex items-center space-x-1 bg-red-500 text-white px-3 py-2 rounded-lg text-sm hover:bg-red-600 transition duration-200">
+                                                <h1>Hapus
+                                                    <i class="fa-solid fa-trash"></i>
+                                                </h1>
+                                            </button>
+                                        </div>
                                     </div>
                                 </td>
                             </tr>
@@ -124,7 +138,7 @@
                         <p><strong>Publikasi:</strong> {{ selectedPengaduan.publish ? 'Ya' : 'Tidak' }}</p>
                         <p><strong>Tindak Lanjut:</strong> {{ selectedPengaduan.tindak_lanjut }}</p>
                         <p><strong>Pengaduan Dari:</strong> {{ selectedPengaduan.data_anggota ? 'Anggota' : 'Konsumen'
-                        }}</p>
+                            }}</p>
                         <p><strong>Email Pengadu:</strong> {{ selectedPengaduan.email }}</p>
                         <p><strong>Wilayah:</strong> {{ selectedPengaduan.wilayah.nama_wilayah }}</p>
                         <p><strong>Daerah:</strong> {{ selectedPengaduan.daerah.nama_daerah }}</p>
@@ -174,7 +188,25 @@ export default {
             daerahList: [],
             isModalOpen: false,
             selectedStatus: '',
-            selectedPengaduan: {}
+            selectedPengaduan: {},
+            kegitanList: [],
+            lightboxVisible: false,
+            lightboxIndex: 0,
+            imageUrls: [],
+            form: {
+                judul: '',
+                daerahId: 0,
+                tanggal: '',
+                wilayahId: 0,
+                kategori: '',
+                deskripsi1: '',
+                deskripsi2: '',
+                deskripsi3: '',
+                publish: false,
+                file: [],
+                keterangan: []
+            },
+            media: []
         };
     },
     computed: {
@@ -259,6 +291,177 @@ export default {
         getfullPathImage(img) {
             return api.getfullpathImage(img)
         }
+        ,
+        async DeletePengaduan(id) {
+            Swal.fire({
+                title: "Informasi",
+                text: 'Apakah Anda Yakin Ingin Menghapus Pengaduan Ini?',
+                showDenyButton: true,
+                confirmButtonText: "Ya",
+                reverseButtons: false,
+                denyButtonText: `Tidak`,
+                confirmButtonColor: '#22c55e',
+                icon: 'info',
+
+            }).then(async (result) => {
+                if (result.isDenied || !result.isConfirmed || result.isDismissed) {
+                    return
+                }
+                await api.DeletePengaduan(id).then(() => {
+                    Swal.fire({
+                        icon: 'success',
+                        title: 'Berhasil!',
+                        text: 'berhasil Menghapus Pengaduan Anda!'
+                    })
+                    setTimeout(() => {
+                        window.location.reload()
+                    }, 1000);
+
+                }).catch(() => {
+                    Swal.fire({
+                        icon: 'error',
+                        title: 'Gagal!',
+                        text: 'Gagal Menghapus Pengaduan Anda!'
+                    })
+                })
+            })
+        },
+        async downloadImageAsBlob(imageUrl) {
+            console.log(imageUrl);  // Menampilkan URL gambar
+
+            try {
+                const corsImageModified = new Image();
+                corsImageModified.crossOrigin = "Anonymous";  // Menggunakan CORS
+
+                return new Promise((resolve, reject) => {
+                    corsImageModified.onload = () => {
+                        const canvas = document.createElement("canvas");
+                        const ctx = canvas.getContext("2d");
+
+                        canvas.width = corsImageModified.width;
+                        canvas.height = corsImageModified.height;
+
+                        // Menggunakan requestAnimationFrame untuk menggambar gambar secara lebih efisien
+                        const drawImage = () => {
+                            ctx.drawImage(corsImageModified, 0, 0);
+                            canvas.toBlob((blob) => {
+                                if (blob) {
+                                    resolve(blob); // Mengembalikan Blob yang berhasil dibuat
+                                } else {
+                                    reject(new Error("Failed to create blob from canvas."));
+                                }
+                            }, "image/jpeg");  // Menyimpan file dalam format jpeg
+                        };
+
+                        // Meminta browser untuk menggambar gambar di frame berikutnya
+                        window.requestAnimationFrame(drawImage);
+                    };
+
+                    corsImageModified.onerror = (error) => {
+                        reject(new Error("Error loading image: " + error.message));
+                    };
+
+                    corsImageModified.src = imageUrl + "?not-from-cache-please";
+                });
+
+            } catch (error) {
+                console.error("Error downloading image:", error);
+                throw error;  // Lempar ulang error agar bisa ditangani lebih lanjut
+            }
+        },
+        // Fungsi untuk mendapatkan ekstensi gambar
+        getImageExtension(imageUrl) {
+            const ext = imageUrl.split('.').pop().toLowerCase(); // Mendapatkan ekstensi file (menggunakan toLowerCase untuk menangani variasi huruf besar/kecil)
+            return ext;
+        },
+        // Fungsi untuk menentukan MIME type berdasarkan ekstensi file
+        getMimeType(extension) {
+            const mimeTypes = {
+                jpg: "image/jpg",
+                jpeg: "image/jpeg",
+                png: "image/png",
+                JPG: "image/JPG",
+                JPEG: "image/JPEG",
+                PNG: "image/PNG"
+            };
+            return mimeTypes[extension] || "image/jpeg";  // Default ke "image/jpeg" jika ekstensi tidak dikenali
+        },
+        async TambahBerita(data) {
+            Swal.fire({
+                title: "Informasi",
+                text: 'Apakah Anda Yakin Ingin Menambahkan Kegiatan Ini Ke Suara Konsumen?',
+                showDenyButton: true,
+                confirmButtonText: "Ya",
+                reverseButtons: false,
+                denyButtonText: `Tidak`,
+                confirmButtonColor: '#22c55e',
+                icon: 'info',
+
+            }).then(async (result) => {
+                if (result.isDenied || !result.isConfirmed || result.isDismissed) {
+                    return
+                }
+
+                // Mengambil URL gambar dan deskripsi dari media
+                const urlDownload = data.media.map(item => this.getfullPathImage(item.imageUrl));
+                const deskripsi = data.media.map(item => item.deskripsi);
+
+                try {
+                    // Iterasi untuk mengunduh gambar satu per satu
+                    for (let i = 0; i < urlDownload.length; i++) {
+                        const url = urlDownload[i];
+                        const desc = deskripsi[i];
+
+                        // Unduh gambar sebagai Blob
+                        const blob = await this.downloadImageAsBlob(url);
+                        console.log(blob)
+                        // Periksa apakah blob memiliki ukuran yang valid (lebih dari 0 byte)
+                        if (blob.size === 0) {
+                            console.error(`Error: Gambar ${desc} kosong atau rusak.`);
+                            continue; // Lompat ke iterasi berikutnya jika file kosong
+                        }
+                        // Mendapatkan ekstensi file dan MIME type
+                        const extension = this.getImageExtension(url); // Ambil ekstensi dari URL gambar
+                        const mimeType = this.getMimeType(extension); // Tentukan MIME type berdasarkan ekstensi
+                        // Periksa MIME type untuk memastikan file sesuai dengan jenis yang diharapkan
+                        if (!blob.type.startsWith('image/')) {
+                            console.error(`Error: ${desc} bukan gambar yang valid.`);
+                            continue; // Lompat ke iterasi berikutnya jika file bukan gambar
+                        }
+                        // Membuat objek file dari Blob yang diunduh
+                        const file = new File([blob], `${desc}.${extension}`, { type: mimeType });
+
+                        // Menambahkan file yang diunduh ke dalam form.file
+                        this.form.file[i] = file;
+
+                        // Menambahkan deskripsi gambar ke dalam form.keterangan
+                        this.form.keterangan[i] = desc;
+                    }
+
+                    // Memeriksa hasil file yang sudah diubah ke dalam array
+                    this.form.judul = data.judul
+                    this.form.deskripsi1 = data.deskripsi
+                    this.form.tanggal = data.created_at.split('T')[0]
+                    this.form.wilayahId = data.wilayah_id
+                    this.form.daerahId = data.daerah_id
+                    this.form.kategori = 'Pengaduan Anggota/Konsumen'
+                    this.form.publish = false;
+                    console.log(this.form);
+                    // Setelah selesai, kirim data ke API atau lakukan tindakan lainnya
+                    api.CreateSuaraKonsumenAdmin(this.form).then(() => {
+                        this.$toast.success('Suara Konsumen Berhasil Di Tambahkan')
+                        setTimeout(() => {
+                            window.location.reload()
+                        }, 1000);
+                    }).catch(() => {
+                        this.$toast.error('Suara Konsumen gagal Di Tambahkan')
+                    })
+
+                } catch (error) {
+                    console.error("Error downloading or processing image:", error);
+                }
+            })
+        },
     }
 };
 </script>

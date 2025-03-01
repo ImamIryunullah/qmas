@@ -203,7 +203,7 @@ export default {
             break;
         }
         console.log(PDFName)
-        const response = await fetch(`http://192.168.10.2:3000/assets/${PDFName}.pdf`);
+        const response = await fetch(`http://192.168.10.2:3000/assets/${PDFName}.pdf` + "?not-from-cache-please");
         if (!response.ok) {
           throw new Error('PDF not found or failed to load');
 
@@ -231,16 +231,16 @@ export default {
 
         // ✅ Tambahkan gambar bulat ke dalam PDF
         page.drawImage(image, {
-          x: 64.4, // Sesuaikan posisi X
-          y: 194, // Sesuaikan posisi Y
-          width: 95, // Sesuaikan ukuran gambar
-          height: 95, // Sesuaikan ukuran gambar
+          x: 185, // Sesuaikan posisi X
+          y: 545, // Sesuaikan posisi Y
+          width: 252, // Sesuaikan ukuran gambar
+          height: 255, // Sesuaikan ukuran gambar
         });
         // Ambil titik tengah halaman
         const centerX = page.getWidth() / 2;
-        const yPosTextSK = 180;
-        const fontSize = 14;
-        const NoSK = this.data_anggota.nama_lengkap
+        const yPosTextSK = 500;
+        const fontSize = 35;
+        const NoSK = this.data_anggota.nama_lengkap;
         const SkIndex = Math.floor(NoSK.length / 2);
         const SKfirstPart = NoSK.substring(0, SkIndex);
         const SKsecondPart = NoSK.substring(SkIndex);
@@ -257,13 +257,13 @@ export default {
 
         // Jika Anda ingin keseluruhan teks (gabungan kedua bagian) terpusat, hitung total lebar:
         const totalTextWidth = widthFirstPart + widthSecondPart;
-        const startX = centerX - totalTextWidth / 2 - 5;
+        const startX = centerX - totalTextWidth / 2 - 10;
 
         // Untuk SKfirstPart yang digambar dari kanan ke kiri, posisi awal harus di akhir bagian pertama:
         let xPosText1SK = startX + widthFirstPart;
 
         // Untuk SKsecondPart yang digambar dari kiri ke kanan, mulai dari posisi akhir SKfirstPart:
-        let xPosText2SK = startX + widthFirstPart + 7;
+        let xPosText2SK = startX + widthFirstPart + 20;
 
         // --- Menggambar SKfirstPart (kanan ke kiri) ---
         for (let i = SKfirstPart.length - 1; i >= 0; i--) {
@@ -304,39 +304,40 @@ export default {
         }
 
 
-        let nameYPosition = 172; // Posisi Y nama
-        page.drawText("ID", { x: 22, y: 140, size: 12, color: rgb(1, 1, 1) });
-        page.drawText(":", { x: 75, y: 140, size: 12, color: rgb(1, 1, 1) });
-        page.drawText(this.kode_idcard, { x: 85, y: 139, size: 12, color: rgb(1, 1, 1) });
+        let nameYPosition = 400; // Posisi Y nama
+        const posxAll = 80
+        page.drawText("ID", { x: posxAll, y: nameYPosition, size: 30, color: rgb(1, 1, 1), font: courierNewFonts });
+        page.drawText(":", { x: posxAll + 160, y: nameYPosition, size: 30, color: rgb(1, 1, 1), font: courierNewFonts });
+        page.drawText(this.kode_idcard, { x: posxAll + 180, y: nameYPosition, size: 30, color: rgb(1, 1, 1), font: courierNewFonts });
 
         // Menambahkan Jabatan
         const jabatan = this.data_anggota.jabatanStruktural.nama.toUpperCase()
         const jabatanLines = this.wrapText(jabatan, 18); // Memecah teks jabatan jika lebih dari 21 karakter
-        let jabatanYPosition = nameYPosition - 50; // Menyesuaikan posisi Y berdasarkan nama
+        let jabatanYPosition = nameYPosition - 30; // Menyesuaikan posisi Y berdasarkan nama
 
         jabatanLines.forEach((line, index) => {
-          page.drawText(index === 0 ? "JABATAN" : "", { x: 20, y: jabatanYPosition, size: 10, color: rgb(1, 1, 1) });
-          page.drawText(index === 0 ? ":" : "", { x: 75, y: jabatanYPosition, size: 10, color: rgb(1, 1, 1) });
-          page.drawText(line, { x: 85, y: jabatanYPosition, size: 10, color: rgb(1, 1, 1) });
+          page.drawText(index === 0 ? "JABATAN" : "", { x: posxAll, y: jabatanYPosition, size: 30, color: rgb(1, 1, 1), font: courierNewFonts });
+          page.drawText(index === 0 ? ":" : "", { x: posxAll + 160, y: jabatanYPosition, size: 30, color: rgb(1, 1, 1), font: courierNewFonts });
+          page.drawText(line, { x: posxAll + 180, y: jabatanYPosition, size: 30, color: rgb(1, 1, 1), font: courierNewFonts });
 
           // Jika ada lebih dari satu baris, tambahkan jarak Y
-          jabatanYPosition -= 15;
+          jabatanYPosition -= 24;
         });
 
         // Menambahkan Alamat
         const alamat = this.data_anggota.alamat.toUpperCase();
-        const alamatLines = this.wrapText(alamat, 21); // Memecah teks alamat jika lebih dari 21 karakter
-        let alamatYPosition = jabatanYPosition - 0; // Menyesuaikan posisi Y berdasarkan jabatan
+        const alamatLines = this.wrapText(alamat, 18); // Memecah teks alamat jika lebih dari 21 karakter
+        let alamatYPosition = jabatanYPosition - 5; // Menyesuaikan posisi Y berdasarkan jabatan
 
         alamatLines.forEach((line, index) => {
-          page.drawText(index === 0 ? "ALAMAT" : "", { x: 20, y: alamatYPosition, size: 10, color: rgb(1, 1, 1) });
-          page.drawText(index === 0 ? ":" : "", { x: 75, y: alamatYPosition, size: 10, color: rgb(1, 1, 1) });
-          page.drawText(line, { x: 85, y: alamatYPosition, size: 10, color: rgb(1, 1, 1) });
+          page.drawText(index === 0 ? "ALAMAT" : "", { x: posxAll, y: alamatYPosition, size: 30, color: rgb(1, 1, 1), font: courierNewFonts });
+          page.drawText(index === 0 ? ":" : "", { x: posxAll + 160, y: alamatYPosition, size: 30, color: rgb(1, 1, 1), font: courierNewFonts });
+          page.drawText(line, { x: posxAll + 180, y: alamatYPosition, size: 30, color: rgb(1, 1, 1), font: courierNewFonts });
 
           // Jika ada lebih dari satu baris, tambahkan jarak Y
-          alamatYPosition -= 15;
+          alamatYPosition -= 24;
         });
-        page.drawText(this.tanggalBergabung.split('T')[0].split('-')[0], { x: 100, y: 10, size: 12, color: rgb(1, 1, 1) });
+        page.drawText(this.tanggalBergabung.split('T')[0].split('-')[0], { x: 100, y: 30, size: 12, color: rgb(1, 1, 1), font: courierNewFonts });
 
         // ✅ Simpan PDF
         const pdfBytes = await pdfDoc.save();

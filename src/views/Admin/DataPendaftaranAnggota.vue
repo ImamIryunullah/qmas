@@ -86,6 +86,9 @@
                 <td class="px-4 py-2 border border-b-2">{{ data.jabatanStruktural ?
                   data.jabatanStruktural.tingkat :
                   "-" }}</td>
+                <td class="px-4 py-2 border border-b-2">{{ data.alamatkantor ?
+                  data.alamatkantor :
+                  "-" }}</td>
                 <td class="px-4 py-2 border border-b-2 text-center font-semibold">
                   <!-- Conditional Rendering of Status with Icon and Color -->
                   <span :class="{
@@ -108,9 +111,7 @@
                     {{ data.status }}
                   </span>
                 </td>
-                <td class="px-4 py-2 border border-b-2">{{ data.alamatkantor ?
-                  data.alamatkantor :
-                  "-" }}</td>
+
                 <td class="px-4 py-2 border border-b-2">{{ data.keterangan ?
                   data.keterangan :
                   "-" }}</td>
@@ -159,7 +160,7 @@
                 <tr class="border-t">
                   <td class="px-4 py-2 border border-b-2 ">{{ SelecteAnggota.nik }}</td>
                   <td class="px-4 py-2 border border-b-2 ">{{ SelecteAnggota.alamat
-                    }}</td>
+                  }}</td>
                   <td class="px-4 py-2 border border-b-2 ">{{ SelecteAnggota.agama }}</td>
                   <td class="px-4 py-2 border border-b-2 ">{{ SelecteAnggota.pekerjaan }}</td>
                   <td class="px-4 py-2 border border-b-2 ">{{ SelecteAnggota.tempatLahir }}</td>

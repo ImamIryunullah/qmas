@@ -67,6 +67,9 @@ export default {
   GetAllPengaduanAdmin() {
     return API.get("/pengaduan");
   },
+  DeletePengaduan(id) {
+    return API.delete(`/pengaduan/${id}`);
+  },
   CreateSuaraKonsumenAdmin(data) {
     return API.post("/berita", data, {
       headers: { "Content-Type": "multipart/form-data" },
