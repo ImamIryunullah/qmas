@@ -47,19 +47,19 @@ export default {
     return {
       dashboardData: [
         { title: "Data Pendaftaran Anggota", total: 0, icon: "fas fa-user-plus", bgColor: "bg-purple-500", link: '/admin/data-pendaftaran-anggota' },
-        { title: "Jabatan Tingkat Pusat", total: 0, icon: "fas fa-landmark", bgColor: "bg-green-500", link: '/admin/data-pendaftaran-anggota' },
+        { title: "Jabatan Tingkat Pusat", total: 0, icon: "fas fa-landmark", bgColor: "bg-green-500", link: '/admin/management-jabatan' },
         { title: "Jabatan Tingkat Kota/Kabupaten", total: 0, icon: "fas fa-city", bgColor: "bg-yellow-500", link: '/admin/management-jabatan' },
-        { title: "Jabatan Tingkat Provinsi", total: 0, icon: "fas fa-landmark", bgColor: "bg-green-500", link: '/admin/data-pendaftaran-anggota' },
+        { title: "Jabatan Tingkat Provinsi", total: 0, icon: "fas fa-landmark", bgColor: "bg-green-500", link: '/admin/management-jabatan' },
         { title: "Total Jabatan Seluruh Indonesia", total: "6028", icon: "fas fa-globe", bgColor: "bg-red-500", link: '/admin/data-pendaftaran-anggota' },
         { title: "Total Pendaftaran Disetujui", total: 0, icon: "fas fa-check-circle", bgColor: "bg-blue-500", link: '/admin/data-pendaftaran-anggota' },
         { title: "Total Pengaduan", total: 0, icon: "fas fa-exclamation-triangle", bgColor: "bg-purple-500", link: '/admin/data-pengaduan' },
         // { title: "Tim Pusat", total: "15", icon: "fas fa-users", bgColor: "bg-red-400", link: '/admin/data-pendaftaran-anggota' },
-        { title: "Data Transaksi Pending", total: 0, icon: "fas fa-wallet", bgColor: "bg-yellow-400", link: '/admin/data-pendaftaran-anggota' },
-        { title: "Data Transaksi Succes", total: 0, icon: "fas fa-wallet", bgColor: "bg-green-600", link: '/admin/data-pendaftaran-anggota' },
+        { title: "Data Transaksi Pending", total: 0, icon: "fas fa-wallet", bgColor: "bg-yellow-400", link: '/admin/data-pembayaran-anggota' },
+        { title: "Data Transaksi Succes", total: 0, icon: "fas fa-wallet", bgColor: "bg-green-600", link: '/admin/data-pembayaran-anggota' },
         { title: "Data Pendaftaran Anggota Pending", total: 0, icon: "fas fa-user-plus", bgColor: "bg-yellow-500", link: '/admin/data-pendaftaran-anggota' },
 
         { title: "Data Pendaftaran Anggota Cancel", total: 0, icon: "fas fa-user-plus", bgColor: "bg-red-800", link: '/admin/data-pendaftaran-anggota' },
-        { title: "Data Transaksi Cancel", total: 0, icon: "fas fa-wallet", bgColor: "bg-red-600", link: '/admin/data-pendaftaran-anggota' },
+        { title: "Data Transaksi Cancel", total: 0, icon: "fas fa-wallet", bgColor: "bg-red-600", link: '/admin/data-pembayaran-anggota' },
 
       ],
       listDataAnggota: [],
@@ -110,23 +110,14 @@ export default {
       try {
         const response = await lpkni.getAllUserData();
         this.listDataAnggota = response.data;
-        // console.log(this.listDataAnggota);
         this.$toast.success('Berhasil mengambil Data Anggota');
         this.dashboardData[0].total = this.listDataAnggota.length;
-        //Status Anggota 
         const setuju = this.listDataAnggota.map(item => item.status === "SUCCESS")
         const pending = this.listDataAnggota.map(item => item.status === "PENDING")
         const cancel = this.listDataAnggota.map(item => item.status === "CANCEL")
         this.dashboardData[5].total = setuju.filter(item => item === true).length
         this.dashboardData[9].total = pending.filter(item => item === true).length
         this.dashboardData[10].total = cancel.filter(item => item === true).length
-        //Status Transasksi 
-        // const transaksiSuccess = this.listDataAnggota.map(item => item.transaksiAnggota);
-        // const transaksiPending = this.listDataAnggota.map(item => item.transaksiAnggota);
-        // console.log(transaksiSuccess)
-        // this.dashboardData[7].total = transaksiPending.filter(item => item === true).length;  // Total success
-        // this.dashboardData[8].total = transaksiSuccess.filter(item => item === true).length; // Total success
-
       } catch (error) {
         this.$toast.error('Gagal mengambil Data Anggota');
       } finally {
@@ -138,7 +129,6 @@ export default {
       try {
         const response = await lpkni.GetAllPengaduanAdmin();
         this.listDataPengaduan = response.data;
-        // console.log(this.listDataPengaduan);
         this.$toast.success('Berhasil mengambil Data Pengaduan');
         this.dashboardData[6].total = this.listDataPengaduan.length
       } catch (error) {
@@ -152,7 +142,6 @@ export default {
       try {
         const response = await lpkni.GetallJabatan();
         this.JabatanList = response.data;
-        // console.log(this.JabatanList);
         this.$toast.success('Berhasil mengambil Data Anggota');
         this.dashboardData[4].total = this.JabatanList.length;
         const jabatanPusat = this.JabatanList.map(item => item.tingkat === "Pusat");
