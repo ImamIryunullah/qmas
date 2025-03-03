@@ -2,25 +2,19 @@
     <header :class="{ 'hidden-navbar': !isNavbarVisible }"
         class="bg-red-600 p-6 shadow-lg fixed top-0 left-0 right-0 z-50 font-bold">
         <div class="container mx-auto flex justify-between items-center">
-            <!-- Logo -->
-            <router-link to="/" class="text-white text-3xl font-bold flex items-center">
-                <img src="@/assets/iconlpkni.png" alt="LPKNI" class="w-15 h-12 mr-3 mt-2" />
+            <router-link to="/" class="text-white text-2xl font-bold flex items-center">
+                <img src="@/assets/iconlpkni.png" alt="LPKNI" class="w-9 h-12 mr-1 mt-1" />
                 LPKNI
             </router-link>
-
-            <!-- Mobile Hamburger Button -->
             <div class="block md:hidden">
                 <button @click="toggleMenu" class="text-white focus:outline-none">
                     <i class="fas fa-bars text-2xl"></i>
                 </button>
             </div>
-
-            <!-- Desktop Header Links -->
             <ul class="hidden md:flex space-x-6">
-
                 <li>
                     <router-link to="/suara-konsumen"
-                        class="text-white hover:text-gray-300 flex items-center space-x-2">
+                        class="text-white hover:text-gray-300 flex items-center space-x-1">
                         <i class="fas fa-newspaper"></i>
                         <span>Suara Konsumen</span>
                     </router-link>
@@ -31,19 +25,6 @@
                         <span>Pengaduan</span>
                     </router-link>
                 </li>
-                <li>
-                    <a href="/#services" class="text-white hover:text-gray-300 flex items-center space-x-2">
-                        <i class="fas fa-cogs"></i>
-                        <span>Layanan</span>
-                    </a>
-                </li>
-                <li>
-                    <a href="/#about" class="text-white hover:text-gray-300 flex items-center space-x-2">
-                        <i class="fas fa-info-circle"></i>
-                        <span>Tentang</span>
-                    </a>
-                </li>
-
                 <li>
                     <a href="/#contact" class="text-white hover:text-gray-300 flex items-center space-x-2">
                         <i class="fas fa-phone-alt"></i>
@@ -95,7 +76,6 @@
 
             </ul>
         </div>
-
         <div v-if="isMenuOpen" class="md:hidden fixed inset-0 bg-black bg-opacity-50 z-40" @click="toggleMenu"></div>
         <div v-if="isMenuOpen"
             class="fixed inset-y-0 right-0 w-64 bg-red-700 text-white z-50 transform transition-all ease-in-out"
@@ -127,6 +107,19 @@
                         <i class="fas fa-phone-alt w-5 h-5"></i>
                         <span>Kontak</span>
                     </a>
+                </li>
+               
+                <li>
+                    <router-link to="/suara-konsumen" class="flex items-center space-x-2 hover:text-gray-300">
+                        <i class="fas fa-newspaper w-5 h-5"></i>
+                        <span>Suara Konsumen</span>
+                    </router-link>
+                </li>
+                <li>
+                    <router-link to="/pengaduan" class="flex items-center space-x-2 hover:text-gray-300">
+                        <i class="fas fa-exclamation-triangle w-5 h-5"></i>
+                        <span>Pengaduan</span>
+                    </router-link>
                 </li>
                 <li class="relative">
                     <button @click="toggleDropdown"
@@ -170,23 +163,10 @@
                         </li>
                     </ul>
                 </li>
-                <li>
-                    <router-link to="/suara-konsumen" class="flex items-center space-x-2 hover:text-gray-300">
-                        <i class="fas fa-newspaper w-5 h-5"></i>
-                        <span>Suara Konsumen</span>
-                    </router-link>
-                </li>
-                <li>
-                    <router-link to="/pengaduan" class="flex items-center space-x-2 hover:text-gray-300">
-                        <i class="fas fa-exclamation-triangle w-5 h-5"></i>
-                        <span>Pengaduan</span>
-                    </router-link>
-                </li>
             </ul>
         </div>
     </header>
 </template>
-
 <script>
 export default {
     data() {
@@ -200,68 +180,59 @@ export default {
     },
     methods: {
         toggleMenu() {
-            this.isMenuOpen = !this.isMenuOpen; // Toggle mobile menu visibility
+            this.isMenuOpen = !this.isMenuOpen; 
         },
         toggleDropdown() {
-            this.isDropdownOpen = !this.isDropdownOpen; // Toggle dropdown visibility
+            this.isDropdownOpen = !this.isDropdownOpen; 
         },
         toggleDropdownLogin() {
-            this.isDropdownOpenLogin = !this.isDropdownOpenLogin; // Toggle dropdown visibility
+            this.isDropdownOpenLogin = !this.isDropdownOpenLogin; 
         },
         handleScroll() {
             const currentScrollY = window.scrollY;
             this.isNavbarVisible = currentScrollY < this.lastScrollY || currentScrollY < 50;
             this.lastScrollY = currentScrollY;
-            this.closeMenu(); // Close mobile menu when scrolling
+            this.closeMenu(); 
         },
         closeMenu() {
-            this.isMenuOpen = false; // Close menu
+            this.isMenuOpen = false; 
         },
     },
     mounted() {
-        window.addEventListener('scroll', this.handleScroll); // Detect scroll position
+        window.addEventListener('scroll', this.handleScroll); 
     },
     beforeUnmount() {
-        window.removeEventListener('scroll', this.handleScroll); // Cleanup scroll event listener
+        window.removeEventListener('scroll', this.handleScroll);
     },
 };
 </script>
 
 <style scoped>
-/* Navbar transition styles */
+
 .hidden-navbar {
     transform: translateY(-100%);
 }
 
-/* Mobile devices (Portrait) */
 @media (max-width: 480px) {
     .text-2xl {
         font-size: 1.2rem;
-        /* Adjust font size for mobile phones */
     }
-
     .text-3xl {
         font-size: 1.8rem;
-        /* Adjust font size for larger mobile devices */
     }
-
-    /* Adjust padding for small screens */
     .container {
         padding-left: 1rem;
         padding-right: 1rem;
     }
 }
 
-/* Small tablets (like iPad portrait) */
 @media (min-width: 481px) and (max-width: 768px) {
     .text-2xl {
         font-size: 1rem;
-        /* Adjust font size for tablets */
     }
 
     .text-3xl {
         font-size: 1rem;
-        /* Adjust for iPad screens */
     }
 
     .container {
@@ -270,16 +241,13 @@ export default {
     }
 }
 
-/* Larger Tablets (iPad landscape, small laptops) */
 @media (min-width: 769px) and (max-width: 1024px) {
     .text-2xl {
         font-size: 1.75rem;
-        /* Slightly larger for landscape tablets */
     }
 
     .text-3xl {
         font-size: 2.25rem;
-        /* Adjust for tablet landscape */
     }
 
     .container {
@@ -288,16 +256,15 @@ export default {
     }
 }
 
-/* Large screens (Desktops, Large Tablets in landscape) */
 @media (min-width: 1025px) {
     .text-2xl {
         font-size: 2rem;
-        /* Larger screens, keep font size large */
+
     }
 
     .text-3xl {
         font-size: 2.5rem;
-        /* Large font size for desktops */
+
     }
 
     .container {
@@ -306,94 +273,62 @@ export default {
     }
 }
 
-/* Styles for screens smaller than 768px (tablet) */
 @media (max-width: 768px) {
 
-    /* Reduce the font size of text in span and icon further */
     header .text-white {
         font-size: 0.5rem;
-        /* Significantly smaller text size */
     }
 
-    /* Reduce the icon size even more */
     header i {
         font-size: 0.625rem;
-        /* Significantly smaller icon size */
     }
 
-    /* Adjust navbar items for smaller screens */
     header .container {
         padding: 0 5px;
-        /* Further reduce padding for compactness */
     }
 
-    /* Adjust mobile menu button size */
     .block.md\:hidden button {
         font-size: 1rem;
-        /* Smaller hamburger button */
     }
 
-    /* Stack navbar items vertically for mobile view */
     header .md\:hidden .space-x-6 {
         flex-direction: column;
     }
 
-    /* Adjust dropdown menu width and behavior for smaller screens */
     .md\:hidden .w-64 {
         width: 100%;
     }
 
-    /* Adjust button sizes for better responsiveness */
     header button {
         padding: 3px 6px;
-        /* Minimized button padding */
     }
 }
 
-/* Styles for screens smaller than 820px */
 @media (max-width: 820px) {
 
-    /* Reduce the font size of text in span further */
     header .text-white {
         font-size: 0.375rem;
-        /* Further smaller font size */
     }
-
-    /* Reduce icon size more */
     header i {
         font-size: 0.5rem;
-        /* More reduced icon size */
     }
-
-    /* Adjust navbar container padding */
     header .container {
         padding: 0 3px;
-        /* Further reduced padding */
     }
 
-    /* Make hamburger button size smaller */
     .block.md\:hidden button {
         font-size: 0.875rem;
-        /* Even smaller hamburger button */
     }
-
-    /* Stack navbar items vertically in dropdown for smaller screens */
     header .md\:hidden .space-x-6 {
         flex-direction: column;
     }
-
-    /* Ensure full-width dropdown */
     .md\:hidden .w-64 {
         width: 100%;
     }
-
-    /* Adjust button sizes and spacing */
     header button {
         padding: 3px 5px;
-        /* Even smaller button size */
     }
 }
-
 
 @media (max-width: 1024px) {
     header .text-white {

@@ -67,6 +67,8 @@ export default {
         { label: "Data Anggota", path: "/admin/data-pendaftaran-anggota", icon: "fas fa-user-check" },
         { label: "Data Pembayaran", path: "/admin/data-pembayaran-anggota", icon: "fas fa-wallet" },
         { label: "Management Jabatan", path: "/admin/management-jabatan", icon: "fas fa-briefcase" },
+        { label: "Management Provinsi", path: "/admin/management-Provinsi", icon: "fas fa-briefcase" },
+        { label: "Management Kota/Kab", path: "/admin/management-Kota-Kab", icon: "fas fa-briefcase" },
         { label: "Data Pengaduan", path: "/admin/data-pengaduan", icon: "fas fa-exclamation-triangle" },
         { label: "Tambah Berita/Suara Konsumen", path: "/admin/pengaduan-suara-konsumen", icon: "fas fa-newspaper" },
         { label: "Daftar Berita/Suara Konsumen", path: "/admin/daftar-suara-konsumen", icon: "fas fa-newspaper" },

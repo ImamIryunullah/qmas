@@ -39,7 +39,7 @@
                         <select v-model="form.wilayahId" @change="GetDaerahByWilayahId(form.wilayahId)"
                             class="w-full p-3 border border-gray-300 rounded-lg focus:outline-none focus:ring-2 focus:ring-red-600 transition duration-200 ease-in-out mt-2"
                             required>
-                            <option :value="0" selected disabled>Pilih Wilayah</option>
+                            <option :value="0" selected disabled>Pilih Provinsi</option>
                             <option v-for="wilayah in wilayahList" :key="wilayah.id_wilayah"
                                 :value="wilayah.id_wilayah">
                                 {{ wilayah.kode_wilayah + " - " + wilayah.nama_wilayah }}

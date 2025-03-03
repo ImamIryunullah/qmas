@@ -1,44 +1,100 @@
 <template>
-
-  <div class="w-screen h-screen min-h-screen flex flex-col bg-gray-100">
+  <div class="w-screen min-h-screen h-full flex bg-gray-100">
     <NavbarAnggota />
-    <div class="flex flex-col items-center justify-center p-10 h-full bg-gray-100 flex-grow">
-      <div class="bg-white h-screen w-full max-w-xl p-10 pb-28 rounded-lg shadow-md">
-        <h3 class="text-xl font-semibold text-center mb-4">ID Card Anda</h3>
-        <!-- <h3 class="text-sm font-semibold text-left mb-4">Jabatan : {{ data_anggota.jabatanStruktural.nama }}</h3> -->
-        <!-- <h3 class="text-sm font-semibold text-left mb-4">Tingkat : {{ data_anggota.jabatanStruktural.tingkat }}</h3> -->
-        <div class="w-full h-full" v-if="pdfUrl">
-          <!-- <embed :src="pdfUrl" type="" class="w-full h-full"> -->
-          <iframe loading="lazy" :src="pdfUrl" class="w-full h-full" frameborder="0"></iframe>
+    <!-- Wrapper utama agar tidak gepeng -->
+    <div class="flex flex-grow justify-center items-center text-xl mt-14 mr-8 w-full h-full mb-12">
+      <div class="w-full h-full max-w-sm sm:max-w-xl p-5 sm:p-10 pb-20 ">
+        <div class="w-full py-8 px-4 sm:px-8">
+          <h3 class="text-2xl sm:text-3xl font-semibold text-center text-red-700 mb-4">
+            ID Card LPKNI
+          </h3>
+          <p class="text-lg sm:text-xl text-gray-700 mb-3 text-justify">
+            Kartu identitas resmi anggota LPKNI adalah bukti keanggotaan yang sah, yang berfungsi sebagai:
+          </p>
+
+
         </div>
-        <div class="w-full flex items-center justify-center" v-else>
-          Harap Tekan Cetak ID Card
+        <div
+          class="w-full min-h-[150px] sm:min-h-[200px] overflow-hidden flex justify-center items-center bg-gray-200 rounded-md">
+          <canvas ref="pdfCanvas" class="w-full h-auto"></canvas>
         </div>
-        <div class="flex items-center justify-center">
-          <button @click="generatePdf"
-            class="w-full p-5 m-5 md:w-auto flex items-center justify-center bg-red-500 text-white px-4 py-2 rounded-lg hover:bg-red-600 transition duration-300 shadow-md">
-            <i class="fas fa-id-card mr-2"></i> Cetak ID Card
-          </button>
+
+        <div class="mt-6">
+          <!-- Responsive grid layout with adjusted spacing -->
+          <div class="grid grid-cols-1 sm:grid-cols-2 lg:grid-cols-2 lg:grid-rows-2 gap-6">
+            <!-- Button Cetak -->
+            <div class="flex flex-col items-center">
+              <button @click="generatePdf"
+                class="flex items-center justify-center bg-red-500 text-white px-4 py-2 rounded-lg hover:bg-red-600 transition duration-300 shadow-md w-full sm:w-auto min-w-[140px]">
+                <i class="fas fa-id-card mr-2"></i> Cetak
+              </button>
+              <p class="text-xs sm:text-sm text-gray-600 mt-1 text-center">Buat dokumen ID Card dalam format PDF.</p>
+            </div>
+            <!-- Button Unduh -->
+            <div class="flex flex-col items-center">
+              <button v-if="pdfUrl" @click="downloadPdf"
+                class="flex items-center justify-center bg-blue-500 text-white px-4 py-2 rounded-lg hover:bg-blue-600 transition duration-300 shadow-md w-full sm:w-auto min-w-[140px]">
+                <i class="fas fa-download mr-2"></i> Unduh
+              </button>
+              <p v-if="pdfUrl" class="text-xs sm:text-sm text-gray-600 mt-1 text-center">Simpan ID Card dalam perangkat
+                Anda.</p>
+            </div>
+            <!-- Button Depan -->
+            <div class="flex flex-col items-center">
+              <button v-if="pdfUrl" @click="renderPdf(1)"
+                class="flex items-center justify-center bg-gray-700 text-white px-4 py-2 rounded-lg hover:bg-gray-800 transition duration-300 shadow-md w-full sm:w-auto min-w-[140px]">
+                <i class="fas fa-eye mr-2"></i> Depan
+              </button>
+              <p v-if="pdfUrl" class="text-xs sm:text-sm text-gray-600 mt-1 text-center">Tampilan Depan ID Card.</p>
+            </div>
+            <!-- Button Belakang -->
+            <div class="flex flex-col items-center">
+              <button v-if="pdfUrl" @click="renderPdf(2)"
+                class="flex items-center justify-center bg-gray-500 text-white px-4 py-2 rounded-lg hover:bg-gray-800 transition duration-300 shadow-md w-full sm:w-auto min-w-[140px]">
+                <i class="fas fa-eye mr-2"></i> Belakang
+              </button>
+              <p v-if="pdfUrl" class="text-xs sm:text-sm text-gray-600 mt-1 text-center">Tampilan Belakang ID Card.</p>
+            </div>
+          </div>
+          <div class="mt-4">
+            <div class="text-sm sm:text-base text-gray-600 mb-4 mx-4 sm:mx-12">
+              <ul class="list-disc pl-5 text-justify">
+                <li>Validasi keanggotaan di organisasi LPKNI.</li>
+                <li>Akses layanan dan program yang disediakan oleh LPKNI.</li>
+                <li>Pengenalan identitas anggota saat mengikuti kegiatan atau event.</li>
+                <li>Dokumen resmi yang dapat digunakan dalam proses verifikasi anggota di berbagai kesempatan.</li>
+                <li>Mempermudah akses dan otentikasi anggota di berbagai layanan
+                  dan kegiatan yang diadakan oleh LPKNI</li>
+              </ul>
+            </div>
+          </div>
         </div>
       </div>
     </div>
-    <!-- Overlay loading -->
+    <div v-if="lightboxVisible" class="fixed inset-0 bg-black bg-opacity-80 flex justify-center items-center z-50">
+      <div class="relative w-full h-full flex justify-center items-center">
+        <!-- Tombol Close -->
+        <button @click="lightboxVisible = false"
+          class="absolute top-4 right-4 text-white bg-black bg-opacity-50 p-2 rounded-full hover:bg-opacity-80 transition">
+          &times;
+        </button>
+        <iframe v-if="pdfUrl" :src="pdfUrl" class="w-full h-full border-none"></iframe>
+      </div>
+    </div>
     <div v-if="loading" class="fixed inset-0 flex items-center justify-center bg-black bg-opacity-50 z-50">
       <div class="text-white text-lg">Sedang Memuat...</div>
-      <div class="spinner-border animate-spin border-4 border-t-4 border-white rounded-full w-16 h-16 ml-2"></div>
+      <div class="spinner-border animate-spin border-4 border-t-4 border-white rounded-full w-12 h-12 ml-2"></div>
     </div>
   </div>
-
 </template>
-
 <script>
 import NavbarAnggota from '@/components/NavbarAnggota.vue';
-import { PDFDocument, rgb } from 'pdf-lib'; // Import rgb from pdf-lib
+import { PDFDocument, rgb } from 'pdf-lib';
 import fontkit from '@pdf-lib/fontkit';
 import lpkni from '@/service/lpkni';
 import Swal from 'sweetalert2';
-// import pusatmerah from 'public/pusatmerah.pdf'
-
+import * as pdfjsLib from "pdfjs-dist";
+import "pdfjs-dist/webpack";
 export default {
   components: {
     NavbarAnggota,
@@ -64,10 +120,10 @@ export default {
       this.$router.push('/anggota/data-diri')
     }
     this.getGetUserData();
-
   },
   data() {
     return {
+      lightboxVisible: false,
       data_anggota: {
         id_data_anggota: 0,
         nama_lengkap: "",
@@ -91,7 +147,6 @@ export default {
           nama: "",
           maksimumAnggota: 0,
           tingkat: ''
-
         },
         imageUsers: [
           { imageUrl: "", keterangan: "" },
@@ -111,9 +166,30 @@ export default {
       errorpdf: false,
       existingPdfBytes: null,
       tanggalBergabung: "",
+      currentPage: 1, // Halaman saat ini
     };
   },
   methods: {
+    async renderPdf(pages) {
+      try {
+        const loadingTask = pdfjsLib.getDocument(this.pdfUrl);
+        const pdf = await loadingTask.promise;
+        const page = await pdf.getPage(pages); // Render hanya halaman pertama
+        const scale = window.innerWidth < 768 ? 0.8 : 1.5; // Skala berbeda untuk mobile & desktop
+        const viewport = page.getViewport({ scale });
+
+        const canvas = this.$refs.pdfCanvas;
+        const context = canvas.getContext("2d");
+        canvas.width = viewport.width;
+        canvas.height = viewport.height;
+
+        await page.render({ canvasContext: context, viewport });
+
+        console.log("PDF berhasil dirender ke canvas!");
+      } catch (error) {
+        console.error("Gagal merender PDF:", error);
+      }
+    },
     async getGetUserData() {
       try {
         const res = await lpkni.getUserData();
@@ -123,13 +199,20 @@ export default {
         this.data_anggota = userData.data_anggota
         this.kode_idcard = this.data_anggota.daerah.kode_daerah + "." + this.data_anggota.id_data_anggota
         this.tanggalBergabung = this.data_anggota.createdAt
-        // setTimeout(() => {
-
-        // }, 1000);
         await this.generatePdf();
+        await this.renderPdf(1)
       } catch (error) {
         console.log(error)
       }
+    },
+    downloadPdf() {
+      if (!this.pdfUrl) return;
+      const link = document.createElement("a");
+      link.href = this.pdfUrl;
+      link.download = "ID_Card.pdf";
+      document.body.appendChild(link);
+      link.click();
+      document.body.removeChild(link);
     },
     getFullPathImage(img) {
       return lpkni.getfullpathImage(img)
@@ -139,32 +222,26 @@ export default {
         const canvas = document.createElement("canvas");
         const ctx = canvas.getContext("2d");
         const img = new Image();
-
-        img.crossOrigin = "Anonymous"; // Pastikan bisa diakses dari domain lain
+        img.crossOrigin = "Anonymous";
         img.onload = () => {
-          const size = Math.min(img.width, img.height); // Ukuran terkecil untuk membuat lingkaran
+          const size = Math.min(img.width, img.height);
           canvas.width = size;
           canvas.height = size;
-          // Buat lingkaran sebagai area pemotongan
           ctx.beginPath();
           ctx.arc(size / 2, size / 2, size / 2, 0, Math.PI * 2);
           ctx.closePath();
-          ctx.clip(); // Gunakan clip untuk memotong gambar
-          // Gambar image dalam lingkaran
+          ctx.clip();
           ctx.drawImage(img, 0, 0, size, size);
-          // Konversi ke blob agar bisa digunakan di PDF
           canvas.toBlob(blob => {
             resolve(blob);
           }, "image/png");
         };
-
         img.onerror = (error) => reject(error);
         img.src = imageUrl + "?not-from-cache-please";
       });
-    }
-    ,
+    },
     calculateTextWidth(text, fontSize) {
-      const charWidth = fontSize * 0.5; // Perkiraan lebar per karakter
+      const charWidth = fontSize * 0.5;
       return text.length * charWidth;
     },
     wrapText(text, maxLength) {
@@ -203,7 +280,7 @@ export default {
             break;
         }
         console.log(PDFName)
-        const response = await fetch(`http://192.168.10.2:3000/assets/${PDFName}.pdf` + "?not-from-cache-please");
+        const response = await fetch(`https://lpkni.id/assets/${PDFName}.pdf` + "?not-from-cache-please");
         if (!response.ok) {
           throw new Error('PDF not found or failed to load');
 
@@ -337,8 +414,7 @@ export default {
           // Jika ada lebih dari satu baris, tambahkan jarak Y
           alamatYPosition -= 24;
         });
-        page.drawText(this.tanggalBergabung.split('T')[0].split('-')[0], { x: 100, y: 30, size: 12, color: rgb(1, 1, 1), font: courierNewFonts });
-
+        page.drawText(this.tanggalBergabung.split('T')[0].split('-')[0], { x: centerX - 25, y: 30, size: 30, color: rgb(1, 1, 1), font: courierNewFonts });
         // ✅ Simpan PDF
         const pdfBytes = await pdfDoc.save();
         const pdfBlob = new Blob([pdfBytes], { type: 'application/pdf' });

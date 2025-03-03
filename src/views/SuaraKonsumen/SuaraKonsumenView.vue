@@ -2,19 +2,18 @@
   <div class="bg-gray-200">
     <!-- Header Section -->
     <NavbarNews />
-
-    <div v-if="showPopup" class="fixed inset-0 bg-gray-900 bg-opacity-50 flex justify-center items-center z-50">
+    <!--IKLAN-->
+    <!-- <div v-if="showPopup" class="fixed inset-0 bg-gray-900 bg-opacity-50 flex justify-center items-center z-50">
       <div class="relative p-6 w-full sm:w-135 md:w-1/2 lg:w-1/3">
-        <!-- Image with larger size -->
         <img :src="adImage" alt="Advertisement" class="w-full h-auto mb-4" />
-
         <div class="absolute top-6 right-6">
           <button @click="closePopup" class="text-white p-2">
-            <i class="fa fa-close fa-2x text-black hover:text-gray-700"></i> <!-- Larger Icon -->
+            <i class="fa fa-close fa-2x text-black hover:text-gray-700"></i> 
           </button>
         </div>
       </div>
-    </div>
+    </div> -->
+      <!--IKLAN-->
     <div class="flex items-center justify-center mt-4 w-full px-4">
       <div class="relative w-full sm:w-3/4 md:w-2/3 lg:w-1/2">
         <input type="text" v-model="searchQuery"
@@ -56,7 +55,7 @@
       </div>
     </section>
 
-    <section class="container mx-auto px-4 py-12 bg-white rounded-lg shadow-md mb-4">
+    <section v-if="suaraKonsumenList.length > 0" class="container mx-auto px-4 py-12 bg-white rounded-lg shadow-md mb-4">
       <div class="flex flex-col md:flex-row items-center space-y-6 md:space-y-0 md:space-x-6">
         <div class="max-w-full md:w-1/2">
           <img :src="getfullpathImage(suaraKonsumenList[0].media[0].imageUrl)" alt="Trending Image"
@@ -120,24 +119,33 @@
             </router-link>
           </article>
         </div>
-        <div class="flex justify-center items-center mt-6 flex-col sm:flex-row">
-          <button @click="changePage(currentPage - 1)" :disabled="currentPage === 1"
-            class="px-4 py-2 rounded-lg font-semibold bg-red-600 text-white hover:bg-red-700 disabled:opacity-50 mr-3">
-            Prev
-          </button>
-          <div class="flex space-x-4">
-            <button v-for="page in visiblePages" :key="page" @click="changePage(page)" :class="{
-              'bg-gray-300 text-white': currentPage !== page,
-              'bg-red-600 text-gray-700': currentPage === page
-            }" class="px-4 py-2 rounded-lg font-semibold hover:bg-red-700 disabled:opacity-50">
-              {{ page }}
-            </button>
-          </div>
-          <button @click="changePage(currentPage + 1)" :disabled="currentPage === totalPages"
-            class="px-4 py-2 rounded-lg font-semibold bg-red-600 text-white hover:bg-red-700 disabled:opacity-50 ml-3">
-            Next
-          </button>
-        </div>
+        <div class="flex flex-wrap justify-center items-center mt-6 gap-3">
+  <!-- Tombol Prev -->
+  <button @click="changePage(currentPage - 1)" 
+    :disabled="currentPage === 1"
+    class="px-4 py-2 rounded-lg font-semibold bg-red-600 text-white hover:bg-red-700 disabled:opacity-50">
+    Prev
+  </button>
+
+  <!-- Nomor Halaman -->
+  <div class="flex flex-wrap gap-2">
+    <button v-for="page in visiblePages" :key="page" 
+      @click="changePage(page)" 
+      :class="currentPage === page 
+        ? 'bg-red-600 text-white' 
+        : 'bg-gray-300 text-gray-800 hover:bg-gray-400'"
+      class="px-4 py-2 rounded-lg font-semibold transition duration-200">
+      {{ page }}
+    </button>
+  </div>
+
+  <!-- Tombol Next -->
+  <button @click="changePage(currentPage + 1)" 
+    :disabled="currentPage === totalPages"
+    class="px-4 py-2 rounded-lg font-semibold bg-red-600 text-white hover:bg-red-700 disabled:opacity-50">
+    Next
+  </button>
+</div>
 
       </section>
       <section class="container mx-auto px-4 py-6 md:px-8 sm:px-8">
@@ -199,7 +207,7 @@
 
 import FooterNews from '@/components/FooterSuaraKonsumen.vue';
 import NavbarNews from '@/components/NavbarSuaraKonsumen.vue';
-import adImage from '@/assets/aqua.jpeg';
+// import adImage from '@/assets/aqua.jpeg';
 
 
 import api from "@/service/lpkni"
@@ -215,7 +223,7 @@ export default {
       showPopup: true,
       isLoading: false,
       maxVisiblePages: 5,
-      adImage,
+      // adImage,
       currentDate: this.formatDate(new Date()),
       currentPage: 1,
       articlesPerPage: 8,

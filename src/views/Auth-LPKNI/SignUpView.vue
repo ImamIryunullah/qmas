@@ -51,6 +51,8 @@
             placeholder="Password"
             class="p-3 border border-gray-300 rounded-lg focus:outline-none focus:ring-2 focus:ring-red-600 transition duration-200 ease-in-out transform hover:scale-105"
             required />
+          <p class="text-xs text-red-500 mt-1 font-bold">*Password harus memiliki minimal 8 karakter, 1 huruf kapital,
+            dan 1 simbol.</p>
 
         </div>
         <!-- Show Password Checkbox -->
@@ -83,7 +85,10 @@
       </p>
 
     </div>
-
+    <div v-if="isLoading" class="fixed inset-0 flex items-center justify-center bg-black bg-opacity-50 z-50">
+      <div class="text-white text-lg">Sedang Memuat...</div>
+      <div class="spinner-border animate-spin border-4 border-t-4 border-white rounded-full w-16 h-16 ml-2"></div>
+    </div>
   </div>
   <div class="w-full">
     <FooterLandingPage />
@@ -112,7 +117,9 @@ export default {
         password: "",
         confirmpassword: "",
         username: "",
+
       },
+      isLoading: false
     };
   },
   mounted() {
@@ -146,23 +153,107 @@ export default {
         !this.form.confirmpassword
       );
     },
-    submitForm() {
+    // async  submitForm() {
+    //     if (this.isFormInvalid()) {
+    //       Swal.fire({
+    //         icon: 'warning',
+    //         title: 'Info',
+    //         text: 'Lengkapi Data Anda!',
+    //       });
+    //       return;
+    //     }
+    //     if (this.form.password !== this.form.confirmpassword) {
+    //       Swal.fire({
+    //         icon: 'warning',
+    //         title: 'Info',
+    //         text: 'Password Anda Tidak Cocok',
+    //       });
+    //       return;
+    //     }
+    //    this.isLoading = true;
+    //     const userData = {
+    //       nama_depan: this.form.nama_depan,
+    //       nama_belakang: this.form.nama_belakang,
+    //       no_hp: this.form.no_hp,
+    //       email: this.form.email,
+    //       username: this.generatedUsername, // Use generated username
+    //       password: this.form.password,
+    //     };
+    //     console.log(userData);
+    //    await Api.CreateUser(userData)
+    //       .then((res) => {
+    //         Swal.fire({
+    //           icon: 'success',
+    //           title: 'Success',
+    //           text: res.data.message,
+    //           timer: 1500,
+    //           showConfirmButton: false
+    //         }).then(() => {
+    //           this.$router.push("/auth/login");
+    //         });
+    //       })
+    //       .catch((error) => {
+    //         if (error.response) {
+    //           Swal.fire({
+    //             icon: 'error',
+    //             title: 'Error',
+    //             text: `${error.response.data.error}`,
+    //             timer: 1500,
+    //             showConfirmButton: false
+    //           });
+    //         } else if (error.request) {
+    //           Swal.fire({
+    //             icon: 'error',
+    //             title: 'No Response from Server',
+    //             text: "The server did not respond.",
+    //             timer: 1500,
+    //             showConfirmButton: false
+    //           });
+    //         } else {
+    //           Swal.fire({
+    //             icon: 'error',
+    //             title: 'Error',
+    //             text: `Error: ${error.message}`,
+    //             timer: 1500,
+    //             showConfirmButton: false
+    //           });
+    //         }
+    //       }).finally(()=>{
+    //         this.isLoading = false;
+    //       });
+
+    //   }
+    async submitForm() {
       if (this.isFormInvalid()) {
         Swal.fire({
-          icon: 'error',
-          title: 'Error',
-          text: 'Lengkapi Data Diri Anda',
+          icon: 'warning',
+          title: 'Info',
+          text: 'Lengkapi Data Anda!',
         });
         return;
       }
+
+      // Validasi panjang password, huruf kapital, dan simbol
+      const passwordRegex = /^(?=.*[A-Z])(?=.*[\W_]).{8,}$/;
+      if (!passwordRegex.test(this.form.password)) {
+        Swal.fire({
+          icon: 'warning',
+          title: 'Info',
+          text: 'Password harus memiliki minimal 8 karakter, 1 huruf kapital, dan 1 simbol.',
+        });
+        return;
+      }
+
       if (this.form.password !== this.form.confirmpassword) {
         Swal.fire({
-          icon: 'error',
-          title: 'Error',
+          icon: 'warning',
+          title: 'Info',
           text: 'Password Anda Tidak Cocok',
         });
         return;
       }
+
+      this.isLoading = true;
       const userData = {
         nama_depan: this.form.nama_depan,
         nama_belakang: this.form.nama_belakang,
@@ -171,8 +262,9 @@ export default {
         username: this.generatedUsername, // Use generated username
         password: this.form.password,
       };
+
       console.log(userData);
-      Api.CreateUser(userData)
+      await Api.CreateUser(userData)
         .then((res) => {
           Swal.fire({
             icon: 'success',
@@ -210,9 +302,11 @@ export default {
               showConfirmButton: false
             });
           }
+        }).finally(() => {
+          this.isLoading = false;
         });
-
     }
+
   }
 }
 </script>

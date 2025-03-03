@@ -42,8 +42,15 @@
                                 </td>
                                 <td class="px-4 py-2 text-sm text-justify text-black border border-b-2">{{
                                     activity.judul }}</td>
-                                <td class="px-4 py-2 text-sm text-justify text-black border border-b-2">{{
-                                    activity.deskripsi }}</td>
+                                <td class="px-4 py-2 text-sm text-justify text-black border border-b-2">
+                                    {{ activity.deskripsi.length > 50 ? activity.deskripsi.substring(0, 50) + '...' :
+                                        activity.deskripsi }}
+                                    <button v-if="activity.deskripsi.length > 50"
+                                        @click="showFullDescription(activity.deskripsi)"
+                                        class="text-blue-500 ml-2 underline">
+                                        Lihat Selengkapnya
+                                    </button>
+                                </td>
                                 <td class="px-4 py-2 text-sm">
                                     <div v-if="activity.media.length > 0" class="flex space-x-2">
                                         <img :src="getfullpathImage(activity.media[0].imageUrl)" alt="file preview"
@@ -88,6 +95,22 @@
                             </tr>
                         </tbody>
                     </table>
+                    <div v-if="showModal"
+                        class="fixed inset-0 flex items-center justify-center bg-black bg-opacity-50 px-4">
+                        <div class="bg-white p-6 rounded-lg shadow-lg w-full max-w-lg max-h-[80vh] overflow-auto">
+                            <h3 class="text-xl font-semibold mb-4">Deskripsi Lengkap</h3>
+                            <div class="text-gray-700 overflow-auto max-h-60">
+                                <p>{{ selectedDeskripsi }}</p>
+                            </div>
+                            <button @click="showModal = false" class="mt-4 px-4 py-2 bg-gray-500 text-white rounded-lg">
+                                Tutup
+                            </button>
+                        </div>
+                    </div>
+
+
+
+
                 </div>
             </div>
             <!-- No Activities Message -->
@@ -112,6 +135,8 @@ export default {
     },
     data() {
         return {
+            selectedDeskripsi: '',
+            showModal: false,
             kegitanList: [],
             lightboxVisible: false,
             lightboxIndex: 0,
@@ -143,6 +168,10 @@ export default {
     methods: {
         getfullpathImage(img) {
             return api.getfullpathImage(img)
+        },
+        showFullDescription(deskripsi) {
+            this.selectedDeskripsi = deskripsi;
+            this.showModal = true;
         },
         async fetchActivities() {
             await api.getAllKegiatanAnggotaa().then((res) => {

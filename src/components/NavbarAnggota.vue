@@ -11,7 +11,6 @@
               <i :class="item.icon"></i>
               <span>{{ item.label }}</span>
             </router-link>
-
           </li>
         </ul>
       </nav>
@@ -27,7 +26,6 @@
           class="flex font-semibold items-center py-3 px-4 rounded-md w-full bg-red-600 hover:bg-red-800">
           <i class="fas fa-sign-out-alt mr-2"></i>
           <span>Logout</span>
-
         </button>
       </div>
     </aside>
@@ -48,7 +46,8 @@
 
     <!-- Sidebar untuk Mobile -->
     <aside v-if="isSidebarOpen"
-      class="fixed top-0 left-0 w-64 h-full bg-red-600 text-white p-4 transition-transform transform md:hidden flex flex-col z-50">
+      class="fixed top-0 left-0 w-64 h-full bg-red-600 text-white p-4 transition-all transform md:hidden flex flex-col z-50"
+      :class="{ 'translate-x-0 opacity-100': isSidebarOpen, 'translate-x-full opacity-0': !isSidebarOpen }">
       <button @click="toggleSidebar" class="text-white text-2xl mb-4">
         <i class="fas fa-times"></i>
       </button>
@@ -76,7 +75,6 @@
         </button>
       </div>
     </aside>
-    <!-- Display Current Date & Time -->
 
     <!-- Konten Utama -->
     <main class="flex-1 p-6 md:ml-64 mt-12 md:mt-0 z-10">
@@ -142,3 +140,9 @@ export default {
   },
 };
 </script>
+
+<style scoped>
+.transition-all {
+  transition: transform 0.3s ease, opacity 0.3s ease;
+}
+</style>

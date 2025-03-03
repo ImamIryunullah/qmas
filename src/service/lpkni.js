@@ -1,14 +1,14 @@
 import axios from "axios";
-const baseURL = "http://192.168.10.2:3000/api"; // Ganti dengan domain Anda
-const IMG = "http://192.168.10.2:3000/"; // Ganti dengan domain Anda
+const baseURL = "https://lpkni.id/api"; // Ganti dengan domain Anda
+const IMG = "https://lpkni.id/"; // Ganti dengan domain Anda
 const API = axios.create({
   baseURL: baseURL,
   withCredentials: true,
 });
 
-// // Interceptor request untuk menambahkan token jika sudah ada di cookie (opsional)
+// Interceptor request untuk menambahkan token jika sudah ada di cookie (opsional)
 // const getCSRFToken = () => {
-//   const match = document.cookie.match(new RegExp("(^| )XSRF-TOKEN=([^;]+)"));
+//   const match = document.cookie.match(new RegExp("(^| )CSRF-TOKEN=([^;]+)"));
 //   return match ? match[2] : null;
 // };
 
@@ -16,7 +16,7 @@ const API = axios.create({
 //   async (config) => {
 //     const csrfToken = getCSRFToken();
 //     if (csrfToken) {
-//       config.headers["XSRF-TOKEN"] = csrfToken;
+//       config.headers["CSRF-TOKEN"] = csrfToken;
 //     }
 //     return config;
 //   },
@@ -35,7 +35,7 @@ const API = axios.create({
 //       const newToken = response.data.token;
 //       if (newToken) {
 //         // Perbarui header request dengan token baru
-//         config.headers["XSRF-TOKEN"] = newToken;
+//         config.headers["CSRF-TOKEN"] = newToken;
 //         // Jika perlu, perbarui cookie (biasanya server sudah meng-set cookie)
 //         // Lakukan re-request dengan konfigurasi yang telah diperbarui
 //         return API(config);
@@ -153,12 +153,29 @@ export default {
   getUserData() {
     return API.get("/data-anggota");
   },
-
   /*Wilayah*/
+  CreateWilayah(data) {
+    return API.post(`/wilayah`, data);
+  },
   getAllWilayah() {
     return API.get("/wilayah");
   },
+  UpdateWilayah(id, data) {
+    return API.put(`/wilayah/${id}`, data);
+  },
+  DeleteWilayah(id) {
+    return API.delete(`/wilayah/${id}`);
+  },
   /*Daerah*/
+  CreateDaerah(data) {
+    return API.post(`/daerah`, data);
+  },
+  UpdateDaerah(id, data) {
+    return API.put(`/daerah/${id}`, data);
+  },
+  DeleteDaerah(id) {
+    return API.delete(`/daerah/${id}`);
+  },
   getAllDaerah() {
     return API.get(`/daerah`);
   },
@@ -168,6 +185,9 @@ export default {
   /*Jabatan*/
   CreateJabatan(data) {
     return API.post(`/jabatans`, data);
+  },
+  UpdateJabatan(id, data) {
+    return API.put(`/jabatans/${id}`, data);
   },
   DeleteJabatan(id) {
     return API.delete(`/jabatans/${id}`);

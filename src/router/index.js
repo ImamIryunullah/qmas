@@ -37,6 +37,8 @@ const DashboardAdmin = () => import("@/views/Admin/DashboardAdmin.vue");
 const DataPembayaran = () => import("@/views/Admin/DataPembayaran.vue");
 const DataPengaduanAdmin = () => import("@/views/Admin/DataPengaduanAdmin.vue");
 const ManagementJabatan = () => import("@/views/Admin/ManagementJabatan.vue");
+const ManagementProvinsi = () => import("@/views/Admin/ManagementProvinsi.vue");
+const ManagementKota_Kab = () => import("@/views/Admin/ManagementKota-Kab.vue");
 const TambahSuaraKonsumen = () =>
   import("@/views/Admin/TambahSuaraKonsumen.vue");
 const KegiatanAnggotaAdmin = () =>
@@ -348,6 +350,26 @@ const routes = [
       requiresAuth: true,
       requiredRole: "admin",
       title: "Management Jabatan",
+    },
+  },
+  {
+    path: "/admin/management-Provinsi",
+    name: "Management Provinsi",
+    component: ManagementProvinsi,
+    meta: {
+      requiresAuth: true,
+      requiredRole: "admin",
+      title: "Management Wilayah",
+    },
+  },
+  {
+    path: "/admin/management-Kota-Kab",
+    name: "Management Kota-Kab",
+    component: ManagementKota_Kab,
+    meta: {
+      requiresAuth: true,
+      requiredRole: "admin",
+      title: "Management Kota-Kabupaten",
     },
   },
   {

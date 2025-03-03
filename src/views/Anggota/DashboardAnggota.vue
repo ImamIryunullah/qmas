@@ -272,11 +272,12 @@
                         </div>
                         <div class="flex flex-col items-center">
                             <div class="bg bg-red-500 w-32 p-1 rounded-md">
-
                                 <button @click="downloadFile()"
-                                    class="w-full px-1 text-white font-semibold rounded-md hover:bg-red-600 transition duration-200">
-                                    Download AD ART
+                                    class="w-fit px-3 py-2 text-white font-semibold rounded-md bg-red-500 hover:bg-red-600 transition duration-200 flex items-center space-x-2">
+                                    <i class="fa-solid fa-download"></i>
+                                    <span>AD ART</span>
                                 </button>
+
                             </div>
                         </div>
 
@@ -360,57 +361,67 @@
                 </div>
                 <div class="bg-white p-6 rounded-lg shadow-md mt-8">
                     <h2 class="text-2xl font-semibold text-gray-700 mb-6 flex items-center">
-                        <i class="	fas fa-calendar-alt text-gray-600 mr-3"></i>
-                        Data Kegitan {{ data_anggota.nama_lengkap }}
+                        <i class="fas fa-calendar-alt text-gray-600 mr-3"></i>
+                        Data Kegiatan {{ data_anggota.nama_lengkap }}
                     </h2>
+
                     <div v-if="kegiatanAnggota">
-                        <div v-for="(Kegiatan) in kegiatanAnggota" :key="Kegiatan.id"
-                            class="grid grid-cols-1 gap-4 sm:grid-cols-2 md:grid-cols-3 lg:grid-cols-6">
+                        <div class="grid grid-cols-1 sm:grid-cols-2 lg:grid-cols-3 xl:grid-cols-4 gap-6">
+                            <div v-for="(Kegiatan) in kegiatanAnggota" :key="Kegiatan.id"
+                                class="p-4 border rounded-lg shadow-sm bg-gray-50 flex flex-col">
 
-                            <div class="">
-                                <div class="text-sm font-medium text-gray-600">Judul Kegiatan:</div>
-                                <div class="text-lg text-gray-800 font-semibold">{{ Kegiatan.judul }}</div>
-                            </div>
-
-                            <div class="">
-                                <div class="text-sm font-medium text-gray-600">Deskripsi Kegiatan :</div>
-                                <div class="text-lg text-gray-800 font-semibold">
-                                    {{ Kegiatan.deskripsi }}
+                                <!-- Judul -->
+                                <div>
+                                    <p class="text-sm font-sm text-gray-600">Judul Kegiatan:</p>
+                                    <p class="text-lg text-gray-800 font-semibold line-clamp-2 break-words">
+                                        {{ Kegiatan.judul }}
+                                    </p>
                                 </div>
-                            </div>
 
-                            <div class="">
-                                <div class="text-sm font-medium text-gray-600">Tangal Kegiatan :</div>
-                                <div class="text-lg text-gray-800 font-semibold">{{
-                                    Kegiatan.tanggal.split('T')[0]
-                                    }}</div>
-                            </div>
-                            <div class="flex flex-col items-center ">
-                                <div class="text-sm font-medium text-gray-600">Bukti Kegiatan:</div>
-                                <div v-if="Kegiatan.media" class=" flex flex-col items-center">
-                                    <div v-for="media in Kegiatan.media" :key="media.id"
-                                        class="w-48 h-32 overflow-hidden rounded-lg border-2 border-gray-300 mb-2">
-                                        <img :src="getFullpathImage(media.imageUrl)" alt="Foto Bukti Pembayaran"
-                                            class="w-full h-full object-cover transition-transform duration-300 transform hover:scale-105"
-                                            @click="openLightboxKegiatan(media.imageUrl)" />
+                                <!-- Deskripsi -->
+                                <div class="flex-1">
+                                    <p class="text-sm text-gray-600">Deskripsi:</p>
+                                    <p class="text-base font-medium text-gray-700 line-clamp-3 break-words">
+                                        {{ Kegiatan.deskripsi }}
+                                    </p>
+                                </div>
+
+                                <!-- Tanggal -->
+                                <div>
+                                    <p class="text-sm text-gray-600">Tanggal:</p>
+                                    <p class="text-base text-gray-800 font-semibold">
+                                        {{ Kegiatan.tanggal.split('T')[0] }}
+                                    </p>
+                                </div>
+
+                                <!-- Bukti Kegiatan -->
+                                <div class="flex flex-col items-center mt-2">
+                                    <p class="text-sm font-medium text-gray-600 mb-1">Bukti Kegiatan:</p>
+                                    <div v-if="Kegiatan.media" class="flex flex-wrap justify-center gap-2">
+                                        <div v-for="media in Kegiatan.media" :key="media.id"
+                                            class="w-32 h-20 overflow-hidden rounded-lg border-2 border-gray-300">
+                                            <img :src="getFullpathImage(media.imageUrl)" alt="Bukti Kegiatan"
+                                                class="w-full h-full object-cover transition-transform duration-300 hover:scale-105 cursor-pointer"
+                                                @click="openLightboxKegiatan(media.imageUrl)" />
+                                        </div>
                                     </div>
+                                    <p v-else class="text-gray-500 text-sm">Gambar Tidak Tersedia</p>
                                 </div>
-                                <div v-else>
-                                    <label class="text-gray-500">Gambar Tidak Tersedia</label>
-                                </div>
-                            </div>
-                            <div class="">
-                                <div class="text-sm font-medium text-gray-600">Aksi :</div>
+
+                                <!-- Tombol Hapus -->
                                 <button @click="deleteKegiatanAnggota(Kegiatan.id)"
-                                    class="bg-red-600 items-center text-white font-semibold justify-center rounded-md  w-20 h-20">Hapus</button>
+                                    class="mt-4 bg-red-600 text-white font-semibold px-4 py-2 rounded-lg w-full hover:bg-red-700 transition">
+                                    Hapus
+                                </button>
                             </div>
+
                         </div>
                     </div>
-                    <div v-else>
+                    <div v-else class="text-center text-gray-600 font-semibold mt-4">
                         <h1>Belum Ada Kegiatan Yang Anda Lakukan!</h1>
                     </div>
-                    <!-- Grid Layout -->
                 </div>
+
             </div>
             <vue-easy-lightbox :visible="lightboxVisible" :imgs="imageUrls" :index="lightboxIndex"
                 @hide="lightboxVisible = false" />
@@ -550,7 +561,7 @@ export default {
             })
         },
         async downloadFile() {
-            const fileUrl = "http://192.168.10.2:3000/assets/adart.pdf";
+            const fileUrl = "https://lpkni.id/assets/adart.pdf";
             try {
                 const response = await fetch(fileUrl);
                 if (!response.ok) {

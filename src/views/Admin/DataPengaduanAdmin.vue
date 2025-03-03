@@ -23,7 +23,7 @@
                 <div class="grid grid-cols-1 sm:grid-cols-2 lg:flex lg:items-center gap-4">
                     <label class="text-gray-700 font-medium">Provinsi :</label>
                     <select v-model="selectedWilayah" class="p-2 border rounded-md w-auto">
-                        <option :value="''">Pilih Wilayah</option>
+                        <option :value="''">Pilih Provinsi</option>
                         <option v-for="wilayah in wilayahList" :key="wilayah.id_wilayah" :value="wilayah">
                             {{ wilayah.nama_wilayah }}
                         </option>
@@ -145,7 +145,7 @@
                             <p><strong>Pengaduan Dari:</strong> {{ selectedPengaduan.data_anggota ? 'Anggota' :
                                 'Konsumen' }}</p>
                             <p><strong>Email Pengadu:</strong> {{ selectedPengaduan.email }}</p>
-                            <p><strong>Wilayah:</strong> {{ selectedPengaduan.wilayah.nama_wilayah }}</p>
+                            <p><strong>Provinsi:</strong> {{ selectedPengaduan.wilayah.nama_wilayah }}</p>
                             <p><strong>Daerah:</strong> {{ selectedPengaduan.daerah.nama_daerah }}</p>
                             <div v-if="selectedPengaduan.data_anggota">
                                 <p><strong>Alamat Pengadu:</strong> {{ selectedPengaduan.data_anggota.alamat }}</p>
@@ -174,12 +174,15 @@
                                     class="flex flex-col items-center">
                                     <img :src="getfullPathImage(media.imageUrl)" alt="Image"
                                         class="w-32 h-32 object-cover rounded-lg shadow-md mb-2 hover:scale-105 transition-transform cursor-pointer"
-                                        @click="openPreview(media.imageUrl)">
+                                        @click="openPreview(getfullPathImage(media.imageUrl))">
                                     <p class="text-xs text-center text-white">{{ media.deskripsi }}</p>
                                 </div>
                             </div>
                         </div>
                     </div>
+
+                    <!-- Lightbox Component -->
+                    <VueEasyLightbox :visible="showLightbox" :imgs="previewImage" @hide="showLightbox = false" />
 
 
                     <!-- Display Images Associated with Pengaduan -->
@@ -202,12 +205,16 @@
 import NavbarAdmin from "@/components/NavbarAdmin.vue";
 import api from "@/service/lpkni";
 import Swal from "sweetalert2";
+import VueEasyLightbox from 'vue-easy-lightbox';
 export default {
     components: {
         NavbarAdmin,
+        VueEasyLightbox
     },
     data() {
         return {
+            previewImage: '',
+            showLightbox: false,
             selectedWilayah: '',
             selectedDaerah: '',
             pengaduanList: [],
@@ -252,6 +259,10 @@ export default {
                     this.wilayahList = res.data;
                 })
                 .catch(() => { });
+        },
+        openPreview(imageUrl) {
+            this.previewImage = imageUrl;
+            this.showLightbox = true;
         },
         async GetTransaksiByStatusByWilayahByDaerah(status) {
             api.GetTransaksiByStatusByWilayahByDaerah(status, this.selectedWilayah.id_wilayah, this.selectedDaerah)

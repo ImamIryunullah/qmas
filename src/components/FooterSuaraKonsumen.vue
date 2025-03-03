@@ -5,7 +5,7 @@
       <div class="grid grid-cols-1 sm:grid-cols-2 lg:grid-cols-4 gap-12 mb-8">
 
         <div>
-          <h3 class="font-semibold text-lg mb-4">Quick Links</h3>
+          <h3 class="font-semibold text-lg mb-4">Link Cepat</h3>
           <ul>
             <li><a href="#contact" class="hover:text-gray-300">Terkini</a></li>
             <li><a href="#about" class="hover:text-gray-300">Nasional</a></li>
@@ -14,10 +14,8 @@
             <li><a href="#services" class="hover:text-gray-300">Kriminal</a></li>
           </ul>
         </div>
-
-
         <div>
-          <h3 class="font-semibold text-lg mb-4">Follow Us</h3>
+          <h3 class="font-semibold text-lg mb-4">Ikuti Kami</h3>
           <div class="flex space-x-4">
             <a href="https://www.facebook.com/lpkni.pusat/" target="_blank" class="hover:text-gray-300"><i
                 class="fab fa-facebook-f text-xl"></i></a>
@@ -29,11 +27,9 @@
               target="_blank" class="hover:text-gray-300"><i class="fab fa-linkedin-in text-xl"></i></a>
           </div>
         </div>
-
-
         <div>
-          <h3 class="font-semibold text-lg mb-4">Contact</h3>
-          <p class="text-gray-300">LPKNI, Malang City, Indonesia</p>
+          <h3 class="font-semibold text-lg mb-4">Kontak dan Alamat</h3>
+          <p class="text-gray-300">LPKNI Kota Malang, Indonesia</p>
           <p class="text-gray-300">Malang, di Jalan Raya Wapoga No.2 Perum Nguji Permai Il </p>
           <p class="text-gray-300">Phone: 0813 3301 5767 & 0341 - 437354</p>
           <p class="text-gray-300">Email: pt.lpkni@gmail.com</p>

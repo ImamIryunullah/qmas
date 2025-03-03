@@ -23,7 +23,7 @@
                 <div class="grid grid-cols-1 sm:grid-cols-2 lg:flex lg:items-center gap-4">
                     <label class="text-gray-700 font-medium">Provinsi :</label>
                     <select v-model="selectedWilayah" class="p-2 border rounded-md w-auto">
-                        <option :value="''">Pilih Wilayah</option>
+                        <option :value="''">Pilih Provinsi</option>
                         <option v-for="wilayah in wilayahList" :key="wilayah.id_wilayah" :value="wilayah">
                             {{ wilayah.nama_wilayah }}
                         </option>

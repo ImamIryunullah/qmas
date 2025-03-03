@@ -1,7 +1,7 @@
 <template>
   <div class="bg-gray-50">
     <NavbarNews />
-    <div v-if="showPopup" class="fixed inset-0 bg-gray-900 bg-opacity-50 flex justify-center items-center z-50">
+    <!-- <div v-if="showPopup" class="fixed inset-0 bg-gray-900 bg-opacity-50 flex justify-center items-center z-50">
       <div class="relative p-6 w-full sm:w-135 md:w-1/2 lg:w-1/3">
         <img :src="adImage" alt="Advertisement" class="w-full h-auto mb-4" />
         <div class="absolute top-6 right-6">
@@ -10,7 +10,7 @@
           </button>
         </div>
       </div>
-    </div>
+    </div> -->
 
     <section class="container mx-auto px-4 py-6">
       <div class="flex flex-col sm:flex-row sm:space-x-6">
@@ -159,7 +159,7 @@
 import FooterNews from '@/components/FooterSuaraKonsumen.vue';
 import NavbarNews from '@/components/NavbarSuaraKonsumen.vue';
 import lpkni from '@/service/lpkni';
-import adImage from '@/assets/aqua.jpeg';
+// import adImage from '@/assets/aqua.jpeg';
 export default {
   components: {
     FooterNews,
@@ -169,7 +169,7 @@ export default {
     return {
       showPopup: true,
       isLoading: false,
-      adImage,
+      // adImage,
       idBerita: this.$route.query.id || this.$route.params.id,
       currentUrl: window.location.href,
       showShareOptions: false,

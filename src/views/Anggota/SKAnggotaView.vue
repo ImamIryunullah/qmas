@@ -1,38 +1,92 @@
 <template>
-
-  <div class="w-screen h-screen min-h-screen flex flex-col bg-gray-100">
+  <div class="w-screen min-h-screen h-full flex bg-gray-100">
     <NavbarAnggota />
-    <div class="flex flex-col items-center justify-center p-10 h-full bg-gray-100 flex-grow">
-      <div class="bg-white h-screen w-full max-w-xl p-10 pb-28 rounded-lg shadow-md">
-        <h3 class="text-xl font-semibold text-center mb-4">SK Anda</h3>
-        <!-- <h3 class="text-sm font-semibold text-left mb-4">Jabatan : {{ data_anggota.jabatanStruktural.nama }}</h3> -->
-        <!-- <h3 class="text-sm font-semibold text-left mb-4">Tingkat : {{ data_anggota.jabatanStruktural.tingkat }}</h3> -->
-        <div class="w-full h-full" v-if="pdfUrl">
-          <!-- <embed :src="pdfUrl" type="" class="w-full h-full"> -->
-          <iframe loading="lazy" :src="pdfUrl" class="w-full h-full" frameborder="0"></iframe>
+
+    <div class="flex justify-center items-center text-xl mt-16 mr-6 w-full h-full mb-6">
+      <div class="w-full max-w-sm sm:max-w-xl p-3 sm:p-10 pb-20">
+        <h3 class="text-lg sm:text-xl font-semibold text-center mb-2">Surat Keputusan (SK) LPKNI</h3>
+        <p class="text-sm sm:text-base text-center text-gray-600 mb-4">
+          Dokumen resmi sebagai syarat pengangkatan & pengakuan dalam LPKNI.
+        </p>
+
+
+        <!-- Informasi Konteks SK -->
+        <div class="bg-gray-100 p-4 rounded-md text-sm sm:text-base text-gray-700 mb-6">
+          <p><strong>SK LPKNI</strong> adalah dokumen legal yang menyatakan bahwa anggota telah diakui dan memiliki hak
+            serta kewajiban dalam organisasi.</p>
+          <p class="mt-2">Syarat untuk diakui:</p>
+          <ul class="list-disc list-inside ml-2">
+            <li>Telah menyelesaikan pendaftaran & verifikasi</li>
+            <li>Memiliki status keanggotaan aktif</li>
+            <li>Menyetujui kode etik & peraturan organisasi</li>
+          </ul>
+        </div>
+        <!-- Tampilan SK -->
+        <div
+          class="w-full min-h-[150px] sm:min-h-[200px] overflow-hidden flex justify-center items-center bg-gray-200 rounded-md">
+          <canvas ref="pdfCanvas" class="w-full h-full"></canvas>
         </div>
 
-        <div class="flex items-center justify-center">
-          <button @click="generatePdf"
-            class="w-full p-5 m-5 md:w-auto flex items-center justify-center bg-red-500 text-white px-4 py-2 rounded-lg hover:bg-red-600 transition duration-300 shadow-md">
-            <i class="fas fa-id-card mr-2"></i> Cetak SK
-          </button>
+        <div class="grid grid-cols-1 sm:grid-cols-3 gap-4 mt-6 w-full">
+          <div class="flex flex-col items-center sm:items-start">
+            <button @click="generatePdf"
+              class="w-full sm:w-auto flex items-center justify-center bg-red-500 text-white py-2 px-4 rounded-lg hover:bg-red-600 transition duration-300 shadow-md">
+              <i class="fas fa-file-alt mr-2"></i> Cetak
+            </button>
+            <p class="text-xs sm:text-sm text-gray-600 mt-1 text-center sm:text-left">
+              Buat dokumen SK dalam format PDF.
+            </p>
+          </div>
+          <div class="flex flex-col items-center sm:items-start">
+            <button v-if="pdfUrl" @click="downloadPdf"
+              class="w-full sm:w-auto flex items-center justify-center bg-blue-500 text-white py-2 px-4 rounded-lg hover:bg-blue-600 transition duration-300 shadow-md">
+              <i class="fas fa-download mr-2"></i> Unduh
+            </button>
+            <p v-if="pdfUrl" class="text-xs sm:text-sm text-gray-600 mt-1 text-center sm:text-left">
+              Simpan dokumen SK ke perangkat Anda.
+            </p>
+          </div>
+          <div class="flex flex-col items-center sm:items-start">
+            <button v-if="pdfUrl" @click="renderPdf(1)"
+              class="w-full sm:w-auto flex items-center justify-center bg-gray-700 text-white py-2 px-4 rounded-lg hover:bg-gray-800 transition duration-300 shadow-md">
+              <i class="fas fa-eye mr-2"></i> Detail SK
+            </button>
+            <p v-if="pdfUrl" class="text-xs sm:text-sm text-gray-600 mt-1 text-center sm:text-left">
+              Tampilkan isi dokumen SK.
+            </p>
+          </div>
         </div>
+
       </div>
     </div>
-    <!-- Overlay loading -->
+
+    <!-- Overlay Loading -->
     <div v-if="loading" class="fixed inset-0 flex items-center justify-center bg-black bg-opacity-50 z-50">
       <div class="text-white text-lg">Sedang Memuat...</div>
-      <div class="spinner-border animate-spin border-4 border-t-4 border-white rounded-full w-16 h-16 ml-2"></div>
+      <div class="spinner-border animate-spin border-4 border-t-4 border-white rounded-full w-12 h-12 ml-2"></div>
+    </div>
+
+    <!-- Lightbox untuk melihat SK -->
+    <div v-if="lightboxVisible" class="fixed inset-0 flex items-center justify-center bg-black bg-opacity-80 z-50">
+      <div class="bg-white p-5 rounded-lg shadow-lg max-w-3xl w-full">
+        <button @click="lightboxVisible = false" class="absolute top-5 right-5 text-gray-600 hover:text-black text-2xl">
+          &times;
+        </button>
+        <h3 class="text-lg font-semibold text-center mb-4">Pratinjau SK</h3>
+        <iframe v-if="pdfUrl" :src="pdfUrl" class="w-full h-[500px]" frameborder="0"></iframe>
+      </div>
     </div>
   </div>
 </template>
+
 <script>
 import NavbarAnggota from '@/components/NavbarAnggota.vue';
 import { PDFDocument, rgb } from 'pdf-lib';
 import fontkit from '@pdf-lib/fontkit';
 import lpkni from '@/service/lpkni';
 import Swal from 'sweetalert2';
+import * as pdfjsLib from "pdfjs-dist";
+import "pdfjs-dist/webpack";
 // import pusatmerah from 'public/pusatmerah.pdf'
 
 export default {
@@ -64,6 +118,7 @@ export default {
   },
   data() {
     return {
+      lightboxVisible: false,
       data_anggota: {
         id_data_anggota: 0,
         nama_lengkap: "",
@@ -75,18 +130,22 @@ export default {
         statusPerkawinan: "",
         agama: "",
         status: "",
+        updatedAt: "",
         daerah: {
           nama_daerah: "",
-          kode_daerah: ""
+          kode_daerah: "",
+          kode_daerah_lpkni: ""
         },
         wilayah: {
           nama_wilayah: "",
-          kode_wilayah: ""
+          kode_wilayah: "",
+          kode_wilayah_lpkni: ''
         },
         jabatanStruktural: {
           nama: "",
           maksimumAnggota: 0,
-          tingkat: ''
+          tingkat: '',
+          uidJabatan: ''
 
         },
         imageUsers: [
@@ -107,10 +166,31 @@ export default {
       errorpdf: false,
       existingPdfBytes: null,
       tanggalBergabung: "",
-      Kota: ""
+      Kota: "",
+      romanMonth: ""
     };
   },
   methods: {
+    async renderPdf(pages) {
+      try {
+        const loadingTask = pdfjsLib.getDocument(this.pdfUrl);
+        const pdf = await loadingTask.promise;
+        const page = await pdf.getPage(pages); // Render hanya halaman pertama
+        const scale = window.innerWidth < 768 ? 0.8 : 1.5; // Skala berbeda untuk mobile & desktop
+        const viewport = page.getViewport({ scale });
+
+        const canvas = this.$refs.pdfCanvas;
+        const context = canvas.getContext("2d");
+        canvas.width = viewport.width;
+        canvas.height = viewport.height;
+
+        await page.render({ canvasContext: context, viewport });
+
+        console.log("PDF berhasil dirender ke canvas!");
+      } catch (error) {
+        console.error("Gagal merender PDF:", error);
+      }
+    },
     async getGetUserData() {
       try {
         const res = await lpkni.getUserData();
@@ -136,12 +216,31 @@ export default {
         else if (this.data_anggota.jabatanStruktural.tingkat === "Region 2") {
           await this.generatePdfRegional2();
         }
+        this.renderPdf(1)
       } catch (error) {
         console.log(error)
       }
     },
+    downloadPdf() {
+      if (!this.pdfUrl) return;
+
+      const link = document.createElement("a");
+      link.href = this.pdfUrl;
+      link.download = "Surat_SK.pdf"; // Nama file
+      document.body.appendChild(link);
+      link.click();
+      document.body.removeChild(link);
+    },
     getFullPathImage(img) {
       return lpkni.getfullpathImage(img)
+    },
+    convertMonthToRoman(tanggal) {
+      const month = new Date(tanggal).getMonth() + 1; // Ambil bulan (1-12)
+      return month ? this.toRoman(month) : 'Format tanggal tidak valid';
+    },
+    toRoman(num) {
+      const romanNumerals = ['I', 'II', 'III', 'IV', 'V', 'VI', 'VII', 'VIII', 'IX', 'X', 'XI', 'XII'];
+      return romanNumerals[num - 1]; // Mengembalikan simbol Romawi berdasarkan indeks
     },
     async cropImageToCircle(imageUrl) {
       return new Promise((resolve, reject) => {
@@ -215,7 +314,7 @@ export default {
         }
 
         console.log(PDFName);
-        const response = await fetch(`http://192.168.10.2:3000/assets/${PDFName}.pdf`);
+        const response = await fetch(`https://lpkni.id/assets/${PDFName}.pdf`);
         if (!response.ok) {
           throw new Error('PDF not found or failed to load');
         }
@@ -315,7 +414,8 @@ export default {
           xPosText2 += charWidth;
         }
 
-        const NoSK = `85.1/SPP/LPKNI/II/2025`
+        // const NoSK = `${this.data_anggota.id_data_anggota}.${this.data_anggota.jabatanStruktural.uidJabatan}/SPP/LPKNI/${this.convertMonthToRoman(this.data_anggota.updatedAt)}/${this.data_anggota.updatedAt.split("T")[0].split("-")[0]}`
+        const NoSK = `${this.data_anggota.wilayah.kode_wilayah_lpkni}.${this.data_anggota.jabatanStruktural.uidJabatan}.${this.data_anggota.id_data_anggota}/SPP/LPKNI/${this.convertMonthToRoman(this.data_anggota.updatedAt)}/${this.data_anggota.updatedAt.split("T")[0].split("-")[0]}`
         const SkIndex = Math.floor(NoSK.length / 2);
         const SKfirstPart = NoSK.substring(0, SkIndex);
         const SKsecondPart = NoSK.substring(SkIndex);
@@ -431,7 +531,7 @@ export default {
         }
 
         console.log(PDFName);
-        const response = await fetch(`http://192.168.10.2:3000/assets/${PDFName}.pdf`);
+        const response = await fetch(`https://lpkni.id/assets/${PDFName}.pdf`);
         if (!response.ok) {
           throw new Error('PDF not found or failed to load');
         }
@@ -515,7 +615,6 @@ export default {
             color: textColor2,
             font: courierNewFont,
           });
-
           // Hitung lebar karakter
           const charWidth = courierNewFont.widthOfTextAtSize(char, fontSize1);
 
@@ -526,12 +625,11 @@ export default {
             thickness: 1.2,
             color: textColor2,
           });
-
           // Geser posisi x ke kanan sesuai lebar karakter
           xPosText2 += charWidth;
         }
-
-        const NoSK = `85.1/SPP/LPKNI/II/2025`
+        // const NoSK = `${this.data_anggota.id_data_anggota}.${this.data_anggota.jabatanStruktural.uidJabatan}/SPP/LPKNI/${this.convertMonthToRoman(this.data_anggota.updatedAt)}/${this.data_anggota.updatedAt.split("T")[0].split("-")[0]}`
+        const NoSK = `${this.data_anggota.daerah.kode_daerah_lpkni}.${this.data_anggota.jabatanStruktural.uidJabatan}.${this.data_anggota.id_data_anggota}/SPP/LPKNI/${this.convertMonthToRoman(this.data_anggota.updatedAt)}/${this.data_anggota.updatedAt.split("T")[0].split("-")[0]}`
         const SkIndex = Math.floor(NoSK.length / 2);
         const SKfirstPart = NoSK.substring(0, SkIndex);
         const SKsecondPart = NoSK.substring(SkIndex);
@@ -647,7 +745,7 @@ export default {
         }
 
         console.log(PDFName);
-        const response = await fetch(`http://192.168.10.2:3000/assets/${PDFName}.pdf`);
+        const response = await fetch(`https://lpkni.id/assets/${PDFName}.pdf`);
         if (!response.ok) {
           throw new Error('PDF not found or failed to load');
         }
@@ -747,7 +845,7 @@ export default {
           xPosText2 += charWidth;
         }
 
-        const NoSK = `166/SKEP/LPKNI/II/2025`
+        const NoSK = `${this.data_anggota.id_data_anggota}/SKEP/LPKNI/${this.convertMonthToRoman(this.data_anggota.updatedAt)}/${this.data_anggota.updatedAt.split("T")[0].split("-")[0]}`
         const SkIndex = Math.floor(NoSK.length / 2);
         const SKfirstPart = NoSK.substring(0, SkIndex);
         const SKsecondPart = NoSK.substring(SkIndex);
@@ -868,7 +966,7 @@ export default {
         }
 
         console.log(PDFName);
-        const response = await fetch(`http://192.168.10.2:3000/assets/${PDFName}.pdf`);
+        const response = await fetch(`https://lpkni.id/assets/${PDFName}.pdf`);
         if (!response.ok) {
           throw new Error('PDF not found or failed to load');
         }
@@ -967,8 +1065,9 @@ export default {
           // Geser posisi x ke kanan sesuai lebar karakter
           xPosText2 += charWidth;
         }
-
-        const NoSK = `060.1/SPP/LPKNI/II/2025`
+        const kepala = this.data_anggota.jabatanStruktural.nama.toLowerCase().includes('kepala');
+        const NoSK = kepala ? `${this.data_anggota.wilayah.kode_wilayah_lpkni}.${this.data_anggota.jabatanStruktural.uidJabatan}/SPP/LPKNI/${this.convertMonthToRoman(this.data_anggota.updatedAt)}/${this.data_anggota.updatedAt.split("T")[0].split("-")[0]}` :
+          `${this.data_anggota.wilayah.kode_wilayah_lpkni}.${this.data_anggota.jabatanStruktural.uidJabatan}.${this.data_anggota.id_data_anggota}/SPP/LPKNI/${this.convertMonthToRoman(this.data_anggota.updatedAt)}/${this.data_anggota.updatedAt.split("T")[0].split("-")[0]}`
         const SkIndex = Math.floor(NoSK.length / 2);
         const SKfirstPart = NoSK.substring(0, SkIndex);
         const SKsecondPart = NoSK.substring(SkIndex);
@@ -1123,7 +1222,7 @@ export default {
         }
 
         console.log(PDFName);
-        const response = await fetch(`http://192.168.10.2:3000/assets/${PDFName}.pdf`);
+        const response = await fetch(`https://lpkni.id/assets/${PDFName}.pdf`);
         if (!response.ok) {
           throw new Error('PDF not found or failed to load');
         }
@@ -1222,8 +1321,10 @@ export default {
           // Geser posisi x ke kanan sesuai lebar karakter
           xPosText2 += charWidth;
         }
-
-        const NoSK = `060.1/SPP/LPKNI/II/2025`
+        const kepala = this.data_anggota.jabatanStruktural.nama.toLowerCase().includes('kepala');
+        // const NoSK = `${this.data_anggota.wilayah.kode_wilayah_lpkni}.${this.data_anggota.jabatanStruktural.uidJabatan}.${this.data_anggota.id_data_anggota}/SPP/LPKNI/${this.convertMonthToRoman(this.data_anggota.updatedAt)}/${this.data_anggota.updatedAt.split("T")[0].split("-")[0]}`
+        const NoSK = kepala ? `${this.data_anggota.daerah.kode_daerah_lpkni}.${this.data_anggota.jabatanStruktural.uidJabatan}/SPP/LPKNI/${this.convertMonthToRoman(this.data_anggota.updatedAt)}/${this.data_anggota.updatedAt.split("T")[0].split("-")[0]}` :
+          `${this.data_anggota.daerah.kode_daerah_lpkni}.${this.data_anggota.jabatanStruktural.uidJabatan}.${this.data_anggota.id_data_anggota}/SPP/LPKNI/${this.convertMonthToRoman(this.data_anggota.updatedAt)}/${this.data_anggota.updatedAt.split("T")[0].split("-")[0]}`
         const SkIndex = Math.floor(NoSK.length / 2);
         const SKfirstPart = NoSK.substring(0, SkIndex);
         const SKsecondPart = NoSK.substring(SkIndex);

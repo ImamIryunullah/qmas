@@ -1,19 +1,13 @@
 <template>
-
     <div class="mb-10">
-
         <NavbarLandingPage />
     </div>
-
     <div class="bg-red-100 min-h-screen">
         <section class="flex flex-col md:flex-row items-center justify-center pt-14 bg-red-700 text-white">
-            <!-- Left Section (Text Content) -->
             <div class="md:w-1/2 text-center md:text-left px-[1.5rem] sm:px-4 pt-5 sm:text-base">
-                <!-- Typing Effect for Heading -->
                 <div class="flex items-center justify-start text-start">
-                    <h1 id="typing" class="text-4xl md:text-5xl font-bold mb-4"></h1>
+                    <h1 id="typing" class="text-4xl md:text-5xl font-bold mb-3 mt-2"></h1>
                 </div>
-
                 <p class="mb-6 text-sm sm:text-lg text-justify">LPKNI merupakan salah satu lembaga atau institusi yang
                     mempunyai
                     tugas
@@ -21,18 +15,22 @@
                     fungsinya adalah melindungi hak setiap warga negara baik perseorangan (konsumen) maupun badan yang
                     harus mendapatkan perlakuan yang layak selaku konsumen khususnya dan masyarakat sebagai warga negara
                     Indonesia pada umumnya.</p>
-                <div class="flex space-x-4 justify-center md:justify-start">
+                <div class="flex flex-col md:flex-row md:flex-wrap gap-4 justify-center md:justify-start mb-5">
                     <a href="/auth/register-anggota"
-                        class="bg-white text-red-600 px-6 py-2 rounded-lg font-bold sm:font-semibold hover:bg-gray-100 transition duration-300">
+                        class="w-full md:w-auto text-center bg-white text-red-600 px-4 py-2 rounded-lg font-bold sm:font-semibold hover:bg-gray-100 transition duration-300">
                         Daftar LPKNI
                     </a>
                     <a href="/auth/swi/register"
-                        class="bg-white text-red-600 px-6 py-2 rounded-lg font-bold sm:font-semibold hover:bg-gray-100 transition duration-300 ">
+                        class="w-full md:w-auto text-center bg-white text-red-600 px-4 py-2 rounded-lg font-bold sm:font-semibold hover:bg-gray-100 transition duration-300">
                         Daftar SWI
                     </a>
+                    <a href="https://www.youtube.com/@channellpkni" target="_blank"
+                        class="w-full md:w-auto text-center bg-white text-red-600 px-4 py-2 rounded-lg font-bold sm:font-semibold hover:bg-gray-100 transition duration-300 flex items-center justify-center">
+                        <i class="fa fa-youtube-play text-3xl"></i>
+                    </a>
                 </div>
+
             </div>
-            <!-- Right Section (Image) -->
             <div class="md:w-[30%] w-3/4 mt-5 md:mt-0">
                 <img src="@/assets/animasi1.png" loading="lazy" alt="LPKNI"
                     class="rounded-lg w-full mx-auto responsive-image" />
@@ -149,7 +147,7 @@
 
             <div class="grid grid-cols-1 md:grid-cols-2 lg:grid-cols-4 gap-6 h-auto">
                 <div v-for="suaraKonsumen in SuaraKonsumeList.slice(0, 4)" :key="suaraKonsumen.id"
-                    @click="routingTo(suaraKonsumen.id)" class="flex justify-end">
+                    @click="routingTo(suaraKonsumen.id, suaraKonsumen.judul)" class="flex justify-end">
                     <!-- Image Box -->
                     <div
                         class="bg-gray-100 p-4 rounded-lg shadow-lg hover:shadow-2xl transform transition duration-500 ease-in-out hover:scale-105 w-full">
@@ -303,14 +301,7 @@ import lpkni from '@/service/lpkni';
 function type(element, text, i) {
     if (i < text.length) {
         element.innerHTML += text.charAt(i);
-        i++;
-        setTimeout(() => type(element, text, i), 100);
-    } else {
-        setTimeout(() => {
-            element.innerHTML = "";
-            i = 0;
-            type(element, text, i);
-        }, 2000);
+        setTimeout(() => type(element, text, i + 1), 100);
     }
 }
 
@@ -333,8 +324,8 @@ export default {
         this.getAllBerita()
     },
     methods: {
-        routingTo(id) {
-            this.$router.push(`/suara-konsumen/detail/${id}`)
+        routingTo(id, judul) {
+            this.$router.push(`/suara-konsumen/detail/${id}/${judul}`)
         },
         getTruncatedDescription(text, karakter) {
             if (text.length > karakter) {
@@ -356,15 +347,13 @@ export default {
         getfullPathImage(img) {
             return lpkni.getfullpathImage(img)
         },
-        // Method for Typing Effect
+
         typeWriterEffect() {
             const text = "Lembaga Perlindungan Konsumen Nasional Indonesia";
-            let i = 0;
-            const element = document.getElementById("typing"); // Target the correct element (about-text)
+            const element = document.getElementById("typing"); // Pastikan elemen ada
 
-            // Ensure the element exists before running the typing effect
             if (element) {
-                type(element, text, i); // Call the type function outside the mounted hook
+                type(element, text, 0);
             }
         },
         toggleExpand() {
@@ -402,9 +391,6 @@ export default {
     }
 };
 </script>
-
-
-
 <style scoped>
 /* Tailwind CSS animation for fade-in effect */
 @keyframes fadeIn {

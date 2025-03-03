@@ -1,11 +1,14 @@
-const path = require('path');
+const path = require("path");
 
 module.exports = {
+  productionSourceMap: false,
   configureWebpack: {
-    
+    optimization: {
+      minimize: true,
+    },
     resolve: {
       alias: {
-        '@': path.resolve(__dirname, 'src'), // alias @ to point to the src folder
+        "@": path.resolve(__dirname, "src"), // alias @ to point to the src folder
       },
     },
     module: {
@@ -14,9 +17,9 @@ module.exports = {
           test: /\.pdf$/,
           use: [
             {
-              loader: 'file-loader',
+              loader: "file-loader",
               options: {
-                name: 'assets/[name].[hash:8].[ext]', // Handle PDF file loading
+                name: "assets/[name].[hash:8].[ext]", // Handle PDF file loading
               },
             },
           ],

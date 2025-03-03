@@ -72,7 +72,10 @@
 
       </div>
     </div>
-
+    <div v-if="isLoading" class="fixed inset-0 flex items-center justify-center bg-black bg-opacity-50 z-50">
+        <div class="text-white text-lg">Sedang Memuat...</div>
+        <div class="spinner-border animate-spin border-4 border-t-4 border-white rounded-full w-16 h-16 ml-2"></div>
+      </div>
   </div>
   <div class="w-full">
     <FooterLandingPage />
@@ -98,6 +101,7 @@ export default {
       password: null,
       errorMessage: "",
       loading: false,
+      isLoading :false
     };
   },
   computed: {
@@ -123,6 +127,7 @@ export default {
     async login() {
       try {
         // Dispatch login action to Vuex store
+        this.isLoading = true
         await this.$store.dispatch("loginLpkni", { email: this.email, password: this.password });
         console.log(this.isUserLoggedIn)
 
@@ -152,6 +157,8 @@ export default {
           text: `${error}`,
           timer: 1500,
           showConfirmButton: false,
+        }).finally(()=>{
+          this.isLoading = false;
         });
       }
     }

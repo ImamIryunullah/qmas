@@ -39,7 +39,7 @@
 
             <!-- Wilayah -->
             <div>
-              <p class="text-sm text-gray-600">Wilayah:</p>
+              <p class="text-sm text-gray-600">Provinsi:</p>
               <p class="text-lg font-semibold">
                 {{ dataUser.wilayah.nama_wilayah || 'Data tidak tersedia' }}
               </p>
@@ -164,11 +164,11 @@ export default {
     },
   },
   mounted() {
-    if (this.getUserLpkni === 0) {
-      this.$router.push('/anggota/data-diri')
-      return
-    }
-    this.getProfile();
+    // if (this.getUserLpkni === 0) {
+    //   this.$router.push('/anggota/data-diri')
+    //   return
+    // }
+    // this.getProfile();
   },
 
   methods: {

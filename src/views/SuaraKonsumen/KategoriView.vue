@@ -2,19 +2,19 @@
     <div class="bg-gray-200">
         <!-- Header Section -->
         <NavbarNews />
-        <div v-if="showPopup" class="fixed inset-0 bg-gray-900 bg-opacity-50 flex justify-center items-center z-50">
+        <!-- <div v-if="showPopup" class="fixed inset-0 bg-gray-900 bg-opacity-50 flex justify-center items-center z-50">
             <div class="relative p-6 w-full sm:w-135 md:w-1/2 lg:w-1/3">
-                <!-- Image with larger size -->
+         
                 <img :src="adImage" alt="Advertisement" class="w-full h-auto mb-4" />
 
-                <!-- Close Button positioned at the top right of the image -->
+
                 <div class="absolute top-6 right-6">
                     <button @click="closePopup" class="text-white p-2">
-                        <i class="fa fa-close fa-2x text-black hover:text-gray-700"></i> <!-- Larger Icon -->
+                        <i class="fa fa-close fa-2x text-black hover:text-gray-700"></i> 
                     </button>
                 </div>
             </div>
-        </div>
+        </div> -->
 
         <div v-if="suaraKonsumenList.length > 1">
             <section class="container mx-auto px-4 py-12 bg-white rounded-lg shadow-md mb-5 mt-4">
@@ -176,20 +176,20 @@
         <div v-else>
             <div class="container mx-auto px-4 py-16 md:px-16 sm:px-8">
                 <!-- Full-screen alert section with icon and text -->
-                <div class="flex items-center justify-center w-full h-full bg-red-600 rounded-lg shadow-xl">
+                <div class="flex items-center justify-start w-full h-full bg-red-600 rounded-lg shadow-xl p-6">
                     <!-- Icon and Text Section -->
                     <div class="flex items-center space-x-4 sm:space-x-6 md:space-x-8">
                         <!-- Info Icon -->
                         <i class="fas fa-info-circle text-4xl sm:text-5xl md:text-6xl text-white"></i>
                         <!-- Text Message -->
-                        <h3
-                            class="text-2xl sm:text-3xl md:text-4xl font-semibold text-white py-4 sm:py-6 md:py-8 px-6 sm:px-8 md:px-12">
+                        <h3 class="text-2xl sm:text-3xl md:text-4xl font-semibold text-white">
                             BERTIA BELUM ADA DALAM PROVINSI INI
                         </h3>
                     </div>
                 </div>
             </div>
         </div>
+
         <div v-if="isLoading" class="fixed inset-0 flex items-center justify-center bg-black bg-opacity-50 z-50">
             <div class="text-white text-lg">Sedang Memuat...</div>
             <div class="spinner-border animate-spin border-4 border-t-4 border-white rounded-full w-16 h-16 ml-2"></div>
@@ -202,7 +202,7 @@
 import FooterNews from '@/components/FooterSuaraKonsumen.vue';
 import NavbarNews from '@/components/NavbarSuaraKonsumen.vue';
 import lpkni from '@/service/lpkni';
-import adImage from '@/assets/aqua.jpeg';
+// import adImage from '@/assets/aqua.jpeg';
 export default {
     name: "KategoriView",
     components: {
@@ -214,7 +214,7 @@ export default {
             maxVisiblePages: 5,
             showPopup: true,
             isLoading: false,
-            adImage,
+            // adImage,
             currentPage: 1, // Start at the first page
             articlesPerPage: 4, // Number of articles per page
             // The selected region

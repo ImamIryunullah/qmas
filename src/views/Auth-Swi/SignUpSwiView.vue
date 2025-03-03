@@ -112,7 +112,7 @@ export default {
   },
   mounted() {
     this.isMounted = true;
-
+    this.getHealth()
   },
   computed: {
     // Generate username based on first name, last name, and email
@@ -128,6 +128,12 @@ export default {
     },
   },
   methods: {
+    async getHealth() {
+      await Api.getHealthSwi().then(() => {
+      }).catch(() => {
+        this.$router.push('/maintenance');
+      })
+    },
     togglePasswordVisibility() {
       this.passwordVisible = !this.passwordVisible;
     },

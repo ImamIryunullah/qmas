@@ -3,7 +3,7 @@
     <div class="bg-gray-100 text-white">
       <NavbarAnggota />
     </div>
-    <div class="flex-1 flex justify-center items-center bg-gray-100 mr-6 mt-20 mb-12">
+    <div class="flex-1 flex justify-center items-center bg-gray-100 mr-6 mt-16 mb-6">
       <div
         class="justify-center items-center w-full h-full min-h-screen max-w-2xl bg-white p-6 rounded-lg shadow-xl animate-fadeInUp mt-12 mb-12">
         <div class="text-center mb-8">
@@ -140,7 +140,7 @@
                   !jabatan.daerah ?
                   jabatan.wilayah.kode_wilayah + " - " + jabatan.nama : jabatan.daerah.kode_daerah + " - " +
                   jabatan.nama
-                }}
+                  }}
                 </option>
               </select>
               <div>
@@ -166,8 +166,8 @@
 
           <div class="items-center justify-center flex">
             <button type="submit"
-              class="mt-12 w-1/2 bg-red-600 text-white px-6 py-2 rounded-lg font-bold hover:bg-red-700 transition">
-              {{ dataLengkap ? 'Update Data' : 'Submit Data' }}
+              class="mt-12 w-1/2 bg-red-600 text-white px-4 py-2 rounded-lg font-bold hover:bg-red-700 transition">
+              {{ dataLengkap ? 'Update' : 'Kirim' }}
             </button>
           </div>
         </form>

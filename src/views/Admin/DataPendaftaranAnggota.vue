@@ -23,7 +23,7 @@
         <div class="grid grid-cols-1 sm:grid-cols-2 lg:flex lg:items-center gap-4">
           <label class="text-gray-700 font-medium">Provinsi :</label>
           <select v-model="selectedWilayah" class="p-2 border rounded-md w-auto">
-            <option :value="''">Pilih Wilayah</option>
+            <option :value="''">Pilih Provinsi</option>
             <option v-for="wilayah in wilayahList" :key="wilayah.id_wilayah" :value="wilayah">
               {{ wilayah.nama_wilayah }}
             </option>
@@ -153,6 +153,7 @@
                   <th class="px-4 py-2 border border-b-2 ">Tempat Lahir</th>
                   <th class="px-4 py-2 border border-b-2 ">Tanggal Lahir</th>
                   <th class="px-4 py-2 border border-b-2 ">Status Kawin</th>
+                  <th class="px-4 py-2 border border-b-2 ">Total Bayar</th>
                   <th class="px-4 py-2 text-center">Aksi</th>
                 </tr>
               </thead>
@@ -160,28 +161,28 @@
                 <tr class="border-t">
                   <td class="px-4 py-2 border border-b-2 ">{{ SelecteAnggota.nik }}</td>
                   <td class="px-4 py-2 border border-b-2 ">{{ SelecteAnggota.alamat
-                  }}</td>
+                    }}</td>
                   <td class="px-4 py-2 border border-b-2 ">{{ SelecteAnggota.agama }}</td>
                   <td class="px-4 py-2 border border-b-2 ">{{ SelecteAnggota.pekerjaan }}</td>
                   <td class="px-4 py-2 border border-b-2 ">{{ SelecteAnggota.tempatLahir }}</td>
                   <td class="px-4 py-2 border border-b-2 ">{{ SelecteAnggota.tanggalLahir.split('T')[0] }}</td>
                   <td class="px-4 py-2 border border-b-2 ">{{ SelecteAnggota.statusPerkawinan }}</td>
-
+                  <td class="px-4 py-2 border border-b-2 ">{{ totalPembayaran }}</td>
                   <td class="px-4 py-2 border border-b-2  text-center">
                     <div class="flex justify-center space-x-2">
-                      <button @click="updateStatusAnggota(SelecteAnggota.id_data_anggota, 'SUCCESS')"
+                      <button @click="updateStatusAnggota(SelecteAnggota.id_data_anggota, 'SUCCESS', SelecteAnggota)"
                         class="bg-green-500 text-white p-3 rounded-md font-semibold hover:bg-green-600">
                         <i class="fa-regular fa-circle-check"></i>
                         <h1 for="">Sukses
                         </h1>
                       </button>
-                      <button @click="updateStatusAnggota(SelecteAnggota.id_data_anggota, 'PENDING')"
+                      <button @click="updateStatusAnggota(SelecteAnggota.id_data_anggota, 'PENDING', SelecteAnggota)"
                         class="bg-yellow-500 text-white p-3 rounded-md font-semibold hover:bg-yellow-600">
                         <i class="fa-solid fa-clock"></i>
                         <h1 for="">Pending
                         </h1>
                       </button>
-                      <button @click="updateStatusAnggota(SelecteAnggota.id_data_anggota, 'CANCEL')"
+                      <button @click="updateStatusAnggota(SelecteAnggota.id_data_anggota, 'CANCEL', SelecteAnggota)"
                         class="bg-red-500 text-white p-3 rounded-md font-semibold  hover:bg-red-600">
                         <i class="fa-solid fa-ban"></i>
                         <h1 for="">Cancel
@@ -225,7 +226,6 @@ import NavbarAdmin from "@/components/NavbarAdmin.vue";
 import api from "@/service/lpkni";
 import VueEasyLightbox from 'vue-easy-lightbox';
 import Swal from "sweetalert2";
-
 export default {
   components: {
     NavbarAdmin,
@@ -246,7 +246,7 @@ export default {
       selectedStatus: '',
       SelecteAnggota: {},
       isModalOpen: false,
-
+      payments: []
     };
   },
   mounted() {
@@ -257,6 +257,11 @@ export default {
     isSidebarOpen() {
       return this.$store.state.storeSidebar.isSidebarOpen;
     },
+    totalPembayaran() {
+      return this.payments.reduce((total, payment) => {
+        return total + payment.jumlahPembayaran;
+      }, 0);
+    }
   },
   methods: {
     async fetchWilayah() {
@@ -284,13 +289,34 @@ export default {
       this.lightboxVisible = true
     },
     openModal(data) {
+      this.payments = data.transaksiAnggota ? data.transaksiAnggota : [{ jumlahPembayaran: 0 }];
       this.SelecteAnggota = data;
       this.isModalOpen = true;
     },
     closeModal() {
       this.isModalOpen = false;
     },
-    async updateStatusAnggota(id, data) {
+    async updateStatusAnggota(id, data, dataAnggota) {
+      this.payments = dataAnggota.transaksiAnggota;
+      if (!dataAnggota.transaksiAnggota && data === "SUCCESS") {
+        Swal.fire({
+          icon: "warning",
+          title: "Informasi!",
+          text: "Anggota Ini Belum Melakukan Transaksi Sama Sekali!",
+          showConfirmButton: true,
+          confirmButtonColor: '#22c55e',
+        })
+        return
+      } else if (this.totalPembayaran < 600000 && data === "SUCCESS") {
+        Swal.fire({
+          icon: "warning",
+          title: "Informasi!",
+          text: "Anggota Ini Belum Menyelesaikan Pembayaran!",
+          showConfirmButton: true,
+          confirmButtonColor: '#22c55e',
+        })
+        return
+      }
       var keterangan = ""
       Swal.fire({
         title: "Info",

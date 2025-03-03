@@ -1,7 +1,7 @@
 <template>
   <div class="w-screen min-h-screen h-full flex bg-gray-100">
     <NavbarAnggota />
-    <div v-if="isMounted" class="flex justify-center items-center text-xl mt-20 mr-6 w-full h-full mb-12">
+    <div v-if="isMounted" class="flex justify-center items-center text-xl mt-20 mr-8 w-full h-full mb-12">
       <div class="flex flex-col justify-center items-center flex-grow">
         <div class="bg-white w-full max-w-screen-md p-6 rounded-lg shadow-2xl border box-border animate-fadeInUp ">
           <h2 class="text-2xl md:text-3xl font-bold text-center text-gray-800 border-b-2 border-gray-300 pb-3">

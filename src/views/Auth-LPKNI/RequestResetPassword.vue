@@ -83,7 +83,7 @@ export default {
           email: this.email,
           subject: 'Permintaan Reset Kata Sandi',
           message: `Untuk mereset kata sandi Anda, silakan klik tautan berikut : `,
-          link: `http://192.168.1.39:8080/auth/reset-password/${this.token}`
+          link: `https://lpkni.id/auth/reset-password/${this.token}`
         };
         await emailjs.send(this.service_id, this.template_id, templateParams, this.user_id)
           .then(() => {
