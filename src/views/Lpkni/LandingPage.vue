@@ -335,7 +335,7 @@ export default {
         },
         getAllBerita() {
             this.isLoading = true;
-            lpkni.getAllSuaraKonsumen().then((res) => {
+            lpkni.getAllSuaraKonsumenPublish().then((res) => {
                 this.SuaraKonsumeList = res.data
                 console.log(this.SuaraKonsumeList)
             }).catch(() => {

@@ -19,9 +19,9 @@
 
 
     <!-- Navigasi Menu -->
-    <nav class="flex flex-col flex-grow space-y-2">
+    <nav class="flex flex-col flex-grow space-y-1">
       <router-link v-for="(item, index) in menuItems" :key="index" :to="item.path"
-        class="flex items-center py-3 px-4 rounded-md transition-all duration-200 hover:bg-red-700 font-semibold"
+        class="flex items-center py-2 px-4 rounded-md transition-all duration-200 hover:bg-red-700 font-semibold"
         :class="{ 'bg-grey-200 text-black bg-red-700': $route.path === item.path }">
         <i :class="item.icon" class="w-6 text-lg"></i>
         <span v-if="isSidebarOpen" class="ml-3">{{ item.label }}</span>
@@ -42,7 +42,7 @@
       <!-- Display Current Date & Time -->
       <div v-if="isSidebarOpen" class="text-white text-xs mt-4 ml-3">
         <p>{{ currentDate.toLocaleString('id-ID', { weekday: 'long', year: 'numeric', month: 'long', day: 'numeric' })
-        }}</p>
+          }}</p>
         <p>{{ currentDate.toLocaleTimeString('id-ID') }} WIB</p>
       </div>
 
@@ -67,8 +67,8 @@ export default {
         { label: "Data Anggota", path: "/admin/data-pendaftaran-anggota", icon: "fas fa-user-check" },
         { label: "Data Pembayaran", path: "/admin/data-pembayaran-anggota", icon: "fas fa-wallet" },
         { label: "Management Jabatan", path: "/admin/management-jabatan", icon: "fas fa-briefcase" },
-        { label: "Management Provinsi", path: "/admin/management-Provinsi", icon: "fas fa-briefcase" },
-        { label: "Management Kota/Kab", path: "/admin/management-Kota-Kab", icon: "fas fa-briefcase" },
+        { label: "Management Provinsi", path: "/admin/management-Provinsi", icon: "fa-solid fa-city" },
+        { label: "Management Kota/Kab", path: "/admin/management-Kota-Kab", icon: "fa-solid fa-city" },
         { label: "Data Pengaduan", path: "/admin/data-pengaduan", icon: "fas fa-exclamation-triangle" },
         { label: "Tambah Berita/Suara Konsumen", path: "/admin/pengaduan-suara-konsumen", icon: "fas fa-newspaper" },
         { label: "Daftar Berita/Suara Konsumen", path: "/admin/daftar-suara-konsumen", icon: "fas fa-newspaper" },

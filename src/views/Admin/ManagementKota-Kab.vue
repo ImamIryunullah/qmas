@@ -10,7 +10,7 @@
                             📌 Management Daerah
                         </h1>
                         <p class="text-gray-600 mt-2">
-                            Kelola jabatan untuk tingkat Provinsi dan Kota/Kabupaten.
+                            Kelola Kota/Kabupaten Tiap Provinsi
                         </p>
                     </div>
                 </div>
@@ -71,10 +71,10 @@
                     <h2 class="text-xl font-semibold text-gray-700 mb-4">
                         Daftar Provinsi Seluruh Indonesia
                     </h2>
-                    <button @click="exportToCSV"
+                    <!-- <button @click="exportToCSV"
                         class="flex items-center bg-green-500 text-white px-4 py-2 rounded-lg hover:bg-green-600 transition duration-300 shadow-md">
                         <i class="fas fa-file-csv mr-2"></i> Export CSV
-                    </button>
+                    </button> -->
                 </div>
 
                 <div class="overflow-x-auto">

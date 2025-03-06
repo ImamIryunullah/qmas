@@ -95,7 +95,7 @@
 import NavbarAnggota from '@/components/NavbarAnggota.vue';
 import lpkni from '@/service/lpkni';
 import Swal from 'sweetalert2';
-
+import Compressor from 'compressorjs';
 export default {
     components: {
         NavbarAnggota,
@@ -138,36 +138,59 @@ export default {
                 });
                 return;
             }
-            // Validasi ukuran file
-            var sizeInMb = file.size / 1024;
-            var sizeLimit = 1024 * 5;
-            if (sizeInMb > sizeLimit) {
-                Swal.fire({
-                    icon: 'error',
-                    title: 'Ukuran Gambar Terlalu Besar',
-                    text: 'Ukuran Gambar Terlalu Besar, Maksimal 5 MB',
-                });
-                return;
-            }
             // Validasi tipe file (hanya gambar)
             const allowedTypes = ['image/jpeg', 'image/png', 'image/jpg'];
             if (!allowedTypes.includes(file.type)) {
                 Swal.fire({
                     icon: 'error',
                     title: 'Format File Tidak Didukung',
-                    text: 'Gunakan File Png, Jpg, atau Jpeg',
+                    text: 'Gunakan File PNG, JPG, atau JPEG.',
                 });
                 return;
             }
 
-            if (file) {
-                this.form.file[index] = file
-                this.imageUsers[index] = URL.createObjectURL(file);
-                if (this.imageUsers[index] && !this.lastIndexImage[index]) {
-                    this.imageInputs.push({ keterangan: "", required: false })
-                    this.lastIndexImage[index] = true
+            // Kompresi gambar sebelum menyimpannya
+            new Compressor(file, {
+                quality: 0.6, // Kualitas gambar dikurangi ke 60%
+                maxWidth: 1024, // Batasi lebar maksimal 1024px
+                maxHeight: 1024, // Batasi tinggi maksimal 1024px
+                success: (compressedBlob) => {
+                    // Konversi hasil Blob ke File agar bisa diterima backend
+                    const compressedFile = new File([compressedBlob], file.name, {
+                        type: compressedBlob.type,
+                        lastModified: Date.now(),
+                    });
+
+                    // Validasi ukuran file setelah dikompresi
+                    var sizeInMb = compressedFile.size / (1024 * 1024); // Konversi ke MB
+                    var sizeLimit = 5; // Maksimal 5MB
+                    if (sizeInMb > sizeLimit) {
+                        Swal.fire({
+                            icon: 'error',
+                            title: 'Ukuran Gambar Terlalu Besar',
+                            text: 'Ukuran Gambar Terlalu Besar, Maksimal 5 MB.',
+                        });
+                        return;
+                    }
+                    // Simpan hasil kompresi ke dalam form
+                    this.form.file[index] = compressedFile;
+                    this.imageUsers[index] = URL.createObjectURL(compressedFile);
+
+                    // Tambahkan input baru jika diperlukan
+                    if (this.imageUsers[index] && !this.lastIndexImage[index]) {
+                        this.imageInputs.push({ keterangan: "", required: false });
+                        this.lastIndexImage[index] = true;
+                    }
+                },
+                error(err) {
+                    console.error(err.message);
+                    Swal.fire({
+                        icon: 'error',
+                        title: 'Gagal Mengompres Gambar',
+                        text: 'Terjadi kesalahan saat mengompres gambar.',
+                    });
                 }
-            }
+            });
         },
         openLightbox(index) {
             this.lightboxVisible = true;

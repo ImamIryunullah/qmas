@@ -1,0 +1,239 @@
+<template>
+  <div class="w-screen min-h-screen h-full flex bg-gray-100">
+    <div class="bg-gray-100 text-white">
+      <NavbarAdmin />
+    </div>
+    <div class="flex-1 flex justify-center items-center bg-gray-100 mr-5 mt-12 mb-12">
+      <div class="bg-white w-full max-w-3xl border border-b-2 shadow-md p-8 rounded-lg animate-fadeInUp">
+        <div class="space-y-6">
+          <!-- Profile Picture -->
+          <div class="flex justify-center">
+            <div v-if="dataUser.imageUsers.length > 0" class="relative w-40 h-40 sm:w-48 sm:h-48 mb-4">
+              <img :src="getFullpathImage(dataUser.imageUsers[1].imageUrl)" alt="Profile Picture"
+                class="w-full h-full object-cover rounded-full shadow-lg border-4 border-white ring-2 ring-gray-300 hover:scale-105 transition-transform duration-200" />
+            </div>
+            <div v-else>
+              <label for="">Gambar Tidak Tersedia</label>
+            </div>
+          </div>
+
+          <!-- Information List -->
+          <div class="grid grid-cols-1 sm:grid-cols-2 gap-6">
+            <!-- Nama Lengkap -->
+            <div>
+              <p class="text-sm text-gray-600">Nama Lengkap:</p>
+              <p class="text-lg font-semibold">{{ dataUser.nama_lengkap }}</p>
+            </div>
+
+            <!-- Tanggal Lahir -->
+            <div>
+              <p class="text-sm text-gray-600">Tanggal Lahir:</p>
+              <p class="text-lg font-semibold">{{ dataUser.tanggalLahir.split('T')[0] }}</p>
+            </div>
+
+            <!-- NIK -->
+            <div>
+              <p class="text-sm text-gray-600">Nomor Induk Kependudukan:</p>
+              <p class="text-lg font-semibold">{{ dataUser.nik }}</p>
+            </div>
+
+            <!-- Wilayah -->
+            <div>
+              <p class="text-sm text-gray-600">Provinsi:</p>
+              <p class="text-lg font-semibold">
+                {{ dataUser.wilayah.nama_wilayah || 'Data tidak tersedia' }}
+              </p>
+            </div>
+
+            <!-- Daerah -->
+            <div>
+              <p class="text-sm text-gray-600">Kota / Kab:</p>
+              <p class="text-lg font-semibold">
+                {{ dataUser.daerah.nama_daerah || 'Anggota Wilayah' }}
+              </p>
+            </div>
+
+            <!-- Alamat -->
+            <div>
+              <p class="text-sm text-gray-600">Alamat:</p>
+              <p class="text-lg font-semibold">{{ dataUser.alamat }}</p>
+            </div>
+            <div>
+              <p class="text-sm text-gray-600">Phone Number:</p>
+              <p class="text-lg font-semibold">{{ user.no_hp }}</p>
+            </div>
+            <div>
+              <p class="text-sm text-gray-600">Jabatan Struktural:</p>
+              <p class="text-lg font-semibold">{{ dataUser.jabatanStruktural.nama }}</p>
+            </div>
+            <div>
+              <p class="text-sm text-gray-600">Status Perkawinan:</p>
+              <p class="text-lg font-semibold">{{ dataUser.statusPerkawinan }}</p>
+            </div>
+            <div>
+              <p class="text-sm text-gray-600">Agama:</p>
+              <p class="text-lg font-semibold">{{ dataUser.agama }}</p>
+            </div>
+            <div>
+              <p class="text-lg font-semibold">Status:</p>
+              <p class="text-lg font-semibold">
+                <span
+                  :class="{ 'text-yellow-500 font-semibold': dataUser.status === 'PENDING', 'font-semibold text-green-500': dataUser.status === 'SUCCESS' }">
+                  {{ dataUser.status }}
+                </span>
+              </p>
+            </div>
+          </div>
+        </div>
+      </div>
+    </div>
+  </div>
+</template>
+
+<script>
+import NavbarAdmin from "@/components/NavbarAdmin.vue";
+// import NavbarAnggota from "@/components/NavbarAnggota.vue";
+import api from "@/service/lpkni";
+
+export default {
+  components: {
+    NavbarAdmin,
+  },
+
+  data() {
+    return {
+      user: {},
+      dataUser: {
+        id_data_anggota: null,
+        userId: null,
+        daerah: {
+          id_daerah: null,
+          nama_daerah: "",
+          kode_daerah: "",
+        },
+        wilayahId: null,
+        wilayah: {
+          id_wilayah: null,
+          nama_wilayah: "",
+          kode_wilayah: "",
+        },
+        jabatanStrukturalId: null,
+        jabatanStruktural: {
+          id: null,
+          nama: "",
+          maksimumAnggota: null,
+        },
+        nama_lengkap: "",
+        alamat: "",
+        tanggalLahir: "",
+        nik: "",
+        tempatLahir: "",
+        pekerjaan: "",
+        statusPerkawinan: "",
+        agama: "",
+        status: "",
+        createdAt: "",
+        updatedAt: "",
+        imageUsers: [
+          {
+            id: null,
+            dataUserId: null,
+            imageUrl: "",
+            keterangan: "",
+            createdAt: "",
+            updatedAt: "",
+          },
+          {
+            id: null,
+            dataUserId: null,
+            imageUrl: "",
+            keterangan: "",
+            createdAt: "",
+            updatedAt: "",
+          },
+        ],
+      },
+      currentIndex: 0,
+      showLightbox: false,
+      isModalOpen: false,
+    };
+  },
+  computed: {
+    getUserLpkni() {
+      return this.$store.state.storeLpkni.userLpkni.data_anggota.id_data_anggota;
+    },
+  },
+  mounted() {
+    // if (this.getUserLpkni === 0) {
+    //   this.$router.push('/anggota/data-diri')
+    //   return
+    // }
+    // this.getProfile();
+  },
+
+  methods: {
+    openLightbox() {
+      this.showLightbox = true;
+    },
+    // Close the lightbox
+    closeLightbox() {
+      this.showLightbox = false;
+    },
+    getProfile() {
+      api
+        .getUserData()
+        .then((response) => {
+          this.user = response.data.user;
+          this.dataUser = response.data.data_anggota;
+        })
+        .catch((error) => {
+          console.error(error);
+        });
+    },
+    openEditModal() {
+      this.isModalOpen = true;
+    },
+
+    closeEditModal() {
+      this.isModalOpen = false;
+    },
+
+    saveProfile() {
+      alert("Profile updated successfully!");
+      this.closeEditModal();
+    },
+
+    getFullpathImage(img) {
+      return api.getfullpathImage(img);
+    },
+  },
+};
+</script>
+
+<style scoped>
+@keyframes fadeInUp {
+  0% {
+    opacity: 0;
+    transform: translateY(20px);
+  }
+
+  100% {
+    opacity: 1;
+    transform: translateY(0);
+  }
+}
+
+.animate-fadeInUp {
+  animation: fadeInUp 0.6s ease-out;
+}
+
+@media (max-width: 768px) {
+  .kelass {
+    width: 90% !important;
+  }
+
+  .w-full {
+    width: 100%;
+  }
+}
+</style>

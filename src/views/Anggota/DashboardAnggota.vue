@@ -240,32 +240,32 @@
                     <div class="grid gap-2 grid-cols-1 sm:grid-cols-2 lg:grid-cols-3 ">
                         <!-- First Image Block -->
                         <div class="flex flex-col items-center">
-                            <div v-if="data_anggota.imageUsers.length > 0"
+                            <div v-if="data_anggota.imageUsers[0]"
                                 class="w-50 h-32 overflow-hidden rounded-lg border-2 border-gray-300 mb-2">
                                 <img :src="getFullpathImage(data_anggota.imageUsers[0].imageUrl)" alt="Foto 3x4"
                                     class="w-full h-full object-cover transition-transform duration-300 transform hover:scale-105"
                                     @click="openLightbox(0)" />
                             </div>
                             <div v-else>
-                                <label for="">Gambar Tidak Tersedia</label>
+                                <label for="">Pas Foto Tidak Tersedia</label>
                             </div>
-                            <div v-if="data_anggota.imageUsers.length > 0">
+                            <div v-if="data_anggota.imageUsers[0]">
                                 <p class="text-sm text-gray-600 text-center">{{ data_anggota.imageUsers[0].keterangan }}
                                 </p>
                             </div>
                         </div>
                         <!-- Second Image Block -->
                         <div class="flex flex-col items-center">
-                            <div v-if="data_anggota.imageUsers.length > 0"
+                            <div v-if="data_anggota.imageUsers[1]"
                                 class="w-50 h-32 overflow-hidden rounded-lg border-2 border-gray-300 mb-2">
                                 <img :src="getFullpathImage(data_anggota.imageUsers[1].imageUrl)" alt="Foto KTP"
                                     class="w-full h-full object-cover transition-transform duration-300 transform hover:scale-105"
                                     @click="openLightbox(1)" />
                             </div>
                             <div v-else>
-                                <label for="">Gambar Tidak Tersedia</label>
+                                <label for="">Foto KTP Tidak Tersedia</label>
                             </div>
-                            <div v-if="data_anggota.imageUsers.length > 0">
+                            <div v-if="data_anggota.imageUsers[1]">
                                 <p class="text-sm text-gray-600 text-center">{{ data_anggota.imageUsers[1].keterangan }}
                                 </p>
                             </div>

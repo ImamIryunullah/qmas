@@ -10,7 +10,7 @@
                             📌 Management Pengaduan
                         </h1>
                         <p class="text-gray-600 mt-2">
-                            Kelola Pembayaran Untuk anggota tingkat Provinsi dan Kota/Kabupaten.
+                            Kelola Pengaduan Untuk anggota tingkat Provinsi dan Kota/Kabupaten.
                         </p>
                     </div>
                 </div>

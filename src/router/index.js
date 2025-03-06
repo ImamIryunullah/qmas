@@ -472,7 +472,7 @@ router.beforeEach(async (to, from, next) => {
 });
 
 router.afterEach((to) => {
-  document.title = to.meta.title || "LPKNI";
+  document.title = to.meta.title || "LPKNI Official";
 });
 
 export default router;

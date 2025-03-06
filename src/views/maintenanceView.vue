@@ -63,7 +63,7 @@
 </template>
 
 <script>
-import Swal from 'sweetalert2';
+// import Swal from 'sweetalert2';
 export default {
     data() {
         return {
@@ -99,14 +99,14 @@ export default {
             }, 1000); // Update every second
         },
         Goback() {
-            // this.$router.push('/')
-            Swal.fire({
-            icon: "warning",
-            title: "Informasi!",
-            text: "Mohon Maaf Masih Dalam Maintenance",
-            showConfirmButton: true,
-            confirmButtonColor: '#22c55e',
-          })
+            this.$router.push('/')
+            // Swal.fire({
+            //     icon: "warning",
+            //     title: "Informasi!",
+            //     text: "Mohon Maaf Masih Dalam Maintenance",
+            //     showConfirmButton: true,
+            //     confirmButtonColor: '#22c55e',
+            // })
         }
     }
 };

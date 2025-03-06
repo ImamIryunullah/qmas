@@ -13,7 +13,7 @@
         </div>
       </div>
     </div> -->
-      <!--IKLAN-->
+    <!--IKLAN-->
     <div class="flex items-center justify-center mt-4 w-full px-4">
       <div class="relative w-full sm:w-3/4 md:w-2/3 lg:w-1/2">
         <input type="text" v-model="searchQuery"
@@ -40,8 +40,6 @@
           </RouterLink>
           <p class="text-xs sm:text-sm text-red-700 mt-1">{{ data.nama_wilayah }}</p>
           <p class="text-xs sm:text-sm text-red-700 mt-1">{{ data.tanggal.split('T')[0] }}</p>
-
-
           <p class="text-xs text-gray-700 mt-2 font-bold underline">
             {{ data.wilayah.nama_wilayah }}, {{ data.daerah.nama_daerah }}
           </p>
@@ -55,7 +53,8 @@
       </div>
     </section>
 
-    <section v-if="suaraKonsumenList.length > 0" class="container mx-auto px-4 py-12 bg-white rounded-lg shadow-md mb-4">
+    <section v-if="suaraKonsumenList.length > 0"
+      class="container mx-auto px-4 py-12 bg-white rounded-lg shadow-md mb-4">
       <div class="flex flex-col md:flex-row items-center space-y-6 md:space-y-0 md:space-x-6">
         <div class="max-w-full md:w-1/2">
           <img :src="getfullpathImage(suaraKonsumenList[0].media[0].imageUrl)" alt="Trending Image"
@@ -66,7 +65,7 @@
             <div class="bg-red-600 text-white p-2 rounded-lg inline-block mb-4">
               <span class="font-bold text-sm">Breaking News</span>
             </div>
-            <router-link :to="`/suara-konsumen/detail/${suaraKonsumenList[0].id}`">
+            <router-link :to="`/suara-konsumen/detail/${suaraKonsumenList[0].id}/${suaraKonsumenList[0].judul}`">
               <h2 class="text-3xl font-bold text-gray-900 hover:text-red-800 leading-tight cursor-pointer">
                 {{ suaraKonsumenList[0].judul }}
               </h2>
@@ -120,32 +119,28 @@
           </article>
         </div>
         <div class="flex flex-wrap justify-center items-center mt-6 gap-3">
-  <!-- Tombol Prev -->
-  <button @click="changePage(currentPage - 1)" 
-    :disabled="currentPage === 1"
-    class="px-4 py-2 rounded-lg font-semibold bg-red-600 text-white hover:bg-red-700 disabled:opacity-50">
-    Prev
-  </button>
+          <!-- Tombol Prev -->
+          <button @click="changePage(currentPage - 1)" :disabled="currentPage === 1"
+            class="px-4 py-2 rounded-lg font-semibold bg-red-600 text-white hover:bg-red-700 disabled:opacity-50">
+            Prev
+          </button>
 
-  <!-- Nomor Halaman -->
-  <div class="flex flex-wrap gap-2">
-    <button v-for="page in visiblePages" :key="page" 
-      @click="changePage(page)" 
-      :class="currentPage === page 
-        ? 'bg-red-600 text-white' 
-        : 'bg-gray-300 text-gray-800 hover:bg-gray-400'"
-      class="px-4 py-2 rounded-lg font-semibold transition duration-200">
-      {{ page }}
-    </button>
-  </div>
+          <!-- Nomor Halaman -->
+          <div class="flex flex-wrap gap-2">
+            <button v-for="page in visiblePages" :key="page" @click="changePage(page)" :class="currentPage === page
+              ? 'bg-red-600 text-white'
+              : 'bg-gray-300 text-gray-800 hover:bg-gray-400'"
+              class="px-4 py-2 rounded-lg font-semibold transition duration-200">
+              {{ page }}
+            </button>
+          </div>
 
-  <!-- Tombol Next -->
-  <button @click="changePage(currentPage + 1)" 
-    :disabled="currentPage === totalPages"
-    class="px-4 py-2 rounded-lg font-semibold bg-red-600 text-white hover:bg-red-700 disabled:opacity-50">
-    Next
-  </button>
-</div>
+          <!-- Tombol Next -->
+          <button @click="changePage(currentPage + 1)" :disabled="currentPage === totalPages"
+            class="px-4 py-2 rounded-lg font-semibold bg-red-600 text-white hover:bg-red-700 disabled:opacity-50">
+            Next
+          </button>
+        </div>
 
       </section>
       <section class="container mx-auto px-4 py-6 md:px-8 sm:px-8">
@@ -199,6 +194,10 @@
         </div>
       </section>
     </div>
+  </div>
+  <div v-if="isLoading" class="fixed inset-0 flex items-center justify-center bg-black bg-opacity-50 z-50">
+    <div class="text-white text-lg">Sedang Memuat...</div>
+    <div class="spinner-border animate-spin border-4 border-t-4 border-white rounded-full w-16 h-16 ml-2"></div>
   </div>
   <FooterNews />
 </template>

@@ -142,7 +142,7 @@ export default {
       try {
         const response = await lpkni.GetallJabatan();
         this.JabatanList = response.data;
-        this.$toast.success('Berhasil mengambil Data Anggota');
+        this.$toast.success('Berhasil mengambil Data Jabatan');
         this.dashboardData[4].total = this.JabatanList.length;
         const jabatanPusat = this.JabatanList.map(item => item.tingkat === "Pusat");
         const jabatanKota_Kab = this.JabatanList.map(item => item.tingkat === "Kota/Kab");
@@ -152,7 +152,7 @@ export default {
         this.dashboardData[3].total = jabatanProvinsi.filter(item => item === true).length
 
       } catch (error) {
-        this.$toast.error('Gagal mengambil Data Anggota');
+        this.$toast.error('Gagal mengambil Data Jabatan');
       } finally {
         this.isLoading = false
       }

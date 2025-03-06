@@ -4,6 +4,9 @@ const IMG = "https://lpkni.id/"; // Ganti dengan domain Anda
 const API = axios.create({
   baseURL: baseURL,
   withCredentials: true,
+  headers: {
+    "X-Requested-With": "XMLHttpRequest", // Pastikan hanya bisa diakses via AJAX
+  },
 });
 
 // Interceptor request untuk menambahkan token jika sudah ada di cookie (opsional)
@@ -207,8 +210,9 @@ export default {
 
   /*Image*/
   getfullpathImage(img) {
-    return `${IMG}${img}`;
+    return `${IMG}${img}?v=${new Date().getTime()}`;
   },
+
   getHealthlpkni() {
     return API.get("/health");
   },

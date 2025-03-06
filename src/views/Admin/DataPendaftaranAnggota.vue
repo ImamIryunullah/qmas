@@ -161,7 +161,7 @@
                 <tr class="border-t">
                   <td class="px-4 py-2 border border-b-2 ">{{ SelecteAnggota.nik }}</td>
                   <td class="px-4 py-2 border border-b-2 ">{{ SelecteAnggota.alamat
-                    }}</td>
+                  }}</td>
                   <td class="px-4 py-2 border border-b-2 ">{{ SelecteAnggota.agama }}</td>
                   <td class="px-4 py-2 border border-b-2 ">{{ SelecteAnggota.pekerjaan }}</td>
                   <td class="px-4 py-2 border border-b-2 ">{{ SelecteAnggota.tempatLahir }}</td>
@@ -195,19 +195,24 @@
             </table>
             <div class="grid grid-cols-1 sm:grid-cols-2 gap-10 mt-10 border border-b-2 p-5">
               <!-- Gambar pertama -->
-              <div class="flex flex-col items-center justify-center text-center">
+              <div v-if="SelecteAnggota.imageUsers[0]" class="flex flex-col items-center justify-center text-center">
                 <label><strong>{{ SelecteAnggota.imageUsers[0].keterangan }}</strong></label>
                 <img @click="openImagePreview(SelecteAnggota.imageUsers[0].imageUrl)"
                   :src="getFullPathImage(SelecteAnggota.imageUsers[0].imageUrl)" alt=""
                   class="w-48 h-48 object-contain rounded-md mt-4 hover:cursor-pointer" />
               </div>
-
+              <div v-else>
+                <h1>Pas Foto Tidak Tersedia</h1>
+              </div>
               <!-- Gambar kedua -->
-              <div class="flex flex-col items-center justify-center text-center">
+              <div v-if="SelecteAnggota.imageUsers[1]" class="flex flex-col items-center justify-center text-center">
                 <label><strong>{{ SelecteAnggota.imageUsers[1].keterangan }}</strong></label>
                 <img :src="getFullPathImage(SelecteAnggota.imageUsers[1].imageUrl)" alt=""
                   class="w-48 h-48 object-contain rounded-md mt-4 hover:cursor-pointer"
                   @click="openImagePreview(SelecteAnggota.imageUsers[1].imageUrl)" />
+              </div>
+              <div v-else>
+                <h1>Foto KTP Tidak Tersedia</h1>
               </div>
             </div>
 

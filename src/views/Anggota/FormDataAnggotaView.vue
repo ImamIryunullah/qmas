@@ -97,7 +97,7 @@
               <select v-model="userData.wilayahId" @change="GetDaerahByWilayahId(userData.wilayahId)"
                 class="w-full p-3 border border-gray-300 rounded-lg focus:outline-none focus:ring-2 focus:ring-red-600 transition duration-200 ease-in-out mt-2"
                 required>
-                <option :value="0" selected disabled>Pilih Wilayah</option>
+                <option :value="''" disabled>Pilih Wilayah</option>
                 <option v-for="wilayah in wilayahList" :key="wilayah.id_wilayah" :value="wilayah.id_wilayah">
                   {{ wilayah.kode_wilayah + " - " + wilayah.nama_wilayah }}
                 </option>
@@ -105,11 +105,11 @@
             </div>
             <div>
               <label class="text-sm text-gray-500 font-bold">Kota / Kabupaten</label>
-              <select v-model="userData.daerahId" :disabled="userData.wilayahId === 0"
+              <select v-model="userData.daerahId" :disabled="!userData.wilayahId"
                 @change="getJabatanBywilayahAndDaerah(userData.wilayahId, userData.daerahId)"
                 class="w-full p-3 border border-gray-300 rounded-lg focus:outline-none focus:ring-2 focus:ring-red-600 transition duration-200 ease-in-out mt-2"
                 required>
-                <option :value="0" selected disabled>Pilih Daerah</option>
+                <option :value="''" disabled>Pilih Daerah</option>
                 <option v-for="daerah in daerahList" :key="daerah.id_daerah" :value="daerah.id_daerah">
                   {{ daerah.kode_daerah + " - " + daerah.nama_daerah }}
                 </option>
@@ -121,7 +121,7 @@
                 @change="filterJabatanTingkat()"
                 class="w-full p-3 border border-gray-300 rounded-lg focus:outline-none focus:ring-2 focus:ring-red-600 transition duration-200 ease-in-out mt-2"
                 required>
-                <option disabled hidden :value="''">Pilih Tingkat</option>
+                <option value="" disabled>Pilih Tingkat</option>
                 <option value="Pusat">Pusat</option>
                 <option value="Provinsi">Provinsi</option>
                 <option value="Kota/Kab">Kota/Kab</option>
@@ -132,10 +132,10 @@
 
             <div>
               <label class="text-sm text-gray-500 font-bold">Jabatan</label>
-              <select v-model="userData.jabatanStrukturalId" :disabled="!userData.daerahId"
+              <select v-model="userData.jabatanStrukturalId" :disabled="!userData.jabatanStruktural.tingkat"
                 class="w-full p-3 border border-gray-300 rounded-lg focus:outline-none focus:ring-2 focus:ring-red-600 transition duration-200 ease-in-out mt-2"
                 required>
-                <option disabled hidden :value="0">Pilih Jabatan</option>
+                <option disabled :value="''">Pilih Jabatan</option>
                 <option v-for="jabatan in filterJabatanList" :key="jabatan.id" :value="jabatan.id">{{ jabatan.wilayah &&
                   !jabatan.daerah ?
                   jabatan.wilayah.kode_wilayah + " - " + jabatan.nama : jabatan.daerah.kode_daerah + " - " +
@@ -191,6 +191,7 @@ import lpkni from '@/service/lpkni.js';
 import ApiService from '@/service/lpkni.js';
 import VueEasyLightbox from 'vue-easy-lightbox';
 import Swal from 'sweetalert2';
+import Compressor from 'compressorjs';
 export default {
   components: {
     NavbarAnggota,
@@ -204,19 +205,19 @@ export default {
       userData: {
         id_data_anggota: 0,
         userId: null,
-        daerahId: 0,
+        daerahId: '',
         daerah: {
           id_daerah: null,
           nama_daerah: "",
           kode_daerah: "",
         },
-        wilayahId: 0,
+        wilayahId: '',
         wilayah: {
           id_wilayah: null,
           nama_wilayah: "",
           kode_wilayah: "",
         },
-        jabatanStrukturalId: 0,
+        jabatanStrukturalId: '',
         jabatanStruktural: {
           id: null,
           nama: "",
@@ -268,27 +269,48 @@ export default {
         this.$toast.error('Tidak ada file yang dipilih!');
         return;
       }
-      // Validasi ukuran file
-      var sizeInMb = files.size / 1024;
-      var sizeLimit = 1024 * 5;
-      if (sizeInMb > sizeLimit) {
-        this.$toast.error('Ukuran Gambar Terlalu Besar! Maksimal 5MB.');
-        return;
-      }
+
       // Validasi tipe file (hanya gambar)
       const allowedTypes = ['image/jpeg', 'image/png', 'image/jpg'];
       if (!allowedTypes.includes(files.type)) {
         this.$toast.error('Format file tidak didukung! Harap unggah gambar dalam format JPG atau PNG.');
         return;
       }
-      if (this.dataLengkap) {
-        this.UpdateGambar[index] = true
-      }
-      if (files) {
-        this.userData.file[index] = files
-        this.userData.folder[index] = this.imageInputs[index].folder
-        this.imageUsers[index] = URL.createObjectURL(files);
-      }
+
+      // Kompresi gambar sebelum upload
+      new Compressor(files, {
+        quality: 0.6, // Kualitas gambar dikurangi ke 60%
+        maxWidth: 1024, // Batasi lebar maksimal 1024px
+        maxHeight: 1024, // Batasi tinggi maksimal 1024px
+        success: (compressedBlob) => {
+          // Konversi Blob ke File sebelum dikirim ke backend
+          const compressedFile = new File([compressedBlob], files.name, {
+            type: compressedBlob.type,
+            lastModified: Date.now(),
+          });
+
+          // Validasi ukuran file setelah dikompresi
+          var sizeInMb = compressedFile.size / (1024 * 1024);
+          var sizeLimit = 5; // Maksimal 5MB
+          if (sizeInMb > sizeLimit) {
+            this.$toast.error('Ukuran Gambar Terlalu Besar Setelah Dikompres! Maksimal 5MB.');
+            return;
+          }
+
+          if (this.dataLengkap) {
+            this.UpdateGambar[index] = true;
+          }
+
+          // Simpan file yang sudah dikompres ke dalam userData
+          this.userData.file[index] = compressedFile;
+          this.userData.folder[index] = this.imageInputs[index].folder;
+          this.imageUsers[index] = URL.createObjectURL(compressedFile);
+        },
+        error(err) {
+          console.error(err.message);
+          this.$toast.error('Gagal mengompres gambar.');
+        }
+      });
     },
     openLightbox(index) {
       if (this.dataLengkap)
@@ -300,14 +322,17 @@ export default {
       return ApiService.getfullpathImage(img)
     },
     filterJabatanTingkat() {
+      if (!this.dataLengkap) {
+        this.userData.jabatanStrukturalId = ''
+      }
       const filteredJabatan = this.jabatanList.filter(jabatan =>
         jabatan.tingkat === this.userData.jabatanStruktural.tingkat);
       this.filterJabatanList = filteredJabatan
     },
     async GetDaerahByWilayahId(id) {
       if (!this.dataLengkap) {
-        this.userData.daerahId = 0
-        this.userData.jabatanStrukturalId = 0
+        this.userData.daerahId = ''
+        this.userData.jabatanStrukturalId = ''
       }
       await ApiService.getDaerahByWilayahId(id).then((response) => {
         this.daerahList = response.data;
@@ -371,7 +396,7 @@ export default {
     },
     async GetJabatanByWilayahId(id) {
       if (!this.dataLengkap)
-        this.userData.jabatanStrukturalId = 0
+        this.userData.jabatanStrukturalId = ''
       await ApiService.GetJabatanByWilayahId(id).then((res) => {
         this.jabatanList = res.data
       }).catch((error) => {
@@ -381,7 +406,7 @@ export default {
     },
     async getJabatanBywilayahAndDaerah(id_wilayah, id_daerah) {
       if (!this.dataLengkap)
-        this.userData.jabatanStrukturalId = 0
+        this.userData.jabatanStrukturalId = ''
       await ApiService.GetJabatanByWilayahDaerahId(id_wilayah, id_daerah).then((res) => {
         this.jabatanList = res.data
       }).catch((error) => {
@@ -390,6 +415,18 @@ export default {
 
     },
     async SubmitData() {
+      if (!this.userData.file[0] || !this.userData.file[1]) {
+        Swal.fire({
+          title: "Informasi",
+          text: 'Harap Lengkapi Foto Identitas Anda!',
+          confirmButtonText: "Ya",
+          reverseButtons: false,
+          confirmButtonColor: '#22c55e',
+          icon: 'info',
+
+        })
+        return
+      }
       Swal.fire({
         title: "Informasi",
         text: 'Apakah Anda Yakin Data Sudah Benar?',
@@ -421,6 +458,7 @@ export default {
           alamatkantor: this.userData.alamatkantor
         }
         this.isLoading = true;
+        console.log(forms)
         try {
           const response = await ApiService.CreateDataUserImage(forms);
           console.log(response)
@@ -431,6 +469,9 @@ export default {
             confirmButtonColor: '#22c55e',
             showConfirmButton: true,
           })
+          setTimeout(() => {
+            window.location.reload()
+          }, 1000);
         } catch (error) {
           Swal.fire({
             icon: "error",
@@ -495,6 +536,9 @@ export default {
             confirmButtonColor: '#22c55e',
             showConfirmButton: true,
           })
+          setTimeout(() => {
+            window.location.reload()
+          }, 1000);
         }).catch(() => {
           Swal.fire({
             icon: "error",

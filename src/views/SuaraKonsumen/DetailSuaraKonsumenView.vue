@@ -125,15 +125,13 @@
         <div class="w-full sm:w-1/3 space-y-6 mt-1">
           <h2 class="bg-black text-white px-2 py-1 rounded-sm text-center flex justify-center font-semibold">BACA JUGA
           </h2>
-          <div v-for="data in suaraKonsumenTerbaruList" :key="data.id"
-            class="bg-gray-50 flex space-x-4 transition-all p-4 transform">
+          <div v-for="data in suaraKonsumenTerbaruList" :key="data.id" @click="routerPush(data.id, data.judul)"
+            class="bg-gray-50 flex space-x-4 transition-all p-4 transform hover:cursor-pointer">
             <img :src="getfullpathImage(data.media[0].imageUrl)" alt="Article 1"
               class="w-1/3 h-20 object-cover rounded-lg" />
             <div class="w-2/3">
-              <router-link :to="`/suara-konsumen/detail/${suaraKonsumenList[0].id}`">
-                <h5 class="text-lg font-semibold text-gray-800 hover:text-red-900">{{ singkatJudul(data.judul, 50) }}
-                </h5>
-              </router-link>
+              <h5 class="text-lg font-semibold text-gray-800 hover:text-red-900">{{ singkatJudul(data.judul, 50) }}
+              </h5>
               <p class="text-sm text-red-600">{{ data.tanggal.split('T')[0] }}</p>
               <p class="text-gray-600 font-semibold text-sm">{{ berita.wilayah.nama_wilayah }}, {{
                 berita.daerah.nama_daerah }}</p>
@@ -191,6 +189,9 @@ export default {
   },
   methods: {
     async routerPush(id, judul) {
+      if (encodeURIComponent(this.$route.path) === `/suara-konsumen/detail/${id}/${judul}`) {
+        return;
+      }
       await this.$router.push(`/suara-konsumen/detail/${id}/${judul}`)
       window.location.reload()
     },

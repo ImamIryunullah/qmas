@@ -47,7 +47,8 @@
             <div class="relative mt-2">
               <div
                 class="flex items-center justify-center bg-gray-100 hover:bg-gray-200 cursor-pointer border-2 border-gray-300 p-6 rounded-lg text-gray-500 transition-all duration-300 ease-in-out">
-                <input type="file" class="w-full opacity-0 absolute top-0 left-0" @change="handleFileChange" required />
+                <input type="file" class="w-full opacity-0 absolute top-0 left-0" @change="handleFileChange($event)"
+                  required />
                 <span class="mr-2 text-lg">📎</span>
                 <span class="text-sm font-medium">Upload File</span>
               </div>
@@ -87,6 +88,7 @@ import lpkni from '@/service/lpkni';
 import api from '@/service/lpkni';
 import Swal from 'sweetalert2';
 import VueEasyLightbox from 'vue-easy-lightbox';
+import Compressor from 'compressorjs';
 export default {
   components: {
     NavbarAnggota,
@@ -146,25 +148,41 @@ export default {
         this.$toast.error('Tidak ada file yang dipilih!');
         return;
       }
-      // Validasi ukuran file
-      var sizeInMb = file.size / 1024;
-      var sizeLimit = 1024 * 5;
-      if (sizeInMb > sizeLimit) {
-        this.$toast.error('Ukuran Gambar Terlalu Besar! Maksimal 5MB.');
-        return;
-      }
       // Validasi tipe file (hanya gambar)
       const allowedTypes = ['image/jpeg', 'image/png', 'image/jpg'];
       if (!allowedTypes.includes(file.type)) {
         this.$toast.error('Format file tidak didukung! Harap unggah gambar dalam format JPG atau PNG.');
         return;
       }
-      if (file) {
-        this.fileName = file.name;
-        this.fileType = file.type;
-        this.fileUrl = URL.createObjectURL(file);
-        this.file = file;
-      }
+      // Kompresi gambar sebelum menyimpannya
+      new Compressor(file, {
+        quality: 0.6, // Mengurangi kualitas gambar ke 60%
+        maxWidth: 1024, // Batasi lebar maksimal 1024px
+        maxHeight: 1024, // Batasi tinggi maksimal 1024px
+        success: (compressedBlob) => {
+          // Konversi hasil Blob ke File agar bisa diterima backend
+          const compressedFile = new File([compressedBlob], file.name, {
+            type: compressedBlob.type,
+            lastModified: Date.now(),
+          });
+          // Validasi ukuran file setelah dikompresi
+          var sizeInMb = compressedFile.size / (1024 * 1024); // Konversi ke MB
+          var sizeLimit = 5; // Maksimal 5MB
+          if (sizeInMb > sizeLimit) {
+            this.$toast.error('Ukuran Gambar Terlalu Besar Setelah Dikompres! Maksimal 5MB.');
+            return;
+          }
+          // Simpan hasil kompresi
+          this.fileName = compressedFile.name;
+          this.fileType = compressedFile.type;
+          this.fileUrl = URL.createObjectURL(compressedFile);
+          this.file = compressedFile;
+        },
+        error(err) {
+          console.error(err.message);
+          this.$toast.error('Gagal mengompres gambar.');
+        }
+      });
     },
     getpathfullimage(img) {
       return api.getfullpathImage(img);
