@@ -52,8 +52,8 @@
             class="p-3 border border-gray-300 rounded-lg focus:outline-none focus:ring-2 focus:ring-red-600 transition duration-200 ease-in-out transform hover:scale-105"
             required />
           <p class="text-xs text-red-500 mt-1 font-bold">*Password harus memiliki minimal 8 karakter, 1 huruf kapital,
-            dan 1 simbol.</p>
-
+            1 simbol, dan 1 angka.</p>
+          <p class="text-xs text-gray-700 font-bold text italic">*Contoh (Johndoes123!,Johndoes2025@,Johndoes321$)</p>
         </div>
         <!-- Show Password Checkbox -->
         <div class="flex items-center">
@@ -234,12 +234,13 @@ export default {
       }
 
       // Validasi panjang password, huruf kapital, dan simbol
-      const passwordRegex = /^(?=.*[A-Z])(?=.*[\W_]).{8,}$/;
+      // const passwordRegex = /^(?=.*[A-Z])(?=.*[\W_]).{8,}$/;
+      const passwordRegex = /^(?=.*[A-Z])(?=.*\d)(?=.*[\W_]).{8,}$/;
       if (!passwordRegex.test(this.form.password)) {
         Swal.fire({
           icon: 'warning',
           title: 'Info',
-          text: 'Password harus memiliki minimal 8 karakter, 1 huruf kapital, dan 1 simbol.',
+          text: 'Password harus memiliki minimal 8 karakter, 1 huruf kapital,1 simbol, dan 1 angka!',
         });
         return;
       }

@@ -1,6 +1,11 @@
 import axios from "axios";
-const baseURL = "https://lpkni.id/api"; // Ganti dengan domain Anda
-const IMG = "https://lpkni.id/"; // Ganti dengan domain Anda
+const currentDomain = window.location.hostname.includes("www")
+  ? "https://www.lpkni.id"
+  : "https://lpkni.id";
+
+const baseURL = `${currentDomain}/api`;
+const IMG = `${currentDomain}/`;
+
 const API = axios.create({
   baseURL: baseURL,
   withCredentials: true,
