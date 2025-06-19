@@ -4,6 +4,7 @@ import ProdukQmas from "@/views/produkQmas.vue";
 const Dashboard = () => import("@/views/LandingPage.vue");
 const FormPengaduan = () => import("@/views/FormPengaduan.vue");
 const pesanProduk = () => import("@/views/pesanProduk.vue");
+const kontakQmas = () => import("@/views/kontakQmas.vue");
 const routes = [
   /* Tanpa Role Suara Konsumen */
 
@@ -26,6 +27,11 @@ const routes = [
     path: "/pesan-qmas",
     name: "Pesan Qmas",
     component: pesanProduk,
+  },
+  {
+    path: "/kontak-kami",
+    name: "Kontak Kami",
+    component: kontakQmas,
   },
 ];
 

@@ -38,13 +38,6 @@
                         <i class="fab fa-youtube text-lg"></i>
                     </a>
                     <div class="w-px h-6 bg-white/20 mx-2"></div>
-                    <div class="flex items-center space-x-2 text-white/90">
-                        <i class="fas fa-globe text-blue-200"></i>
-                        <select class="bg-transparent text-white text-sm focus:outline-none cursor-pointer">
-                            <option value="id" class="text-black">ID</option>
-                            <option value="en" class="text-black">EN</option>
-                        </select>
-                    </div>
                 </div>
             </div>
         </div>
@@ -76,7 +69,7 @@
                         <span>Pengaduan</span>
                     </router-link>
                     
-                    <a href="/#contact" 
+                    <a href="/kontak-kami" 
                         class="nav-link text-white hover:text-blue-200 flex items-center space-x-2 px-4 py-2 rounded-lg hover:bg-white/10 transition-all duration-300 group">
                         <i class="fas fa-envelope text-blue-200 group-hover:scale-110 transition-transform duration-300"></i>
                         <span>Kontak</span>
@@ -113,7 +106,7 @@
         <div v-if="isMenuOpen" 
             class="lg:hidden fixed inset-0 bg-black/60 backdrop-blur-sm z-40 transition-all duration-300" 
             @click="toggleMenu"></div>
-        
+
         
         <div v-if="isMenuOpen"
             class="fixed inset-y-0 right-0 w-80 max-w-full bg-gradient-to-b from-[#6AA1DA] via-[#5B91CA] to-[#4C81BA] text-white z-50 transform transition-all duration-300 ease-out shadow-2xl"
