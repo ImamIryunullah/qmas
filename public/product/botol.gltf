@@ -1,0 +1,254 @@
+{
+    "asset": {
+        "version": "2.0",
+        "generator": "Open Asset Import Library (assimp v5.4.0)"
+    },
+    "extensionsUsed": [
+        "KHR_materials_volume",
+        "FB_ngon_encoding"
+    ],
+    "accessors": [
+        {
+            "bufferView": 0,
+            "byteOffset": 0,
+            "componentType": 5126,
+            "count": 2800,
+            "type": "VEC3",
+            "max": [
+                200.0,
+                249.5,
+                0.0
+            ],
+            "min": [
+                -200.0,
+                -249.5,
+                0.0
+            ]
+        },
+        {
+            "bufferView": 1,
+            "byteOffset": 0,
+            "componentType": 5126,
+            "count": 2800,
+            "type": "VEC3",
+            "max": [
+                1.0,
+                0.0,
+                0.0
+            ],
+            "min": [
+                1.0,
+                0.0,
+                0.0
+            ]
+        },
+        {
+            "bufferView": 2,
+            "byteOffset": 0,
+            "componentType": 5126,
+            "count": 2800,
+            "type": "VEC2",
+            "max": [
+                1.0,
+                1.0
+            ],
+            "min": [
+                0.0,
+                0.0
+            ]
+        },
+        {
+            "bufferView": 3,
+            "byteOffset": 0,
+            "componentType": 5125,
+            "count": 7184,
+            "type": "SCALAR",
+            "max": [
+                2799
+            ],
+            "min": [
+                0
+            ]
+        },
+        {
+            "bufferView": 4,
+            "byteOffset": 0,
+            "componentType": 5126,
+            "count": 348614,
+            "type": "VEC3",
+            "max": [
+                205.0,
+                254.5,
+                10.0
+            ],
+            "min": [
+                -205.0,
+                -254.5,
+                -10.0
+            ]
+        },
+        {
+            "bufferView": 5,
+            "byteOffset": 0,
+            "componentType": 5126,
+            "count": 348614,
+            "type": "VEC3",
+            "max": [
+                1.0,
+                1.0,
+                1.0
+            ],
+            "min": [
+                -1.0,
+                -1.0,
+                -1.0
+            ]
+        },
+        {
+            "bufferView": 6,
+            "byteOffset": 0,
+            "componentType": 5126,
+            "count": 348614,
+            "type": "VEC2",
+            "max": [
+                1.0,
+                1.0
+            ],
+            "min": [
+                0.0,
+                0.0
+            ]
+        },
+        {
+            "bufferView": 7,
+            "byteOffset": 0,
+            "componentType": 5125,
+            "count": 426018,
+            "type": "SCALAR",
+            "max": [
+                348613
+            ],
+            "min": [
+                0
+            ]
+        }
+    ],
+    "buffers": [
+        {
+            "byteLength": 12978056,
+            "uri": "Udah minum air putih belum hari iniKalau belum, ini waktunya isi ulang segar bareng Qmas Air yang m_0.bin"
+        }
+    ],
+    "bufferViews": [
+        {
+            "buffer": 0,
+            "byteOffset": 0,
+            "byteLength": 33600,
+            "target": 34962
+        },
+        {
+            "buffer": 0,
+            "byteOffset": 33600,
+            "byteLength": 33600,
+            "target": 34962
+        },
+        {
+            "buffer": 0,
+            "byteOffset": 67200,
+            "byteLength": 22400,
+            "target": 34962
+        },
+        {
+            "buffer": 0,
+            "byteOffset": 89600,
+            "byteLength": 28736,
+            "target": 34963
+        },
+        {
+            "buffer": 0,
+            "byteOffset": 118336,
+            "byteLength": 4183368,
+            "target": 34962
+        },
+        {
+            "buffer": 0,
+            "byteOffset": 4301704,
+            "byteLength": 4183368,
+            "target": 34962
+        },
+        {
+            "buffer": 0,
+            "byteOffset": 8485072,
+            "byteLength": 2788912,
+            "target": 34962
+        },
+        {
+            "buffer": 0,
+            "byteOffset": 11273984,
+            "byteLength": 1704072,
+            "target": 34963
+        }
+    ],
+    "materials": [
+        {
+            "name": "Default Material",
+            "pbrMetallicRoughness": {
+                "baseColorFactor": [
+                    0.4019777774810791,
+                    0.4019777774810791,
+                    0.4019777774810791,
+                    1.0
+                ],
+                "metallicFactor": 0.30000001192092896,
+                "roughnessFactor": 0.44999998807907104
+            }
+        }
+    ],
+    "meshes": [
+        {
+            "name": "meshes[0]",
+            "primitives": [
+                {
+                    "mode": 1,
+                    "material": 0,
+                    "indices": 3,
+                    "attributes": {
+                        "POSITION": 0,
+                        "NORMAL": 1,
+                        "TEXCOORD_0": 2
+                    }
+                },
+                {
+                    "mode": 4,
+                    "material": 0,
+                    "indices": 7,
+                    "attributes": {
+                        "POSITION": 4,
+                        "NORMAL": 5,
+                        "TEXCOORD_0": 6
+                    }
+                }
+            ]
+        }
+    ],
+    "nodes": [
+        {
+            "name": "Udah minum air putih belum hari iniKalau belum, ini waktunya isi ulang segar bareng Qmas Air yang m",
+            "children": [
+                1
+            ]
+        },
+        {
+            "name": "nodes[0]",
+            "mesh": 0
+        }
+    ],
+    "scenes": [
+        {
+            "nodes": [
+                0
+            ]
+        }
+    ],
+    "scene": 0
+}

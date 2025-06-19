@@ -1,8 +1,7 @@
 <template>
-    <footer class="bg-gradient-to-r from-red-500 to-red-800 text-white py-8">
+    <footer class="bg-[#6AA1DA] text-white py-8">
         <div class="container mx-auto px-6 md:px-12">
-            <div class="grid grid-cols-1 sm:grid-cols-2 lg:grid-cols-4 gap-12 mb-8">
-                <!-- Quick Links -->
+            <div class="grid grid-cols-1 sm:grid-cols-2 lg:grid-cols-3 gap-12 mb-8">
                 <div>
                     <h3 class="font-semibold text-lg mb-4">Link Cepat</h3>
                     <ul>
@@ -12,7 +11,6 @@
                     </ul>
                 </div>
 
-                <!-- Follow Us -->
                 <div>
                     <h3 class="font-semibold text-lg mb-4">Ikuti Kami</h3>
                     <div class="flex space-x-4">
@@ -35,36 +33,16 @@
                 <!-- Contact Information -->
                 <div>
                     <h3 class="font-semibold text-lg mb-4">Kontak dan Alamat</h3>
-                    <p class="text-gray-300">LPKNI, Malang City, Indonesia</p>
-                    <p class="text-gray-300">Malang, di Jalan Raya Wapoga No.2 Perum Nguji Permai Il </p>
-                    <p class="text-gray-300">Phone: 0813 3301 5767 & 0341 - 437354</p>
-                    <p class="text-gray-300">Email: pt.lpkni@gmail.com</p>
-                </div>
-
-                <!-- Join Us Section -->
-                <div>
-                    <h3 class="font-semibold text-lg mb-4">Jadilah Bagian dari Kami</h3>
-                    <p class="text-gray-300 mb-4">
-                        Bergabung dengan LPKNI dan dapatkan manfaat eksklusif dalam perlindungan dan standarisasi usaha
-                        Anda!
-                    </p>
-                    <div class="grid grid-cols-2 gap-2 text-center">
-                        <router-link to="/auth/register-anggota"
-                            class="bg-white text-red-600 hover:text-gray-600 px-6 py-2 rounded-lg font-semibold hover:bg-gray-100 transition">
-                            LPKNI
-                        </router-link>
-                        <router-link to="/auth/swi/register"
-                            class="bg-white text-red-600 hover:text-gray-600 px-6 py-2 rounded-lg font-semibold hover:bg-gray-100 transition">
-                            SWI
-                        </router-link>
-                    </div>
-                </div>
-
+                    <p class="text-gray-300">Qmas, Malang City, Indonesia</p>
+                    <p class="text-gray-300">Jl. Sulfat No.51, Purwantoro, Kec. Blimbing, Kota Malang, Jawa Timur 65126 </p>
+                    <p class="text-gray-300">Phone: (0341) 474322</p>
+                    <p class="text-gray-300">Kontak Person: Anita Yuli R. 081334559730, kantor 085100581177</p>
+                </div>              
             </div>
 
             <!-- Copyright Section -->
             <div class="text-sm text-gray-300 text-center mt-6">
-                <p>&copy; 2025 LPKNI. All Rights Reserved.</p>
+                <p>&copy; 2025 QMAS. All Rights Reserved.</p>
             </div>
         </div>
     </footer>

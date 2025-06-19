@@ -1,172 +1,225 @@
 <template>
     <header :class="{ 'hidden-navbar': !isNavbarVisible }"
-        class="bg-red-600 p-6 shadow-lg fixed top-0 left-0 right-0 z-50 font-bold">
-        <div class="container mx-auto flex justify-between items-center">
-            <router-link to="/" class="text-white text-2xl font-bold flex items-center">
-                <img src="@/assets/iconlpkni.png" alt="LPKNI" class="w-9 h-12 mr-1 mt-1" />
-                LPKNI
-            </router-link>
-            <div class="block md:hidden">
-                <button @click="toggleMenu" class="text-white focus:outline-none">
-                    <i class="fas fa-bars text-2xl"></i>
-                </button>
-            </div>
-            <ul class="hidden md:flex space-x-6">
-                <li>
-                    <router-link to="/suara-konsumen"
-                        class="text-white hover:text-gray-300 flex items-center space-x-1">
-                        <i class="fas fa-newspaper"></i>
-                        <span>Suara Konsumen</span>
-                    </router-link>
-                </li>
-                <li>
-                    <router-link to="/pengaduan" class="text-white hover:text-gray-300 flex items-center space-x-2">
-                        <i class="fas fa-exclamation-triangle"></i>
-                        <span>Pengaduan</span>
-                    </router-link>
-                </li>
-                <li>
-                    <a href="/#contact" class="text-white hover:text-gray-300 flex items-center space-x-2">
-                        <i class="fas fa-phone-alt"></i>
-                        <span>Kontak</span>
+        class="bg-gradient-to-r from-[#6AA1DA] via-[#5B91CA] to-[#4C81BA] p-4 shadow-2xl fixed top-0 left-0 right-0 z-50 font-bold backdrop-blur-sm border-b border-white/10">
+        
+        
+        <div class="bg-black/20 backdrop-blur-sm border-b border-white/10 py-2 px-6 hidden lg:block mb-1">
+            <div class="container mx-auto flex justify-between items-center text-sm">
+                <div class="flex items-center space-x-6 text-white/90">
+                    <div class="flex items-center space-x-2">
+                        <i class="fas fa-envelope text-blue-200"></i>
+                        <span>info@qmas.com</span>
+                    </div>  
+                    <div class="flex items-center space-x-2">
+                        <i class="fas fa-phone text-blue-200"></i>
+                        <span>+62 123 456 789</span>
+                    </div>
+                    <div class="flex items-center space-x-2">
+                        <i class="fas fa-map-marker-alt text-blue-200"></i>
+                        <span>Malang, Indonesia</span>
+                    </div>
+                </div>
+                
+                
+                <div class="flex items-center space-x-4">
+                    <a href="#" class="text-white/80 hover:text-white hover:scale-110 transition-all duration-300">
+                        <i class="fab fa-facebook-f text-lg"></i>
                     </a>
-                </li>
-                <li class="relative group">
-                    <button class="text-white hover:text-gray-300 flex items-center space-x-2">
-                        <i class="fas fa-clipboard-check"></i>
-                        <span>Daftar</span>
-                        <i class="fas fa-chevron-down ml-1"></i>
-                    </button>
-                    <div class="">
-                        <ul
-                            class="absolute min-w-[150px] bg-white text-black shadow-md rounded-md hidden group-hover:block z-10">
-                            <li>
-                                <router-link to="/auth/register-anggota"
-                                    class="block px-4 py-2 text-sm hover:bg-gray-200">
-                                    Anggota LPKNI</router-link>
-                            </li>
-                            <li>
-                                <router-link to="/auth/swi/register" class="block px-4 py-2 text-sm hover:bg-gray-200">
-                                    Standar Warung Indonesia</router-link>
-                            </li>
-                        </ul>
+                    <a href="#" class="text-white/80 hover:text-white hover:scale-110 transition-all duration-300">
+                        <i class="fab fa-twitter text-lg"></i>
+                    </a>
+                    <a href="#" class="text-white/80 hover:text-white hover:scale-110 transition-all duration-300">
+                        <i class="fab fa-instagram text-lg"></i>
+                    </a>
+                    <a href="#" class="text-white/80 hover:text-white hover:scale-110 transition-all duration-300">
+                        <i class="fab fa-linkedin-in text-lg"></i>
+                    </a>
+                    <a href="#" class="text-white/80 hover:text-white hover:scale-110 transition-all duration-300">
+                        <i class="fab fa-youtube text-lg"></i>
+                    </a>
+                    <div class="w-px h-6 bg-white/20 mx-2"></div>
+                    <div class="flex items-center space-x-2 text-white/90">
+                        <i class="fas fa-globe text-blue-200"></i>
+                        <select class="bg-transparent text-white text-sm focus:outline-none cursor-pointer">
+                            <option value="id" class="text-black">ID</option>
+                            <option value="en" class="text-black">EN</option>
+                        </select>
                     </div>
-                </li>
-                <li class="relative group">
-                    <button class="text-white hover:text-gray-300 flex items-center space-x-2">
-                        <i class="fas fa-clipboard-check"></i>
-                        <span>Masuk</span>
-                        <i class="fas fa-chevron-down ml-1"></i>
-                    </button>
-                    <div class="">
-                        <ul
-                            class="absolute min-w-[150px] bg-white text-black shadow-md rounded-md hidden group-hover:block z-10">
-                            <li>
-                                <router-link to="/auth/login"
-                                    class="block px-4 py-2 text-sm hover:bg-gray-200">LPKNI</router-link>
-                            </li>
-                            <li>
-                                <router-link to="/auth/swi/login"
-                                    class="block px-4 py-2 text-sm hover:bg-gray-200">Standar Warung
-                                    Indonesia</router-link>
-                            </li>
-                        </ul>
-                    </div>
-                </li>
-
-            </ul>
+                </div>
+            </div>
         </div>
-        <div v-if="isMenuOpen" class="md:hidden fixed inset-0 bg-black bg-opacity-50 z-40" @click="toggleMenu"></div>
-        <div v-if="isMenuOpen"
-            class="fixed inset-y-0 right-0 w-64 bg-red-700 text-white z-50 transform transition-all ease-in-out"
-            :class="{ 'translate-x-0': isMenuOpen, 'translate-x-full': !isMenuOpen }">
-            <div class="flex justify-end p-4">
-                <router-link to="/" class="text-white text-3xl font-bold flex items-center">
-                    <img src="@/assets/iconlpkni.png" alt="LPKNI" class="w-13 h-10 mr-3 mt-2" />
-                    LPKNI
-                </router-link>
-                <button @click="toggleMenu" class="text-white">
-                    <i class="fas fa-times w-6 h-6"></i>
-                </button>
-            </div>
-            <ul class="space-y-6 p-6">
-                <li>
-                    <a href="/#about" class="flex items-center space-x-2 hover:text-gray-300">
-                        <i class="fas fa-info-circle w-5 h-5"></i>
-                        <span>Tentang</span>
-                    </a>
-                </li>
-                <li>
-                    <a href="/#services" class="flex items-center space-x-2 hover:text-gray-300">
-                        <i class="fas fa-cogs w-5 h-5"></i>
-                        <span>Layanan</span>
-                    </a>
-                </li>
-                <li>
-                    <a href="/#contact" class="flex items-center space-x-2 hover:text-gray-300">
-                        <i class="fas fa-phone-alt w-5 h-5"></i>
-                        <span>Kontak</span>
-                    </a>
-                </li>
-               
-                <li>
-                    <router-link to="/suara-konsumen" class="flex items-center space-x-2 hover:text-gray-300">
-                        <i class="fas fa-newspaper w-5 h-5"></i>
-                        <span>Suara Konsumen</span>
+
+        
+        <div class="container mx-auto flex justify-between items-center relative">
+            
+            <router-link to="/" class="text-white text-3xl font-bold flex items-center group">
+                <div class="bg-white/10 backdrop-blur-sm p-3 rounded-xl mr-3 group-hover:bg-white/20 transition-all duration-300 border border-white/20">
+                    <div class="w-8 h-8 bg-gradient-to-br from-white to-blue-200 rounded-lg flex items-center justify-center">
+                        <span class="text-blue-600 font-black text-lg">Q</span>
+                    </div>
+                </div>
+                <span class="bg-gradient-to-r from-white to-blue-100 bg-clip-text text-transparent">QMAS</span>
+            </router-link>
+
+            
+            <nav class="hidden lg:flex items-center space-x-8">
+                <div class="flex items-center space-x-8">
+                    <router-link to="/suara-konsumen"
+                        class="nav-link text-white hover:text-blue-200 flex items-center space-x-2 px-4 py-2 rounded-lg hover:bg-white/10 transition-all duration-300 group">
+                        <i class="fas fa-newspaper text-blue-200 group-hover:scale-110 transition-transform duration-300"></i>
+                        <span>News</span>
                     </router-link>
-                </li>
-                <li>
-                    <router-link to="/pengaduan" class="flex items-center space-x-2 hover:text-gray-300">
-                        <i class="fas fa-exclamation-triangle w-5 h-5"></i>
+                    
+                    <router-link to="/pengaduan" 
+                        class="nav-link text-white hover:text-blue-200 flex items-center space-x-2 px-4 py-2 rounded-lg hover:bg-white/10 transition-all duration-300 group">
+                        <i class="fas fa-comment-alt text-blue-200 group-hover:scale-110 transition-transform duration-300"></i>
                         <span>Pengaduan</span>
                     </router-link>
-                </li>
-                <li class="relative">
-                    <button @click="toggleDropdown"
-                        class="flex items-center w-full justify-between hover:text-gray-300">
-                        <div class="flex items-center space-x-2">
-                            <i class="fas fa-clipboard-check w-5 h-5"></i>
-                            <span>Pendaftaran</span>
+                    
+                    <a href="/#contact" 
+                        class="nav-link text-white hover:text-blue-200 flex items-center space-x-2 px-4 py-2 rounded-lg hover:bg-white/10 transition-all duration-300 group">
+                        <i class="fas fa-envelope text-blue-200 group-hover:scale-110 transition-transform duration-300"></i>
+                        <span>Kontak</span>
+                    </a>
+                    
+                    <a href="/product-Qmas" 
+                        class="nav-link text-white hover:text-blue-200 flex items-center space-x-2 px-4 py-2 rounded-lg hover:bg-white/10 transition-all duration-300 group">
+                        <i class="fas fa-box-open text-blue-200 group-hover:scale-110 transition-transform duration-300"></i>
+                        <span>Produk Kami</span>
+                    </a>
+                </div>
+
+            </nav>
+
+            
+            <div class="flex items-center space-x-4 lg:hidden">
+                
+                <div class="flex items-center space-x-2">
+                    <a href="#" class="text-white/80 hover:text-white text-sm">
+                        <i class="fab fa-instagram"></i>
+                    </a>
+                    <a href="#" class="text-white/80 hover:text-white text-sm">
+                        <i class="fab fa-facebook-f"></i>
+                    </a>
+                </div>
+                <button @click="toggleMenu" 
+                    class="text-white focus:outline-none bg-white/10 backdrop-blur-sm p-2 rounded-lg hover:bg-white/20 transition-all duration-300">  
+                    <i :class="isMenuOpen ? 'fas fa-times' : 'fas fa-bars'" class="text-xl transition-all duration-300"></i>
+                </button>
+            </div>
+        </div>
+
+        
+        <div v-if="isMenuOpen" 
+            class="lg:hidden fixed inset-0 bg-black/60 backdrop-blur-sm z-40 transition-all duration-300" 
+            @click="toggleMenu"></div>
+        
+        
+        <div v-if="isMenuOpen"
+            class="fixed inset-y-0 right-0 w-80 max-w-full bg-gradient-to-b from-[#6AA1DA] via-[#5B91CA] to-[#4C81BA] text-white z-50 transform transition-all duration-300 ease-out shadow-2xl"
+            :class="{ 'translate-x-0': isMenuOpen, 'translate-x-full': !isMenuOpen }">
+            
+            
+            <div class="flex justify-between items-center p-6 border-b border-white/20">
+                <div class="flex items-center space-x-3">
+                    <div class="bg-white/10 backdrop-blur-sm p-2 rounded-lg">
+                        <div class="w-6 h-6 bg-gradient-to-br from-white to-blue-200 rounded flex items-center justify-center">
+                            <span class="text-blue-600 font-black text-sm">Q</span>
                         </div>
-                        <i class="fas fa-chevron-down w-5 h-5 transition-transform"
-                            :class="{ 'rotate-180': isDropdownOpen }"></i>
-                    </button>
-                    <ul v-show="isDropdownOpen" class="mt-2 bg-white text-black rounded shadow-lg overflow-hidden">
-                        <li>
-                            <router-link to="/auth/register-anggota"
-                                class="block px-4 py-2 text-sm hover:bg-gray-200">LPKNI</router-link>
-                        </li>
-                        <li>
-                            <router-link to="/auth/swi/register"
-                                class="block px-4 py-2 text-sm hover:bg-gray-200">Standar Warung Indonesia</router-link>
-                        </li>
-                    </ul>
-                </li>
-                <li class="relative">
-                    <button @click="toggleDropdownLogin"
-                        class="flex items-center w-full justify-between hover:text-gray-300">
-                        <div class="flex items-center space-x-2">
-                            <i class="fas fa-clipboard-check w-5 h-5"></i>
-                            <span>Masuk</span>
-                        </div>
-                        <i class="fas fa-chevron-down w-5 h-5 transition-transform"
-                            :class="{ 'rotate-180': isDropdownOpenLogin }"></i>
-                    </button>
-                    <ul v-show="isDropdownOpenLogin" class="mt-2 bg-white text-black rounded shadow-lg overflow-hidden">
-                        <li>
-                            <router-link to="/auth/login"
-                                class="block px-4 py-2 text-sm hover:bg-gray-200">LPKNI</router-link>
-                        </li>
-                        <li>
-                            <router-link to="/auth/swi/login" class="block px-4 py-2 text-sm hover:bg-gray-200">Standar
-                                Warung Indonesia</router-link>
-                        </li>
-                    </ul>
-                </li>
-            </ul>
+                    </div>
+                    <span class="text-xl font-bold">QMAS</span>
+                </div>
+                <button @click="toggleMenu" 
+                    class="text-white bg-white/10 backdrop-blur-sm p-2 rounded-lg hover:bg-white/20 transition-all duration-300">
+                    <i class="fas fa-times text-lg"></i>
+                </button>
+            </div>
+
+            
+            <div class="p-6 space-y-2 flex-1 overflow-y-auto">
+                <a href="/#about" 
+                    class="flex items-center space-x-4 p-4 rounded-xl hover:bg-white/10 transition-all duration-300 group">
+                    <div class="bg-white/10 p-2 rounded-lg group-hover:bg-white/20 transition-all duration-300">
+                        <i class="fas fa-info-circle text-blue-200"></i>
+                    </div>
+                    <span class="text-lg">Tentang</span>
+                </a>
+                
+                <a href="/#services" 
+                    class="flex items-center space-x-4 p-4 rounded-xl hover:bg-white/10 transition-all duration-300 group">
+                    <div class="bg-white/10 p-2 rounded-lg group-hover:bg-white/20 transition-all duration-300">
+                        <i class="fas fa-cogs text-blue-200"></i>
+                    </div>
+                    <span class="text-lg">Layanan</span>
+                </a>
+                
+                <a href="/#contact" 
+                    class="flex items-center space-x-4 p-4 rounded-xl hover:bg-white/10 transition-all duration-300 group">
+                    <div class="bg-white/10 p-2 rounded-lg group-hover:bg-white/20 transition-all duration-300">
+                        <i class="fas fa-envelope text-blue-200"></i>
+                    </div>
+                    <span class="text-lg">Kontak</span>
+                </a>
+
+                <a href="/product-Qmas" 
+                    class="flex items-center space-x-4 p-4 rounded-xl hover:bg-white/10 transition-all duration-300 group">
+                    <div class="bg-white/10 p-2 rounded-lg group-hover:bg-white/20 transition-all duration-300">
+                        <i class="fas fa-box-open text-blue-200"></i>
+                    </div>
+                    <span class="text-lg">Produk Kami</span>
+                </a>
+
+                <router-link to="/suara-konsumen" 
+                    class="flex items-center space-x-4 p-4 rounded-xl hover:bg-white/10 transition-all duration-300 group">
+                    <div class="bg-white/10 p-2 rounded-lg group-hover:bg-white/20 transition-all duration-300">
+                        <i class="fas fa-newspaper text-blue-200"></i>
+                    </div>
+                    <span class="text-lg">Suara Konsumen</span>
+                </router-link>
+                
+                <router-link to="/pengaduan" 
+                    class="flex items-center space-x-4 p-4 rounded-xl hover:bg-white/10 transition-all duration-300 group">
+                    <div class="bg-white/10 p-2 rounded-lg group-hover:bg-white/20 transition-all duration-300">
+                        <i class="fas fa-comment-alt text-blue-200"></i>
+                    </div>
+                    <span class="text-lg">Pengaduan</span>
+                </router-link>
+            </div>
+
+            
+            <div class="p-6 border-t border-white/20">
+                <button class="w-full bg-gradient-to-r from-orange-500 to-red-500 hover:from-orange-600 hover:to-red-600 text-white py-3 px-6 rounded-xl font-semibold shadow-lg hover:shadow-xl transform hover:scale-105 transition-all duration-300 flex items-center justify-center space-x-2 mb-4">
+                    <i class="fas fa-phone-alt"></i>
+                    <span>Hubungi Kami</span>
+                </button>
+                
+                
+                <div class="flex justify-center space-x-6">
+                    <a href="#" class="text-white/80 hover:text-white hover:scale-110 transition-all duration-300">
+                        <i class="fab fa-facebook-f text-xl"></i>
+                    </a>
+                    <a href="#" class="text-white/80 hover:text-white hover:scale-110 transition-all duration-300">
+                        <i class="fab fa-twitter text-xl"></i>
+                    </a>
+                    <a href="#" class="text-white/80 hover:text-white hover:scale-110 transition-all duration-300">
+                        <i class="fab fa-instagram text-xl"></i>
+                    </a>
+                    <a href="#" class="text-white/80 hover:text-white hover:scale-110 transition-all duration-300">
+                        <i class="fab fa-linkedin-in text-xl"></i>
+                    </a>
+                    <a href="#" class="text-white/80 hover:text-white hover:scale-110 transition-all duration-300">
+                        <i class="fab fa-youtube text-xl"></i>
+                    </a>
+                </div>
+                
+                <div class="text-center mt-4 text-white/60 text-sm">
+                    <p>&copy; 2024 QMAS. All rights reserved.</p>
+                </div>
+            </div>
         </div>
     </header>
 </template>
+
 <script>
 export default {
     data() {
@@ -181,6 +234,12 @@ export default {
     methods: {
         toggleMenu() {
             this.isMenuOpen = !this.isMenuOpen; 
+            // Prevent body scroll when menu is open
+            if (this.isMenuOpen) {
+                document.body.style.overflow = 'hidden';
+            } else {
+                document.body.style.overflow = 'auto';
+            }
         },
         toggleDropdown() {
             this.isDropdownOpen = !this.isDropdownOpen; 
@@ -195,7 +254,10 @@ export default {
             this.closeMenu(); 
         },
         closeMenu() {
-            this.isMenuOpen = false; 
+            if (this.isMenuOpen) {
+                this.isMenuOpen = false;
+                document.body.style.overflow = 'auto';
+            }
         },
     },
     mounted() {
@@ -203,157 +265,98 @@ export default {
     },
     beforeUnmount() {
         window.removeEventListener('scroll', this.handleScroll);
+        document.body.style.overflow = 'auto';
     },
 };
 </script>
 
 <style scoped>
-
 .hidden-navbar {
     transform: translateY(-100%);
+    transition: transform 0.3s ease-in-out;
 }
 
+.nav-link {
+    position: relative;
+    overflow: hidden;
+}
+
+.nav-link::before {
+    content: '';
+    position: absolute;
+    bottom: 0;
+    left: 50%;
+    width: 0;
+    height: 2px;
+    background: linear-gradient(90deg, #fbbf24, #f59e0b);
+    transition: all 0.3s ease;
+    transform: translateX(-50%);
+}
+
+.nav-link:hover::before {
+    width: 100%;
+}
+
+/* Custom scrollbar for mobile menu */
+.overflow-y-auto::-webkit-scrollbar {
+    width: 4px;
+}
+
+.overflow-y-auto::-webkit-scrollbar-track {
+    background: rgba(255, 255, 255, 0.1);
+    border-radius: 2px;
+}
+
+.overflow-y-auto::-webkit-scrollbar-thumb {
+    background: rgba(255, 255, 255, 0.3);
+    border-radius: 2px;
+}
+
+.overflow-y-auto::-webkit-scrollbar-thumb:hover {
+    background: rgba(255, 255, 255, 0.5);
+}
+
+/* Responsive adjustments */
 @media (max-width: 480px) {
-    .text-2xl {
-        font-size: 1.2rem;
-    }
-    .text-3xl {
-        font-size: 1.8rem;
-    }
-    .container {
-        padding-left: 1rem;
-        padding-right: 1rem;
+    .w-80 {
+        width: 100%;
     }
 }
 
-@media (min-width: 481px) and (max-width: 768px) {
-    .text-2xl {
-        font-size: 1rem;
-    }
-
-    .text-3xl {
-        font-size: 1rem;
-    }
-
-    .container {
+@media (max-width: 768px) {
+    header .container {
         padding-left: 1rem;
         padding-right: 1rem;
     }
 }
 
 @media (min-width: 769px) and (max-width: 1024px) {
-    .text-2xl {
-        font-size: 1.75rem;
-    }
-
-    .text-3xl {
-        font-size: 2.25rem;
-    }
-
-    .container {
+    header .container {
         padding-left: 2rem;
         padding-right: 2rem;
     }
 }
 
 @media (min-width: 1025px) {
-    .text-2xl {
-        font-size: 2rem;
-
-    }
-
-    .text-3xl {
-        font-size: 2.5rem;
-
-    }
-
-    .container {
+    header .container {
         padding-left: 2.5rem;
         padding-right: 2.5rem;
     }
 }
 
-@media (max-width: 768px) {
-
-    header .text-white {
-        font-size: 0.5rem;
+/* Animation for mobile menu */
+@keyframes slideIn {
+    from {
+        transform: translateX(100%);
+        opacity: 0;
     }
-
-    header i {
-        font-size: 0.625rem;
-    }
-
-    header .container {
-        padding: 0 5px;
-    }
-
-    .block.md\:hidden button {
-        font-size: 1rem;
-    }
-
-    header .md\:hidden .space-x-6 {
-        flex-direction: column;
-    }
-
-    .md\:hidden .w-64 {
-        width: 100%;
-    }
-
-    header button {
-        padding: 3px 6px;
+    to {
+        transform: translateX(0);
+        opacity: 1;
     }
 }
 
-@media (max-width: 820px) {
-
-    header .text-white {
-        font-size: 0.375rem;
-    }
-    header i {
-        font-size: 0.5rem;
-    }
-    header .container {
-        padding: 0 3px;
-    }
-
-    .block.md\:hidden button {
-        font-size: 0.875rem;
-    }
-    header .md\:hidden .space-x-6 {
-        flex-direction: column;
-    }
-    .md\:hidden .w-64 {
-        width: 100%;
-    }
-    header button {
-        padding: 3px 5px;
-    }
-}
-
-@media (max-width: 1024px) {
-    header .text-white {
-        font-size: 0.875rem;
-    }
-
-    header i {
-        font-size: 1.25rem;
-    }
-
-    header .container {
-        padding: 0 20px;
-
-    }
-
-    .block.md\:hidden button {
-        font-size: 1.25rem;
-    }
-
-    header .md\:hidden .space-x-6 {
-        flex-direction: column;
-    }
-
-    .md\:hidden .w-64 {
-        width: 100%;
-    }
+.mobile-menu-enter {
+    animation: slideIn 0.3s ease-out;
 }
 </style>
