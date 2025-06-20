@@ -8,6 +8,8 @@ const kontakQmas = () => import("@/views/kontakQmas.vue");
 const newsQmas = () => import("@/views/newsQmas.vue");
 const adminBerita = () => import("@/views/adminBerita.vue")
 const adminPesanan = () => import("@/views/adminPesanan")
+const adminProduk = () => import("@/views/adminProduk")
+const adminAnalitik = () => import("@/views/adminAnalitik")
 
 
 const adminDashboard = () => import("@/views/adminDashboard.vue");
@@ -62,6 +64,16 @@ const routes = [
     path: "/admin/kelola-pesanan",
     name: "Admin Panel Pesanan",
     component: adminPesanan,
+  },
+  {
+    path: "/admin/kelola-produk",
+    name: "Admin Panel Produk",
+    component: adminProduk,
+  },
+  {
+    path: "/admin/analytics",
+    name: "Admin Panel Analitik",
+    component: adminAnalitik,
   },
 ];
 
