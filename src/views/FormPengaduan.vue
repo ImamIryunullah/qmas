@@ -88,7 +88,7 @@
                   />
                 </div>
   
-                <div class="space-y-2">
+                <div   class="space-y-2">
                   <label for="kategori" class="block text-sm font-semibold text-gray-700">
                     Kategori <span class="text-red-500">*</span>
                   </label>

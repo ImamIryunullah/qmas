@@ -8,7 +8,7 @@
         <section class="">
           <h2 class="text-3xl font-bold text-gray-800 mb-8 text-center">Berita Utama</h2>
           <div class="grid grid-cols-1 lg:grid-cols-2 gap-8">
-            <!-- Main Featured -->
+            
             <article class="bg-white rounded-2xl shadow-lg overflow-hidden hover:shadow-xl transition-all duration-300 transform hover:-translate-y-1">
               <div class="relative">
                 <div class="w-full h-64 bg-gradient-to-br from-blue-400 to-blue-600 flex items-center justify-center">
@@ -48,7 +48,7 @@
               </div>
             </article>
   
-            <!-- Side Featured -->
+            
             <div class="space-y-6">
               <article v-for="(article, index) in sideArticles" :key="index" 
                        class="bg-white rounded-xl shadow-md overflow-hidden hover:shadow-lg transition-all duration-300 flex">
@@ -73,7 +73,7 @@
           </div>
         </section>
   
-        <!-- Latest News Grid -->
+        
         <section class="mb-12">
           <div class="flex items-center justify-between mb-8">
             <h2 class="text-3xl font-bold text-gray-800">Berita Terkini</h2>
@@ -93,7 +93,7 @@
             </div>
           </div>
   
-          <!-- Grid View -->
+          
           <div v-if="gridView" class="grid grid-cols-1 md:grid-cols-2 lg:grid-cols-3 gap-8">
             <article v-for="(article, index) in filteredArticles" :key="index" 
                      class="bg-white rounded-xl shadow-lg overflow-hidden hover:shadow-xl transition-all duration-300 transform hover:-translate-y-1">
@@ -128,7 +128,7 @@
             </article>
           </div>
   
-          <!-- List View -->
+          
           <div v-else class="space-y-6">
             <article v-for="(article, index) in filteredArticles" :key="index" 
                      class="bg-white rounded-xl shadow-lg overflow-hidden hover:shadow-xl transition-all duration-300 flex flex-col sm:flex-row">

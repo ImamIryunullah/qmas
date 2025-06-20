@@ -10,6 +10,9 @@ const adminBerita = () => import("@/views/adminBerita.vue")
 const adminPesanan = () => import("@/views/adminPesanan")
 const adminProduk = () => import("@/views/adminProduk")
 const adminAnalitik = () => import("@/views/adminAnalitik")
+const adminLogin = () => import("@/views/adminLogin")
+const adminPengaturan = () => import("@/views/adminPengaturan")
+const adminPengaduanSaran = () => import("@/views/adminPengaduanSaran")
 
 
 const adminDashboard = () => import("@/views/adminDashboard.vue");
@@ -74,6 +77,21 @@ const routes = [
     path: "/admin/analytics",
     name: "Admin Panel Analitik",
     component: adminAnalitik,
+  },
+  {
+    path: "/admin/pengaduan-dan-saran",
+    name: "Admin Panel Pengaduan Dan Saran",
+    component: adminPengaduanSaran,
+  },
+  {
+    path: "/admin/pengaturan",
+    name: "Admin Panel Pengaturan",
+    component: adminPengaturan,
+  },
+  {
+    path: "/login",
+    name: "Login",
+    component: adminLogin,
   },
 ];
 

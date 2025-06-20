@@ -249,10 +249,10 @@
               </router-link>
 
               <router-link
-                to="/admin/pengaduan"
+                to="/admin/pengaduan-dan-saran"
                 :class="[
                   'block px-3 py-2 text-sm rounded-md transition duration-150',
-                  isActive('/admin/pengaduan')
+                  isActive('/admin/pengaduan-dan-saran')
                     ? 'bg-blue-100 text-blue-700'
                     : 'text-gray-700 hover:bg-gray-100 hover:text-gray-900',
                 ]"
@@ -339,10 +339,10 @@
           </h3>
 
           <router-link
-            to="/admin/settings"
+            to="/admin/pengaturan"
             :class="[
               'group flex items-center px-3 py-2.5 text-sm font-medium rounded-lg transition-all duration-200',
-              isActive('/admin/settings')
+              isActive('/admin/pengaturan')
                 ? 'bg-blue-100 text-blue-700 shadow-sm'
                 : 'text-gray-700 hover:bg-gray-100 hover:text-gray-900',
             ]"
@@ -350,7 +350,7 @@
             <svg
               :class="[
                 'mr-3 h-5 w-5 transition-colors duration-200',
-                isActive('/admin/settings')
+                isActive('/admin/pengaturan')
                   ? 'text-blue-600'
                   : 'text-gray-400 group-hover:text-gray-500',
               ]"
@@ -372,36 +372,6 @@
               ></path>
             </svg>
             Pengaturan
-          </router-link>
-
-          <router-link
-            to="/admin/users"
-            :class="[
-              'group flex items-center px-3 py-2.5 text-sm font-medium rounded-lg transition-all duration-200',
-              isActive('/admin/users')
-                ? 'bg-blue-100 text-blue-700 shadow-sm'
-                : 'text-gray-700 hover:bg-gray-100 hover:text-gray-900',
-            ]"
-          >
-            <svg
-              :class="[
-                'mr-3 h-5 w-5 transition-colors duration-200',
-                isActive('/admin/users')
-                  ? 'text-blue-600'
-                  : 'text-gray-400 group-hover:text-gray-500',
-              ]"
-              fill="none"
-              stroke="currentColor"
-              viewBox="0 0 24 24"
-            >
-              <path
-                stroke-linecap="round"
-                stroke-linejoin="round"
-                stroke-width="2"
-                d="M12 4.354a4 4 0 110 5.292M15 21H3v-1a6 6 0 0112 0v1zm0 0h6v-1a6 6 0 00-9-5.197M13 7a4 4 0 11-8 0 4 4 0 018 0z"
-              ></path>
-            </svg>
-            Pengguna
           </router-link>
         </div>
       </nav>
@@ -491,7 +461,7 @@ export default {
   watch: {
     // Otomatis buka dropdown jika berada di halaman dalam grup konten
     "$route.path"(newPath) {
-      if (newPath.startsWith("/admin/berita") || newPath.startsWith("/admin/pengaduan")) {
+      if (newPath.startsWith("/admin/berita") || newPath.startsWith("/admin/pengaduan-dan-saran")) {
         this.dropdownKontenOpen = true;
       }
     },

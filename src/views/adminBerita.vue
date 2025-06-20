@@ -1,11 +1,7 @@
 <template>
   <div class="min-h-screen bg-gray-50">
-    
     <AdminNavbar :isOpen="sidebarOpen" @toggle="toggleSidebar" @close="closeSidebar" />
-
-    
     <div class="lg:ml-64 transition-all duration-300">
-      
       <nav class="bg-white shadow-sm border-b border-gray-200 px-4 py-4 lg:px-6">
         <div class="flex items-center justify-between">
           

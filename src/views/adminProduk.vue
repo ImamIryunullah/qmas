@@ -1,13 +1,10 @@
     <template>
         <div class="min-h-screen bg-gray-50">
-        
         <AdminNavbar 
             :isOpen="sidebarOpen" 
             @toggle="toggleSidebar"
             @close="closeSidebar"
         />
-        
-        
         <div class="lg:ml-64 transition-all duration-300">
             
             <nav class="bg-white shadow-sm border-b border-gray-200 px-4 py-4 lg:px-6">
@@ -20,24 +17,17 @@
                 <svg class="w-6 h-6" fill="none" stroke="currentColor" viewBox="0 0 24 24">
                     <path stroke-linecap="round" stroke-linejoin="round" stroke-width="2" d="M4 6h16M4 12h16M4 18h16"></path>
                 </svg>
-                </button>
-                
-                
+                </button>      
                 <div class="flex-1 lg:flex-none">
                 <h1 class="text-xl lg:text-2xl font-bold text-gray-900 ml-2 lg:ml-0">Kelola Produk</h1>
                 </div>
-                
-                
                 <div class="flex items-center space-x-4">
-                
                 <button class="p-2 text-gray-600 hover:text-gray-900 hover:bg-gray-100 rounded-full relative">
                     <svg class="w-5 h-5" fill="none" stroke="currentColor" viewBox="0 0 24 24">
                     <path stroke-linecap="round" stroke-linejoin="round" stroke-width="2" d="M15 17h5l-5-5 5-5m-10 10l-5-5 5-5"></path>
                     </svg>
                     <span class="absolute -top-1 -right-1 w-3 h-3 bg-red-500 rounded-full"></span>
                 </button>
-                
-                
                 <div class="relative">
                     <button 
                     @click="profileDropdownOpen = !profileDropdownOpen"
@@ -51,8 +41,6 @@
                         <path stroke-linecap="round" stroke-linejoin="round" stroke-width="2" d="M19 9l-7 7-7-7"></path>
                     </svg>
                     </button>
-                    
-                    
                     <div 
                     v-if="profileDropdownOpen"
                     class="absolute right-0 mt-2 w-48 bg-white rounded-lg shadow-lg border border-gray-200 z-50"
@@ -787,13 +775,13 @@
             name: 'Botol Tanggung 750ml QMas',
             sku: 'CRO-BUT-001',
             category: 'Botol',
-            price: 15000,
+            price: 7000,
             stock: 25,
             minStock: 5,
             status: 'active',
             sold: 150,
             description: 'Croissant lembut dengan butter premium, dipanggang fresh setiap hari.',
-            image: 'https://images.unsplash.com/photo-1555507036-ab794f674c7f?w=300&h=300&fit=crop',
+            image: '',
             weight: 80,
             createdAt: '2024-01-15T08:30:00Z',
             updatedAt: '2024-01-20T10:15:00Z',
@@ -805,13 +793,13 @@
             name: 'Galon Qmas 15L',
             sku: 'CAK-CHO-001',
             category: 'Galon',
-            price: 85000,
+            price: 20000,
             stock: 8,
             minStock: 3,
             status: 'active',
             sold: 45,
             description: 'Kue coklat premium dengan lapisan ganache dan topping berry.',
-            image: 'https://images.unsplash.com/photo-1578985545062-69928b1d9587?w=300&h=300&fit=crop',
+            image: '',
             weight: 500,
             createdAt: '2024-01-10T14:20:00Z',
             updatedAt: '2024-01-18T16:45:00Z',
@@ -823,13 +811,13 @@
             name: 'Gelas Qmas',
             sku: 'DON-GLA-001',
             category: 'Gelas',
-            price: 8000,
+            price: 2000,
             stock: 2,
             minStock: 10,
             status: 'active',
             sold: 320,
             description: 'Donat klasik dengan glazur manis yang meleleh di mulut.',
-            image: 'https://images.unsplash.com/photo-1551024506-0bccd828d307?w=300&h=300&fit=crop',
+            image: '',
             weight: 60,
             createdAt: '2024-01-12T09:15:00Z',
             updatedAt: '2024-01-19T11:30:00Z',
