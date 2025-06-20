@@ -5,6 +5,14 @@ const Dashboard = () => import("@/views/LandingPage.vue");
 const FormPengaduan = () => import("@/views/FormPengaduan.vue");
 const pesanProduk = () => import("@/views/pesanProduk.vue");
 const kontakQmas = () => import("@/views/kontakQmas.vue");
+const newsQmas = () => import("@/views/newsQmas.vue");
+const adminBerita = () => import("@/views/adminBerita.vue")
+const adminPesanan = () => import("@/views/adminPesanan")
+
+
+const adminDashboard = () => import("@/views/adminDashboard.vue");
+
+
 const routes = [
   /* Tanpa Role Suara Konsumen */
 
@@ -32,6 +40,28 @@ const routes = [
     path: "/kontak-kami",
     name: "Kontak Kami",
     component: kontakQmas,
+  },
+  {
+    path: "/suara-konsumen",
+    name: "news Qmas",
+    component: newsQmas,
+  },
+
+
+  {
+    path: "/admin/dashboard",
+    name: "Admin Panel",
+    component: adminDashboard,
+  },
+  {
+    path: "/admin/kelola-berita",
+    name: "Admin Panel Berita",
+    component: adminBerita,
+  },
+  {
+    path: "/admin/kelola-pesanan",
+    name: "Admin Panel Pesanan",
+    component: adminPesanan,
   },
 ];
 

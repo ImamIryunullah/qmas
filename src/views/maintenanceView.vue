@@ -13,7 +13,7 @@
                                     perbaikan akan memakan waktu. Kami akan kembali online dalam waktu.</p>
                             </div>
 
-                            <!-- Countdown Timer -->
+                            
                             <div class="flex items-start justify-center w-full gap-1 count-down-main">
                                 <div class="timer">
                                     <div class="">
@@ -93,20 +93,12 @@ export default {
                     this.timeLeft.minutes = 59;
                     this.timeLeft.seconds = 59;
                 } else {
-                    // When time runs out, stop the countdown
                     clearInterval(this.countdownTimer);
                 }
-            }, 1000); // Update every second
+            }, 1000); 
         },
         Goback() {
             this.$router.push('/')
-            // Swal.fire({
-            //     icon: "warning",
-            //     title: "Informasi!",
-            //     text: "Mohon Maaf Masih Dalam Maintenance",
-            //     showConfirmButton: true,
-            //     confirmButtonColor: '#22c55e',
-            // })
         }
     }
 };

@@ -107,7 +107,6 @@
             class="lg:hidden fixed inset-0 bg-black/60 backdrop-blur-sm z-40 transition-all duration-300" 
             @click="toggleMenu"></div>
 
-        
         <div v-if="isMenuOpen"
             class="fixed inset-y-0 right-0 w-80 max-w-full bg-gradient-to-b from-[#6AA1DA] via-[#5B91CA] to-[#4C81BA] text-white z-50 transform transition-all duration-300 ease-out shadow-2xl"
             :class="{ 'translate-x-0': isMenuOpen, 'translate-x-full': !isMenuOpen }">
@@ -127,7 +126,6 @@
                     <i class="fas fa-times text-lg"></i>
                 </button>
             </div>
-
             
             <div class="p-6 space-y-2 flex-1 overflow-y-auto">
                 <a href="/#about" 

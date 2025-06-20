@@ -1,6 +1,5 @@
 <template>
-  <div class="min-h-screen bg-gradient-to-br from-blue-50 via-white to-cyan-50">
-    
+  <div class="min-h-screen bg-gradient-to-br from-blue-50 via-white to-cyan-50">   
     <nav class="bg-white shadow-lg sticky top-0 z-50">
       <div class="max-w-7xl mx-auto px-4 sm:px-6 lg:px-8">
         <div class="flex justify-between items-center h-16">
@@ -19,8 +18,6 @@
         </div>
       </div>
     </nav>
-
-    
     <section class="py-12 bg-gradient-to-r from-blue-600 to-cyan-600 text-white relative overflow-hidden">
       <div class="absolute inset-0">
         <div class="absolute -top-24 -right-24 w-48 h-48 bg-white/10 rounded-full blur-3xl"></div>
@@ -33,12 +30,11 @@
         </p>
       </div>
     </section>
-
     
     <div class="max-w-7xl mx-auto px-4 sm:px-6 lg:px-8 py-12">
       <div class="grid grid-cols-1 lg:grid-cols-2 gap-12">
         
-        
+
         <div class="space-y-8">
           <div class="bg-white rounded-2xl shadow-xl p-8">
             <div class="flex items-center mb-6">
@@ -432,7 +428,6 @@
     </div>
   </div>
 </template>
-
 <script>
 export default {
   name: 'OrderPage',
@@ -509,21 +504,17 @@ export default {
       if (this.quantities[productId] > 0) {
         this.quantities[productId]--;
       }
-    },
+    },  
     async submitOrder() {
       this.isSubmitting = true;
       
-      // Simulate API call
       try {
         await new Promise(resolve => setTimeout(resolve, 2000));
-        
-        // Generate order ID
+
         this.orderId = 'QM' + Date.now().toString().slice(-8);
-        
-        // Show success modal
+
         this.showSuccessModal = true;
-        
-        // Reset form
+      
         this.resetForm();
         
       } catch (error) {
@@ -562,7 +553,6 @@ export default {
 </script>
 
 <style scoped>
-/* Custom animations */
 @keyframes fadeInUp {
   from {
     opacity: 0;
@@ -577,13 +567,10 @@ export default {
 .animate-fadeInUp {
   animation: fadeInUp 0.6s ease-out;
 }
-
-/* Smooth transitions */
 .transition-all {
   transition: all 0.3s ease;
 }
 
-/* Custom scrollbar */
 ::-webkit-scrollbar {
   width: 8px;
 }

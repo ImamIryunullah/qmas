@@ -168,13 +168,13 @@
             class=" w-full mx-auto responsive-image hover-scale transition-all duration-500"
           />
 
-          <div
+          <!-- <div
             class="absolute -bottom-2 -left-2 w-10 h-10 bg-green-500 rounded-full flex items-center justify-center shadow-lg animate-pulse"
           >
             <svg class="w-6 h-6 text-white" fill="currentColor" viewBox="0 0 20 20">
               <path d="M9 12l2 2 4-4m6 2a9 9 0 11-18 0 9 9 0 0118 0z" />
             </svg>
-          </div>
+          </div> -->
         </div>
 
         <div
