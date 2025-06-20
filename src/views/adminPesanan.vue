@@ -298,15 +298,6 @@
                           </svg>
                         </button>
                         <button 
-                          @click="editOrder(order)"
-                          class="text-green-600 hover:text-green-900 p-1 hover:bg-green-50 rounded transition-colors"
-                          title="Edit Pesanan"
-                        >
-                          <svg class="w-4 h-4" fill="none" stroke="currentColor" viewBox="0 0 24 24">
-                            <path stroke-linecap="round" stroke-linejoin="round" stroke-width="2" d="M11 5H6a2 2 0 00-2 2v11a2 2 0 002 2h11a2 2 0 002-2v-5m-1.414-9.414a2 2 0 112.828 2.828L11.828 15H9v-2.828l8.586-8.586z"></path>
-                          </svg>
-                        </button>
-                        <button 
                           @click="deleteOrder(order.id)"
                           class="text-red-600 hover:text-red-900 p-1 hover:bg-red-50 rounded transition-colors"
                           title="Hapus Pesanan"
@@ -701,11 +692,6 @@
     viewOrderDetail(order) {
       this.selectedOrderDetail = order
       this.showOrderDetail = true
-    },
-    editOrder(order) {
-      // Implementation for edit order
-      console.log('Edit order:', order.id)
-      // You can navigate to edit page or show edit modal
     },
     deleteOrder(orderId) {
       if (confirm('Apakah Anda yakin ingin menghapus pesanan ini?')) {
