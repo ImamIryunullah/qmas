@@ -43,7 +43,7 @@
                     </div>
                     <span class="text-sm font-medium text-gray-700">Tim Q-Mas</span>
                   </div>
-                  <a href="#" class="text-blue-600 hover:text-blue-700 font-semibold text-sm">Baca Selengkapnya →</a>
+                  <a href="/suara-konsumen/detail" class="text-blue-600 hover:text-blue-700 font-semibold text-sm">Baca Selengkapnya →</a>
                 </div>
               </div>
             </article>
@@ -154,7 +154,7 @@
                     </div>
                     <span class="text-sm font-medium text-gray-700">{{ article.author }}</span>
                   </div>
-                  <a href="#" class="text-blue-600 hover:text-blue-700 font-semibold">Baca Selengkapnya →</a>
+                  <a href="/suara-konsumen/detail" class="text-blue-600 hover:text-blue-700 font-semibold">Baca Selengkapnya →</a>
                 </div>
               </div>
             </article>

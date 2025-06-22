@@ -6,6 +6,7 @@ const FormPengaduan = () => import("@/views/FormPengaduan.vue");
 const pesanProduk = () => import("@/views/pesanProduk.vue");
 const kontakQmas = () => import("@/views/kontakQmas.vue");
 const newsQmas = () => import("@/views/newsQmas.vue");
+const newsQmasDetail = () => import("@/views/newsQmasDetail.vue");
 const adminBerita = () => import("@/views/adminBerita.vue")
 const adminPesanan = () => import("@/views/adminPesanan")
 const adminProduk = () => import("@/views/adminProduk")
@@ -50,6 +51,11 @@ const routes = [
     path: "/suara-konsumen",
     name: "news Qmas",
     component: newsQmas,
+  },
+  {
+    path: "/suara-konsumen/detail",
+    name: "news Qmas Detail",
+    component: newsQmasDetail,
   },
 
 

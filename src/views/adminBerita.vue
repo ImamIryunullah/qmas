@@ -28,21 +28,6 @@
 
           
           <div class="flex items-center space-x-4">
-            <button
-              class="p-2 text-gray-600 hover:text-gray-900 hover:bg-gray-100 rounded-full relative"
-            >
-              <svg class="w-5 h-5" fill="none" stroke="currentColor" viewBox="0 0 24 24">
-                <path
-                  stroke-linecap="round"
-                  stroke-linejoin="round"
-                  stroke-width="2"
-                  d="M15 17h5l-5-5 5-5m-10 10l-5-5 5-5"
-                ></path>
-              </svg>
-              <span
-                class="absolute -top-1 -right-1 w-3 h-3 bg-red-500 rounded-full"
-              ></span>
-            </button>
 
             <div class="relative">
               <button
@@ -76,17 +61,12 @@
               >
                 <div class="py-1">
                   <a
-                    href="#"
-                    class="block px-4 py-2 text-sm text-gray-700 hover:bg-gray-100"
-                    >Profile</a
-                  >
-                  <a
-                    href="#"
+                    href="/admin/pengaturan"
                     class="block px-4 py-2 text-sm text-gray-700 hover:bg-gray-100"
                     >Settings</a
                   >
                   <hr class="my-1 border-gray-200" />
-                  <a href="#" class="block px-4 py-2 text-sm text-red-600 hover:bg-red-50"
+                  <a href="/login" class="block px-4 py-2 text-sm text-red-600 hover:bg-red-50"
                     >Logout</a
                   >
                 </div>
