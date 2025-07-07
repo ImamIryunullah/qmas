@@ -7,15 +7,16 @@ const pesanProduk = () => import("@/views/pesanProduk.vue");
 const kontakQmas = () => import("@/views/kontakQmas.vue");
 const newsQmas = () => import("@/views/newsQmas.vue");
 const newsQmasDetail = () => import("@/views/newsQmasDetail.vue");
-const adminBerita = () => import("@/views/adminBerita.vue");
-const adminPesanan = () => import("@/views/adminPesanan");
-const adminProduk = () => import("@/views/adminProduk");
-const adminAnalitik = () => import("@/views/adminAnalitik");
-const adminLogin = () => import("@/views/adminLogin");
-const adminPengaturan = () => import("@/views/adminPengaturan");
-const adminPengaduanSaran = () => import("@/views/adminPengaduanSaran");
+const adminBerita = () => import("@/views/superadmin/adminBerita.vue");
+const adminPesanan = () => import("@/views/superadmin/adminPesanan");
+const adminProduk = () => import("@/views/superadmin/adminProduk");
+const adminAnalitik = () => import("@/views/superadmin/adminAnalitik");
+const adminLogin = () => import("@/views/superadmin/adminLogin");
+const adminPengaturan = () => import("@/views/superadmin/adminPengaturan");
+const adminPengaduanSaran = () =>
+  import("@/views/superadmin/adminPengaduanSaran");
 
-const adminDashboard = () => import("@/views/adminDashboard.vue");
+const adminDashboard = () => import("@/views/superadmin/adminDashboard.vue");
 
 const routes = [
   /* Tanpa Role Suara Konsumen */

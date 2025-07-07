@@ -1,6 +1,6 @@
 <template>
     <header :class="{ 'hidden-navbar': !isNavbarVisible }"
-        class="bg-gradient-to-r from-[#6AA1DA] via-[#5B91CA] to-[#4C81BA] p-4 shadow-2xl fixed top-0 left-0 right-0 z-50 font-bold backdrop-blur-sm border-b border-white/10">
+        class="bg-gradient-to-r from-[#6AA1DA] via-[#5B91CA] to-[#4C81BA] p-4 shadow-2xl fixed top-0 left-0 right-0 z-50 font-bold border-b border-white/10">
 
 
         <div class="bg-black/20 backdrop-blur-sm border-b border-white/10 py-2 px-6 hidden lg:block mb-1">
@@ -136,23 +136,7 @@
             </div>
 
             <div class="p-6 space-y-2 flex-1 overflow-y-auto">
-                <a href="/#about"
-                    class="flex items-center space-x-4 p-4 rounded-xl hover:bg-white/10 transition-all duration-300 group">
-                    <div class="bg-white/10 p-2 rounded-lg group-hover:bg-white/20 transition-all duration-300">
-                        <i class="fas fa-info-circle text-blue-200"></i>
-                    </div>
-                    <span class="text-lg">Tentang</span>
-                </a>
-
-                <a href="/#services"
-                    class="flex items-center space-x-4 p-4 rounded-xl hover:bg-white/10 transition-all duration-300 group">
-                    <div class="bg-white/10 p-2 rounded-lg group-hover:bg-white/20 transition-all duration-300">
-                        <i class="fas fa-cogs text-blue-200"></i>
-                    </div>
-                    <span class="text-lg">Layanan</span>
-                </a>
-
-                <a href="/#contact"
+                <a href="/kontak-kami"
                     class="flex items-center space-x-4 p-4 rounded-xl hover:bg-white/10 transition-all duration-300 group">
                     <div class="bg-white/10 p-2 rounded-lg group-hover:bg-white/20 transition-all duration-300">
                         <i class="fas fa-envelope text-blue-200"></i>
@@ -184,14 +168,12 @@
                     <span class="text-lg">Pengaduan</span>
                 </router-link>
             </div>
-
-
             <div class="p-6 border-t border-white/20">
-                <button
+                <!-- <button
                     class="w-full bg-gradient-to-r from-orange-500 to-red-500 hover:from-orange-600 hover:to-red-600 text-white py-3 px-6 rounded-xl font-semibold shadow-lg hover:shadow-xl transform hover:scale-105 transition-all duration-300 flex items-center justify-center space-x-2 mb-4">
                     <i class="fas fa-phone-alt"></i>
                     <span>Hubungi Kami</span>
-                </button>
+                </button> -->
 
 
                 <div class="flex justify-center space-x-6">

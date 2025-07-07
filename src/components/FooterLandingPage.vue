@@ -5,9 +5,10 @@
                 <div>
                     <h3 class="font-semibold text-lg mb-4">Link Cepat</h3>
                     <ul>
-                        <li><a href="#about" class="hover:text-gray-300">About</a></li>
-                        <li><a href="#services" class="hover:text-gray-300">Services</a></li>
-                        <li><a href="#contact" class="hover:text-gray-300">Contact</a></li>
+                        <li><a href="/suara-konsumen" class="hover:text-gray-300">News</a></li>
+                        <li><a href="/pengaduan" class="hover:text-gray-300">Pengaduan</a></li>
+                        <li><a href="/kontak-kami" class="hover:text-gray-300">Contact</a></li>
+                        <li><a href="/product-Qmas" class="hover:text-gray-300">Produk Kami</a></li>
                     </ul>
                 </div>
 
