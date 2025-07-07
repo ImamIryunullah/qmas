@@ -8,7 +8,7 @@
 // };
 /** @type {import('tailwindcss').Config} */
 module.exports = {
-  content: ["./src/**/*.html", "./src/**/*.vue"],
+  content: ["./index.html", "./src/**/*.{vue,js,ts,jsx,tsx}"], // Tidak ada `purge`
   theme: {
     extend: {
       colors: {

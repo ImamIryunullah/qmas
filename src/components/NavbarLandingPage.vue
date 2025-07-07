@@ -1,6 +1,6 @@
 <template>
     <header :class="{ 'hidden-navbar': !isNavbarVisible }"
-        class="bg-gradient-to-r from-[#6AA1DA] via-[#5B91CA] to-[#4C81BA] p-4 shadow-2xl fixed top-0 left-0 right-0 z-50 font-bold backdrop-blur-sm border-b border-white/10">
+        class="bg-gradient-to-r from-[#6AA1DA] via-[#5B91CA] to-[#4C81BA] p-4 shadow-2xl fixed top-0 left-0 right-0 z-50 font-bold border-b border-white/10">
 
 
         <div class="bg-black/20 backdrop-blur-sm border-b border-white/10 py-2 px-6 hidden lg:block mb-1">
