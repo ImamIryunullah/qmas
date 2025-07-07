@@ -1,12 +1,12 @@
 {
-  "name": "lpkniweb",
+  "name": "qmasweb",
   "version": "0.1.0",
   "private": true,
   "scripts": {
     "serve": "vue-cli-service serve",
     "build": "vue-cli-service build",
     "lint": "vue-cli-service lint",
-    "deploy": "npm run build && sudo cp -r dist/* /var/www/lpkni/",
+    "deploy": "npm run build && sudo cp -r dist/* /var/www/qmas/",
     "watch": "nodemon --watch src --exec 'npm run deploy'"
   },
   "dependencies": {

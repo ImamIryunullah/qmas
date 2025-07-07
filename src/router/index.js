@@ -1,98 +1,137 @@
 import { createRouter, createWebHistory } from "vue-router";
 import store from "@/store/store";
-import ProdukQmas from "@/views/produkQmas.vue";
+const ProdukQmas = () => import("@/views/produkQmas.vue");
 const Dashboard = () => import("@/views/LandingPage.vue");
 const FormPengaduan = () => import("@/views/FormPengaduan.vue");
 const pesanProduk = () => import("@/views/pesanProduk.vue");
 const kontakQmas = () => import("@/views/kontakQmas.vue");
 const newsQmas = () => import("@/views/newsQmas.vue");
 const newsQmasDetail = () => import("@/views/newsQmasDetail.vue");
-const adminBerita = () => import("@/views/adminBerita.vue")
-const adminPesanan = () => import("@/views/adminPesanan")
-const adminProduk = () => import("@/views/adminProduk")
-const adminAnalitik = () => import("@/views/adminAnalitik")
-const adminLogin = () => import("@/views/adminLogin")
-const adminPengaturan = () => import("@/views/adminPengaturan")
-const adminPengaduanSaran = () => import("@/views/adminPengaduanSaran")
-
+const adminBerita = () => import("@/views/adminBerita.vue");
+const adminPesanan = () => import("@/views/adminPesanan");
+const adminProduk = () => import("@/views/adminProduk");
+const adminAnalitik = () => import("@/views/adminAnalitik");
+const adminLogin = () => import("@/views/adminLogin");
+const adminPengaturan = () => import("@/views/adminPengaturan");
+const adminPengaduanSaran = () => import("@/views/adminPengaduanSaran");
 
 const adminDashboard = () => import("@/views/adminDashboard.vue");
-
 
 const routes = [
   /* Tanpa Role Suara Konsumen */
 
   {
     path: "/",
-    name: "Dasboard",
+    name: "Qmas | Air Mineral",
     component: Dashboard,
+    meta: {
+      title: "Qmas | Air Mineral",
+    },
   },
   {
     path: "/product-Qmas",
     name: "Product Qmas",
     component: ProdukQmas,
+    meta: {
+      title: "Product Qmas",
+    },
   },
   {
     path: "/pengaduan",
     name: "Pengaduan",
     component: FormPengaduan,
+    meta: {
+      title: "Pengaduan",
+    },
   },
   {
     path: "/pesan-qmas",
     name: "Pesan Qmas",
     component: pesanProduk,
+    meta: {
+      title: "Pesan Qmas",
+    },
   },
   {
     path: "/kontak-kami",
     name: "Kontak Kami",
     component: kontakQmas,
+    meta: {
+      title: "Kontak Kami",
+    },
   },
   {
     path: "/suara-konsumen",
-    name: "news Qmas",
+    name: "News Qmas",
     component: newsQmas,
+    meta: {
+      title: "News Qmas",
+    },
   },
   {
     path: "/suara-konsumen/detail",
-    name: "news Qmas Detail",
+    name: "News Qmas Detail",
     component: newsQmasDetail,
+    meta: {
+      title: "News Qmas Detail",
+    },
   },
-
 
   {
     path: "/admin/dashboard",
     name: "Admin Panel",
     component: adminDashboard,
+    meta: {
+      title: "Admin Panel",
+    },
   },
   {
     path: "/admin/kelola-berita",
     name: "Admin Panel Berita",
     component: adminBerita,
+    meta: {
+      title: "Admin Panel Berita",
+    },
   },
   {
     path: "/admin/kelola-pesanan",
     name: "Admin Panel Pesanan",
     component: adminPesanan,
+    meta: {
+      title: "Admin Panel Pesanan",
+    },
   },
   {
     path: "/admin/kelola-produk",
     name: "Admin Panel Produk",
     component: adminProduk,
+    meta: {
+      title: "Admin Panel Produk",
+    },
   },
   {
     path: "/admin/analytics",
     name: "Admin Panel Analitik",
     component: adminAnalitik,
+    meta: {
+      title: "Admin Panel Analitik",
+    },
   },
   {
     path: "/admin/pengaduan-dan-saran",
     name: "Admin Panel Pengaduan Dan Saran",
     component: adminPengaduanSaran,
+    meta: {
+      title: "Admin Panel Pengaduan Dan Saran",
+    },
   },
   {
     path: "/admin/pengaturan",
     name: "Admin Panel Pengaturan",
     component: adminPengaturan,
+    meta: {
+      title: "Admin Panel Pengaturan",
+    },
   },
   {
     path: "/login",
@@ -135,10 +174,10 @@ router.beforeEach(async (to, from, next) => {
       isAuthenticated = store.state.storeswi.userLoggedInSwi;
       userRole = store.state.storeswi.userRoleSwi;
     } else {
-      await store.dispatch("updateStoreLpkni");
-      isAuthenticated = store.state.storeLpkni.UserLpkniIsLoggedIn;
-      userRole = store.state.storeLpkni.userLpkniRole;
-    } 
+      await store.dispatch("updateStoreqmas");
+      isAuthenticated = store.state.storeqmas.UserqmasIsLoggedIn;
+      userRole = store.state.storeqmas.userqmasRole;
+    }
 
   console.log(isAuthenticated);
   console.log(userRole);
@@ -158,7 +197,7 @@ router.beforeEach(async (to, from, next) => {
 });
 
 router.afterEach((to) => {
-  document.title = to.meta.title || "LPKNI Official";
+  document.title = to.meta.title || "";
 });
 
 export default router;

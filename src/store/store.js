@@ -1,136 +1,73 @@
 import { createStore } from "vuex";
-import Lpkni from "@/service/lpkni";
-import swi from "@/service/swi";
+import qmas from "@/service/qmas";
 
-// Modul untuk Lpkni
-const storeLpkni = {
+// Modul untuk qmas
+const storeqmas = {
   state: {
-    userLpkni: null,
-    UserLpkniIsLoggedIn: false,
-    userLpkniRole: null,
-    isStoreLpkniUpdated: false,
+    userqmas: null,
+    UserqmasIsLoggedIn: false,
+    userqmasRole: null,
+    isStoreqmasUpdated: false,
   },
   mutations: {
-    setUserLpkni(state, payload) {
-      state.userLpkni = payload;
+    setUserqmas(state, payload) {
+      state.userqmas = payload;
     },
-    setUserLpkniIsLoggedIn(state, payload) {
-      state.UserLpkniIsLoggedIn = payload;
+    setUserqmasIsLoggedIn(state, payload) {
+      state.UserqmasIsLoggedIn = payload;
     },
-    setUserLpkniRole(state, role) {
-      state.userLpkniRole = role;
+    setUserqmasRole(state, role) {
+      state.userqmasRole = role;
     },
-    setIsStoreLpkniUpdated(state, payload) {
-      state.isStoreLpkniUpdated = payload;
+    setIsStoreqmasUpdated(state, payload) {
+      state.isStoreqmasUpdated = payload;
     },
   },
   actions: {
-    async loginLpkni(context, { email, password }) {
+    async loginqmas(context, { email, password }) {
       try {
-        const response = await Lpkni.LoginPost({
+        const response = await qmas.LoginPost({
           email,
           password,
         });
         document.cookie = `token=${response.data.token}; path=/; secure; HttpOnly`;
-        await context.dispatch("updateStoreLpkni");
+        await context.dispatch("updateStoreqmas");
       } catch (err) {
         console.log(err.response.data.error);
         throw new Error(err.response.data.error);
       }
     },
-    async updateStoreLpkni(context) {
+    async updateStoreqmas(context) {
       try {
-        const res = await Lpkni.getUserData();
+        const res = await qmas.getUserData();
         const userData = res.data;
-        context.commit("setUserLpkni", userData);
-        context.commit("setUserLpkniIsLoggedIn", true);
-        context.commit("setUserLpkniRole", userData.user.role);
+        context.commit("setUserqmas", userData);
+        context.commit("setUserqmasIsLoggedIn", true);
+        context.commit("setUserqmasRole", userData.user.role);
       } catch (e) {
         console.log(e);
-        context.commit("setUserLpkni", null);
-        context.commit("setUserLpkniIsLoggedIn", false);
-        context.commit("setUserLpkniRole", null);
+        context.commit("setUserqmas", null);
+        context.commit("setUserqmasIsLoggedIn", false);
+        context.commit("setUserqmasRole", null);
       }
-      context.commit("setIsStoreLpkniUpdated", true);
+      context.commit("setIsStoreqmasUpdated", true);
     },
-    async logoutLpkni(context) {
+    async logoutqmas(context) {
       try {
-        await Lpkni.LogoutPost();
-        context.commit("setUserLpkni", null);
-        context.commit("setUserLpkniIsLoggedIn", false);
-        context.commit("setUserLpkniRole", null);
+        await qmas.LogoutPost();
+        context.commit("setUserqmas", null);
+        context.commit("setUserqmasIsLoggedIn", false);
+        context.commit("setUserqmasRole", null);
         document.cookie = "token=; path=/; secure; HttpOnly";
       } catch (error) {
-        context.commit("setUserLpkni", null);
-        context.commit("setUserLpkniIsLoggedIn", false);
-        context.commit("setUserLpkniRole", null);
+        context.commit("setUserqmas", null);
+        context.commit("setUserqmasIsLoggedIn", false);
+        context.commit("setUserqmasRole", null);
       }
     },
   },
 };
 
-// Modul untuk Swi
-const storeswi = {
-  namespaced: true, // Menambahkan namespace
-  state: {
-    userSwi: null,
-    userLoggedInSwi: false,
-    userRoleSwi: null,
-  },
-  mutations: {
-    setUserSwi(state, payload) {
-      state.userSwi = payload;
-    },
-    setUserLoggedInSwi(state, payload) {
-      state.userLoggedInSwi = payload;
-    },
-    setUserRoleSwi(state, role) {
-      state.userRoleSwi = role;
-    },
-  },
-  actions: {
-    async loginSwi(context, { email, password }) {
-      try {
-        const response = await swi.LoginPostSwi({
-          email,
-          password,
-        });
-        document.cookie = `token=${response.data.token}; path=/; secure; HttpOnly`;
-        await context.dispatch("updateStoreSwi");
-      } catch (err) {
-        console.log(err.response.data.error);
-        throw new Error(err.response.data.error);
-      }
-    },
-    async updateStoreSwi(context) {
-      try {
-        const res = await swi.getUserDataSwi();
-        const userData = res.data;
-        context.commit("setUserSwi", userData);
-        context.commit("setUserLoggedInSwi", true);
-        context.commit("setUserRoleSwi", userData.user.role);
-      } catch (e) {
-        console.log(e);
-        context.commit("setUserSwi", null);
-        context.commit("setUserLoggedInSwi", false);
-        context.commit("setUserRoleSwi", null);
-      }
-    },
-    async logoutSwi(context) {
-      try {
-        await swi.LogoutPostSwi();
-        context.commit("setUserSwi", null);
-        context.commit("setUserLoggedInSwi", false);
-        context.commit("setUserRoleSwi", null);
-        document.cookie = "token=; path=/; secure; HttpOnly";
-      } catch (error) {
-        context.commit("setUserSwi", null);
-        context.commit("setUserLoggedInSwi", false);
-        context.commit("setUserRoleSwi", null);
-      }
-    },
-  },
-};
 const storeSidebar = {
   namespaced: true, // Menambahkan namespace
   state: {
@@ -157,8 +94,7 @@ const storeSidebar = {
 // Membuat store utama dengan kedua modul
 const store = createStore({
   modules: {
-    storeLpkni, // Menambahkan modul Lpkni
-    storeswi, // Menambahkan modul Swi
+    storeqmas, // Menambahkan modul qmas
     storeSidebar,
   },
 });

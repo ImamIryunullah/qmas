@@ -1,7 +1,7 @@
 import axios from "axios";
 const currentDomain = window.location.hostname.includes("www")
-  ? "https://www.lpkni.id"
-  : "https://lpkni.id";
+  ? "https://tasamaqmas.com"
+  : "https://qmas.id";
 
 const baseURL = `${currentDomain}/api`;
 const IMG = `${currentDomain}/`;
@@ -9,49 +9,7 @@ const IMG = `${currentDomain}/`;
 const API = axios.create({
   baseURL: baseURL,
   withCredentials: true,
-  headers: {
-    "X-Requested-With": "XMLHttpRequest", // Pastikan hanya bisa diakses via AJAX
-  },
 });
-
-// Interceptor request untuk menambahkan token jika sudah ada di cookie (opsional)
-// const getCSRFToken = () => {
-//   const match = document.cookie.match(new RegExp("(^| )CSRF-TOKEN=([^;]+)"));
-//   return match ? match[2] : null;
-// };
-
-// API.interceptors.request.use(
-//   async (config) => {
-//     const csrfToken = getCSRFToken();
-//     if (csrfToken) {
-//       config.headers["CSRF-TOKEN"] = csrfToken;
-//     }
-//     return config;
-//   },
-//   (error) => Promise.reject(error)
-// );
-
-// // Interceptor respons untuk menangani status 419 dan melakukan re-request
-// API.interceptors.response.use(
-//   (response) => response,
-//   async (error) => {
-//     const { config, response } = error;
-//     console.log(error);
-//     if (response && response.status === 401) {
-//       config._retry = true; // Tandai request telah di-retry satu kali
-//       // Ambil token baru dari respons
-//       const newToken = response.data.token;
-//       if (newToken) {
-//         // Perbarui header request dengan token baru
-//         config.headers["CSRF-TOKEN"] = newToken;
-//         // Jika perlu, perbarui cookie (biasanya server sudah meng-set cookie)
-//         // Lakukan re-request dengan konfigurasi yang telah diperbarui
-//         return API(config);
-//       }
-//     }
-//     return Promise.reject(error);
-//   }
-// );
 
 const Image = axios.create({
   baseURL: IMG,
@@ -124,7 +82,7 @@ export default {
   LogoutPost() {
     return API.post("/auth/logout");
   },
-  /*User Anggota LPKNI*/
+  /*User Anggota qmas*/
   CreateUser(data) {
     return API.post("/user", data);
   },
@@ -218,7 +176,7 @@ export default {
     return `${IMG}${img}?v=${new Date().getTime()}`;
   },
 
-  getHealthlpkni() {
+  getHealthqmas() {
     return API.get("/health");
   },
 

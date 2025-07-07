@@ -1,4 +1,4 @@
-# lpkniweb
+# qmasweb
 
 ## Project setup
 ```
@@ -22,5 +22,5 @@ npm run lint
 
 ### Customize configuration
 See [Configuration Reference](https://cli.vuejs.org/config/).
-# lpkniweb
-# LPKNIWEBV2
+# qmasweb
+# qmaswebV2

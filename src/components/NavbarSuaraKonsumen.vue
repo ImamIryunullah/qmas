@@ -4,21 +4,21 @@
     <div class="container mx-auto flex justify-between items-center px-4">
       <!-- Hashtags on the Left -->
       <div class="text-white text-sm sm:text-xs">
-        <span>#lpknipusat #perlindungankonsumen #konsumen #konsumencerdas</span>
+        <span>#qmaspusat #perlindungankonsumen #konsumen #konsumencerdas</span>
       </div>
 
       <!-- Social Media Icons on the Right -->
       <div class="flex space-x-6 text-white sm:space-x-4">
-        <a href="https://facebook.com/lpkni.pusat/" target="_blank" class="hover:text-gray-400">
+        <a href="https://facebook.com/qmas.pusat/" target="_blank" class="hover:text-gray-400">
           <i class="fab fa-facebook fa-sm sm:fa-xs"></i>
         </a>
-        <a href="https://www.instagram.com/lpkni_official/" target="_blank" class="hover:text-gray-400">
+        <a href="https://www.instagram.com/qmas_official/" target="_blank" class="hover:text-gray-400">
           <i class="fab fa-instagram fa-sm sm:fa-xs"></i>
         </a>
-        <a href="https://www.facebook.com/lpkni.pusat" target="_blank" class="hover:text-gray-400">
+        <a href="https://www.facebook.com/qmas.pusat" target="_blank" class="hover:text-gray-400">
           <i class="fab fa-linkedin fa-sm sm:fa-xs"></i>
         </a>
-        <a href="https://www.youtube.com/@channellpkni" target="_blank" class="hover:text-gray-400">
+        <a href="https://www.youtube.com/@channelqmas" target="_blank" class="hover:text-gray-400">
           <i class="fab fa-youtube fa-sm sm:fa-xs"></i>
         </a>
       </div>
@@ -30,8 +30,8 @@
       <!-- Logo and Navigation -->
       <div class="flex items-center w-full sm:w-auto sm:flex-row flex-col">
         <router-link to="/" class="text-white text-xl font-bold flex items-center">
-          <img src="@/assets/iconlpkni.png" alt="LPKNI" class="w-15 h-12 mr-3 mt-2">
-          LPKNI
+          <img src="@/assets/iconqmas.png" alt="qmas" class="w-15 h-12 mr-3 mt-2">
+          qmas
         </router-link>
         <div class="flex items-center w-full sm:w-auto sm:flex-row flex-col ml-2 sm:ml-4">
         </div>
@@ -65,7 +65,7 @@
 
 <script>
 // import router from "@/router";
-import api from "@/service/lpkni";
+import api from "@/service/qmas";
 export default {
   data() {
     return {

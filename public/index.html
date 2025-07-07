@@ -1,55 +1,78 @@
 <!DOCTYPE html>
 <html lang="id">
+  <head>
+    <meta charset="utf-8" />
+    <meta http-equiv="X-UA-Compatible" content="IE=edge" />
+    <meta name="viewport" content="width=device-width,initial-scale=1.0" />
 
-<head>
-  <meta charset="utf-8">
-  <meta http-equiv="X-UA-Compatible" content="IE=edge">
-  <meta name="viewport" content="width=device-width,initial-scale=1.0">
+    <!-- SEO Meta Tags -->
+    <meta
+      name="description"
+      content="qmas adalah Lembaga Perlindungan Konsumen Nasional Indonesia yang berkomitmen dalam memberikan edukasi, bantuan hukum, dan advokasi bagi hak-hak konsumen di Indonesia."
+    />
+    <meta
+      name="keywords"
+      content="qmas,qmas,Perlindungan Untuk Konsumen, Perlindungan Konsumen, Pengaduan Konsumen, Bantuan Hukum Konsumen, Standarisasi Warung, qmas Malang, Hak Konsumen Indonesia"
+    />
+    <meta name="author" content="QMAS Official" />
+    <meta name="robots" content="index, follow" />
+    <link rel="canonical" href="https://tasamaqmas.com" />
 
-  <!-- SEO Meta Tags -->
-  <meta name="description"
-    content="LPKNI adalah Lembaga Perlindungan Konsumen Nasional Indonesia yang berkomitmen dalam memberikan edukasi, bantuan hukum, dan advokasi bagi hak-hak konsumen di Indonesia.">
-  <meta name="keywords"
-    content="LPKNI,lpkni,Perlindungan Untuk Konsumen, Perlindungan Konsumen, Pengaduan Konsumen, Bantuan Hukum Konsumen, Standarisasi Warung, LPKNI Malang, Hak Konsumen Indonesia">
-  <meta name="author" content="QMAS Official">
-  <meta name="robots" content="index, follow">
-  <link rel="canonical" href="https://www.lpkni.id">
+    <!-- Open Graph Meta Tags (Untuk Facebook, LinkedIn, dll.) -->
+    <meta
+      property="og:title"
+      content="qmas - Lembaga Perlindungan Konsumen Nasional Indonesia"
+    />
+    <meta
+      property="og:description"
+      content="Bantu melindungi hak-hak konsumen dengan qmas. Laporkan pelanggaran dan dapatkan bantuan hukum sekarang!"
+    />
+    <meta property="og:image" content="<%= BASE_URL %>iconqmas.png" />
+    <meta property="og:url" content="https://tasamaqmas.com" />
+    <meta property="og:type" content="website" />
 
-  <!-- Open Graph Meta Tags (Untuk Facebook, LinkedIn, dll.) -->
-  <meta property="og:title" content="LPKNI - Lembaga Perlindungan Konsumen Nasional Indonesia">
-  <meta property="og:description"
-    content="Bantu melindungi hak-hak konsumen dengan LPKNI. Laporkan pelanggaran dan dapatkan bantuan hukum sekarang!">
-  <meta property="og:image" content="<%= BASE_URL %>iconlpkni.png">
-  <meta property="og:url" content="https://www.lpkni.id">
-  <meta property="og:type" content="website">
+    <!-- Twitter Card Meta Tags -->
+    <meta name="twitter:card" content="summary_large_image" />
+    <meta
+      name="twitter:title"
+      content="qmas - Perlindungan Konsumen Nasional"
+    />
+    <meta
+      name="twitter:description"
+      content="qmas hadir untuk melindungi hak konsumen dan memberikan bantuan hukum bagi masyarakat Indonesia."
+    />
+    <meta name="twitter:image" content="<%= BASE_URL %>iconqmas.png" />
 
-  <!-- Twitter Card Meta Tags -->
-  <meta name="twitter:card" content="summary_large_image">
-  <meta name="twitter:title" content="LPKNI - Perlindungan Konsumen Nasional">
-  <meta name="twitter:description"
-    content="LPKNI hadir untuk melindungi hak konsumen dan memberikan bantuan hukum bagi masyarakat Indonesia.">
-  <meta name="twitter:image" content="<%= BASE_URL %>iconlpkni.png">
+    <!-- Favicon -->
+    <link rel="icon" href="<%= BASE_URL %>iconqmas.png" type="image/png" />
 
-  <!-- Favicon -->
-  <link rel="icon" href="<%= BASE_URL %>iconlpkni.png" type="image/png">
+    <!-- FontAwesome Icons -->
+    <link
+      href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/5.15.3/css/all.min.css"
+      rel="stylesheet"
+    />
+    <link
+      href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/6.0.0-beta3/css/all.min.css"
+      rel="stylesheet"
+    />
+    <script
+      type="module"
+      src="https://unpkg.com/@google/model-viewer/dist/model-viewer.min.js"
+    ></script>
 
-  <!-- FontAwesome Icons -->
-  <link href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/5.15.3/css/all.min.css" rel="stylesheet">
-  <link href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/6.0.0-beta3/css/all.min.css" rel="stylesheet" />
-  <script type="module" src="https://unpkg.com/@google/model-viewer/dist/model-viewer.min.js"></script>
+    <title>QMAS</title>
+  </head>
 
-  <title>QMAS</title>
-</head>
+  <body>
+    <noscript>
+      <strong
+        >Mohon maaf, tetapi <%= htmlWebpackPlugin.options.title %> tidak dapat
+        berfungsi dengan baik tanpa JavaScript. Silakan aktifkan JavaScript
+        untuk melanjutkan.</strong
+      >
+    </noscript>
 
-<body>
-  <noscript>
-    <strong>Mohon maaf, tetapi <%= htmlWebpackPlugin.options.title %> tidak dapat berfungsi dengan baik tanpa
-        JavaScript.
-        Silakan aktifkan JavaScript untuk melanjutkan.</strong>
-  </noscript>
-
-  <div id="app"></div>
-  <!-- built files will be auto injected -->
-</body>
-
+    <div id="app"></div>
+    <!-- built files will be auto injected -->
+  </body>
 </html>

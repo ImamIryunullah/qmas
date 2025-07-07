@@ -4,18 +4,12 @@
   </div>
   <div class="min-h-screen">
     <section
-      class="flex flex-col md:flex-row items-center justify-center pt-16 pb-16 bg-[#D7EDFD] text-white animate__animated animate__fadeIn"
-    >
+      class="flex flex-col md:flex-row items-center justify-center pt-16 pb-16 bg-[#D7EDFD] text-white animate__animated animate__fadeIn">
       <div class="md:w-1/2 text-center md:text-left px-6 sm:px-10 pt-5 fade-in-left">
         <div class="flex items-center justify-start mb-4">
-          <h1
-            id="typing"
-            class="text-3xl sm:text-4xl md:text-5xl font-bold text-[#223DFC]"
-          ></h1>
+          <h1 id="typing" class="text-3xl sm:text-4xl md:text-5xl font-bold text-[#223DFC]"></h1>
         </div>
-        <p
-          class="mb-6 text-sm sm:text-base md:text-lg text-justify text-black leading-relaxed"
-        >
+        <p class="mb-6 text-sm sm:text-base md:text-lg text-justify text-black leading-relaxed">
           Air minum <strong>Q-Mas M</strong> diproduksi oleh
           <strong>Panti Asuhan KH Mas Mansyur Malang</strong>, menggunakan mesin filtrasi
           berteknologi tinggi dengan kualitas terbaik. Proses penyaringan super halus
@@ -23,10 +17,8 @@
           tubuh Anda.
         </p>
         <div class="flex flex-col sm:flex-row gap-4">
-          <a
-            href="/pesan-qmas"
-            class="bg-blue-600 hover:bg-blue-700 text-white px-8 py-3 rounded-full font-semibold transition-all duration-300 transform hover:scale-105 hover:shadow-lg inline-flex items-center justify-center"
-          >
+          <a href="/pesan-qmas"
+            class="bg-blue-600 hover:bg-blue-700 text-white px-8 py-3 rounded-full font-semibold transition-all duration-300 transform hover:scale-105 hover:shadow-lg inline-flex items-center justify-center">
             <i class="fas fa-phone mr-2"></i>
             Pesan Sekarang
           </a>
@@ -34,33 +26,22 @@
       </div>
 
       <div class="md:w-[30%] w-3/4 mt-5 md:mt-0 fade-in-right">
-        <img
-          src="@/assets/produk.png"
-          loading="lazy"
-          alt="LPKNI"
-          class="rounded-lg w-full mx-auto responsive-image hover-scale"
-        />
+        <img src="@/assets/produk.png" loading="lazy" alt="qmas"
+          class="rounded-lg w-full mx-auto responsive-image hover-scale" />
       </div>
     </section>
 
-    <section
-      id="about"
-      class="py-12 sm:py-14 md:py-16 px-4 sm:px-6 bg-[#76AAE4] text-center fade-in-up"
-    >
+    <section id="about" class="py-12 sm:py-14 md:py-16 px-4 sm:px-6 bg-[#76AAE4] text-center fade-in-up">
       <h2 class="text-2xl sm:text-3xl md:text-4xl font-bold text-white mb-4 sm:mb-6">
         Kenapa Memilih Air Minum Q-MAS M
       </h2>
 
-      <p
-        class="text-base sm:text-lg text-white max-w-3xl mx-auto leading-relaxed mb-4 sm:mb-6 px-2"
-      >
+      <p class="text-base sm:text-lg text-white max-w-3xl mx-auto leading-relaxed mb-4 sm:mb-6 px-2">
         Air Minum Q-MAS M hadir sebagai solusi air minum berkualitas tinggi yang diproses
         dengan teknologi modern. Berikut beberapa informasi penting mengenai Q-MAS M:
       </p>
 
-      <div
-        class="grid grid-cols-1 md:grid-cols-2 lg:grid-cols-3 gap-4 sm:gap-6 lg:gap-8 max-w-6xl mx-auto text-left"
-      >
+      <div class="grid grid-cols-1 md:grid-cols-2 lg:grid-cols-3 gap-4 sm:gap-6 lg:gap-8 max-w-6xl mx-auto text-left">
         <div class="bg-white p-4 sm:p-6 rounded-lg shadow-lg card-animate">
           <h3 class="text-lg sm:text-xl font-semibold text-blue-700 mb-3 sm:mb-4">
             Proses Produksi Modern
@@ -96,9 +77,7 @@
 
       <transition name="fade">
         <div v-if="expanded" class="max-w-6xl mx-auto mt-6 sm:mt-8 text-left">
-          <div
-            class="grid grid-cols-1 md:grid-cols-2 lg:grid-cols-3 gap-4 sm:gap-6 lg:gap-8"
-          >
+          <div class="grid grid-cols-1 md:grid-cols-2 lg:grid-cols-3 gap-4 sm:gap-6 lg:gap-8">
             <div class="bg-gray-100 p-4 sm:p-6 rounded-lg shadow-md card-animate">
               <h3 class="text-base sm:text-lg font-semibold text-blue-700">
                 Kepercayaan Konsumen
@@ -135,51 +114,33 @@
 
     <section class="flex flex-col sm:flex-row">
       <div class="w-full sm:w-1/2 overflow-hidden">
-        <img
-          src="@/assets/product/airadalah.jpeg"
-          alt="gambar product"
-          class="w-full h-auto hover-scale image-animate transition-transform duration-700"
-        />
+        <img src="@/assets/product/airadalah.jpeg" alt="gambar product"
+          class="w-full h-auto hover-scale image-animate transition-transform duration-700" />
       </div>
       <div class="w-full sm:w-1/2 overflow-hidden">
-        <img
-          src="@/assets/product/penuhikebutuhan.jpeg"
-          alt="gambar product"
-          class="w-full h-auto hover-scale image-animate transition-transform duration-700"
-        />
+        <img src="@/assets/product/penuhikebutuhan.jpeg" alt="gambar product"
+          class="w-full h-auto hover-scale image-animate transition-transform duration-700" />
       </div>
     </section>
 
     <section class="overflow-hidden">
-      <img
-        src="@/assets/product/botol.jpg"
-        alt="gambar product"
-        class="w-full h-auto hover-scale image-animate transition-transform duration-700"
-      />
+      <img src="@/assets/product/botol.jpg" alt="gambar product"
+        class="w-full h-auto hover-scale image-animate transition-transform duration-700" />
     </section>
 
     <section class="overflow-hidden">
-      <img
-        src="@/assets/product/temansetia.jpg"
-        alt="gambar teman setia qmas"
-        class="w-full h-auto hover-scale image-animate transition-transform duration-700"
-      />
+      <img src="@/assets/product/temansetia.jpg" alt="gambar teman setia qmas"
+        class="w-full h-auto hover-scale image-animate transition-transform duration-700" />
     </section>
 
-    <section
-      id="track-record"
-      class="py-16 sm:py-20 px-4 sm:px-6 bg-[#E4E6E5] fade-in-up"
-    >
+    <section id="track-record" class="py-16 sm:py-20 px-4 sm:px-6 bg-[#E4E6E5] fade-in-up">
       <h2
-        class="text-2xl sm:text-3xl md:text-4xl font-semibold text-center mb-4 text-blue-700 flex flex-col sm:flex-row items-center justify-center"
-      >
+        class="text-2xl sm:text-3xl md:text-4xl font-semibold text-center mb-4 text-blue-700 flex flex-col sm:flex-row items-center justify-center">
         <i class="fas fa-newspaper text-blue-700 mb-2 sm:mb-0 sm:mr-3"></i>
         <span class="text-base sm:text-base md:text-xl">PORTAL SUARA KONSUMEN</span>
       </h2>
-      <p
-        class="text-sm sm:text-base md:text-lg text-gray-600 max-w-3xl mx-auto mb-8 sm:mb-12 text-justify px-2"
-      >
-        LPKNI berkomitmen untuk memberikan wadah bagi masyarakat Indonesia dalam
+      <p class="text-sm sm:text-base md:text-lg text-gray-600 max-w-3xl mx-auto mb-8 sm:mb-12 text-justify px-2">
+        qmas berkomitmen untuk memberikan wadah bagi masyarakat Indonesia dalam
         menyampaikan suara dan keluhan terkait produk atau layanan yang diterima. Kami
         berusaha memastikan bahwa setiap suara konsumen didengar dengan adil, dan sebagai
         hasil dari upaya ini, kami terus meningkatkan kualitas layanan dan perlindungan
@@ -189,33 +150,20 @@
       </p>
 
       <div class="flex justify-center mb-6 sm:mb-8">
-        <a
-          href="/suara-konsumen"
-          class="bg-blue-700 text-white px-4 sm:px-6 py-3 text-sm sm:text-base rounded-lg font-semibold hover:bg-blue-800 transition duration-300 hover:scale-105"
-        >
+        <a href="/suara-konsumen"
+          class="bg-blue-700 text-white px-4 sm:px-6 py-3 text-sm sm:text-base rounded-lg font-semibold hover:bg-blue-800 transition duration-300 hover:scale-105">
           Kunjungi Suara Konsumen
         </a>
       </div>
 
       <div class="grid grid-cols-1 sm:grid-cols-2 lg:grid-cols-4 gap-4 sm:gap-6 h-auto">
-        <div
-          v-for="suaraKonsumen in SuaraKonsumeList.slice(0, 4)"
-          :key="suaraKonsumen.id"
-          @click="routingTo(suaraKonsumen.id, suaraKonsumen.judul)"
-          class="flex justify-end"
-        >
+        <div v-for="suaraKonsumen in SuaraKonsumeList.slice(0, 4)" :key="suaraKonsumen.id"
+          @click="routingTo(suaraKonsumen.id, suaraKonsumen.judul)" class="flex justify-end">
           <div
-            class="bg-gray-100 p-3 sm:p-4 rounded-lg shadow-lg hover:shadow-2xl transform transition duration-500 ease-in-out hover:scale-105 w-full card-animate cursor-pointer"
-          >
-            <img
-              :src="getfullPathImage(suaraKonsumen.media[0].imageUrl)"
-              alt=""
-              loading="lazy"
-              class="rounded-md w-full transition duration-300 ease-in-out hover:opacity-80 max-h-40 sm:max-h-52 object-cover"
-            />
-            <h3
-              class="text-base sm:text-xl font-semibold mt-3 sm:mt-4 hover:text-blue-600 text-left cursor-pointer"
-            >
+            class="bg-gray-100 p-3 sm:p-4 rounded-lg shadow-lg hover:shadow-2xl transform transition duration-500 ease-in-out hover:scale-105 w-full card-animate cursor-pointer">
+            <img :src="getfullPathImage(suaraKonsumen.media[0].imageUrl)" alt="" loading="lazy"
+              class="rounded-md w-full transition duration-300 ease-in-out hover:opacity-80 max-h-40 sm:max-h-52 object-cover" />
+            <h3 class="text-base sm:text-xl font-semibold mt-3 sm:mt-4 hover:text-blue-600 text-left cursor-pointer">
               {{ suaraKonsumen.judul }}
             </h3>
             <p class="text-gray-600 mt-2 text-sm sm:text-base">
@@ -227,17 +175,12 @@
     </section>
 
     <section id="services" class="py-16 sm:py-20 px-4 sm:px-6 bg-[#D7EDFD] fade-in-up">
-      <h2
-        class="text-2xl sm:text-3xl font-semibold text-center mb-8 sm:mb-10 animate__animated animate__fadeIn"
-      >
+      <h2 class="text-2xl sm:text-3xl font-semibold text-center mb-8 sm:mb-10 animate__animated animate__fadeIn">
         Layanan Kami
       </h2>
-      <div
-        class="grid grid-cols-1 md:grid-cols-2 lg:grid-cols-3 gap-6 sm:gap-8 lg:gap-10"
-      >
+      <div class="grid grid-cols-1 md:grid-cols-2 lg:grid-cols-3 gap-6 sm:gap-8 lg:gap-10">
         <div
-          class="bg-white p-4 sm:p-6 rounded-lg shadow-lg transform transition-all duration-300 hover:scale-105 hover:shadow-2xl animate__animated animate__fadeInUp card-animate"
-        >
+          class="bg-white p-4 sm:p-6 rounded-lg shadow-lg transform transition-all duration-300 hover:scale-105 hover:shadow-2xl animate__animated animate__fadeInUp card-animate">
           <i class="fas fa-tint text-blue-700 text-2xl sm:text-3xl mb-3 sm:mb-4"></i>
           <h3 class="text-lg sm:text-xl font-semibold mb-3 sm:mb-4">
             Air Minum Berkualitas
@@ -250,8 +193,7 @@
         </div>
 
         <div
-          class="bg-white p-4 sm:p-6 rounded-lg shadow-lg transform transition-all duration-300 hover:scale-105 hover:shadow-2xl animate__animated animate__fadeInUp card-animate"
-        >
+          class="bg-white p-4 sm:p-6 rounded-lg shadow-lg transform transition-all duration-300 hover:scale-105 hover:shadow-2xl animate__animated animate__fadeInUp card-animate">
           <i class="fas fa-box-open text-blue-700 text-2xl sm:text-3xl mb-3 sm:mb-4"></i>
           <h3 class="text-lg sm:text-xl font-semibold mb-3 sm:mb-4">Kemasan Beragam</h3>
           <p class="text-gray-600 text-justify text-sm sm:text-base">
@@ -261,11 +203,8 @@
         </div>
 
         <div
-          class="bg-white p-4 sm:p-6 rounded-lg shadow-lg transform transition-all duration-300 hover:scale-105 hover:shadow-2xl animate__animated animate__fadeInUp card-animate"
-        >
-          <i
-            class="fas fa-check-circle text-blue-700 text-2xl sm:text-3xl mb-3 sm:mb-4"
-          ></i>
+          class="bg-white p-4 sm:p-6 rounded-lg shadow-lg transform transition-all duration-300 hover:scale-105 hover:shadow-2xl animate__animated animate__fadeInUp card-animate">
+          <i class="fas fa-check-circle text-blue-700 text-2xl sm:text-3xl mb-3 sm:mb-4"></i>
           <h3 class="text-lg sm:text-xl font-semibold mb-3 sm:mb-4">
             Standar Kesehatan Teruji
           </h3>
@@ -276,11 +215,8 @@
         </div>
 
         <div
-          class="bg-white p-4 sm:p-6 rounded-lg shadow-lg transform transition-all duration-300 hover:scale-105 hover:shadow-2xl animate__animated animate__fadeInUp card-animate"
-        >
-          <i
-            class="fas fa-shipping-fast text-blue-700 text-2xl sm:text-3xl mb-3 sm:mb-4"
-          ></i>
+          class="bg-white p-4 sm:p-6 rounded-lg shadow-lg transform transition-all duration-300 hover:scale-105 hover:shadow-2xl animate__animated animate__fadeInUp card-animate">
+          <i class="fas fa-shipping-fast text-blue-700 text-2xl sm:text-3xl mb-3 sm:mb-4"></i>
           <h3 class="text-lg sm:text-xl font-semibold mb-3 sm:mb-4">Distribusi Cepat</h3>
           <p class="text-gray-600 text-justify text-sm sm:text-base">
             Kami melayani pengiriman air minum Q-Mas secara cepat dan tepat waktu ke
@@ -289,11 +225,8 @@
           </p>
         </div>
         <div
-          class="bg-white p-4 sm:p-6 rounded-lg shadow-lg transform transition-all duration-300 hover:scale-105 hover:shadow-2xl animate__animated animate__fadeInUp card-animate"
-        >
-          <i
-            class="fas fa-hand-holding-water text-blue-700 text-2xl sm:text-3xl mb-3 sm:mb-4"
-          ></i>
+          class="bg-white p-4 sm:p-6 rounded-lg shadow-lg transform transition-all duration-300 hover:scale-105 hover:shadow-2xl animate__animated animate__fadeInUp card-animate">
+          <i class="fas fa-hand-holding-water text-blue-700 text-2xl sm:text-3xl mb-3 sm:mb-4"></i>
           <h3 class="text-lg sm:text-xl font-semibold mb-3 sm:mb-4">
             Dukungan Mitra Usaha
           </h3>
@@ -304,8 +237,7 @@
         </div>
 
         <div
-          class="bg-white p-4 sm:p-6 rounded-lg shadow-lg transform transition-all duration-300 hover:scale-105 hover:shadow-2xl animate__animated animate__fadeInUp card-animate"
-        >
+          class="bg-white p-4 sm:p-6 rounded-lg shadow-lg transform transition-all duration-300 hover:scale-105 hover:shadow-2xl animate__animated animate__fadeInUp card-animate">
           <i class="fas fa-heart text-blue-700 text-2xl sm:text-3xl mb-3 sm:mb-4"></i>
           <h3 class="text-lg sm:text-xl font-semibold mb-3 sm:mb-4">Kontribusi Sosial</h3>
           <p class="text-gray-600 text-justify text-sm sm:text-base">
@@ -319,8 +251,7 @@
     <section id="contact" class="py-16 sm:py-20 px-4 md:px-8 bg-[#76AAE4] fade-in-up">
       <div class="container mx-auto max-w-screen-md text-center">
         <h2
-          class="text-2xl sm:text-3xl md:text-4xl font-bold text-white mb-4 flex flex-col sm:flex-row items-center justify-center"
-        >
+          class="text-2xl sm:text-3xl md:text-4xl font-bold text-white mb-4 flex flex-col sm:flex-row items-center justify-center">
           <i class="fas fa-phone-alt text-white mb-2 sm:mb-0 sm:mr-3"></i>
           Hubungi Kami
         </h2>
@@ -330,50 +261,33 @@
         </p>
 
         <div class="flex flex-col sm:flex-row justify-center items-center gap-4 sm:gap-6">
-          <a
-            href="https://wa.me/6281333015767"
-            target="_blank"
-            class="bg-blue-600 text-white px-6 sm:px-10 py-3 sm:py-4 text-sm sm:text-base rounded-lg font-semibold hover:bg-blue-700 transition-transform duration-300 transform hover:scale-105 w-full sm:w-auto text-center"
-          >
+          <a href="https://wa.me/6281333015767" target="_blank"
+            class="bg-blue-600 text-white px-6 sm:px-10 py-3 sm:py-4 text-sm sm:text-base rounded-lg font-semibold hover:bg-blue-700 transition-transform duration-300 transform hover:scale-105 w-full sm:w-auto text-center">
             <i class="fa fa-phone text-black mr-2 text-lg sm:text-2xl"> </i>0813 3301 5767
             & 0341-437354
           </a>
 
-          <a
-            href="mailto:pt.lpkni@gmail.com"
-            class="bg-blue-600 text-white px-6 sm:px-10 py-3 sm:py-4 text-sm sm:text-base rounded-lg font-semibold hover:bg-blue-700 transition-transform duration-300 transform hover:scale-105 w-full sm:w-auto text-center"
-          >
-            📧 pt.lpkni@gmail.com
+          <a href="mailto:pt.qmas@gmail.com"
+            class="bg-blue-600 text-white px-6 sm:px-10 py-3 sm:py-4 text-sm sm:text-base rounded-lg font-semibold hover:bg-blue-700 transition-transform duration-300 transform hover:scale-105 w-full sm:w-auto text-center">
+            📧 pt.qmas@gmail.com
           </a>
         </div>
 
         <div class="mt-8 sm:mt-10 flex justify-center gap-4 sm:gap-6">
-          <a
-            href="https://www.facebook.com/lpkni.pusat/"
-            target="_blank"
-            class="text-blue-600 hover:text-blue-800 transition-transform duration-300 text-xl sm:text-2xl hover:scale-125"
-          >
+          <a href="https://www.facebook.com/qmas.pusat/" target="_blank"
+            class="text-blue-600 hover:text-blue-800 transition-transform duration-300 text-xl sm:text-2xl hover:scale-125">
             <i class="fab fa-facebook-f"></i>
           </a>
-          <a
-            href="https://www.instagram.com/lpkni.jaktim/"
-            target="_blank"
-            class="text-blue-600 hover:text-blue-800 transition-transform duration-300 text-xl sm:text-2xl hover:scale-125"
-          >
+          <a href="https://www.instagram.com/qmas.jaktim/" target="_blank"
+            class="text-blue-600 hover:text-blue-800 transition-transform duration-300 text-xl sm:text-2xl hover:scale-125">
             <i class="fab fa-instagram"></i>
           </a>
-          <a
-            href="https://www.youtube.com/@channellpkni"
-            target="_blank"
-            class="text-blue-600 hover:text-blue-800 transition-transform duration-300 text-xl sm:text-2xl hover:scale-125"
-          >
+          <a href="https://www.youtube.com/@channelqmas" target="_blank"
+            class="text-blue-600 hover:text-blue-800 transition-transform duration-300 text-xl sm:text-2xl hover:scale-125">
             <i class="fab fa-youtube"></i>
           </a>
-          <a
-            href="https://www.linkedin.com/company/consumers-international"
-            target="_blank"
-            class="text-blue-600 hover:text-blue-800 transition-transform duration-300 text-xl sm:text-2xl hover:scale-125"
-          >
+          <a href="https://www.linkedin.com/company/consumers-international" target="_blank"
+            class="text-blue-600 hover:text-blue-800 transition-transform duration-300 text-xl sm:text-2xl hover:scale-125">
             <i class="fab fa-linkedin-in"></i>
           </a>
         </div>
@@ -381,63 +295,34 @@
     </section>
 
     <section
-      class="relative grid grid-cols-1 sm:grid-cols-2 md:grid-cols-3 gap-4 sm:gap-6 px-4 sm:px-6 py-8 sm:py-10 min-h-[400px] sm:min-h-[600px] fade-in-up"
-    >
-      <div
-        class="relative w-full h-[300px] sm:h-[500px] cursor-pointer overflow-hidden rounded-lg shadow-lg map-hover"
-      >
-        <img
-          :src="require('@/assets/product/kotamalangsebaran.jpg')"
-          alt="gambar 1"
-          class="absolute inset-0 w-full h-full object-cover transition-all duration-500 ease-in-out opacity-100 hover:opacity-0"
-        />
-        <img
-          :src="require('@/assets/product/mapsmalang.jpeg')"
-          alt="gambar 1 hover"
-          class="absolute inset-0 w-full h-full object-cover transition-all duration-500 ease-in-out opacity-0 hover:opacity-100 hover:-translate-y-3"
-        />
+      class="relative grid grid-cols-1 sm:grid-cols-2 md:grid-cols-3 gap-4 sm:gap-6 px-4 sm:px-6 py-8 sm:py-10 min-h-[400px] sm:min-h-[600px] fade-in-up">
+      <div class="relative w-full h-[300px] sm:h-[500px] cursor-pointer overflow-hidden rounded-lg shadow-lg map-hover">
+        <img :src="require('@/assets/product/kotamalangsebaran.jpg')" alt="gambar 1"
+          class="absolute inset-0 w-full h-full object-cover transition-all duration-500 ease-in-out opacity-100 hover:opacity-0" />
+        <img :src="require('@/assets/product/mapsmalang.jpeg')" alt="gambar 1 hover"
+          class="absolute inset-0 w-full h-full object-cover transition-all duration-500 ease-in-out opacity-0 hover:opacity-100 hover:-translate-y-3" />
+      </div>
+
+      <div class="relative w-full h-[300px] sm:h-[500px] cursor-pointer overflow-hidden rounded-lg shadow-lg map-hover">
+        <img :src="require('@/assets/product/kotabatusebaran.png')" alt="gambar 2"
+          class="absolute inset-0 w-full h-full object-cover transition-all duration-500 ease-in-out opacity-100 hover:opacity-0" />
+        <img :src="require('@/assets/product/mapskotabatu.jpg')" alt="gambar 2 hover"
+          class="absolute inset-0 w-full h-full object-cover transition-all duration-500 ease-in-out opacity-0 hover:opacity-100 hover:-translate-y-3" />
       </div>
 
       <div
-        class="relative w-full h-[300px] sm:h-[500px] cursor-pointer overflow-hidden rounded-lg shadow-lg map-hover"
-      >
-        <img
-          :src="require('@/assets/product/kotabatusebaran.png')"
-          alt="gambar 2"
-          class="absolute inset-0 w-full h-full object-cover transition-all duration-500 ease-in-out opacity-100 hover:opacity-0"
-        />
-        <img
-          :src="require('@/assets/product/mapskotabatu.jpg')"
-          alt="gambar 2 hover"
-          class="absolute inset-0 w-full h-full object-cover transition-all duration-500 ease-in-out opacity-0 hover:opacity-100 hover:-translate-y-3"
-        />
-      </div>
-
-      <div
-        class="relative w-full h-[300px] sm:h-[500px] cursor-pointer overflow-hidden rounded-lg shadow-lg map-hover sm:col-span-2 md:col-span-1"
-      >
-        <img
-          :src="require('@/assets/product/kabmalangsebaran.jpg')"
-          alt="gambar 3"
-          class="absolute inset-0 w-full h-full object-cover transition-all duration-500 ease-in-out opacity-100 hover:opacity-0"
-        />
-        <img
-          :src="require('@/assets/product/mapskabmalang.jpg')"
-          alt="gambar 3 hover"
-          class="absolute inset-0 w-full h-full object-cover transition-all duration-500 ease-in-out opacity-0 hover:opacity-100 hover:-translate-y-3"
-        />
+        class="relative w-full h-[300px] sm:h-[500px] cursor-pointer overflow-hidden rounded-lg shadow-lg map-hover sm:col-span-2 md:col-span-1">
+        <img :src="require('@/assets/product/kabmalangsebaran.jpg')" alt="gambar 3"
+          class="absolute inset-0 w-full h-full object-cover transition-all duration-500 ease-in-out opacity-100 hover:opacity-0" />
+        <img :src="require('@/assets/product/mapskabmalang.jpg')" alt="gambar 3 hover"
+          class="absolute inset-0 w-full h-full object-cover transition-all duration-500 ease-in-out opacity-0 hover:opacity-100 hover:-translate-y-3" />
       </div>
     </section>
 
     <FooterLandingPage />
-    <div
-      v-if="isLoading"
-      class="fixed inset-0 flex items-center justify-center bg-black bg-opacity-50 z-50"
-    >
+    <div v-if="isLoading" class="fixed inset-0 flex items-center justify-center bg-black bg-opacity-50 z-50">
       <div class="text-white text-lg">Sedang Memuat...</div>
-      <div
-        class="spinner-border animate-spin border-4 border-t-4 border-white rounded-full w-16 h-16 ml-2"
-      ></div>
+      <div class="spinner-border animate-spin border-4 border-t-4 border-white rounded-full w-16 h-16 ml-2"></div>
     </div>
   </div>
 </template>
@@ -445,7 +330,7 @@
 <script>
 import FooterLandingPage from "@/components/FooterLandingPage.vue";
 import NavbarLandingPage from "@/components/NavbarLandingPage.vue";
-import lpkni from "@/service/lpkni";
+import qmas from "@/service/qmas";
 
 // Move the type function outside of the component
 function type(element, text, i) {
@@ -486,19 +371,19 @@ export default {
     },
     getAllBerita() {
       this.isLoading = true;
-      lpkni
+      qmas
         .getAllSuaraKonsumenPublish()
         .then((res) => {
           this.SuaraKonsumeList = res.data;
           console.log(this.SuaraKonsumeList);
         })
-        .catch(() => {})
+        .catch(() => { })
         .finally(() => {
           this.isLoading = false;
         });
     },
     getfullPathImage(img) {
-      return lpkni.getfullpathImage(img);
+      return qmas.getfullpathImage(img);
     },
 
     typeWriterEffect() {
@@ -574,6 +459,7 @@ export default {
     opacity: 0;
     transform: translateY(30px);
   }
+
   to {
     opacity: 1;
     transform: translateY(0);
@@ -585,6 +471,7 @@ export default {
     opacity: 0;
     transform: translateX(-50px);
   }
+
   to {
     opacity: 1;
     transform: translateX(0);
@@ -596,6 +483,7 @@ export default {
     opacity: 0;
     transform: translateX(50px);
   }
+
   to {
     opacity: 1;
     transform: translateX(0);
@@ -607,6 +495,7 @@ export default {
     opacity: 0;
     transform: translateY(50px);
   }
+
   to {
     opacity: 1;
     transform: translateY(0);
@@ -618,6 +507,7 @@ export default {
     opacity: 0;
     transform: scale(0.8);
   }
+
   to {
     opacity: 1;
     transform: scale(1);
@@ -720,18 +610,23 @@ export default {
 .card-animate:nth-child(1) {
   transition-delay: 0.1s;
 }
+
 .card-animate:nth-child(2) {
   transition-delay: 0.2s;
 }
+
 .card-animate:nth-child(3) {
   transition-delay: 0.3s;
 }
+
 .card-animate:nth-child(4) {
   transition-delay: 0.4s;
 }
+
 .card-animate:nth-child(5) {
   transition-delay: 0.5s;
 }
+
 .card-animate:nth-child(6) {
   transition-delay: 0.6s;
 }
@@ -760,10 +655,12 @@ export default {
 
 /* Floating animation for icons */
 @keyframes floating {
+
   0%,
   100% {
     transform: translateY(0px);
   }
+
   50% {
     transform: translateY(-10px);
   }
@@ -775,10 +672,12 @@ export default {
 
 /* Pulse effect for important elements */
 @keyframes pulse {
+
   0%,
   100% {
     opacity: 1;
   }
+
   50% {
     opacity: 0.7;
   }
@@ -807,6 +706,7 @@ export default {
   0% {
     transform: rotate(0deg);
   }
+
   100% {
     transform: rotate(360deg);
   }
@@ -819,10 +719,12 @@ export default {
 }
 
 @keyframes blink {
+
   0%,
   50% {
     opacity: 1;
   }
+
   51%,
   100% {
     opacity: 0;
@@ -831,6 +733,7 @@ export default {
 
 /* Responsive adjustments */
 @media (max-width: 768px) {
+
   .fade-in-up,
   .fade-in-left,
   .fade-in-right {
@@ -882,10 +785,12 @@ export default {
 }
 
 @keyframes gradientShift {
+
   0%,
   100% {
     background-position: 0% 50%;
   }
+
   50% {
     background-position: 100% 50%;
   }
